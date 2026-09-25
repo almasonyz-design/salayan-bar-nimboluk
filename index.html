@@ -1,0 +1,3435 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f5b">
+<title>صلایان بار</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+    background:#f4f7f6;
+    color:#172b26;
+    min-height:100vh;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    max-width:520px;
+    margin:auto;
+    min-height:100vh;
+    background:#f4f7f6;
+    padding-bottom:85px;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(135deg,#087f5b,#0ca678);
+    color:white;
+    padding:18px;
+    border-radius:0 0 22px 22px;
+    box-shadow:0 5px 18px rgba(0,0,0,.12);
+}
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:bold;
+}
+
+.logo-sub{
+    font-size:11px;
+    opacity:.85;
+    margin-top:4px;
+}
+
+.header-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+/* CONTENT */
+.content{
+    padding:15px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.section-title{
+    font-size:17px;
+    font-weight:bold;
+    margin:18px 2px 12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.section-title small{
+    font-size:11px;
+    color:#78908a;
+    font-weight:normal;
+}
+
+/* WALLET */
+.wallet-card{
+    background:linear-gradient(135deg,#064e3b,#087f5b);
+    color:white;
+    border-radius:19px;
+    padding:17px;
+    box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
+.wallet-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.wallet-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.wallet-icon{
+    width:47px;
+    height:47px;
+    border-radius:14px;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+}
+
+.wallet-title h3{
+    font-size:14px;
+}
+
+.wallet-title p{
+    font-size:10px;
+    opacity:.75;
+    margin-top:4px;
+}
+
+.wallet-balance{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:17px;
+}
+
+.wallet-balance span{
+    font-size:11px;
+    font-weight:normal;
+}
+
+.wallet-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:15px;
+}
+
+.wallet-btn{
+    border:0;
+    padding:11px;
+    border-radius:11px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.wallet-charge{
+    background:white;
+    color:#087f5b;
+}
+
+.wallet-history{
+    background:rgba(255,255,255,.14);
+    color:white;
+}
+
+/* RAH CARD */
+.rah-card{
+    background:white;
+    border-radius:18px;
+    padding:17px;
+    box-shadow:0 4px 14px rgba(0,0,0,.06);
+    border:1px solid #e6eeeb;
+}
+
+.rah-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.rah-icon{
+    width:50px;
+    height:50px;
+    border-radius:15px;
+    background:#e7f7f1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+}
+
+.rah-title h3{
+    font-size:16px;
+}
+
+.rah-title p{
+    font-size:11px;
+    color:#81928e;
+    margin-top:5px;
+}
+
+.main-btn{
+    width:100%;
+    border:0;
+    background:#087f5b;
+    color:white;
+    padding:13px;
+    border-radius:12px;
+    margin-top:15px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+/* CHECK GRID */
+.check-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.check-card{
+    background:white;
+    border:1px solid #e6eeeb;
+    border-radius:17px;
+    min-height:125px;
+    padding:15px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.045);
+    transition:.15s;
+}
+
+.check-card:active{
+    transform:scale(.97);
+}
+
+.check-icon{
+    width:53px;
+    height:53px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.icon-green{background:#e6f7f0;}
+.icon-blue{background:#eaf3ff;}
+.icon-orange{background:#fff3e5;}
+.icon-purple{background:#f1ebff;}
+
+.check-card h4{
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.check-card span{
+    font-size:10px;
+    color:#84928e;
+}
+
+/* QUICK */
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.quick{
+    background:white;
+    border-radius:15px;
+    border:1px solid #e8eeec;
+    padding:14px 7px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.04);
+}
+
+.quick-icon{
+    font-size:24px;
+    margin-bottom:7px;
+}
+
+.quick-title{
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* LOAD */
+.load-card{
+    background:white;
+    border-radius:17px;
+    padding:15px;
+    margin-bottom:11px;
+    border:1px solid #e7eeeb;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.load-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.load-number{
+    color:#087f5b;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.badge{
+    background:#fff1e8;
+    color:#e8590c;
+    padding:5px 8px;
+    border-radius:8px;
+    font-size:9px;
+}
+
+.route{
+    font-size:16px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.route span{
+    color:#087f5b;
+}
+
+.load-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:13px;
+}
+
+.info-item{
+    background:#f6f8f7;
+    border-radius:9px;
+    padding:8px;
+    font-size:10px;
+    color:#60716c;
+}
+
+.info-item b{
+    display:block;
+    color:#263b35;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.load-bottom{
+    margin-top:13px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.price{
+    color:#087f5b;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.small-btn{
+    border:0;
+    background:#e9f7f2;
+    color:#087f5b;
+    padding:9px 13px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.cancel-btn{
+    border:0;
+    background:#fff0ef;
+    color:#d94841;
+    padding:9px 13px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:bold;
+    margin-right:5px;
+}
+
+/* FILTER */
+.filter-row{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:5px;
+    margin-bottom:13px;
+}
+
+.filter{
+    white-space:nowrap;
+    border:1px solid #dce6e2;
+    background:white;
+    color:#63736e;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+.filter.active{
+    background:#087f5b;
+    color:white;
+    border-color:#087f5b;
+}
+
+/* FORM */
+.form-card{
+    background:white;
+    padding:17px;
+    border-radius:17px;
+    border:1px solid #e5ece9;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group label{
+    display:block;
+    font-size:11px;
+    margin-bottom:7px;
+    color:#63736e;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #dce5e2;
+    border-radius:11px;
+    outline:none;
+    background:#fafcfc;
+}
+
+/* PROFILE */
+.profile-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    border:1px solid #e5ece9;
+}
+
+.profile-avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    margin:auto;
+    background:#e6f7f0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+}
+
+.profile-name{
+    font-size:17px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.profile-phone{
+    color:#84918d;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.menu-item{
+    background:white;
+    border:1px solid #e7eeeb;
+    padding:14px;
+    border-radius:13px;
+    margin-top:9px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12px;
+}
+
+/* TRANSACTION */
+.transaction{
+    background:white;
+    border-bottom:1px solid #edf1ef;
+    padding:13px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.transaction:last-child{
+    border-bottom:0;
+}
+
+.transaction-title{
+    font-size:11px;
+    font-weight:bold;
+}
+
+.transaction-date{
+    color:#899792;
+    font-size:9px;
+    margin-top:5px;
+}
+
+.transaction-amount{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.income{
+    color:#087f5b;
+}
+
+.expense{
+    color:#d94841;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:520px;
+    height:72px;
+    background:white;
+    border-top:1px solid #e4ebe8;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    z-index:100;
+}
+
+.nav-item{
+    border:0;
+    background:white;
+    color:#83918d;
+    font-size:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+}
+
+.nav-item span{
+    font-size:22px;
+}
+
+.nav-item.active{
+    color:#087f5b;
+    font-weight:bold;
+}
+
+/* LOGIN */
+.login-screen{
+    min-height:100vh;
+    background:linear-gradient(145deg,#056b4d,#0ca678);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    border-radius:24px;
+    padding:28px 22px;
+    box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+
+.login-logo{
+    text-align:center;
+    font-size:29px;
+    font-weight:bold;
+    color:#087f5b;
+}
+
+.login-sub{
+    text-align:center;
+    color:#84918d;
+    font-size:11px;
+    margin-top:7px;
+    margin-bottom:25px;
+}
+
+.login-box input{
+    width:100%;
+    padding:14px;
+    border:1px solid #dce5e2;
+    border-radius:12px;
+    outline:none;
+    margin-bottom:12px;
+    text-align:center;
+    font-size:15px;
+}
+
+.otp-info{
+    text-align:center;
+    font-size:11px;
+    color:#7c8d87;
+    margin:8px 0 14px;
+}
+
+.otp{
+    letter-spacing:8px;
+    font-size:22px !important;
+}
+
+.link-btn{
+    border:0;
+    background:none;
+    color:#087f5b;
+    font-size:11px;
+    margin-top:12px;
+}
+
+.demo-note{
+    background:#fff8df;
+    border:1px solid #f3df9c;
+    color:#856404;
+    padding:10px;
+    border-radius:10px;
+    font-size:10px;
+    margin-top:14px;
+    text-align:center;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.48);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:200;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:520px;
+    max-height:88vh;
+    overflow:auto;
+    border-radius:22px 22px 0 0;
+    padding:20px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.close{
+    border:0;
+    background:#f1f4f3;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    font-size:18px;
+}
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    padding:11px 0;
+    border-bottom:1px solid #edf1ef;
+    font-size:12px;
+}
+
+.result-row span{
+    color:#768680;
+}
+
+.result-row b{
+    color:#1d312b;
+}
+
+.success{
+    background:#e8f8f1;
+    color:#087f5b;
+    padding:13px;
+    border-radius:11px;
+    margin-top:14px;
+    font-size:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.warning{
+    background:#fff4df;
+    color:#946200;
+    padding:11px;
+    border-radius:11px;
+    margin-top:12px;
+    font-size:10px;
+    text-align:center;
+}
+
+.wallet-option{
+    width:100%;
+    background:#f7faf9;
+    border:1px solid #dce8e4;
+    padding:13px;
+    border-radius:12px;
+    margin-top:9px;
+    font-size:12px;
+    font-weight:bold;
+    color:#087f5b;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    bottom:85px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:#172b26;
+    color:white;
+    padding:12px 17px;
+    border-radius:12px;
+    font-size:11px;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    z-index:500;
+    width:max-content;
+    max-width:90%;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:360px){
+
+    .check-card{
+        min-height:115px;
+    }
+
+    .check-icon{
+        width:47px;
+        height:47px;
+        font-size:24px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-box">
+
+        <div class="login-logo">صلایان بار</div>
+        <div class="login-sub">اعلام بار هوشمند</div>
+
+        <div id="phoneStep">
+
+            <input
+                id="phoneInput"
+                type="tel"
+                maxlength="11"
+                placeholder="شماره موبایل"
+                inputmode="numeric"
+            >
+
+            <button class="main-btn" onclick="sendOTP()">
+                دریافت کد ورود
+            </button>
+
+            <div class="demo-note">
+                نسخه آزمایشی — پیامک واقعی فعلاً فعال نیست
+            </div>
+
+        </div>
+
+        <div id="otpStep" style="display:none">
+
+            <div class="otp-info" id="otpInfo"></div>
+
+            <input
+                id="otpInput"
+                class="otp"
+                type="tel"
+                maxlength="6"
+                placeholder="------"
+                inputmode="numeric"
+            >
+
+            <button class="main-btn" onclick="verifyOTP()">
+                ورود به صلایان بار
+            </button>
+
+            <div style="text-align:center">
+
+                <button class="link-btn" onclick="resendOTP()">
+                    ارسال مجدد کد
+                </button>
+
+                <button class="link-btn" onclick="backToPhone()">
+                    تغییر شماره
+                </button>
+
+            </div>
+
+            <div class="demo-note">
+                کد آزمایشی ورود: <b>123456</b>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- APP -->
+<div id="app" class="app" style="display:none">
+
+<header class="header">
+
+    <div class="header-row">
+
+        <div>
+            <div class="logo">صلایان بار</div>
+            <div class="logo-sub">اعلام بار هوشمند</div>
+        </div>
+
+        <div class="header-icon">
+            🚛
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+<!-- HOME -->
+<section id="homePage" class="page active">
+
+
+    <!-- WALLET -->
+    <div class="section-title">
+        کیف پول
+        <small>هزینه انتخاب بار</small>
+    </div>
+
+    <div class="wallet-card">
+
+        <div class="wallet-top">
+
+            <div class="wallet-title">
+
+                <div class="wallet-icon">
+                    💰
+                </div>
+
+                <div>
+                    <h3>کیف پول من</h3>
+                    <p>موجودی قابل استفاده برای انتخاب بار</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="wallet-balance">
+
+            <span id="walletBalance">
+                ۵۰٬۰۰۰
+            </span>
+
+            <span>
+                تومان
+            </span>
+
+        </div>
+
+
+        <div class="wallet-actions">
+
+            <button
+                class="wallet-btn wallet-charge"
+                onclick="openChargeWallet()"
+            >
+                ➕ شارژ کیف پول
+            </button>
+
+            <button
+                class="wallet-btn wallet-history"
+                onclick="showWalletHistory()"
+            >
+                📋 گردش حساب
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- RAH DARI -->
+    <div class="section-title">
+        استعلام‌های راننده
+        <small>دسترسی سریع</small>
+    </div>
+
+    <div class="rah-card">
+
+        <div class="rah-title">
+
+            <div class="rah-icon">
+                🔎
+            </div>
+
+            <div>
+                <h3>استعلام هوشمند راهداری</h3>
+                <p>
+                    بررسی وضعیت راننده و ناوگان
+                </p>
+            </div>
+
+        </div>
+
+        <button
+            class="main-btn"
+            onclick="rahDariCheck()"
+        >
+            انجام استعلام هوشمند
+        </button>
+
+    </div>
+
+
+    <!-- FOUR CHECKS -->
+    <div class="section-title">
+        استعلام مدارک
+        <small>نسخه آزمایشی</small>
+    </div>
+
+    <div class="check-grid">
+
+
+        <button
+            class="check-card"
+            onclick="truckInspection()"
+        >
+
+            <div class="check-icon icon-green">
+                🔧🚛
+            </div>
+
+            <h4>
+                معاینه فنی کامیون
+            </h4>
+
+            <span>
+                اعتبار معاینه فنی
+            </span>
+
+        </button>
+
+
+        <button
+            class="check-card"
+            onclick="healthCardCheck()"
+        >
+
+            <div class="check-icon icon-blue">
+                🩺
+            </div>
+
+            <h4>
+                کارت سلامت راننده
+            </h4>
+
+            <span>
+                وضعیت سلامت
+            </span>
+
+        </button>
+
+
+        <button
+            class="check-card"
+            onclick="insuranceCheck()"
+        >
+
+            <div class="check-icon icon-orange">
+                🛡️🚛
+            </div>
+
+            <h4>
+                بیمه بدنه کامیون
+            </h4>
+
+            <span>
+                اعتبار بیمه
+            </span>
+
+        </button>
+
+
+        <button
+            class="check-card"
+            onclick="smartCardCheck()"
+        >
+
+            <div class="check-icon icon-purple">
+                💳
+            </div>
+
+            <h4>
+                کارت هوشمند راننده
+            </h4>
+
+            <span>
+                استعلام کارت هوشمند
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <!-- QUICK -->
+    <div class="section-title">
+        دسترسی سریع
+    </div>
+
+    <div class="quick-grid">
+
+        <button
+            class="quick"
+            onclick="showPage('loads')"
+        >
+            <div class="quick-icon">📦</div>
+            <div class="quick-title">تالار بار</div>
+        </button>
+
+        <button
+            class="quick"
+            onclick="showPage('myLoads')"
+        >
+            <div class="quick-icon">📋</div>
+            <div class="quick-title">بارهای من</div>
+        </button>
+
+        <button
+            class="quick"
+            onclick="showPage('announce')"
+        >
+            <div class="quick-icon">➕</div>
+            <div class="quick-title">اعلام بار</div>
+        </button>
+
+    </div>
+
+
+    <!-- URGENT -->
+    <div class="section-title">
+        بارهای فوری
+        <small>آخرین بارها</small>
+    </div>
+
+    <div id="urgentLoads"></div>
+
+</section>
+
+
+<!-- LOADS -->
+<section id="loadsPage" class="page">
+
+    <div class="section-title">
+        تالار بار
+        <small>بارهای موجود</small>
+    </div>
+
+    <div class="filter-row">
+
+        <button
+            class="filter active"
+            onclick="setFilter('all',this)"
+        >
+            همه
+        </button>
+
+        <button
+            class="filter"
+            onclick="setFilter('urgent',this)"
+        >
+            فوری
+        </button>
+
+        <button
+            class="filter"
+            onclick="setFilter('کمپرسی',this)"
+        >
+            کمپرسی
+        </button>
+
+        <button
+            class="filter"
+            onclick="setFilter('تریلی',this)"
+        >
+            تریلی
+        </button>
+
+    </div>
+
+    <div id="allLoads"></div>
+
+</section>
+
+
+<!-- MY LOADS -->
+<section id="myLoadsPage" class="page">
+
+    <div class="section-title">
+        بارهای من
+        <small>درخواست‌های شما</small>
+    </div>
+
+    <div id="myLoads"></div>
+
+</section>
+
+
+<!-- ANNOUNCE -->
+<section id="announcePage" class="page">
+
+    <div class="section-title">
+        اعلام بار
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-group">
+            <label>مبدأ</label>
+            <input id="origin" placeholder="مثلاً نیمبلوک">
+        </div>
+
+        <div class="form-group">
+            <label>مقصد</label>
+            <input id="destination" placeholder="مثلاً مشهد">
+        </div>
+
+        <div class="form-group">
+            <label>نوع بار</label>
+            <input id="cargo" placeholder="مثلاً فولاد">
+        </div>
+
+        <div class="form-group">
+            <label>وزن</label>
+            <input id="weight" placeholder="مثلاً 26 تن">
+        </div>
+
+        <div class="form-group">
+
+            <label>نوع کامیون</label>
+
+            <select id="truckType">
+
+                <option value="کمپرسی">
+                    کمپرسی
+                </option>
+
+                <option value="تریلی">
+                    تریلی
+                </option>
+
+                <option value="خاور">
+                    خاور
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label>کرایه</label>
+            <input id="price" placeholder="مثلاً 60000000">
+        </div>
+
+        <button
+            class="main-btn"
+            onclick="addLoad()"
+        >
+            ثبت اعلام بار
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="profilePage" class="page">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            👨‍✈️
+        </div>
+
+        <div class="profile-name">
+            محمد حسین رافعی
+        </div>
+
+        <div
+            class="profile-phone"
+            id="profilePhone"
+        >
+            —
+        </div>
+
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="openChargeWallet()"
+    >
+        <span>💰 کیف پول و شارژ</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="showWalletHistory()"
+    >
+        <span>📋 گردش حساب</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="rahDariCheck()"
+    >
+        <span>🔎 استعلام هوشمند راهداری</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="smartCardCheck()"
+    >
+        <span>💳 کارت هوشمند راننده</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="healthCardCheck()"
+    >
+        <span>🩺 کارت سلامت راننده</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="truckInspection()"
+    >
+        <span>🔧 معاینه فنی کامیون</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="insuranceCheck()"
+    >
+        <span>🛡️ بیمه بدنه کامیون</span>
+        <b>›</b>
+    </div>
+
+
+    <div
+        class="menu-item"
+        onclick="logout()"
+    >
+        <span style="color:#d94841">
+            خروج از حساب
+        </span>
+        <b>›</b>
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+    <button
+        class="nav-item active"
+        onclick="showPage('home')"
+    >
+        <span>🏠</span>
+        خانه
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="showPage('loads')"
+    >
+        <span>📦</span>
+        تالار بار
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="showPage('myLoads')"
+    >
+        <span>📋</span>
+        بارهای من
+    </button>
+
+    <button
+        class="nav-item"
+        onclick="showPage('profile')"
+    >
+        <span>👤</span>
+        پروفایل
+    </button>
+
+</nav>
+
+</div>
+
+
+<!-- MODAL -->
+<div
+    id="modal"
+    class="modal"
+    onclick="closeModal(event)"
+>
+
+    <div
+        class="modal-box"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-head">
+
+            <h3 id="modalTitle">
+                نتیجه
+            </h3>
+
+            <button
+                class="close"
+                onclick="hideModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* =========================
+   SETTINGS
+========================= */
+
+const LOAD_SELECTION_FEE = 10000;
+
+const DEFAULT_WALLET = 50000;
+
+const demoOTP = "123456";
+
+let otpTimer = null;
+let seconds = 120;
+let currentFilter = "all";
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+const defaultLoads = [
+
+    {
+        id:1001,
+        origin:"نیمبلوک",
+        destination:"مشهد",
+        cargo:"فولاد",
+        weight:"24 تن",
+        truck:"کمپرسی",
+        price:62000000,
+        urgent:true
+    },
+
+    {
+        id:1002,
+        origin:"قاین",
+        destination:"چابهار",
+        cargo:"مواد معدنی",
+        weight:"26 تن",
+        truck:"تریلی",
+        price:115000000,
+        urgent:true
+    },
+
+    {
+        id:1003,
+        origin:"مشهد",
+        destination:"بیرجند",
+        cargo:"سیمان",
+        weight:"25 تن",
+        truck:"تریلی",
+        price:58000000,
+        urgent:false
+    },
+
+    {
+        id:1004,
+        origin:"خواف",
+        destination:"قاین",
+        cargo:"سنگ آهن",
+        weight:"26 تن",
+        truck:"کمپرسی",
+        price:73000000,
+        urgent:false
+    }
+
+];
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function getLoads(){
+
+    let data =
+        localStorage.getItem("salayan_loads");
+
+    if(!data){
+
+        localStorage.setItem(
+            "salayan_loads",
+            JSON.stringify(defaultLoads)
+        );
+
+        return defaultLoads;
+    }
+
+    return JSON.parse(data);
+}
+
+
+function getSelected(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "salayan_selected"
+        ) || "[]"
+    );
+
+}
+
+
+/* =========================
+   WALLET
+========================= */
+
+function getWallet(){
+
+    let wallet =
+        localStorage.getItem(
+            "salayan_wallet"
+        );
+
+    if(wallet === null){
+
+        localStorage.setItem(
+            "salayan_wallet",
+            DEFAULT_WALLET
+        );
+
+        return DEFAULT_WALLET;
+    }
+
+    return Number(wallet);
+
+}
+
+
+function setWallet(amount){
+
+    localStorage.setItem(
+        "salayan_wallet",
+        amount
+    );
+
+    updateWalletUI();
+
+}
+
+
+function getTransactions(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "salayan_transactions"
+        ) || "[]"
+    );
+
+}
+
+
+function saveTransaction(
+    title,
+    amount,
+    type
+){
+
+    let transactions =
+        getTransactions();
+
+    transactions.unshift({
+
+        id:Date.now(),
+
+        title:title,
+
+        amount:amount,
+
+        type:type,
+
+        date:new Date().toLocaleString(
+            "fa-IR"
+        )
+
+    });
+
+    localStorage.setItem(
+        "salayan_transactions",
+        JSON.stringify(transactions)
+    );
+
+}
+
+
+function updateWalletUI(){
+
+    let balance =
+        getWallet();
+
+    let element =
+        document.getElementById(
+            "walletBalance"
+        );
+
+    if(element){
+
+        element.innerText =
+            Number(balance).toLocaleString("fa-IR");
+
+    }
+
+}
+
+
+function openChargeWallet(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "💰 شارژ کیف پول";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div style="
+            background:#eaf8f3;
+            padding:13px;
+            border-radius:12px;
+            text-align:center;
+            color:#087f5b;
+            font-size:12px;
+            margin-bottom:12px;
+        ">
+
+            موجودی فعلی:
+
+            <br>
+
+            <b style="font-size:18px">
+                ${getWallet().toLocaleString("fa-IR")}
+                تومان
+            </b>
+
+        </div>
+
+
+        <div style="
+            font-size:11px;
+            color:#71827c;
+            margin-bottom:5px;
+        ">
+            مبلغ شارژ را انتخاب کنید:
+        </div>
+
+
+        <button
+            class="wallet-option"
+            onclick="chargeWallet(50000)"
+        >
+            ➕ ۵۰٬۰۰۰ تومان
+        </button>
+
+
+        <button
+            class="wallet-option"
+            onclick="chargeWallet(100000)"
+        >
+            ➕ ۱۰۰٬۰۰۰ تومان
+        </button>
+
+
+        <button
+            class="wallet-option"
+            onclick="chargeWallet(200000)"
+        >
+            ➕ ۲۰۰٬۰۰۰ تومان
+        </button>
+
+
+        <button
+            class="wallet-option"
+            onclick="chargeWallet(500000)"
+        >
+            ➕ ۵۰۰٬۰۰۰ تومان
+        </button>
+
+
+        <div class="warning">
+
+            این شارژ در نسخه فعلی آزمایشی است.
+            در نسخه واقعی به درگاه پرداخت متصل می‌شود.
+
+        </div>
+
+    `;
+
+    openModal();
+
+}
+
+
+function chargeWallet(amount){
+
+    let oldBalance =
+        getWallet();
+
+    let newBalance =
+        oldBalance + amount;
+
+
+    setWallet(newBalance);
+
+
+    saveTransaction(
+        "شارژ کیف پول",
+        amount,
+        "income"
+    );
+
+
+    hideModal();
+
+
+    showToast(
+        "کیف پول به مبلغ "
+        + amount.toLocaleString("fa-IR")
+        + " تومان شارژ شد"
+    );
+
+}
+
+
+function showWalletHistory(){
+
+    let transactions =
+        getTransactions();
+
+
+    let html = `
+
+        <div style="
+            background:#eaf8f3;
+            padding:13px;
+            border-radius:12px;
+            text-align:center;
+            color:#087f5b;
+            margin-bottom:12px;
+        ">
+
+            موجودی فعلی
+
+            <br>
+
+            <b style="font-size:19px">
+                ${getWallet().toLocaleString("fa-IR")}
+                تومان
+            </b>
+
+        </div>
+
+    `;
+
+
+    if(transactions.length === 0){
+
+        html += `
+
+            <div style="
+                text-align:center;
+                color:#87958f;
+                font-size:12px;
+                padding:25px;
+            ">
+                هنوز تراکنشی ثبت نشده است.
+            </div>
+
+        `;
+
+    }
+    else{
+
+        html += `<div>`;
+
+        transactions.forEach(t=>{
+
+            let sign =
+                t.type === "income"
+                ? "+"
+                : "-";
+
+
+            let cls =
+                t.type === "income"
+                ? "income"
+                : "expense";
+
+
+            html += `
+
+                <div class="transaction">
+
+                    <div>
+
+                        <div class="transaction-title">
+                            ${t.title}
+                        </div>
+
+                        <div class="transaction-date">
+                            ${t.date}
+                        </div>
+
+                    </div>
+
+                    <div class="transaction-amount ${cls}">
+                        ${sign}
+                        ${Number(t.amount).toLocaleString("fa-IR")}
+                        تومان
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+        html += `</div>`;
+
+    }
+
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "📋 گردش حساب";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = html;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   PAY FOR LOAD
+========================= */
+
+function requestLoad(id){
+
+    let selected =
+        getSelected();
+
+
+    /* already selected */
+
+    if(selected.includes(id)){
+
+        showToast(
+            "این بار قبلاً انتخاب شده است"
+        );
+
+        hideModal();
+
+        return;
+    }
+
+
+    let balance =
+        getWallet();
+
+
+    /* insufficient balance */
+
+    if(balance < LOAD_SELECTION_FEE){
+
+        document.getElementById(
+            "modalTitle"
+        ).innerText =
+            "💰 موجودی کیف پول";
+
+
+        document.getElementById(
+            "modalContent"
+        ).innerHTML = `
+
+            <div style="
+                text-align:center;
+                padding:8px;
+            ">
+
+                <div style="
+                    font-size:35px;
+                    margin-bottom:10px;
+                ">
+                    💰
+                </div>
+
+                <div style="
+                    font-size:13px;
+                    line-height:2;
+                ">
+
+                    موجودی کیف پول شما کافی نیست.
+
+                    <br>
+
+                    موجودی فعلی:
+
+                    <b style="color:#d94841">
+                        ${balance.toLocaleString("fa-IR")}
+                        تومان
+                    </b>
+
+                    <br>
+
+                    هزینه انتخاب بار:
+
+                    <b>
+                        ${LOAD_SELECTION_FEE.toLocaleString("fa-IR")}
+                        تومان
+                    </b>
+
+                </div>
+
+
+                <button
+                    class="main-btn"
+                    onclick="openChargeWallet()"
+                >
+                    ➕ شارژ کیف پول
+                </button>
+
+            </div>
+
+        `;
+
+
+        return;
+    }
+
+
+    /* payment confirmation */
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "💳 تأیید هزینه انتخاب بار";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+
+            <span>
+                موجودی کیف پول
+            </span>
+
+            <b>
+                ${balance.toLocaleString("fa-IR")}
+                تومان
+            </b>
+
+        </div>
+
+
+        <div class="result-row">
+
+            <span>
+                هزینه انتخاب بار
+            </span>
+
+            <b style="color:#d94841">
+                ${LOAD_SELECTION_FEE.toLocaleString("fa-IR")}
+                تومان
+            </b>
+
+        </div>
+
+
+        <div class="result-row">
+
+            <span>
+                موجودی پس از انتخاب
+            </span>
+
+            <b style="color:#087f5b">
+                ${(balance - LOAD_SELECTION_FEE)
+                    .toLocaleString("fa-IR")}
+                تومان
+            </b>
+
+        </div>
+
+
+        <div class="warning">
+
+            با تأیید، مبلغ
+            <b>
+                ${LOAD_SELECTION_FEE.toLocaleString("fa-IR")}
+            </b>
+            تومان از کیف پول شما کسر می‌شود.
+
+        </div>
+
+
+        <button
+            class="main-btn"
+            onclick="confirmLoadPayment(${id})"
+        >
+            تأیید و انتخاب بار
+        </button>
+
+    `;
+
+}
+
+
+function confirmLoadPayment(id){
+
+    let balance =
+        getWallet();
+
+
+    if(balance < LOAD_SELECTION_FEE){
+
+        showToast(
+            "موجودی کیف پول کافی نیست"
+        );
+
+        return;
+    }
+
+
+    let selected =
+        getSelected();
+
+
+    if(selected.includes(id)){
+
+        hideModal();
+
+        showToast(
+            "این بار قبلاً انتخاب شده است"
+        );
+
+        return;
+    }
+
+
+    let newBalance =
+        balance - LOAD_SELECTION_FEE;
+
+
+    setWallet(newBalance);
+
+
+    selected.push(id);
+
+
+    localStorage.setItem(
+        "salayan_selected",
+        JSON.stringify(selected)
+    );
+
+
+    saveTransaction(
+        "هزینه انتخاب بار شماره " + id,
+        LOAD_SELECTION_FEE,
+        "expense"
+    );
+
+
+    hideModal();
+
+
+    showToast(
+        "بار انتخاب شد و ۱۰٬۰۰۰ تومان کسر شد"
+    );
+
+
+    renderMyLoads();
+
+    renderHome();
+
+}
+
+
+/* =========================
+   CANCEL LOAD / REFUND
+========================= */
+
+function cancelLoad(id){
+
+    let selected =
+        getSelected();
+
+
+    if(!selected.includes(id))
+        return;
+
+
+    let load =
+        getLoads().find(
+            x=>x.id === id
+        );
+
+
+    selected =
+        selected.filter(
+            x=>x !== id
+        );
+
+
+    localStorage.setItem(
+        "salayan_selected",
+        JSON.stringify(selected)
+    );
+
+
+    setWallet(
+        getWallet() + LOAD_SELECTION_FEE
+    );
+
+
+    saveTransaction(
+        "برگشت هزینه بار شماره " + id,
+        LOAD_SELECTION_FEE,
+        "income"
+    );
+
+
+    showToast(
+        "بار لغو شد و ۱۰٬۰۰۰ تومان به کیف پول برگشت"
+    );
+
+
+    renderMyLoads();
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function normalizePhone(phone){
+
+    phone =
+        phone.replace(/\D/g,"");
+
+
+    if(phone.startsWith("98")){
+
+        phone =
+            "0" + phone.substring(2);
+
+    }
+
+
+    return phone;
+
+}
+
+
+function maskPhone(phone){
+
+    if(phone.length < 7)
+        return phone;
+
+
+    return phone.substring(0,4)
+        + "****"
+        + phone.substring(
+            phone.length-3
+        );
+
+}
+
+
+function sendOTP(){
+
+    let phone =
+        normalizePhone(
+            document.getElementById(
+                "phoneInput"
+            ).value
+        );
+
+
+    if(!/^09\d{9}$/.test(phone)){
+
+        showToast(
+            "شماره موبایل صحیح وارد کنید"
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "salayan_phone",
+        phone
+    );
+
+
+    document.getElementById(
+        "phoneStep"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "otpStep"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "otpInfo"
+    ).innerText =
+        "کد ورود به شماره "
+        + maskPhone(phone)
+        + " ارسال شد";
+
+
+    startTimer();
+
+}
+
+
+function verifyOTP(){
+
+    let otp =
+        document.getElementById(
+            "otpInput"
+        ).value.trim();
+
+
+    if(otp !== demoOTP){
+
+        showToast(
+            "کد ورود صحیح نیست"
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "salayan_logged",
+        "1"
+    );
+
+
+    showApp();
+
+}
+
+
+function backToPhone(){
+
+    document.getElementById(
+        "otpStep"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "phoneStep"
+    ).style.display="block";
+
+}
+
+
+function resendOTP(){
+
+    document.getElementById(
+        "otpInput"
+    ).value="";
+
+
+    showToast(
+        "کد آزمایشی: 123456"
+    );
+
+
+    startTimer();
+
+}
+
+
+function startTimer(){
+
+    clearInterval(otpTimer);
+
+    seconds = 120;
+
+
+    otpTimer =
+        setInterval(()=>{
+
+            seconds--;
+
+            if(seconds <= 0){
+
+                clearInterval(
+                    otpTimer
+                );
+
+            }
+
+        },1000);
+
+}
+
+
+/* =========================
+   APP
+========================= */
+
+function showApp(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display="none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "profilePhone"
+    ).innerText =
+        localStorage.getItem(
+            "salayan_phone"
+        ) || "—";
+
+
+    getWallet();
+
+    updateWalletUI();
+
+    renderHome();
+
+}
+
+
+function checkLogin(){
+
+    if(
+        localStorage.getItem(
+            "salayan_logged"
+        ) === "1"
+    ){
+
+        showApp();
+
+    }
+
+}
+
+
+function logout(){
+
+    localStorage.removeItem(
+        "salayan_logged"
+    );
+
+    location.reload();
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+    document.querySelectorAll(".page")
+        .forEach(
+            p=>p.classList.remove("active")
+        );
+
+
+    document.querySelectorAll(".nav-item")
+        .forEach(
+            n=>n.classList.remove("active")
+        );
+
+
+    let pageId =
+        page === "home"
+        ? "homePage"
+        : page + "Page";
+
+
+    let element =
+        document.getElementById(pageId);
+
+
+    if(element)
+        element.classList.add("active");
+
+
+    const navItems =
+        document.querySelectorAll(
+            ".nav-item"
+        );
+
+
+    if(page === "home")
+        navItems[0].classList.add("active");
+
+
+    if(page === "loads")
+        navItems[1].classList.add("active");
+
+
+    if(page === "myLoads")
+        navItems[2].classList.add("active");
+
+
+    if(page === "profile")
+        navItems[3].classList.add("active");
+
+
+    if(page === "home")
+        renderHome();
+
+
+    if(page === "loads")
+        renderLoads();
+
+
+    if(page === "myLoads")
+        renderMyLoads();
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome(){
+
+    updateWalletUI();
+
+
+    let loads =
+        getLoads();
+
+
+    let urgent =
+        loads
+            .filter(x=>x.urgent)
+            .slice(0,3);
+
+
+    document.getElementById(
+        "urgentLoads"
+    ).innerHTML =
+        urgent.map(loadCard).join("");
+
+}
+
+
+/* =========================
+   LOAD HALL
+========================= */
+
+function setFilter(
+    filter,
+    button
+){
+
+    currentFilter =
+        filter;
+
+
+    document.querySelectorAll(
+        ".filter"
+    )
+    .forEach(
+        x=>x.classList.remove("active")
+    );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    renderLoads();
+
+}
+
+
+function renderLoads(){
+
+    let loads =
+        getLoads();
+
+
+    if(currentFilter === "urgent"){
+
+        loads =
+            loads.filter(
+                x=>x.urgent
+            );
+
+    }
+    else if(
+        currentFilter === "کمپرسی" ||
+        currentFilter === "تریلی"
+    ){
+
+        loads =
+            loads.filter(
+                x=>x.truck === currentFilter
+            );
+
+    }
+
+
+    document.getElementById(
+        "allLoads"
+    ).innerHTML =
+
+        loads.length
+
+        ? loads.map(loadCard).join("")
+
+        : `
+
+            <div class="form-card">
+
+                <div style="
+                    text-align:center;
+                    color:#82908b;
+                    font-size:12px
+                ">
+
+                    باری پیدا نشد
+
+                </div>
+
+            </div>
+
+          `;
+
+}
+
+
+function loadCard(load){
+
+    let selected =
+        getSelected().includes(load.id);
+
+
+    return `
+
+    <div class="load-card">
+
+        <div class="load-top">
+
+            <div class="load-number">
+                بار شماره ${load.id}
+            </div>
+
+            ${
+                load.urgent
+                ? `<div class="badge">فوری</div>`
+                : ""
+            }
+
+        </div>
+
+
+        <div class="route">
+
+            ${load.origin}
+
+            <span>←</span>
+
+            ${load.destination}
+
+        </div>
+
+
+        <div class="load-info">
+
+            <div class="info-item">
+                نوع بار
+                <b>${load.cargo}</b>
+            </div>
+
+            <div class="info-item">
+                وزن
+                <b>${load.weight}</b>
+            </div>
+
+            <div class="info-item">
+                خودرو
+                <b>${load.truck}</b>
+            </div>
+
+            <div class="info-item">
+                وضعیت
+                <b>آماده حمل</b>
+            </div>
+
+        </div>
+
+
+        <div class="load-bottom">
+
+            <div class="price">
+                ${formatMoney(load.price)}
+            </div>
+
+
+            ${
+                selected
+
+                ?
+
+                `<button
+                    class="small-btn"
+                    onclick="showLoad(${load.id})"
+                >
+                    انتخاب شده
+                </button>`
+
+                :
+
+                `<button
+                    class="small-btn"
+                    onclick="showLoad(${load.id})"
+                >
+                    جزئیات بار
+                </button>`
+            }
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+function showLoad(id){
+
+    let load =
+        getLoads().find(
+            x=>x.id === id
+        );
+
+
+    if(!load)
+        return;
+
+
+    let selected =
+        getSelected().includes(id);
+
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "جزئیات بار";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>مبدأ</span>
+            <b>${load.origin}</b>
+        </div>
+
+        <div class="result-row">
+            <span>مقصد</span>
+            <b>${load.destination}</b>
+        </div>
+
+        <div class="result-row">
+            <span>نوع بار</span>
+            <b>${load.cargo}</b>
+        </div>
+
+        <div class="result-row">
+            <span>وزن</span>
+            <b>${load.weight}</b>
+        </div>
+
+        <div class="result-row">
+            <span>نوع خودرو</span>
+            <b>${load.truck}</b>
+        </div>
+
+        <div class="result-row">
+            <span>کرایه</span>
+            <b>${formatMoney(load.price)}</b>
+        </div>
+
+
+        ${
+            selected
+
+            ?
+
+            `
+
+            <div class="success">
+                🟢 این بار در «بارهای من» قرار دارد.
+            </div>
+
+            <button
+                class="main-btn"
+                style="
+                    background:#d94841;
+                    margin-top:12px;
+                "
+                onclick="cancelLoad(${load.id})"
+            >
+                ↩️ لغو بار و برگشت ۱۰٬۰۰۰ تومان
+            </button>
+
+            `
+
+            :
+
+            `
+
+            <div class="warning">
+
+                هزینه انتخاب هر بار:
+                <b>
+                    ${LOAD_SELECTION_FEE.toLocaleString("fa-IR")}
+                    تومان
+                </b>
+
+            </div>
+
+            <button
+                class="main-btn"
+                onclick="requestLoad(${load.id})"
+            >
+                💳 درخواست این بار
+            </button>
+
+            `
+        }
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   MY LOADS
+========================= */
+
+function renderMyLoads(){
+
+    let selected =
+        getSelected();
+
+
+    let loads =
+        getLoads()
+            .filter(
+                x=>selected.includes(x.id)
+            );
+
+
+    document.getElementById(
+        "myLoads"
+    ).innerHTML =
+
+        loads.length
+
+        ?
+
+        loads.map(
+            myLoadCard
+        ).join("")
+
+        :
+
+        `
+
+        <div class="form-card">
+
+            <div style="
+                text-align:center;
+                color:#84918d;
+                font-size:12px;
+                padding:25px 5px;
+            ">
+
+                هنوز باری انتخاب نکرده‌اید.
+
+                <br><br>
+
+                از تالار بار، بار موردنظر خود را انتخاب کنید.
+
+            </div>
+
+        </div>
+
+        `;
+
+}
+
+
+function myLoadCard(load){
+
+    return `
+
+    <div class="load-card">
+
+        <div class="load-top">
+
+            <div class="load-number">
+                بار شماره ${load.id}
+            </div>
+
+            <div
+                class="badge"
+                style="
+                    background:#e8f8f1;
+                    color:#087f5b;
+                "
+            >
+                انتخاب شده
+            </div>
+
+        </div>
+
+
+        <div class="route">
+
+            ${load.origin}
+
+            <span>←</span>
+
+            ${load.destination}
+
+        </div>
+
+
+        <div class="load-info">
+
+            <div class="info-item">
+                بار
+                <b>${load.cargo}</b>
+            </div>
+
+            <div class="info-item">
+                وزن
+                <b>${load.weight}</b>
+            </div>
+
+        </div>
+
+
+        <div class="load-bottom">
+
+            <div class="price">
+                ${formatMoney(load.price)}
+            </div>
+
+            <button
+                class="cancel-btn"
+                onclick="cancelLoad(${load.id})"
+            >
+                ↩️ لغو و برگشت وجه
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================
+   ANNOUNCE
+========================= */
+
+function addLoad(){
+
+    let origin =
+        document.getElementById(
+            "origin"
+        ).value.trim();
+
+
+    let destination =
+        document.getElementById(
+            "destination"
+        ).value.trim();
+
+
+    let cargo =
+        document.getElementById(
+            "cargo"
+        ).value.trim();
+
+
+    let weight =
+        document.getElementById(
+            "weight"
+        ).value.trim();
+
+
+    let truck =
+        document.getElementById(
+            "truckType"
+        ).value;
+
+
+    let price =
+        Number(
+            document.getElementById(
+                "price"
+            ).value
+            .replace(/\D/g,"")
+        );
+
+
+    if(
+        !origin ||
+        !destination ||
+        !cargo ||
+        !weight ||
+        !price
+    ){
+
+        showToast(
+            "لطفاً اطلاعات بار را کامل کنید"
+        );
+
+        return;
+    }
+
+
+    let loads =
+        getLoads();
+
+
+    let id =
+        Date.now();
+
+
+    loads.unshift({
+
+        id:id,
+
+        origin:origin,
+
+        destination:destination,
+
+        cargo:cargo,
+
+        weight:weight,
+
+        truck:truck,
+
+        price:price,
+
+        urgent:false
+
+    });
+
+
+    localStorage.setItem(
+        "salayan_loads",
+        JSON.stringify(loads)
+    );
+
+
+    document.getElementById(
+        "origin"
+    ).value="";
+
+
+    document.getElementById(
+        "destination"
+    ).value="";
+
+
+    document.getElementById(
+        "cargo"
+    ).value="";
+
+
+    document.getElementById(
+        "weight"
+    ).value="";
+
+
+    document.getElementById(
+        "price"
+    ).value="";
+
+
+    showToast(
+        "اعلام بار با موفقیت ثبت شد"
+    );
+
+
+    showPage("loads");
+
+}
+
+
+/* =========================
+   RAH DARI
+========================= */
+
+function rahDariCheck(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "استعلام هوشمند راهداری";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>راننده</span>
+            <b>محمد حسین رافعی</b>
+        </div>
+
+        <div class="result-row">
+            <span>کارت هوشمند راننده</span>
+            <b style="color:#087f5b">
+                معتبر
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت راننده</span>
+            <b style="color:#087f5b">
+                فعال
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>خودرو</span>
+            <b>Volvo FH500</b>
+        </div>
+
+        <div class="result-row">
+            <span>پلاک</span>
+            <b>۴۷ ع ۵۱۱ ایران ۵۲</b>
+        </div>
+
+        <div class="result-row">
+            <span>VIN</span>
+            <b>
+                YV2RT40A3MB323330
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت ناوگان</span>
+            <b style="color:#087f5b">
+                فعال
+            </b>
+        </div>
+
+        <div class="success">
+            🟢 تأیید آزمایشی راننده و ناوگان
+        </div>
+
+        <div class="warning">
+            این نتیجه آزمایشی است و به سامانه واقعی
+            راهداری متصل نیست.
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   INSPECTION
+========================= */
+
+function truckInspection(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "🔧 استعلام معاینه فنی کامیون";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>خودرو</span>
+            <b>Volvo FH500</b>
+        </div>
+
+        <div class="result-row">
+            <span>پلاک</span>
+            <b>۴۷ ع ۵۱۱ ایران ۵۲</b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت</span>
+            <b style="color:#087f5b">
+                معتبر
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>تاریخ اعتبار</span>
+            <b>۱۴۰۵/۱۲/۲۹</b>
+        </div>
+
+        <div class="success">
+            🟢 معاینه فنی معتبر است
+        </div>
+
+        <div class="warning">
+            این استعلام فعلاً آزمایشی است.
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   HEALTH
+========================= */
+
+function healthCardCheck(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "🩺 استعلام کارت سلامت راننده";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>راننده</span>
+            <b>محمد حسین رافعی</b>
+        </div>
+
+        <div class="result-row">
+            <span>کارت سلامت</span>
+            <b style="color:#087f5b">
+                معتبر
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت</span>
+            <b style="color:#087f5b">
+                فعال
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>تاریخ اعتبار</span>
+            <b>۱۴۰۵/۱۰/۳۰</b>
+        </div>
+
+        <div class="success">
+            🟢 کارت سلامت معتبر است
+        </div>
+
+        <div class="warning">
+            این نتیجه در نسخه آزمایشی نمایش داده شده است.
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   INSURANCE
+========================= */
+
+function insuranceCheck(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "🛡️ استعلام بیمه بدنه کامیون";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>خودرو</span>
+            <b>Volvo FH500</b>
+        </div>
+
+        <div class="result-row">
+            <span>پلاک</span>
+            <b>۴۷ ع ۵۱۱ ایران ۵۲</b>
+        </div>
+
+        <div class="result-row">
+            <span>نوع بیمه</span>
+            <b>بیمه بدنه</b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت</span>
+            <b style="color:#087f5b">
+                معتبر
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>تاریخ اعتبار</span>
+            <b>۱۴۰۵/۱۱/۲۰</b>
+        </div>
+
+        <div class="success">
+            🟢 بیمه بدنه معتبر است
+        </div>
+
+        <div class="warning">
+            استعلام بیمه در این نسخه آزمایشی است.
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   SMART CARD
+========================= */
+
+function smartCardCheck(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "💳 استعلام کارت هوشمند راننده";
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = `
+
+        <div class="result-row">
+            <span>راننده</span>
+            <b>محمد حسین رافعی</b>
+        </div>
+
+        <div class="result-row">
+            <span>کارت هوشمند</span>
+            <b style="color:#087f5b">
+                معتبر
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>وضعیت راننده</span>
+            <b style="color:#087f5b">
+                فعال
+            </b>
+        </div>
+
+        <div class="result-row">
+            <span>ناوگان</span>
+            <b style="color:#087f5b">
+                فعال
+            </b>
+        </div>
+
+        <div class="success">
+            🟢 کارت هوشمند معتبر است
+        </div>
+
+        <div class="warning">
+            این استعلام فعلاً آزمایشی است.
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function openModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.add("show");
+
+}
+
+
+function hideModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("show");
+
+}
+
+
+function closeModal(event){
+
+    if(event.target.id === "modal")
+        hideModal();
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+    let toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove(
+            "show"
+        );
+
+    },2500);
+
+}
+
+
+/* =========================
+   MONEY
+========================= */
+
+function formatMoney(number){
+
+    return Number(number)
+        .toLocaleString("fa-IR")
+        + " تومان";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+getLoads();
+
+getWallet();
+
+checkLogin();
+
+</script>
+
+</body>
+</html>
