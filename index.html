@@ -400,6 +400,9 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
   padding:4px 9px;font-size:10px;font-weight:700;margin-bottom:8px;
 }
 
+
+/* ===== Load board smart features ===== */
+.load-tools{background:#f8fbfa;border:1px solid #dfeae6;border-radius:15px;padding:12px;margin-bottom:12px}.load-tools-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;font-weight:bold;font-size:14px}.load-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.load-tools-grid input,.load-tools-grid select{margin:0;padding:10px;font-size:13px}.load-chip-row{display:flex;gap:7px;overflow:auto;padding:3px 0 2px;margin-top:8px}.load-chip{white-space:nowrap;border:1px solid #d7e5df;background:#fff;color:#456057;border-radius:999px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.load-chip.active{background:#087f5b;color:#fff;border-color:#087f5b}.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.feature-box{background:#fff;border:1px solid #dfeae6;border-radius:14px;padding:11px;text-align:center}.feature-box b{display:block;font-size:13px;color:#294139}.feature-box small{display:block;color:#7a8882;font-size:10px;margin-top:4px;line-height:1.6}.load-extra{font-size:12px;color:#687770;line-height:1.9;margin-top:8px}.load-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.ear-btn{background:#fff8e6!important;color:#946200!important;border:1px solid #f2d28a!important}@media(max-width:480px){.load-tools-grid{grid-template-columns:1fr}.feature-strip{grid-template-columns:1fr 1fr 1fr}}
 </style>
 </head>
 
@@ -638,17 +641,16 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
     <div id="loadsPage" class="hidden">
 
         <div class="card">
-            <h2>تالار بار</h2>
-
-            <button class="btn secondary"
-                    onclick="showPage('homePage');">
-                ← بازگشت
-            </button>
+            <div class="page-toolbar"><h2>تالار هوشمند بار</h2><button class="icon-home" onclick="showPage('homePage')">⌂</button></div>
+            <div class="feature-strip"><div class="feature-box">📍<b>نزدیک من</b><small>بارهای متناسب با موقعیت</small></div><div class="feature-box">↩️<b>بار برگشت</b><small>برای مسیر برگشت</small></div><div class="feature-box">🔔<b>گوش‌به‌زنگ</b><small>اعلان بارهای جدید</small></div></div>
         </div>
-
-        <div id="loadsList" class="loading">
-            در حال دریافت بارها...
+        <div class="card load-tools">
+            <div class="load-tools-title"><span>🔎 جستجو و فیلتر بار</span><span id="loadCount" style="font-size:11px;color:#7b8983">- بار</span></div>
+            <div class="load-tools-grid"><input id="loadSearch" placeholder="مبدأ، مقصد یا کالا"><select id="loadTypeFilter"><option value="">همه نوع بار</option><option value="turn">نوبتی</option><option value="free">آزاد</option><option value="reserved">رزرو شده</option></select><input id="returnRoute" placeholder="مسیر برگشت موردنظر"><select id="timeFilter"><option value="">همه زمان‌ها</option><option value="today">امروز</option><option value="future7">۷ روز آینده</option></select></div>
+            <div class="load-chip-row"><button class="load-chip active" data-load-chip="all">همه بارها</button><button class="load-chip" data-load-chip="turn">نوبتی</button><button class="load-chip" data-load-chip="free">آزاد</button><button class="load-chip" data-load-chip="return">بار برگشت</button><button class="load-chip" data-load-chip="near">نزدیک من ≤۲۰۰ km</button><button class="load-chip ear-btn" id="earToggle">🔔 گوش‌به‌زنگ: خاموش</button></div>
+            <div class="load-extra">نوبتی فقط برای راننده واجد شرایط و محدوده مجاز نمایش داده می‌شود؛ فیلتر فاصله زمانی فعال می‌شود که فاصله بار در رکورد بار ثبت شده باشد.</div>
         </div>
+        <div id="loadsList" class="loading">در حال دریافت بارها...</div>
 
     </div>
 
@@ -2047,6 +2049,27 @@ document
     }
 );
 
+
+/* ===== SMART LOAD BOARD V3 ===== */
+let salayanLoadsCache=[];let salayanLoadMode="all";
+function salayanLoadStatusText(s){return s==="turn"?"نوبتی":s==="free"?"آزاد":s==="reserved"?"رزرو شده":"در انتظار";}
+function salayanLoadBadgeClass(s){return ["turn","free","reserved","waiting"].includes(s)?s:"waiting";}
+function salayanNormalize(v){return String(v??"").trim().toLowerCase();}
+function salayanDate(load){const v=load.loading_time||load.load_time||load.pickup_time||load.created_at;const d=v?new Date(v):null;return d&&!isNaN(d)?d:null;}
+function salayanMatchesTime(load,mode){if(!mode)return true;const d=salayanDate(load);if(!d)return mode==="future7";const now=new Date(),end=new Date(now);if(mode==="today")return d.toDateString()===now.toDateString();if(mode==="future7"){end.setDate(end.getDate()+7);return d>=now&&d<=end;}return true;}
+function salayanIsReturn(load,route){if(!route)return false;const r=salayanNormalize(route),o=salayanNormalize(load.origin),d=salayanNormalize(load.destination);return o.includes(r)||d.includes(r)||r.includes(o)||r.includes(d);}
+function salayanDistance(load){const n=Number(load.distance_km??load.distance??load.distanceKm);return Number.isFinite(n)?n:null;}
+function salayanApplyFilters(){const list=document.getElementById("loadsList");if(!list)return;const search=salayanNormalize(document.getElementById("loadSearch")?.value),type=document.getElementById("loadTypeFilter")?.value||"",time=document.getElementById("timeFilter")?.value||"",ret=(document.getElementById("returnRoute")?.value||localStorage.getItem("salayan_return_route")||"").trim();let rows=salayanLoadsCache.filter(load=>{const txt=salayanNormalize([load.origin,load.destination,load.cargo,load.truck_type,load.body_type].join(" "));if(search&&!txt.includes(search))return false;if(type&&load.status!==type)return false;if(!salayanMatchesTime(load,time))return false;if(salayanLoadMode==="turn"&&load.status!=="turn")return false;if(salayanLoadMode==="free"&&load.status!=="free")return false;if(salayanLoadMode==="return"&&!salayanIsReturn(load,ret))return false;if(salayanLoadMode==="near"){const d=salayanDistance(load);if(d===null||d>200)return false;}return true;});rows.sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));const count=document.getElementById("loadCount");if(count)count.textContent=rows.length.toLocaleString("fa-IR")+" بار";list.innerHTML=rows.length?rows.map(salayanRenderLoad).join(""):'<div class="card"><div class="notice">با فیلترهای فعلی باری پیدا نشد.</div><button class="btn secondary" onclick="salayanResetFilters()">حذف فیلترها</button></div>';}
+function salayanRenderLoad(load){const s=load.status||"waiting",fare=load.fare??load.price??load.amount,loading=load.loading_time||load.load_time||load.pickup_time,distance=salayanDistance(load),contact=load.contact_phone||load.phone||load.owner_phone,truck=load.truck_type||load.vehicle_type||load.vehicle,body=load.body_type||load.trailer_type||load.body,d=salayanDate(load),timeText=loading?String(loading).replace("T"," ").slice(0,16):(d?d.toLocaleDateString("fa-IR"):"");return '<div class="load-item"><span class="badge '+salayanLoadBadgeClass(s)+'">'+salayanLoadStatusText(s)+'</span><h3>'+escapeHtml(load.origin||"-")+' ← '+escapeHtml(load.destination||"-")+'</h3><div class="row"><span>کالا</span><strong>'+escapeHtml(load.cargo||"-")+'</strong></div><div class="row"><span>وزن</span><strong>'+escapeHtml(String(load.weight??"-"))+' تن</strong></div>'+(fare!=null?'<div class="row"><span>کرایه</span><strong class="money" style="font-size:16px">'+formatMoney(fare)+' تومان</strong></div>':"")+(truck||body?'<div class="row"><span>ناوگان</span><strong>'+escapeHtml([truck,body].filter(Boolean).join(" / "))+'</strong></div>':"")+(timeText?'<div class="row"><span>زمان بارگیری</span><strong>'+escapeHtml(timeText)+'</strong></div>':"")+(distance!==null?'<div class="row"><span>فاصله</span><strong>'+formatMoney(distance)+' کیلومتر</strong></div>':"")+(load.note?'<div class="load-extra">📝 '+escapeHtml(load.note)+'</div>':"")+'<div class="load-actions">'+(s!=="reserved"?'<button class="btn" onclick="selectLoad(\''+load.id+'\')">انتخاب بار — ۱۰٬۰۰۰ تومان</button>':'<div class="notice">این بار رزرو شده است.</div>')+(contact?'<a class="btn secondary" href="tel:'+escapeHtml(contact)+'" style="text-align:center;text-decoration:none">📞 تماس مستقیم</a>':'<button class="btn secondary" onclick="salayanSaveReturnRoute(\''+escapeHtml(load.destination||"")+'\')">↩️ ذخیره مسیر برگشت</button>')+'</div></div>';}
+async function salayanSmartShowLoads(){const list=document.getElementById("loadsList");if(list)list.innerHTML='<div class="loading">در حال دریافت بارها...</div>';try{const {data,error}=await supabaseClient.from("loads").select("*").in("status",["waiting","turn","free","reserved"]).order("created_at",{ascending:false});if(error)throw error;salayanLoadsCache=data||[];salayanApplyFilters();salayanNotifyNewLoads();}catch(error){console.error(error);if(list)list.innerHTML='<div class="error">خطا در دریافت بارها: '+escapeHtml(error.message)+'</div>';}}
+showLoads=salayanSmartShowLoads;
+function salayanResetFilters(){["loadSearch","returnRoute"].forEach(id=>{const e=document.getElementById(id);if(e)e.value="";});const t=document.getElementById("loadTypeFilter"),tm=document.getElementById("timeFilter");if(t)t.value="";if(tm)tm.value="";salayanLoadMode="all";document.querySelectorAll("[data-load-chip]").forEach(x=>x.classList.toggle("active",x.dataset.loadChip==="all"));salayanApplyFilters();}
+function salayanSaveReturnRoute(route){if(!route)return alert("مقصد بار برای ذخیره مسیر برگشت مشخص نیست.");localStorage.setItem("salayan_return_route",route);const e=document.getElementById("returnRoute");if(e)e.value=route;salayanLoadMode="return";salayanApplyFilters();alert("مسیر برگشت ذخیره شد: "+route);}
+function salayanToggleEar(){const on=localStorage.getItem("salayan_ear")==="1";if(!on&&"Notification"in window&&Notification.permission==="default")Notification.requestPermission();localStorage.setItem("salayan_ear",on?"0":"1");salayanUpdateEar();}
+function salayanUpdateEar(){const on=localStorage.getItem("salayan_ear")==="1",b=document.getElementById("earToggle");if(b)b.textContent="🔔 گوش‌به‌زنگ: "+(on?"روشن":"خاموش");}
+function salayanNotifyNewLoads(){if(localStorage.getItem("salayan_ear")!=="1"||!salayanLoadsCache.length)return;const latest=salayanLoadsCache[0],key=String(latest.id||latest.created_at||""),old=localStorage.getItem("salayan_last_load_key");localStorage.setItem("salayan_last_load_key",key);if(old&&old!==key&&"Notification"in window&&Notification.permission==="granted")new Notification("صلایان بار",{body:"بار جدید: "+(latest.origin||"-")+" ← "+(latest.destination||"-")});}
+function salayanInitLoadTools(){["loadSearch","loadTypeFilter","returnRoute","timeFilter"].forEach(id=>{const e=document.getElementById(id);if(e)e.addEventListener("input",()=>{if(id==="returnRoute")localStorage.setItem("salayan_return_route",e.value);salayanLoadMode="all";salayanApplyFilters();});});document.querySelectorAll("[data-load-chip]").forEach(b=>b.addEventListener("click",()=>{salayanLoadMode=b.dataset.loadChip;document.querySelectorAll("[data-load-chip]").forEach(x=>x.classList.toggle("active",x===b));salayanApplyFilters();}));const ear=document.getElementById("earToggle");if(ear)ear.addEventListener("click",salayanToggleEar);const saved=localStorage.getItem("salayan_return_route"),re=document.getElementById("returnRoute");if(re&&saved)re.value=saved;salayanUpdateEar();}
+document.addEventListener("DOMContentLoaded",salayanInitLoadTools);
 
 /* =====================================================
    START
