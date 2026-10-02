@@ -1,1278 +1,185 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>پنل مدیریت صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
-  box-sizing:border-box;
-  font-family:Tahoma,Arial,sans-serif;
+    box-sizing:border-box;
+    font-family:Tahoma,Arial,sans-serif;
 }
 
 body{
-  margin:0;
-  background:#f3f6f4;
-  color:#222;
+    margin:0;
+    background:#f3f6f4;
+    color:#222;
 }
 
 header{
-  background:#087f23;
-  color:white;
-  padding:18px;
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
+    background:#087f23;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    font-size:21px;
+    font-weight:bold;
 }
 
 .container{
-  max-width:1200px;
-  margin:auto;
-  padding:18px;
+    max-width:1250px;
+    margin:auto;
+    padding:18px;
 }
 
 .login-box{
-  max-width:420px;
-  margin:80px auto;
-  background:white;
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 5px 25px #0002;
+    max-width:420px;
+    margin:70px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 25px rgba(0,0,0,.12);
 }
 
 .login-box h2{
-  text-align:center;
-  color:#087f23;
+    text-align:center;
+    color:#087f23;
+    margin-top:0;
 }
 
-input,select,button{
-  width:100%;
-  padding:13px;
-  margin:7px 0;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:15px;
+input,select{
+    width:100%;
+    padding:13px;
+    margin:7px 0;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
 }
 
 button{
-  border:0;
-  background:#087f23;
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border:0;
+    border-radius:10px;
+    background:#087f23;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-  opacity:.9;
-}
-
-.logout{
-  background:#c62828;
-  max-width:150px;
+    opacity:.9;
 }
 
 .hidden{
-  display:none!important;
+    display:none !important;
 }
 
 .message{
-  padding:12px;
-  border-radius:10px;
-  margin-top:10px;
-  background:#fff3cd;
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#fff3cd;
+    color:#664d03;
+}
+
+.error{
+    background:#f8d7da;
+    color:#842029;
+}
+
+.success{
+    background:#d1e7dd;
+    color:#0f5132;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.logout{
+    width:auto;
+    padding:9px 20px;
+    background:#c62828;
 }
 
 .dashboard{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-  margin-bottom:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
 }
 
 .card{
-  background:white;
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  box-shadow:0 3px 12px #0001;
+    background:#fff;
+    padding:20px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
-.card .number{
-  font-size:28px;
-  color:#087f23;
-  font-weight:bold;
-  margin-top:10px;
+.card-icon{
+    font-size:28px;
+}
+
+.card-title{
+    margin-top:8px;
+}
+
+.number{
+    font-size:28px;
+    font-weight:bold;
+    color:#087f23;
+    margin-top:8px;
 }
 
 .menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:10px;
+    margin-bottom:20px;
 }
 
 .menu button{
-  background:white;
-  color:#087f23;
-  border:2px solid #087f23;
+    background:#fff;
+    color:#087f23;
+    border:2px solid #087f23;
 }
 
 .section{
-  background:white;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 3px 12px #0001;
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
 .section h2{
-  color:#087f23;
-  margin-top:0;
+    margin-top:0;
+    color:#087f23;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
-}
-
-th,td{
-  padding:10px;
-  border-bottom:1px solid #ddd;
-  text-align:center;
-  white-space:nowrap;
-}
-
-th{
-  background:#087f23;
-  color:white;
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:8px;
 }
 
 .table-wrap{
-  overflow-x:auto;
+    overflow-x:auto;
 }
 
-.small-btn{
-  width:auto;
-  padding:7px 12px;
-  margin:2px;
-}
-
-.danger{
-  background:#c62828;
-}
-
-.orange{
-  background:#ef6c00;
-}
-
-.green{
-  background:#087f23;
-}
-
-.status-select{
-  width:auto;
-  margin:0;
-  padding:7px;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  🚛 صلایان بار نیمبلوک
-  <br>
-  <small>پنل مدیریت</small>
-</header>
-
-<!-- LOGIN -->
-<div id="loginPage" class="login-box">
-
-  <h2>ورود مدیر</h2>
-
-  <input
-    id="email"
-    type="email"
-    placeholder="ایمیل مدیر"
-  >
-
-  <input
-    id="password"
-    type="password"
-    placeholder="رمز عبور"
-  >
-
-  <button onclick="login()">
-    ورود به پنل مدیریت
-  </button>
-
-  <div id="loginMessage"></div>
-
-</div>
-
-
-<!-- ADMIN PANEL -->
-<div id="adminPanel" class="container hidden">
-
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px;">
-    <strong>مدیریت سامانه</strong>
-    <button class="logout" onclick="logout()">خروج</button>
-  </div>
-
-
-  <!-- DASHBOARD -->
-  <div class="dashboard">
-
-    <div class="card">
-      👥
-      <div>کاربران</div>
-      <div id="usersCount" class="number">0</div>
-    </div>
-
-    <div class="card">
-      🚛
-      <div>رانندگان</div>
-      <div id="driversCount" class="number">0</div>
-    </div>
-
-    <div class="card">
-      📦
-      <div>کل بارها</div>
-      <div id="loadsCount" class="number">0</div>
-    </div>
-
-    <div class="card">
-      🟢
-      <div>بارهای فعال</div>
-      <div id="activeLoadsCount" class="number">0</div>
-    </div>
-
-  </div>
-
-
-  <!-- MENU -->
-  <div class="menu">
-
-    <button onclick="showSection('loadsSection')">
-      📦 مدیریت بارها
-    </button>
-
-    <button onclick="showSection('driversSection')">
-      🚛 رانندگان
-    </button>
-
-    <button onclick="showSection('walletSection')">
-      💰 کیف پول
-    </button>
-
-    <button onclick="loadDashboard()">
-      🔄 بروزرسانی
-    </button>
-
-  </div>
-
-
-  <!-- LOADS -->
-  <div id="loadsSection" class="section">
-
-    <h2>📦 مدیریت بارها</h2>
-
-    <button onclick="newLoad()">
-      ➕ ثبت بار جدید
-    </button>
-
-    <div id="loadForm" class="hidden">
-
-      <input id="origin" placeholder="مبدأ">
-
-      <input id="destination" placeholder="مقصد">
-
-      <input id="cargo" placeholder="نوع بار">
-
-      <input id="weight" type="number" placeholder="وزن">
-
-      <input id="truckType" placeholder="نوع کامیون">
-
-      <select id="loadStatus">
-        <option value="waiting">در انتظار</option>
-        <option value="turn">نوبتی</option>
-        <option value="free">آزاد</option>
-        <option value="reserved">رزرو شده</option>
-        <option value="completed">تکمیل شده</option>
-      </select>
-
-      <select id="urgent">
-        <option value="false">عادی</option>
-        <option value="true">فوری</option>
-      </select>
-
-      <button onclick="saveLoad()">ذخیره بار</button>
-
-      <button
-        class="danger"
-        onclick="closeLoadForm()">
-        انصراف
-      </button>
-
-    </div>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>مبدأ</th>
-            <th>مقصد</th>
-            <th>بار</th>
-            <th>وزن</th>
-            <th>نوع کامیون</th>
-            <th>وضعیت</th>
-            <th>فوری</th>
-            <th>عملیات</th>
-          </tr>
-        </thead>
-
-        <tbody id="loadsTable"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- DRIVERS -->
-  <div id="driversSection" class="section hidden">
-
-    <h2>🚛 مدیریت رانندگان</h2>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>شماره</th>
-            <th>شماره موبایل</th>
-            <th>نقش</th>
-            <th>تاریخ ثبت</th>
-          </tr>
-        </thead>
-
-        <tbody id="driversTable"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- WALLET -->
-  <div id="walletSection" class="section hidden">
-
-    <h2>💰 کیف پول رانندگان</h2>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>موبایل</th>
-            <th>موجودی</th>
-            <th>عملیات</th>
-          </tr>
-        </thead>
-
-        <tbody id="walletTable"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-const SUPABASE_URL =
-"https://ntirixjflgqihobpnmya.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
-
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* =========================
-   LOGIN
-========================= */
-
-async function login(){
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  const msg =
-    document.getElementById("loginMessage");
-
-  msg.innerHTML="";
-
-  if(!email || !password){
-
-    msg.innerHTML =
-      '<div class="message">ایمیل و رمز عبور را وارد کنید.</div>';
-
-    return;
-  }
-
-  const {data,error} =
-    await db.auth.signInWithPassword({
-      email:email,
-      password:password
-    });
-
-  if(error){
-
-    msg.innerHTML =
-      '<div class="message">ورود ناموفق: ' +
-      error.message +
-      '</div>';
-
-    return;
-  }
-
-  await checkAdmin();
-
-}
-
-
-/* =========================
-   ADMIN CHECK
-========================= */
-
-async function checkAdmin(){
-
-  const {
-    data:{
-      user
-    }
-  } = await db.auth.getUser();
-
-  if(!user){
-
-    showLogin();
-
-    return;
-  }
-
-
-  const {
-    data:profile,
-    error
-  } =
-    await db
-      .from("profiles")
-      .select("role,phone")
-      .eq("id",user.id)
-      .maybeSingle();
-
-
-  if(error){
-
-    document.getElementById("loginMessage").innerHTML =
-      '<div class="message">خطا در بررسی مدیر: ' +
-      error.message +
-      '</div>';
-
-    return;
-  }
-
-
-  if(!profile || profile.role !== "admin"){
-
-    await db.auth.signOut();
-
-    document.getElementById("loginMessage").innerHTML =
-      '<div class="message">این حساب دسترسی مدیریت ندارد.</div>';
-
-    showLogin();
-
-    return;
-  }
-
-
-  document.getElementById("loginPage")
-    .classList.add("hidden");
-
-  document.getElementById("adminPanel")
-    .classList.remove("hidden");
-
-
-  await loadDashboard();
-
-}
-
-
-/* =========================
-   LOGIN SCREEN
-========================= */
-
-function showLogin(){
-
-  document.getElementById("loginPage")
-    .classList.remove("hidden");
-
-  document.getElementById("adminPanel")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-async function logout(){
-
-  await db.auth.signOut();
-
-  showLogin();
-
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-async function loadDashboard(){
-
-  const users =
-    await db
-      .from("profiles")
-      .select("*",{count:"exact",head:true});
-
-  const drivers =
-    await db
-      .from("profiles")
-      .select("*",{count:"exact",head:true})
-      .eq("role","driver");
-
-  const loads =
-    await db
-      .from("loads")
-      .select("*",{count:"exact",head:true});
-
-  const active =
-    await db
-      .from("loads")
-      .select("*",{count:"exact",head:true})
-      .in("status",[
-        "waiting",
-        "turn",
-        "free"
-      ]);
-
-
-  document.getElementById("usersCount").innerText =
-    users.count || 0;
-
-  document.getElementById("driversCount").innerText =
-    drivers.count || 0;
-
-  document.getElementById("loadsCount").innerText =
-    loads.count || 0;
-
-  document.getElementById("activeLoadsCount").innerText =
-    active.count || 0;
-
-
-  await showLoads();
-
-}
-
-
-/* =========================
-   SECTION
-========================= */
-
-function showSection(id){
-
-  document
-    .querySelectorAll(".section")
-    .forEach(x =>
-      x.classList.add("hidden")
-    );
-
-  document
-    .getElementById(id)
-    .classList.remove("hidden");
-
-
-  if(id==="loadsSection")
-    showLoads();
-
-  if(id==="driversSection")
-    showDrivers();
-
-  if(id==="walletSection")
-    showWallet();
-
-}
-
-
-/* =========================
-   LOAD FORM
-========================= */
-
-function newLoad(){
-
-  document
-    .getElementById("loadForm")
-    .classList.remove("hidden");
-
-  document.getElementById("origin").value="";
-  document.getElementById("destination").value="";
-  document.getElementById("cargo").value="";
-  document.getElementById("weight").value="";
-  document.getElementById("truckType").value="";
-  document.getElementById("loadStatus").value="waiting";
-  document.getElementById("urgent").value="false";
-
-}
-
-
-function closeLoadForm(){
-
-  document
-    .getElementById("loadForm")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================
-   SAVE LOAD
-========================= */
-
-async function saveLoad(){
-
-  const {
-    data:{
-      user
-    }
-  } = await db.auth.getUser();
-
-  if(!user){
-
-    alert("نشست مدیر منقضی شده است.");
-
-    return;
-  }
-
-
-  const row={
-
-    origin:
-      document.getElementById("origin").value.trim(),
-
-    destination:
-      document.getElementById("destination").value.trim(),
-
-    cargo:
-      document.getElementById("cargo").value.trim(),
-
-    weight:
-      Number(document.getElementById("weight").value || 0),
-
-    truck_type:
-      document.getElementById("truckType").value.trim(),
-
-    status:
-      document.getElementById("loadStatus").value,
-
-    urgent:
-      document.getElementById("urgent").value==="true",
-
-    created_by:user.id
-
-  };
-
-
-  if(!row.origin ||
-     !row.destination ||
-     !row.cargo){
-
-    alert("مبدأ، مقصد و نوع بار را وارد کنید.");
-
-    return;
-  }
-
-
-  const {
-    error
-  } =
-    await db
-      .from("loads")
-      .insert(row);
-
-
-  if(error){
-
-    alert(
-      "خطا در ثبت بار:\n"+
-      error.message
-    );
-
-    return;
-  }
-
-
-  alert("بار با موفقیت ثبت شد.");
-
-  closeLoadForm();
-
-  await loadDashboard();
-
-}
-
-
-/* =========================
-   SHOW LOADS
-========================= */
-
-async function showLoads(){
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("loads")
-      .select(`
-        id,
-        origin,
-        destination,
-        cargo,
-        weight,
-        truck_type,
-        status,
-        urgent,
-        created_at
-      `)
-      .order("created_at",{ascending:false});
-
-
-  const tbody =
-    document.getElementById("loadsTable");
-
-
-  if(error){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="9">
-          خطا: ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  if(!data || data.length===0){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="9">
-          هنوز باری ثبت نشده است.
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  tbody.innerHTML =
-    data.map((load,i)=>{
-
-      return `
-      <tr>
-
-        <td>${i+1}</td>
-
-        <td>${escapeHtml(load.origin || "-")}</td>
-
-        <td>${escapeHtml(load.destination || "-")}</td>
-
-        <td>${escapeHtml(load.cargo || "-")}</td>
-
-        <td>${load.weight || 0}</td>
-
-        <td>${escapeHtml(load.truck_type || "-")}</td>
-
-        <td>
-
-          <select
-            class="status-select"
-            onchange="changeStatus('${load.id}',this.value)"
-          >
-
-            <option value="waiting"
-              ${load.status==="waiting"?"selected":""}>
-              در انتظار
-            </option>
-
-            <option value="turn"
-              ${load.status==="turn"?"selected":""}>
-              نوبتی
-            </option>
-
-            <option value="free"
-              ${load.status==="free"?"selected":""}>
-              آزاد
-            </option>
-
-            <option value="reserved"
-              ${load.status==="reserved"?"selected":""}>
-              رزرو شده
-            </option>
-
-            <option value="completed"
-              ${load.status==="completed"?"selected":""}>
-              تکمیل شده
-            </option>
-
-          </select>
-
-        </td>
-
-        <td>
-          ${load.urgent ? "🔴 فوری" : "عادی"}
-        </td>
-
-        <td>
-
-          <button
-            class="small-btn danger"
-            onclick="deleteLoad('${load.id}')">
-            حذف
-          </button>
-
-        </td>
-
-      </tr>
-      `;
-
-    }).join("");
-
-}
-
-
-/* =========================
-   CHANGE STATUS
-========================= */
-
-async function changeStatus(id,status){
-
-  const {
-    error
-  } =
-    await db
-      .from("loads")
-      .update({status:status})
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(
-      "خطا در تغییر وضعیت:\n"+
-      error.message
-    );
-
-    await showLoads();
-
-    return;
-  }
-
-  await loadDashboard();
-
-}
-
-
-/* =========================
-   DELETE LOAD
-========================= */
-
-async function deleteLoad(id){
-
-  if(!confirm("این بار حذف شود؟"))
-    return;
-
-
-  const {
-    error
-  } =
-    await db
-      .from("loads")
-      .delete()
-      .eq("id",id);
-
-
-  if(error){
-
-    alert(
-      "خطا در حذف:\n"+
-      error.message
-    );
-
-    return;
-  }
-
-
-  await loadDashboard();
-
-}
-
-
-/* =========================
-   DRIVERS
-========================= */
-
-async function showDrivers(){
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("profiles")
-      .select("id,phone,role,created_at")
-      .eq("role","driver")
-      .order("created_at",{ascending:false});
-
-
-  const tbody =
-    document.getElementById("driversTable");
-
-
-  if(error){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="4">
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  if(!data || data.length===0){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="4">
-          راننده‌ای ثبت نشده است.
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  tbody.innerHTML =
-    data.map(driver=>`
-
-      <tr>
-
-        <td>
-          ${driver.id.substring(0,8)}
-        </td>
-
-        <td>
-          ${escapeHtml(driver.phone || "ثبت نشده")}
-        </td>
-
-        <td>
-          ${driver.role}
-        </td>
-
-        <td>
-          ${formatDate(driver.created_at)}
-        </td>
-
-      </tr>
-
-    `).join("");
-
-}
-
-
-/* =========================
-   WALLET
-========================= */
-
-async function showWallet(){
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("profiles")
-      .select(`
-        id,
-        phone,
-        role,
-        wallets (
-          balance
-        )
-      `)
-      .eq("role","driver")
-      .order("created_at",{ascending:false});
-
-
-  const tbody =
-    document.getElementById("walletTable");
-
-
-  if(error){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="3">
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  if(!data || data.length===0){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="3">
-          راننده‌ای وجود ندارد.
-        </td>
-      </tr>`;
-
-    return;
-  }
-
-
-  tbody.innerHTML =
-    data.map(driver=>{
-
-      const wallet =
-        Array.isArray(driver.wallets)
-        ? driver.wallets[0]
-        : driver.wallets;
-
-      const balance =
-        wallet?.balance || 0;
-
-
-      return `
-
-      <tr>
-
-        <td>
-          ${escapeHtml(driver.phone || "ثبت نشده")}
-        </td>
-
-        <td>
-          ${Number(balance).toLocaleString("fa-IR")}
-          تومان
-        </td>
-
-        <td>
-
-          <button
-            class="small-btn"
-            onclick="adjustWallet('${driver.id}',1)">
-            ➕ شارژ
-          </button>
-
-          <button
-            class="small-btn orange"
-            onclick="adjustWallet('${driver.id}',-1)">
-            ➖ کسر
-          </button>
-
-        </td>
-
-      </tr>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =========================
-   WALLET ADJUST
-========================= */
-
-async function adjustWallet(userId,direction){
-
-  const amount =
-    prompt(
-      direction===1
-      ? "مبلغ شارژ به تومان:"
-      : "مبلغ کسر به تومان:"
-    );
-
-
-  if(amount===null)
-    return;
-
-
-  const value =
-    Number(amount);
-
-
-  if(!Number.isFinite(value) ||
-     value<=0){
-
-    alert("مبلغ نامعتبر است.");
-
-    return;
-  }
-
-
-  const finalAmount =
-    direction * Math.round(value);
-
-
-  const {
-    data,
-    error
-  } =
-    await db.rpc(
-      "admin_adjust_wallet",
-      {
-        p_user_id:userId,
-        p_amount:finalAmount,
-        p_description:
-          direction===1
-          ? "شارژ توسط مدیر"
-          : "کسر توسط مدیر"
-      }
-    );
-
-
-  if(error){
-
-    alert(
-      "خطا:\n"+
-      error.message
-    );
-
-    return;
-  }
-
-
-  if(data && data.success===false){
-
-    alert(
-      data.message ||
-      "عملیات انجام نشد."
-    );
-
-    return;
-  }
-
-
-  alert("عملیات کیف پول انجام شد.");
-
-  await showWallet();
-
-}
-
-
-/* =========================
-   HELPERS
-========================= */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-function formatDate(date){
-
-  if(!date)
-    return "-";
-
-  return new Date(date)
-    .toLocaleString("fa-IR");
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-(async function(){
-
-  /*
-    مهم:
-    ورود مدیر کاملاً مستقل است.
-    هیچ anonymous login استفاده نمی‌شود.
-  */
-
-  const {
-    data:{
-      session
-    }
-  } =
-    await db.auth.getSession();
-
-
-  if(session){
-
-    await checkAdmin();
-
-  }else{
-
-    showLogin();
-
-  }
-
-})();
-
-</script>
-
-</body>
-</html>
+table{
+    width:100%;
+    border-collapse:collapse;
+    margi
+```
