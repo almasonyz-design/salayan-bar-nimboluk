@@ -1485,16 +1485,7 @@ button{
         >
       </div>
 
-      <div class="form-group full">
-        <label>توضیحات</label>
-        <textarea
-          id="loadDescription"
-          class="form-control"
-          rows="4"
-        ></textarea>
       </div>
-
-    </div>
 
 
     <div class="modal-footer">
@@ -2068,7 +2059,6 @@ function renderLoads(){
             item.origin,
             item.destination,
             item.cargo,
-            item.description,
             item.status
           ]
           .join(" ")
@@ -3271,7 +3261,6 @@ function renderTransactions(){
         const text =
           [
             item.user_id,
-            item.description,
             item.type,
             item.amount
           ]
