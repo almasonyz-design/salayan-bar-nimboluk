@@ -1,300 +1,208 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<title>پنل مدیریت صلایان بار</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پنل مدیریت صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
-margin:0;
-font-family:Tahoma,Arial;
-background:#f3f6f8;
-color:#222;
+ margin:0;
+ font-family:Tahoma,Arial;
+ background:#f3f6f8;
+ color:#222
 }
-
 header{
-background:#087f3d;
-color:white;
-padding:18px;
-text-align:center;
+ background:#087f3d;
+ color:#fff;
+ padding:18px;
+ text-align:center
 }
-
-header h1{
-margin:0;
-font-size:22px;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:15px;
-}
-
+header h1{margin:0;font-size:22px}
+.container{max-width:1250px;margin:auto;padding:15px}
 .card{
-background:white;
-border-radius:14px;
-padding:18px;
-margin-bottom:15px;
-box-shadow:0 2px 10px rgba(0,0,0,.07);
+ background:#fff;
+ border-radius:14px;
+ padding:18px;
+ margin-bottom:15px;
+ box-shadow:0 2px 10px #00000012
 }
-
-.login{
-max-width:430px;
-margin:50px auto;
+.login{max-width:430px;margin:45px auto}
+input,select,textarea,button{
+ width:100%;
+ padding:12px;
+ margin:7px 0;
+ border-radius:9px;
+ border:1px solid #ddd;
+ font-family:inherit
 }
-
-input,
-select,
-textarea,
 button{
-width:100%;
-padding:12px;
-margin:7px 0;
-border-radius:9px;
-border:1px solid #ddd;
-font-family:inherit;
+ background:#087f3d;
+ color:#fff;
+ border:0;
+ cursor:pointer;
+ font-weight:bold
 }
-
-button{
-background:#087f3d;
-color:white;
-border:0;
-cursor:pointer;
-font-weight:bold;
-}
-
-button.gray{
-background:#666;
-}
-
-button.red{
-background:#c62828;
-}
-
-button.orange{
-background:#e68a00;
-}
-
-.hidden{
-display:none!important;
-}
-
+button.gray{background:#666}
+button.red{background:#c62828}
+button.orange{background:#e68a00}
+.hidden{display:none!important}
 .menu{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(160px,1fr));
-gap:10px;
-margin-bottom:15px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:10px;
+ margin-bottom:15px
 }
-
-.menu button{
-height:75px;
-font-size:15px;
-}
-
+.menu button{height:70px}
 .stats{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(170px,1fr));
-gap:12px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+ gap:12px
 }
-
 .stat{
-background:white;
-padding:20px;
-border-radius:14px;
-text-align:center;
-box-shadow:0 2px 8px rgba(0,0,0,.06);
+ background:#fff;
+ padding:20px;
+ border-radius:14px;
+ text-align:center;
+ box-shadow:0 2px 8px #00000010
 }
-
 .number{
-font-size:28px;
-font-weight:bold;
-color:#087f3d;
-margin-top:10px;
+ font-size:28px;
+ font-weight:bold;
+ color:#087f3d;
+ margin-top:10px
 }
-
 .title{
-font-size:19px;
-font-weight:bold;
-margin-bottom:15px;
+ font-size:19px;
+ font-weight:bold;
+ margin-bottom:15px
 }
-
-.table-wrap{
-overflow-x:auto;
-}
-
+.table-wrap{overflow-x:auto}
 table{
-width:100%;
-border-collapse:collapse;
-min-width:850px;
+ width:100%;
+ border-collapse:collapse;
+ min-width:850px
 }
-
-th,
-td{
-padding:10px;
-border-bottom:1px solid #eee;
-text-align:center;
+th,td{
+ padding:10px;
+ border-bottom:1px solid #eee;
+ text-align:center
 }
-
-th{
-background:#f0f3f4;
-}
-
+th{background:#f0f3f4}
 .action{
-width:auto;
-padding:7px 10px;
-margin:2px;
-font-size:12px;
+ width:auto;
+ padding:7px 10px;
+ margin:2px;
+ font-size:12px
 }
-
 .modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:15px;
-z-index:999;
+ position:fixed;
+ inset:0;
+ background:#0009;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:15px;
+ z-index:999
 }
-
 .modal-box{
-background:white;
-width:100%;
-max-width:600px;
-max-height:90vh;
-overflow:auto;
-border-radius:15px;
-padding:20px;
+ background:#fff;
+ width:100%;
+ max-width:600px;
+ max-height:90vh;
+ overflow:auto;
+ border-radius:15px;
+ padding:20px
 }
-
 .msg{
-padding:12px;
-border-radius:8px;
-margin:8px 0;
-background:#fff3cd;
+ padding:12px;
+ border-radius:8px;
+ margin:8px 0;
+ background:#fff3cd
 }
-
-.success{
-background:#d1e7dd;
-color:#0f5132;
-}
-
-.error{
-background:#f8d7da;
-color:#842029;
-}
-
+.success{background:#d1e7dd;color:#0f5132}
+.error{background:#f8d7da;color:#842029}
 .top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-flex-wrap:wrap;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap
 }
-
+.small{font-size:12px;color:#666}
+.balance{
+ font-weight:bold;
+ color:#087f3d
+}
 @media(max-width:700px){
-
-table{
-min-width:800px;
+ table{min-width:800px}
 }
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<h1>
-پنل مدیریت صلایان بار نیمبلوک
-</h1>
-
-<p>
-اعلام بار هوشمند
-</p>
-
+<h1>پنل مدیریت صلایان بار نیمبلوک</h1>
+<p>اعلام بار هوشمند</p>
 </header>
-
 
 <div class="container">
 
-
 <!-- LOGIN -->
+<div id="loginPage" class="card login">
 
-<div
-id="loginPage"
-class="card login">
-
-<div class="title">
-ورود مدیر
-</div>
+<div class="title">🔐 ورود مدیر</div>
 
 <div id="loginMsg"></div>
 
-<input
-id="email"
-type="email"
-placeholder="ایمیل مدیر">
+<input id="email" type="email" placeholder="ایمیل مدیر">
 
-<input
-id="password"
-type="password"
-placeholder="رمز عبور">
+<input id="password" type="password" placeholder="رمز عبور">
 
-<button onclick="login()">
-ورود به پنل مدیریت
+<button onclick="login()">ورود به پنل مدیریت</button>
+
+<button class="gray" onclick="showForgot()">
+فراموشی رمز عبور
 </button>
 
-<button
-class="gray"
-onclick="forgot()">
+</div>
 
-فراموشی رمز عبور
 
+<!-- FORGOT -->
+<div id="forgotPage" class="card login hidden">
+
+<div class="title">بازیابی رمز عبور</div>
+
+<div id="forgotMsg"></div>
+
+<input id="forgotEmail" type="email" placeholder="ایمیل مدیر">
+
+<button onclick="sendReset()">
+ارسال لینک بازیابی
+</button>
+
+<button class="gray" onclick="showLogin()">
+بازگشت
 </button>
 
 </div>
 
 
 <!-- RESET -->
+<div id="resetPage" class="card login hidden">
 
-<div
-id="resetPage"
-class="card login hidden">
-
-<div class="title">
-تعیین رمز جدید
-</div>
+<div class="title">🔑 تعیین رمز جدید</div>
 
 <div id="resetMsg"></div>
 
-<input
-id="newPass"
-type="password"
-placeholder="رمز عبور جدید">
+<input id="newPass" type="password" placeholder="رمز جدید">
 
-<input
-id="newPass2"
-type="password"
-placeholder="تکرار رمز عبور جدید">
+<input id="newPass2" type="password" placeholder="تکرار رمز جدید">
 
 <button onclick="saveNewPassword()">
 ثبت رمز جدید
@@ -303,69 +211,20 @@ placeholder="تکرار رمز عبور جدید">
 </div>
 
 
-<!-- FORGOT -->
-
-<div
-id="forgotPage"
-class="card login hidden">
-
-<div class="title">
-بازیابی رمز عبور
-</div>
-
-<div id="forgotMsg"></div>
-
-<input
-id="forgotEmail"
-type="email"
-placeholder="ایمیل مدیر">
-
-<button onclick="sendReset()">
-ارسال لینک بازیابی
-</button>
-
-<button
-class="gray"
-onclick="showLogin()">
-
-بازگشت
-
-</button>
-
-</div>
-
-
 <!-- ADMIN -->
-
-<div
-id="adminPage"
-class="hidden">
-
+<div id="adminPage" class="hidden">
 
 <div class="card">
 
 <div class="top">
 
 <div>
-
-<b>
-پنل مدیریت
-</b>
-
-<div
-id="adminEmail"
-style="font-size:12px;color:#666;margin-top:5px">
+<b>پنل مدیریت صلایان بار</b>
+<div id="adminEmail" class="small"></div>
 </div>
 
-</div>
-
-<button
-class="red"
-style="width:auto"
-onclick="logout()">
-
+<button class="red" style="width:auto" onclick="logout()">
 خروج
-
 </button>
 
 </div>
@@ -374,7 +233,6 @@ onclick="logout()">
 
 
 <!-- MENU -->
-
 <div class="menu">
 
 <button onclick="section('dashboard')">
@@ -401,49 +259,30 @@ onclick="logout()">
 
 
 <!-- DASHBOARD -->
-
 <div id="dashboard">
 
-<div class="title">
-داشبورد
-</div>
+<div class="title">📊 داشبورد</div>
 
 <div class="stats">
 
 <div class="stat">
 👤 کاربران
-<div
-id="usersCount"
-class="number">
-0
-</div>
+<div id="usersCount" class="number">0</div>
 </div>
 
 <div class="stat">
 🚛 رانندگان
-<div
-id="driversCount"
-class="number">
-0
-</div>
+<div id="driversCount" class="number">0</div>
 </div>
 
 <div class="stat">
 📦 کل بارها
-<div
-id="loadsCount"
-class="number">
-0
-</div>
+<div id="loadsCount" class="number">0</div>
 </div>
 
 <div class="stat">
 🟢 بارهای فعال
-<div
-id="activeCount"
-class="number">
-0
-</div>
+<div id="activeCount" class="number">0</div>
 </div>
 
 </div>
@@ -452,75 +291,39 @@ class="number">
 
 
 <!-- LOADS -->
-
-<div
-id="loads"
-class="hidden">
+<div id="loads" class="hidden">
 
 <div class="card">
 
 <div class="top">
 
-<div class="title">
-مدیریت بارها
-</div>
+<div class="title">📦 مدیریت بارها</div>
 
-<button
-style="width:auto"
-onclick="newLoad()">
-
+<button style="width:auto" onclick="newLoad()">
 ➕ ثبت بار
-
 </button>
 
 </div>
 
-
-<input
-id="search"
+<input id="search"
 placeholder="جستجوی بار..."
 oninput="filterLoads()">
 
-
-<select
-id="filterStatus"
-onchange="filterLoads()">
-
-<option value="">
-همه وضعیت‌ها
-</option>
-
-<option value="waiting">
-در انتظار
-</option>
-
-<option value="turn">
-نوبتی
-</option>
-
-<option value="free">
-آزاد
-</option>
-
-<option value="reserved">
-رزرو شده
-</option>
-
-<option value="completed">
-تکمیل شده
-</option>
-
+<select id="filterStatus" onchange="filterLoads()">
+<option value="">همه وضعیت‌ها</option>
+<option value="waiting">در انتظار</option>
+<option value="turn">نوبتی</option>
+<option value="free">آزاد</option>
+<option value="reserved">رزرو شده</option>
+<option value="completed">تکمیل شده</option>
 </select>
-
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
-
 <th>#</th>
 <th>مبدا</th>
 <th>مقصد</th>
@@ -530,13 +333,10 @@ onchange="filterLoads()">
 <th>وضعیت</th>
 <th>فوری</th>
 <th>عملیات</th>
-
 </tr>
-
 </thead>
 
-<tbody id="loadsTable">
-</tbody>
+<tbody id="loadsTable"></tbody>
 
 </table>
 
@@ -548,23 +348,17 @@ onchange="filterLoads()">
 
 
 <!-- DRIVERS -->
-
-<div
-id="drivers"
-class="hidden">
+<div id="drivers" class="hidden">
 
 <div class="card">
 
-<div class="title">
-مدیریت رانندگان
-</div>
+<div class="title">🚛 مدیریت رانندگان</div>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
 <th>#</th>
 <th>شماره</th>
@@ -572,11 +366,9 @@ class="hidden">
 <th>نقش</th>
 <th>تاریخ</th>
 </tr>
-
 </thead>
 
-<tbody id="driversTable">
-</tbody>
+<tbody id="driversTable"></tbody>
 
 </table>
 
@@ -588,34 +380,26 @@ class="hidden">
 
 
 <!-- WALLET -->
-
-<div
-id="wallet"
-class="hidden">
+<div id="wallet" class="hidden">
 
 <div class="card">
 
-<div class="title">
-کیف پول رانندگان
-</div>
+<div class="title">💰 کیف پول رانندگان</div>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
 <th>#</th>
 <th>راننده</th>
 <th>موجودی</th>
 <th>عملیات</th>
 </tr>
-
 </thead>
 
-<tbody id="walletTable">
-</tbody>
+<tbody id="walletTable"></tbody>
 
 </table>
 
@@ -627,23 +411,17 @@ class="hidden">
 
 
 <!-- TRANSACTIONS -->
-
-<div
-id="transactions"
-class="hidden">
+<div id="transactions" class="hidden">
 
 <div class="card">
 
-<div class="title">
-تراکنش‌ها
-</div>
+<div class="title">💳 تراکنش‌ها</div>
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
 <th>#</th>
 <th>کاربر</th>
@@ -652,11 +430,9 @@ class="hidden">
 <th>شرح</th>
 <th>تاریخ</th>
 </tr>
-
 </thead>
 
-<tbody id="transactionsTable">
-</tbody>
+<tbody id="transactionsTable"></tbody>
 
 </table>
 
@@ -666,130 +442,69 @@ class="hidden">
 
 </div>
 
-
 </div>
-
 </div>
 
 
 <!-- LOAD MODAL -->
-
-<div
-id="loadModal"
-class="modal hidden">
+<div id="loadModal" class="modal hidden">
 
 <div class="modal-box">
 
-<div class="title">
-ثبت / ویرایش بار
-</div>
+<div class="title">📦 ثبت / ویرایش بار</div>
 
-<input
-id="loadId"
-type="hidden">
+<input id="loadId" type="hidden">
 
-<input
-id="origin"
-placeholder="مبدا">
+<input id="origin" placeholder="مبدا">
 
-<input
-id="destination"
-placeholder="مقصد">
+<input id="destination" placeholder="مقصد">
 
-<input
-id="cargo"
-placeholder="نوع کالا">
+<input id="cargo" placeholder="نوع کالا">
 
-<input
-id="weight"
-type="number"
-placeholder="وزن">
+<input id="weight" type="number" placeholder="وزن">
 
-<input
-id="truckType"
-placeholder="نوع کامیون">
+<input id="truckType" placeholder="نوع کامیون">
 
 <select id="loadStatus">
-
-<option value="waiting">
-در انتظار
-</option>
-
-<option value="turn">
-نوبتی
-</option>
-
-<option value="free">
-آزاد
-</option>
-
-<option value="reserved">
-رزرو شده
-</option>
-
-<option value="completed">
-تکمیل شده
-</option>
-
+<option value="waiting">در انتظار</option>
+<option value="turn">نوبتی</option>
+<option value="free">آزاد</option>
+<option value="reserved">رزرو شده</option>
+<option value="completed">تکمیل شده</option>
 </select>
 
 <label>
-
-<input
-id="urgent"
-type="checkbox"
-style="width:auto">
-
-بار فوری
-
+<input id="urgent" type="checkbox" style="width:auto">
+ بار فوری
 </label>
 
 <div id="loadMsg"></div>
 
-<button onclick="saveLoad()">
-💾 ذخیره بار
-</button>
+<button onclick="saveLoad()">💾 ذخیره بار</button>
 
-<button
-class="gray"
-onclick="closeLoad()">
-
-بستن
-
-</button>
+<button class="gray" onclick="closeLoad()">بستن</button>
 
 </div>
-
 </div>
 
 
 <!-- WALLET MODAL -->
-
-<div
-id="walletModal"
-class="modal hidden">
+<div id="walletModal" class="modal hidden">
 
 <div class="modal-box">
 
-<div class="title">
-تغییر موجودی کیف پول
-</div>
+<div class="title">💰 تغییر موجودی کیف پول</div>
 
-<input
-id="walletUser"
-type="hidden">
+<input id="walletUser" type="hidden">
 
 <div id="walletInfo"></div>
 
-<input
-id="walletAmount"
+<input id="walletAmount"
 type="number"
 placeholder="مثلاً 50000 یا -10000">
 
-<textarea
-id="walletDesc"
-placeholder="شرح تراکنش">
-</textarea>
+<textarea id="walletDesc"
+placeholder="شرح تراکنش"></textarea>
 
 <div id="walletMsg"></div>
 
@@ -797,37 +512,26 @@ placeholder="شرح تراکنش">
 ثبت تراکنش
 </button>
 
-<button
-class="gray"
-onclick="closeWallet()">
-
+<button class="gray" onclick="closeWallet()">
 بستن
-
 </button>
 
 </div>
-
 </div>
 
 
 <script>
 
-
-/* =========================================
+/* =================================================
    SUPABASE
-========================================= */
+================================================= */
 
 const SUPABASE_URL =
 "https://ntirixjflgqihobpnmya.supabase.co";
 
-
-/*
- * اینجا کلید Publishable/anon پروژه را
- * دقیقاً از Supabase کپی کن.
- */
+/* کلید صحیح پروژه */
 const SUPABASE_KEY =
-"کلید-PUBLISHABLE-خودت-را-اینجا-بگذار";
-
+"sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
 
 const db =
 window.supabase.createClient(
@@ -835,52 +539,42 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
-
 let currentUser=null;
 let allLoads=[];
 
 
-/* =========================================
+/* =================================================
    START
-========================================= */
+================================================= */
 
-window.addEventListener(
-"load",
-async function(){
+window.addEventListener("load",async()=>{
 
 await checkSession();
 
-}
-);
+});
 
 
-/* =========================================
+/* =================================================
    SESSION
-========================================= */
+================================================= */
 
 async function checkSession(){
 
 try{
 
-const {
-data,
-error
-}=await db.auth.getSession();
-
+const {data,error}=await db.auth.getSession();
 
 if(error){
 
+showLoginMessage(error.message);
 showLogin();
 return;
 
 }
 
-
 if(data.session){
 
-await verifyAdmin(
-data.session.user
-);
+await verifyAdmin(data.session.user);
 
 }else{
 
@@ -890,6 +584,7 @@ showLogin();
 
 }catch(e){
 
+showLoginMessage(e.message);
 showLogin();
 
 }
@@ -897,35 +592,29 @@ showLogin();
 }
 
 
-/* =========================================
+/* =================================================
    VERIFY ADMIN
-========================================= */
+================================================= */
 
 async function verifyAdmin(user){
 
 try{
 
-const {
-data,
-error
-}=await db
+const {data,error}=await db
 .from("profiles")
 .select("id,role,phone")
 .eq("id",user.id)
 .maybeSingle();
 
-
 if(error){
 
 showLoginMessage(
-"خطا در بررسی مدیر: "+
-error.message
+"خطا در بررسی حساب: "+error.message
 );
 
 return;
 
 }
-
 
 if(!data){
 
@@ -939,7 +628,6 @@ return;
 
 }
 
-
 if(data.role!=="admin"){
 
 showLoginMessage(
@@ -952,38 +640,24 @@ return;
 
 }
 
-
 currentUser=user;
 
+document.getElementById("loginPage")
+.classList.add("hidden");
 
-document.getElementById(
-"loginPage"
-).classList.add("hidden");
+document.getElementById("forgotPage")
+.classList.add("hidden");
 
+document.getElementById("resetPage")
+.classList.add("hidden");
 
-document.getElementById(
-"forgotPage"
-).classList.add("hidden");
+document.getElementById("adminPage")
+.classList.remove("hidden");
 
-
-document.getElementById(
-"resetPage"
-).classList.add("hidden");
-
-
-document.getElementById(
-"adminPage"
-).classList.remove("hidden");
-
-
-document.getElementById(
-"adminEmail"
-).textContent=
-user.email || "";
-
+document.getElementById("adminEmail")
+.textContent=user.email || "";
 
 await dashboardData();
-
 
 }catch(e){
 
@@ -994,23 +668,17 @@ showLoginMessage(e.message);
 }
 
 
-/* =========================================
+/* =================================================
    LOGIN
-========================================= */
+================================================= */
 
 async function login(){
 
 const email=
-document.getElementById(
-"email"
-).value.trim();
-
+document.getElementById("email").value.trim();
 
 const password=
-document.getElementById(
-"password"
-).value;
-
+document.getElementById("password").value;
 
 if(!email || !password){
 
@@ -1022,73 +690,64 @@ return;
 
 }
 
+showLoginMessage("در حال ورود...");
 
-showLoginMessage(
-"در حال ورود..."
-);
-
-
-const {
-data,
-error
-}=
+const {data,error}=
 await db.auth.signInWithPassword({
-
-email:email,
-password:password
-
+email,
+password
 });
-
 
 if(error){
 
-showLoginMessage(
-error.message
-);
-
+showLoginMessage(error.message);
 return;
 
 }
 
-
-await verifyAdmin(
-data.user
-);
+await verifyAdmin(data.user);
 
 }
 
 
-/* =========================================
+/* =================================================
    FORGOT
-========================================= */
+================================================= */
 
-function forgot(){
+function showForgot(){
 
-document.getElementById(
-"loginPage"
-).classList.add("hidden");
+document.getElementById("loginPage")
+.classList.add("hidden");
 
+document.getElementById("resetPage")
+.classList.add("hidden");
 
-document.getElementById(
-"forgotPage"
-).classList.remove("hidden");
+document.getElementById("forgotPage")
+.classList.remove("hidden");
 
 }
 
+function showLogin(){
+
+document.getElementById("forgotPage")
+.classList.add("hidden");
+
+document.getElementById("resetPage")
+.classList.add("hidden");
+
+document.getElementById("loginPage")
+.classList.remove("hidden");
+
+}
 
 async function sendReset(){
 
 const email=
-document.getElementById(
-"forgotEmail"
-).value.trim();
-
+document.getElementById("forgotEmail")
+.value.trim();
 
 const box=
-document.getElementById(
-"forgotMsg"
-);
-
+document.getElementById("forgotMsg");
 
 if(!email){
 
@@ -1099,22 +758,15 @@ return;
 
 }
 
-
 const redirectTo=
 window.location.origin+
 window.location.pathname;
 
-
-const {
-error
-}=
+const {error}=
 await db.auth.resetPasswordForEmail(
 email,
-{
-redirectTo:redirectTo
-}
+{redirectTo}
 );
-
 
 if(error){
 
@@ -1127,105 +779,77 @@ return;
 
 }
 
-
 box.innerHTML=
 '<div class="msg success">'+
-'لینک بازیابی به ایمیل ارسال شد.'+
+"لینک بازیابی رمز عبور ارسال شد."+
 '</div>';
 
 }
 
 
-/* =========================================
+/* =================================================
    PASSWORD RECOVERY
-========================================= */
+================================================= */
 
 db.auth.onAuthStateChange(
-async function(event,session){
+async(event,session)=>{
 
 if(event==="PASSWORD_RECOVERY"){
 
-document.getElementById(
-"loginPage"
-).classList.add("hidden");
+document.getElementById("loginPage")
+.classList.add("hidden");
 
+document.getElementById("forgotPage")
+.classList.add("hidden");
 
-document.getElementById(
-"forgotPage"
-).classList.add("hidden");
+document.getElementById("adminPage")
+.classList.add("hidden");
 
-
-document.getElementById(
-"adminPage"
-).classList.add("hidden");
-
-
-document.getElementById(
-"resetPage"
-).classList.remove("hidden");
+document.getElementById("resetPage")
+.classList.remove("hidden");
 
 }
 
-}
-);
+});
 
-
-/* =========================================
-   NEW PASSWORD
-========================================= */
 
 async function saveNewPassword(){
 
 const p1=
-document.getElementById(
-"newPass"
-).value;
-
+document.getElementById("newPass").value;
 
 const p2=
-document.getElementById(
-"newPass2"
-).value;
-
+document.getElementById("newPass2").value;
 
 const box=
-document.getElementById(
-"resetMsg"
-);
-
+document.getElementById("resetMsg");
 
 if(p1.length<6){
 
 box.innerHTML=
 '<div class="msg error">'+
-'رمز باید حداقل ۶ کاراکتر باشد.'+
+"رمز باید حداقل ۶ کاراکتر باشد."+
 '</div>';
 
 return;
 
 }
-
 
 if(p1!==p2){
 
 box.innerHTML=
 '<div class="msg error">'+
-'دو رمز یکسان نیستند.'+
+"دو رمز یکسان نیستند."+
 '</div>';
 
 return;
 
 }
 
-
-const {
-data,
-error
-}=
+const {error}=
 await db.auth.updateUser({
 password:p1
 });
-
 
 if(error){
 
@@ -1238,15 +862,12 @@ return;
 
 }
 
-
 box.innerHTML=
 '<div class="msg success">'+
-'رمز با موفقیت تغییر کرد.'+
+"رمز با موفقیت تغییر کرد."+
 '</div>';
 
-
-setTimeout(
-async function(){
+setTimeout(async()=>{
 
 history.replaceState(
 null,
@@ -1254,291 +875,179 @@ null,
 window.location.pathname
 );
 
-await verifyAdmin(
-data.user
-);
-
-},
-1000
-);
-
-}
-
-
-/* =========================================
-   SHOW LOGIN
-========================================= */
-
-function showLogin(){
-
-document.getElementById(
-"forgotPage"
-).classList.add("hidden");
-
-
-document.getElementById(
-"resetPage"
-).classList.add("hidden");
-
-
-document.getElementById(
-"adminPage"
-).classList.add("hidden");
-
-
-document.getElementById(
-"loginPage"
-).classList.remove("hidden");
-
-}
-
-
-function showLoginMessage(msg){
-
-document.getElementById(
-"loginMsg"
-).innerHTML=
-'<div class="msg error">'+
-escapeHtml(msg)+
-'</div>';
-
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-async function logout(){
-
 await db.auth.signOut();
-
-currentUser=null;
 
 showLogin();
 
+},1500);
+
 }
 
 
-/* =========================================
+/* =================================================
+   DASHBOARD
+================================================= */
+
+async function dashboardData(){
+
+const users=
+await db
+.from("profiles")
+.select("*",{count:"exact",head:true});
+
+const drivers=
+await db
+.from("profiles")
+.select("*",{count:"exact",head:true})
+.eq("role","driver");
+
+const loads=
+await db
+.from("loads")
+.select("*",{count:"exact",head:true});
+
+const active=
+await db
+.from("loads")
+.select("*",{count:"exact",head:true})
+.in(
+"status",
+["waiting","turn","free","reserved"]
+);
+
+document.getElementById("usersCount")
+.textContent=users.count || 0;
+
+document.getElementById("driversCount")
+.textContent=drivers.count || 0;
+
+document.getElementById("loadsCount")
+.textContent=loads.count || 0;
+
+document.getElementById("activeCount")
+.textContent=active.count || 0;
+
+}
+
+
+/* =================================================
    SECTION
-========================================= */
+================================================= */
 
 function section(name){
 
-const sections=[
+[
 "dashboard",
 "loads",
 "drivers",
 "wallet",
 "transactions"
-];
+].forEach(x=>{
 
-
-sections.forEach(
-x=>{
 document.getElementById(x)
 .classList.add("hidden");
-}
-);
 
+});
 
 document.getElementById(name)
 .classList.remove("hidden");
 
-
 if(name==="dashboard")
 dashboardData();
 
-
 if(name==="loads")
-loadLoads();
-
+showLoads();
 
 if(name==="drivers")
-loadDrivers();
-
+showDrivers();
 
 if(name==="wallet")
-loadWallets();
-
+showWallets();
 
 if(name==="transactions")
-loadTransactions();
+showTransactions();
 
 }
 
 
-/* =========================================
-   DASHBOARD
-========================================= */
-
-async function dashboardData(){
-
-const profiles=
-await db
-.from("profiles")
-.select("id,role");
-
-
-const loads=
-await db
-.from("loads")
-.select("id,status");
-
-
-if(profiles.data){
-
-document.getElementById(
-"usersCount"
-).textContent=
-profiles.data.length;
-
-
-document.getElementById(
-"driversCount"
-).textContent=
-profiles.data.filter(
-x=>x.role==="driver"
-).length;
-
-}
-
-
-if(loads.data){
-
-document.getElementById(
-"loadsCount"
-).textContent=
-loads.data.length;
-
-
-document.getElementById(
-"activeCount"
-).textContent=
-loads.data.filter(
-x=>
-["waiting","turn","free"]
-.includes(x.status)
-).length;
-
-}
-
-}
-
-
-/* =========================================
+/* =================================================
    LOADS
-========================================= */
+================================================= */
 
-async function loadLoads(){
+async function showLoads(){
 
-const tbody=
-document.getElementById(
-"loadsTable"
-);
-
-
-tbody.innerHTML=
-'<tr><td colspan="9">در حال دریافت...</td></tr>';
-
-
-const {
-data,
-error
-}=
+const {data,error}=
 await db
 .from("loads")
 .select("*")
-.order(
-"created_at",
-{ascending:false}
-);
-
+.order("created_at",{ascending:false});
 
 if(error){
 
-tbody.innerHTML=
-'<tr><td colspan="9">'+
-escapeHtml(error.message)+
-'</td></tr>';
-
+alert(error.message);
 return;
 
 }
 
-
-allLoads=data||[];
+allLoads=data || [];
 
 renderLoads(allLoads);
 
 }
 
 
-function renderLoads(list){
+function renderLoads(rows){
 
-const tbody=
-document.getElementById(
-"loadsTable"
-);
+const table=
+document.getElementById("loadsTable");
 
+table.innerHTML="";
 
-if(!list.length){
+rows.forEach((l,i)=>{
 
-tbody.innerHTML=
-'<tr><td colspan="9">باری وجود ندارد.</td></tr>';
+const tr=document.createElement("tr");
 
-return;
-
-}
-
-
-tbody.innerHTML=
-list.map(
-(load,i)=>`
-
-<tr>
+tr.innerHTML=`
 
 <td>${i+1}</td>
 
-<td>${escapeHtml(load.origin||"-")}</td>
+<td>${escapeHtml(l.origin || "")}</td>
 
-<td>${escapeHtml(load.destination||"-")}</td>
+<td>${escapeHtml(l.destination || "")}</td>
 
-<td>${escapeHtml(load.cargo||"-")}</td>
+<td>${escapeHtml(l.cargo || "")}</td>
 
-<td>${load.weight??"-"}</td>
+<td>${l.weight ?? ""}</td>
 
-<td>${escapeHtml(load.truck_type||"-")}</td>
+<td>${escapeHtml(l.truck_type || "")}</td>
 
 <td>
 
 <select
-style="width:130px"
-onchange="changeStatus('${load.id}',this.value)">
+onchange="changeStatus('${l.id}',this.value)">
 
 <option value="waiting"
-${load.status==="waiting"?"selected":""}>
+${l.status==="waiting"?"selected":""}>
 در انتظار
 </option>
 
 <option value="turn"
-${load.status==="turn"?"selected":""}>
+${l.status==="turn"?"selected":""}>
 نوبتی
 </option>
 
 <option value="free"
-${load.status==="free"?"selected":""}>
+${l.status==="free"?"selected":""}>
 آزاد
 </option>
 
 <option value="reserved"
-${load.status==="reserved"?"selected":""}>
+${l.status==="reserved"?"selected":""}>
 رزرو شده
 </option>
 
 <option value="completed"
-${load.status==="completed"?"selected":""}>
+${l.status==="completed"?"selected":""}>
 تکمیل شده
 </option>
 
@@ -1546,320 +1055,176 @@ ${load.status==="completed"?"selected":""}>
 
 </td>
 
-<td>
-${load.urgent?"🔴":"عادی"}
-</td>
+<td>${l.urgent ? "🔴 بله":"خیر"}</td>
 
 <td>
 
 <button
 class="action"
-onclick="editLoad('${load.id}')">
-✏️
+onclick="editLoad('${l.id}')">
+ویرایش
 </button>
 
 <button
 class="action red"
-onclick="deleteLoad('${load.id}')">
-🗑️
+onclick="deleteLoad('${l.id}')">
+حذف
 </button>
 
 </td>
 
-</tr>
+`;
 
-`).join("");
+table.appendChild(tr);
+
+});
 
 }
 
-
-/* =========================================
-   FILTER
-========================================= */
 
 function filterLoads(){
 
 const q=
-document.getElementById(
-"search"
-).value
+document.getElementById("search")
+.value
+.trim()
 .toLowerCase();
 
-
 const status=
-document.getElementById(
-"filterStatus"
-).value;
+document.getElementById("filterStatus")
+.value;
 
-
-const filtered=
-allLoads.filter(
-x=>{
+const rows=
+allLoads.filter(l=>{
 
 const text=
 (
-(x.origin||"")+" "+
-(x.destination||"")+" "+
-(x.cargo||"")
+(l.origin||"")+" "+
+(l.destination||"")+" "+
+(l.cargo||"")+" "+
+(l.truck_type||"")
 ).toLowerCase();
 
+return
+(!q || text.includes(q)) &&
+(!status || l.status===status);
 
-if(q&&!text.includes(q))
-return false;
+});
 
-
-if(status&&x.status!==status)
-return false;
-
-
-return true;
-
-}
-);
-
-
-renderLoads(filtered);
+renderLoads(rows);
 
 }
 
 
-/* =========================================
+/* =================================================
    NEW LOAD
-========================================= */
+================================================= */
 
 function newLoad(){
 
-document.getElementById(
-"loadId"
-).value="";
+document.getElementById("loadId").value="";
+document.getElementById("origin").value="";
+document.getElementById("destination").value="";
+document.getElementById("cargo").value="";
+document.getElementById("weight").value="";
+document.getElementById("truckType").value="";
+document.getElementById("loadStatus").value="waiting";
+document.getElementById("urgent").checked=false;
+document.getElementById("loadMsg").innerHTML="";
 
-
-document.getElementById(
-"origin"
-).value="";
-
-
-document.getElementById(
-"destination"
-).value="";
-
-
-document.getElementById(
-"cargo"
-).value="";
-
-
-document.getElementById(
-"weight"
-).value="";
-
-
-document.getElementById(
-"truckType"
-).value="";
-
-
-document.getElementById(
-"loadStatus"
-).value="waiting";
-
-
-document.getElementById(
-"urgent"
-).checked=false;
-
-
-document.getElementById(
-"loadMsg"
-).innerHTML="";
-
-
-document.getElementById(
-"loadModal"
-).classList.remove("hidden");
+document.getElementById("loadModal")
+.classList.remove("hidden");
 
 }
 
-
-function closeLoad(){
-
-document.getElementById(
-"loadModal"
-).classList.add("hidden");
-
-}
-
-
-/* =========================================
-   EDIT LOAD
-========================================= */
 
 function editLoad(id){
 
-const load=
-allLoads.find(
-x=>x.id===id
-);
+const l=
+allLoads.find(x=>x.id===id);
 
+if(!l)return;
 
-if(!load)
-return;
+document.getElementById("loadId").value=l.id;
+document.getElementById("origin").value=l.origin||"";
+document.getElementById("destination").value=l.destination||"";
+document.getElementById("cargo").value=l.cargo||"";
+document.getElementById("weight").value=l.weight||"";
+document.getElementById("truckType").value=l.truck_type||"";
+document.getElementById("loadStatus").value=l.status||"waiting";
+document.getElementById("urgent").checked=!!l.urgent;
 
-
-document.getElementById(
-"loadId"
-).value=load.id;
-
-
-document.getElementById(
-"origin"
-).value=load.origin||"";
-
-
-document.getElementById(
-"destination"
-).value=
-load.destination||"";
-
-
-document.getElementById(
-"cargo"
-).value=load.cargo||"";
-
-
-document.getElementById(
-"weight"
-).value=load.weight||"";
-
-
-document.getElementById(
-"truckType"
-).value=
-load.truck_type||"";
-
-
-document.getElementById(
-"loadStatus"
-).value=
-load.status||"waiting";
-
-
-document.getElementById(
-"urgent"
-).checked=
-!!load.urgent;
-
-
-document.getElementById(
-"loadModal"
-).classList.remove("hidden");
+document.getElementById("loadModal")
+.classList.remove("hidden");
 
 }
 
-
-/* =========================================
-   SAVE LOAD
-========================================= */
 
 async function saveLoad(){
 
 const id=
-document.getElementById(
-"loadId"
-).value;
-
+document.getElementById("loadId").value;
 
 const payload={
 
 origin:
-document.getElementById(
-"origin"
-).value.trim(),
+document.getElementById("origin").value.trim(),
 
 destination:
-document.getElementById(
-"destination"
-).value.trim(),
+document.getElementById("destination").value.trim(),
 
 cargo:
-document.getElementById(
-"cargo"
-).value.trim(),
+document.getElementById("cargo").value.trim(),
 
 weight:
-Number(
-document.getElementById(
-"weight"
-).value
-)||0,
+Number(document.getElementById("weight").value)||0,
 
 truck_type:
-document.getElementById(
-"truckType"
-).value.trim(),
+document.getElementById("truckType").value.trim(),
 
 status:
-document.getElementById(
-"loadStatus"
-).value,
+document.getElementById("loadStatus").value,
 
 urgent:
-document.getElementById(
-"urgent"
-).checked
+document.getElementById("urgent").checked
 
 };
 
+if(!payload.origin ||
+!payload.destination ||
+!payload.cargo){
 
-const box=
-document.getElementById(
-"loadMsg"
-);
-
-
-if(
-!payload.origin||
-!payload.destination||
-!payload.cargo
-){
-
-box.innerHTML=
+document.getElementById("loadMsg").innerHTML=
 '<div class="msg error">'+
-'مبدا، مقصد و کالا الزامی است.'+
+"مبدا، مقصد و کالا الزامی است."+
 '</div>';
 
 return;
 
 }
 
-
 let result;
-
 
 if(id){
 
-result=
-await db
+result=await db
 .from("loads")
 .update(payload)
 .eq("id",id);
 
 }else{
 
-payload.created_by=
-currentUser.id;
+payload.created_by=currentUser.id;
 
-result=
-await db
+result=await db
 .from("loads")
 .insert(payload);
 
 }
 
-
 if(result.error){
 
-box.innerHTML=
+document.getElementById("loadMsg").innerHTML=
 '<div class="msg error">'+
 escapeHtml(result.error.message)+
 '</div>';
@@ -1868,562 +1233,67 @@ return;
 
 }
 
+closeLoad();
 
-box.innerHTML=
-'<div class="msg success">'+
-'بار با موفقیت ذخیره شد.'+
-'</div>';
-
-
-await loadLoads();
-
+await showLoads();
 await dashboardData();
-
-
-setTimeout(
-closeLoad,
-700
-);
 
 }
 
 
-/* =========================================
-   STATUS
-========================================= */
+async function changeStatus(id,status){
 
-async function changeStatus(
-id,
-status
-){
-
-const {
-error
-}=
+const {error}=
 await db
 .from("loads")
-.update({
-status:status
-})
+.update({status})
 .eq("id",id);
-
 
 if(error){
 
 alert(error.message);
+await showLoads();
+return;
 
 }
 
-
-await loadLoads();
-
+await showLoads();
 await dashboardData();
 
 }
 
 
-/* =========================================
-   DELETE
-========================================= */
-
 async function deleteLoad(id){
 
-if(
-!confirm(
-"آیا از حذف این بار مطمئن هستید؟"
-)
-)
+if(!confirm("این بار حذف شود؟"))
 return;
 
-
-const {
-error
-}=
+const {error}=
 await db
 .from("loads")
 .delete()
 .eq("id",id);
 
-
 if(error){
 
 alert(error.message);
-
 return;
 
 }
 
-
-await loadLoads();
-
+await showLoads();
 await dashboardData();
 
 }
 
 
-/* =========================================
-   DRIVERS
-========================================= */
+function closeLoad(){
 
-async function loadDrivers(){
-
-const tbody=
-document.getElementById(
-"driversTable"
-);
-
-
-const {
-data,
-error
-}=
-await db
-.from("profiles")
-.select("id,phone,role,created_at")
-.eq("role","driver")
-.order(
-"created_at",
-{ascending:false}
-);
-
-
-if(error){
-
-tbody.innerHTML=
-'<tr><td colspan="5">'+
-escapeHtml(error.message)+
-'</td></tr>';
-
-return;
+document.getElementById("loadModal")
+.classList.add("hidden");
 
 }
 
 
-if(!data||!data.length){
-
-tbody.innerHTML=
-'<tr><td colspan="5">'+
-'راننده‌ای ثبت نشده است.'+
-'</td></tr>';
-
-return;
-
-}
-
-
-tbody.innerHTML=
-data.map(
-(x,i)=>`
-
-<tr>
-
-<td>${i+1}</td>
-
-<td>
-${escapeHtml(x.phone||"ثبت نشده")}
-</td>
-
-<td>
-${escapeHtml(x.id)}
-</td>
-
-<td>
-${x.role}
-</td>
-
-<td>
-${date(x.created_at)}
-</td>
-
-</tr>
-
-`).join("");
-
-}
-
-
-/* =========================================
-   WALLETS
-========================================= */
-
-async function loadWallets(){
-
-const tbody=
-document.getElementById(
-"walletTable"
-);
-
-
-const {
-data,
-error
-}=
-await db
-.from("profiles")
-.select("id,phone,role")
-.eq("role","driver");
-
-
-if(error){
-
-tbody.innerHTML=
-'<tr><td colspan="4">'+
-escapeHtml(error.message)+
-'</td></tr>';
-
-return;
-
-}
-
-
-if(!data||!data.length){
-
-tbody.innerHTML=
-'<tr><td colspan="4">'+
-'راننده‌ای وجود ندارد.'+
-'</td></tr>';
-
-return;
-
-}
-
-
-const ids=
-data.map(x=>x.id);
-
-
-const wallets=
-await db
-.from("wallets")
-.select("user_id,balance")
-.in("user_id",ids);
-
-
-const list=
-wallets.data||[];
-
-
-tbody.innerHTML=
-data.map(
-(x,i)=>{
-
-const w=
-list.find(
-y=>y.user_id===x.id
-);
-
-
-const balance=
-w?w.balance:0;
-
-
-return `
-
-<tr>
-
-<td>${i+1}</td>
-
-<td>
-${escapeHtml(x.phone||x.id)}
-</td>
-
-<td>
-<b>
-${money(balance)}
-</b>
-تومان
-</td>
-
-<td>
-
-<button
-class="action"
-onclick="openWallet(
-'${x.id}',
-'${escapeHtml(x.phone||x.id)}',
-${balance}
-)">
-
-💰 تغییر موجودی
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-}
-).join("");
-
-}
-
-
-/* =========================================
-   WALLET MODAL
-========================================= */
-
-function openWallet(
-id,
-info,
-balance
-){
-
-document.getElementById(
-"walletUser"
-).value=id;
-
-
-document.getElementById(
-"walletInfo"
-).innerHTML=
-'<div class="msg">'+
-'کاربر: '+info+
-'<br>'+
-'موجودی فعلی: '+
-'<b>'+
-money(balance)+
-'</b> تومان'+
-'</div>';
-
-
-document.getElementById(
-"walletAmount"
-).value="";
-
-
-document.getElementById(
-"walletDesc"
-).value="";
-
-
-document.getElementById(
-"walletMsg"
-).innerHTML="";
-
-
-document.getElementById(
-"walletModal"
-).classList.remove("hidden");
-
-}
-
-
-function closeWallet(){
-
-document.getElementById(
-"walletModal"
-).classList.add("hidden");
-
-}
-
-
-/* =========================================
-   ADJUST WALLET
-========================================= */
-
-async function adjustWallet(){
-
-const userId=
-document.getElementById(
-"walletUser"
-).value;
-
-
-const amount=
-Number(
-document.getElementById(
-"walletAmount"
-).value
-);
-
-
-const description=
-document.getElementById(
-"walletDesc"
-).value.trim();
-
-
-const box=
-document.getElementById(
-"walletMsg"
-);
-
-
-if(
-!Number.isFinite(amount)||
-amount===0
-){
-
-box.innerHTML=
-'<div class="msg error">'+
-'مبلغ معتبر وارد کنید.'+
-'</div>';
-
-return;
-
-}
-
-
-const {
-data,
-error
-}=
-await db.rpc(
-"admin_adjust_wallet",
-{
-p_user_id:userId,
-p_amount:Math.trunc(amount),
-p_description:
-description||null
-}
-);
-
-
-if(error){
-
-box.innerHTML=
-'<div class="msg error">'+
-escapeHtml(error.message)+
-'</div>';
-
-return;
-
-}
-
-
-box.innerHTML=
-'<div class="msg success">'+
-'تراکنش ثبت شد. موجودی جدید: '+
-money(data.balance)+
-' تومان'+
-'</div>';
-
-
-await loadWallets();
-
-await loadTransactions();
-
-
-setTimeout(
-closeWallet,
-1000
-);
-
-}
-
-
-/* =========================================
-   TRANSACTIONS
-========================================= */
-
-async function loadTransactions(){
-
-const tbody=
-document.getElementById(
-"transactionsTable"
-);
-
-
-const {
-data,
-error
-}=
-await db
-.from("transactions")
-.select("*")
-.order(
-"created_at",
-{ascending:false}
-)
-.limit(200);
-
-
-if(error){
-
-tbody.innerHTML=
-'<tr><td colspan="6">'+
-escapeHtml(error.message)+
-'</td></tr>';
-
-return;
-
-}
-
-
-if(!data||!data.length){
-
-tbody.innerHTML=
-'<tr><td colspan="6">'+
-'تراکنشی وجود ندارد.'+
-'</td></tr>';
-
-return;
-
-}
-
-
-tbody.innerHTML=
-data.map(
-(x,i)=>`
-
-<tr>
-
-<td>${i+1}</td>
-
-<td>${escapeHtml(x.user_id)}</td>
-
-<td>${money(x.amount)} تومان</td>
-
-<td>${escapeHtml(x.type)}</td>
-
-<td>${escapeHtml(x.description||"-")}</td>
-
-<td>${date(x.created_at)}</td>
-
-</tr>
-
-`).join("");
-
-}
-
-
-/* =========================================
-   HELPERS
-========================================= */
-
-function money(v){
-
-return Number(v||0)
-.toLocaleString("fa-IR");
-
-}
-
-
-function date(v){
-
-if(!v)
-return "-";
-
-return new Date(v)
-.toLocaleString("fa-IR");
-
-}
-
-
-function escapeHtml(v){
-
-return String(v??"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-</script>
-
-</body>
-</html>
+/* ====================================*
+```
