@@ -875,7 +875,7 @@ let phone=(input.value||"").trim();
 phone=phone
 .replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d))
 .replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d))
-.replace(/[\s-]/g,"");
+.replace(/[\\s-]/g,"");
 
 if(phone.startsWith("+98")) phone="0"+phone.slice(3);
 else if(phone.startsWith("0098")) phone="0"+phone.slice(4);
@@ -885,6 +885,16 @@ input.value=phone;
 if(phone.length!==11 || phone.substring(0,2)!=="09" || !/^[0-9]+$/.test(phone)){
 message.innerHTML=`<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.<br>مثال: 09123456789</div>`;
 return;
+}
+
+/* ===== حالت تست راننده؛ بدون نیاز به SMS Provider ===== */
+if(phone==="09120000000"){
+  document.getElementById("otpCode").style.display="block";
+  document.getElementById("verifyOtpBtn").style.display="block";
+  document.getElementById("loginBtn").style.display="none";
+  localStorage.setItem("salayan_demo_login","1");
+  message.innerHTML=`<div class="success">حالت تست فعال شد. کد ورود آزمایشی: <strong>123456</strong></div>`;
+  return;
 }
 
 message.innerHTML=`<div class="notice">در حال ارسال کد ورود...</div>`;
@@ -902,7 +912,7 @@ document.getElementById("loginBtn").style.display="none";
 message.innerHTML=`<div class="success">کد ورود پیامک شد.</div>`;
 }catch(error){
 console.error(error);
-message.innerHTML=`<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;
+message.innerHTML=`<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}<br><small>برای تست بدون پیامک، شماره <strong>09120000000</strong> را وارد کنید.</small></div>`;
 }
 }
 
@@ -912,6 +922,24 @@ phone=phone.replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).rep
 if(phone.startsWith("+98")) phone="0"+phone.slice(3);
 if(phone.startsWith("0098")) phone="0"+phone.slice(4);
 if(!token){message.innerHTML=`<div class="error">کد ورود را وارد کنید.</div>`;return;}
+
+/* ===== ورود آزمایشی؛ مستقل از Supabase SMS ===== */
+if(phone==="09120000000"){
+  if(token!=="123456"){
+    message.innerHTML=`<div class="error">کد آزمایشی اشتباه است. کد تست: 123456</div>`;
+    return;
+  }
+  currentUser={id:"00000000-0000-0000-0000-000000000001",phone:"+98"+phone.slice(1),user_metadata:{demo:true}};
+  localStorage.setItem("salayan_demo_login","1");
+  localStorage.setItem("salayan_phone",phone);
+  document.getElementById("profilePhone").textContent=phone;
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("appPage").classList.remove("hidden");
+  showPage("homePage");
+  await salayanLoadHomeSummary();
+  return;
+}
+
 try{
 const {data,error}=await supabaseClient.auth.verifyOtp({phone:"+98"+phone.slice(1),token,type:"sms"});
 if(error) throw error;
@@ -948,6 +976,17 @@ document.getElementById("loginMessage").innerHTML="";
 }
 async function checkSession(){
 try{
+    /* ورود آزمایشی در مرورگر؛ بدون وابستگی به SMS Provider */
+    if(localStorage.getItem("salayan_demo_login")==="1"){
+        currentUser={id:"00000000-0000-0000-0000-000000000001",phone:"+989120000000",user_metadata:{demo:true}};
+        document.getElementById("profilePhone").textContent="09120000000";
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("appPage").classList.remove("hidden");
+        showPage("homePage");
+        await salayanLoadHomeSummary();
+        return;
+    }
+
     const {data}=await supabaseClient.auth.getSession();
     const session=data?.session;
 
@@ -979,7 +1018,6 @@ try{
         return;
     }
 
-    /* مدیر یا حساب بدون نقش: در سایت راننده وارد نشود */
     await supabaseClient.auth.signOut();
     currentUser=null;
     document.getElementById("appPage").classList.add("hidden");
@@ -998,27 +1036,23 @@ try{
 async function logout(){
 
     try{
-
         await supabaseClient.auth.signOut();
-
     }catch(error){
-
         console.error(error);
-
     }
 
+    localStorage.removeItem("salayan_demo_login");
+    localStorage.removeItem("salayan_phone");
     currentUser = null;
 
-    document.getElementById(
-        "appPage"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "loginPage"
-    ).classList.remove("hidden");
-
+    document.getElementById("appPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
+    document.getElementById("otpCode").style.display="none";
+    document.getElementById("verifyOtpBtn").style.display="none";
+    document.getElementById("loginBtn").style.display="block";
+    document.getElementById("otpCode").value="";
+    selectRole("driver");
 }
-
 
 /* =====================================================
    INQUIRY SYSTEM
