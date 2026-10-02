@@ -11,135 +11,155 @@
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
- font-family:Tahoma,Arial;
- background:#f3f6f8;
- color:#222
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+background:#f3f6f8;
+color:#222
 }
 header{
- background:#087f3d;
- color:#fff;
- padding:18px;
- text-align:center
+background:#087f3d;
+color:#fff;
+padding:18px;
+text-align:center
 }
 header h1{margin:0;font-size:22px}
-.container{max-width:1250px;margin:auto;padding:15px}
-.card{
- background:#fff;
- border-radius:14px;
- padding:18px;
- margin-bottom:15px;
- box-shadow:0 2px 10px #00000012
+header p{margin:7px 0 0}
+.container{
+max-width:1250px;
+margin:auto;
+padding:15px
 }
-.login{max-width:430px;margin:45px auto}
+.card{
+background:#fff;
+border-radius:14px;
+padding:18px;
+margin-bottom:15px;
+box-shadow:0 2px 10px rgba(0,0,0,.07)
+}
+.login{
+max-width:430px;
+margin:45px auto
+}
 input,select,textarea,button{
- width:100%;
- padding:12px;
- margin:7px 0;
- border-radius:9px;
- border:1px solid #ddd;
- font-family:inherit
+width:100%;
+padding:12px;
+margin:7px 0;
+border-radius:9px;
+border:1px solid #ddd;
+font-family:inherit
 }
 button{
- background:#087f3d;
- color:#fff;
- border:0;
- cursor:pointer;
- font-weight:bold
+background:#087f3d;
+color:#fff;
+border:0;
+cursor:pointer;
+font-weight:bold
 }
 button.gray{background:#666}
 button.red{background:#c62828}
 button.orange{background:#e68a00}
 .hidden{display:none!important}
 .menu{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
- gap:10px;
- margin-bottom:15px
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:10px;
+margin-bottom:15px
 }
 .menu button{height:70px}
 .stats{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
- gap:12px
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px
 }
 .stat{
- background:#fff;
- padding:20px;
- border-radius:14px;
- text-align:center;
- box-shadow:0 2px 8px #00000010
+background:#fff;
+padding:20px;
+border-radius:14px;
+text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,.06)
 }
 .number{
- font-size:28px;
- font-weight:bold;
- color:#087f3d;
- margin-top:10px
+font-size:28px;
+font-weight:bold;
+color:#087f3d;
+margin-top:10px
 }
 .title{
- font-size:19px;
- font-weight:bold;
- margin-bottom:15px
+font-size:19px;
+font-weight:bold;
+margin-bottom:15px
 }
 .table-wrap{overflow-x:auto}
 table{
- width:100%;
- border-collapse:collapse;
- min-width:850px
+width:100%;
+border-collapse:collapse;
+min-width:850px
 }
 th,td{
- padding:10px;
- border-bottom:1px solid #eee;
- text-align:center
+padding:10px;
+border-bottom:1px solid #eee;
+text-align:center
 }
 th{background:#f0f3f4}
 .action{
- width:auto;
- padding:7px 10px;
- margin:2px;
- font-size:12px
+width:auto;
+padding:7px 10px;
+margin:2px;
+font-size:12px
 }
 .modal{
- position:fixed;
- inset:0;
- background:#0009;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:15px;
- z-index:999
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+z-index:999
 }
 .modal-box{
- background:#fff;
- width:100%;
- max-width:600px;
- max-height:90vh;
- overflow:auto;
- border-radius:15px;
- padding:20px
+background:#fff;
+width:100%;
+max-width:600px;
+max-height:90vh;
+overflow:auto;
+border-radius:15px;
+padding:20px
 }
 .msg{
- padding:12px;
- border-radius:8px;
- margin:8px 0;
- background:#fff3cd
+padding:12px;
+border-radius:8px;
+margin:8px 0;
+background:#fff3cd
 }
-.success{background:#d1e7dd;color:#0f5132}
-.error{background:#f8d7da;color:#842029}
+.success{
+background:#d1e7dd;
+color:#0f5132
+}
+.error{
+background:#f8d7da;
+color:#842029
+}
 .top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- flex-wrap:wrap
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap
 }
-.small{font-size:12px;color:#666}
+.small{
+font-size:12px;
+color:#666
+}
 .balance{
- font-weight:bold;
- color:#087f3d
+font-weight:bold;
+color:#087f3d
+}
+.status{
+font-weight:bold
 }
 @media(max-width:700px){
- table{min-width:800px}
+table{min-width:800px}
 }
 </style>
 </head>
@@ -160,11 +180,21 @@ th{background:#f0f3f4}
 
 <div id="loginMsg"></div>
 
-<input id="email" type="email" placeholder="ایمیل مدیر">
+<input
+id="email"
+type="email"
+autocomplete="username"
+placeholder="ایمیل مدیر">
 
-<input id="password" type="password" placeholder="رمز عبور">
+<input
+id="password"
+type="password"
+autocomplete="current-password"
+placeholder="رمز عبور">
 
-<button onclick="login()">ورود به پنل مدیریت</button>
+<button onclick="login()">
+ورود به پنل مدیریت
+</button>
 
 <button class="gray" onclick="showForgot()">
 فراموشی رمز عبور
@@ -180,7 +210,10 @@ th{background:#f0f3f4}
 
 <div id="forgotMsg"></div>
 
-<input id="forgotEmail" type="email" placeholder="ایمیل مدیر">
+<input
+id="forgotEmail"
+type="email"
+placeholder="ایمیل مدیر">
 
 <button onclick="sendReset()">
 ارسال لینک بازیابی
@@ -193,16 +226,22 @@ th{background:#f0f3f4}
 </div>
 
 
-<!-- RESET -->
+<!-- RESET PASSWORD -->
 <div id="resetPage" class="card login hidden">
 
 <div class="title">🔑 تعیین رمز جدید</div>
 
 <div id="resetMsg"></div>
 
-<input id="newPass" type="password" placeholder="رمز جدید">
+<input
+id="newPass"
+type="password"
+placeholder="رمز جدید">
 
-<input id="newPass2" type="password" placeholder="تکرار رمز جدید">
+<input
+id="newPass2"
+type="password"
+placeholder="تکرار رمز جدید">
 
 <button onclick="saveNewPassword()">
 ثبت رمز جدید
@@ -223,7 +262,10 @@ th{background:#f0f3f4}
 <div id="adminEmail" class="small"></div>
 </div>
 
-<button class="red" style="width:auto" onclick="logout()">
+<button
+class="red"
+style="width:auto"
+onclick="logout()">
 خروج
 </button>
 
@@ -299,23 +341,30 @@ th{background:#f0f3f4}
 
 <div class="title">📦 مدیریت بارها</div>
 
-<button style="width:auto" onclick="newLoad()">
+<button
+style="width:auto"
+onclick="newLoad()">
 ➕ ثبت بار
 </button>
 
 </div>
 
-<input id="search"
+<input
+id="search"
 placeholder="جستجوی بار..."
 oninput="filterLoads()">
 
-<select id="filterStatus" onchange="filterLoads()">
+<select
+id="filterStatus"
+onchange="filterLoads()">
+
 <option value="">همه وضعیت‌ها</option>
 <option value="waiting">در انتظار</option>
 <option value="turn">نوبتی</option>
 <option value="free">آزاد</option>
 <option value="reserved">رزرو شده</option>
 <option value="completed">تکمیل شده</option>
+
 </select>
 
 <div class="table-wrap">
@@ -461,28 +510,44 @@ oninput="filterLoads()">
 
 <input id="cargo" placeholder="نوع کالا">
 
-<input id="weight" type="number" placeholder="وزن">
+<input
+id="weight"
+type="number"
+placeholder="وزن">
 
-<input id="truckType" placeholder="نوع کامیون">
+<input
+id="truckType"
+placeholder="نوع کامیون">
 
 <select id="loadStatus">
+
 <option value="waiting">در انتظار</option>
 <option value="turn">نوبتی</option>
 <option value="free">آزاد</option>
 <option value="reserved">رزرو شده</option>
 <option value="completed">تکمیل شده</option>
+
 </select>
 
 <label>
-<input id="urgent" type="checkbox" style="width:auto">
- بار فوری
+<input
+id="urgent"
+type="checkbox"
+style="width:auto">
+بار فوری
 </label>
 
 <div id="loadMsg"></div>
 
-<button onclick="saveLoad()">💾 ذخیره بار</button>
+<button onclick="saveLoad()">
+💾 ذخیره بار
+</button>
 
-<button class="gray" onclick="closeLoad()">بستن</button>
+<button
+class="gray"
+onclick="closeLoad()">
+بستن
+</button>
 
 </div>
 </div>
@@ -493,18 +558,23 @@ oninput="filterLoads()">
 
 <div class="modal-box">
 
-<div class="title">💰 تغییر موجودی کیف پول</div>
+<div class="title">
+💰 تغییر موجودی کیف پول
+</div>
 
 <input id="walletUser" type="hidden">
 
 <div id="walletInfo"></div>
 
-<input id="walletAmount"
+<input
+id="walletAmount"
 type="number"
 placeholder="مثلاً 50000 یا -10000">
 
-<textarea id="walletDesc"
-placeholder="شرح تراکنش"></textarea>
+<textarea
+id="walletDesc"
+placeholder="شرح تراکنش">
+</textarea>
 
 <div id="walletMsg"></div>
 
@@ -512,7 +582,9 @@ placeholder="شرح تراکنش"></textarea>
 ثبت تراکنش
 </button>
 
-<button class="gray" onclick="closeWallet()">
+<button
+class="gray"
+onclick="closeWallet()">
 بستن
 </button>
 
@@ -522,14 +594,13 @@ placeholder="شرح تراکنش"></textarea>
 
 <script>
 
-/* =================================================
-   SUPABASE
-================================================= */
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
 
 const SUPABASE_URL =
 "https://ntirixjflgqihobpnmya.supabase.co";
 
-/* کلید صحیح پروژه */
 const SUPABASE_KEY =
 "sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
 
@@ -539,761 +610,53 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
-let currentUser=null;
-let allLoads=[];
+let currentUser = null;
+let allLoads = [];
 
 
-/* =================================================
+/* =====================================================
    START
-================================================= */
+===================================================== */
 
-window.addEventListener("load",async()=>{
+window.addEventListener("load", async () => {
+
+try {
 
 await checkSession();
 
+} catch (e) {
+
+showLoginMessage(
+"خطا: " + e.message
+);
+
+showLogin();
+
+}
+
 });
 
 
-/* =================================================
+/* =====================================================
    SESSION
-================================================= */
+===================================================== */
 
-async function checkSession(){
+async function checkSession() {
 
-try{
+const result =
+await db.auth.getSession();
 
-const {data,error}=await db.auth.getSession();
+if (result.error) {
 
-if(error){
-
-showLoginMessage(error.message);
-showLogin();
-return;
-
-}
-
-if(data.session){
-
-await verifyAdmin(data.session.user);
-
-}else{
+showLoginMessage(
+result.error.message
+);
 
 showLogin();
 
-}
-
-}catch(e){
-
-showLoginMessage(e.message);
-showLogin();
-
-}
-
-}
-
-
-/* =================================================
-   VERIFY ADMIN
-================================================= */
-
-async function verifyAdmin(user){
-
-try{
-
-const {data,error}=await db
-.from("profiles")
-.select("id,role,phone")
-.eq("id",user.id)
-.maybeSingle();
-
-if(error){
-
-showLoginMessage(
-"خطا در بررسی حساب: "+error.message
-);
-
 return;
 
 }
 
-if(!data){
-
-showLoginMessage(
-"برای این حساب پروفایل وجود ندارد."
-);
-
-await db.auth.signOut();
-
-return;
-
-}
-
-if(data.role!=="admin"){
-
-showLoginMessage(
-"این حساب دسترسی مدیر ندارد."
-);
-
-await db.auth.signOut();
-
-return;
-
-}
-
-currentUser=user;
-
-document.getElementById("loginPage")
-.classList.add("hidden");
-
-document.getElementById("forgotPage")
-.classList.add("hidden");
-
-document.getElementById("resetPage")
-.classList.add("hidden");
-
-document.getElementById("adminPage")
-.classList.remove("hidden");
-
-document.getElementById("adminEmail")
-.textContent=user.email || "";
-
-await dashboardData();
-
-}catch(e){
-
-showLoginMessage(e.message);
-
-}
-
-}
-
-
-/* =================================================
-   LOGIN
-================================================= */
-
-async function login(){
-
-const email=
-document.getElementById("email").value.trim();
-
-const password=
-document.getElementById("password").value;
-
-if(!email || !password){
-
-showLoginMessage(
-"ایمیل و رمز عبور را وارد کنید."
-);
-
-return;
-
-}
-
-showLoginMessage("در حال ورود...");
-
-const {data,error}=
-await db.auth.signInWithPassword({
-email,
-password
-});
-
-if(error){
-
-showLoginMessage(error.message);
-return;
-
-}
-
-await verifyAdmin(data.user);
-
-}
-
-
-/* =================================================
-   FORGOT
-================================================= */
-
-function showForgot(){
-
-document.getElementById("loginPage")
-.classList.add("hidden");
-
-document.getElementById("resetPage")
-.classList.add("hidden");
-
-document.getElementById("forgotPage")
-.classList.remove("hidden");
-
-}
-
-function showLogin(){
-
-document.getElementById("forgotPage")
-.classList.add("hidden");
-
-document.getElementById("resetPage")
-.classList.add("hidden");
-
-document.getElementById("loginPage")
-.classList.remove("hidden");
-
-}
-
-async function sendReset(){
-
-const email=
-document.getElementById("forgotEmail")
-.value.trim();
-
-const box=
-document.getElementById("forgotMsg");
-
-if(!email){
-
-box.innerHTML=
-'<div class="msg error">ایمیل را وارد کنید.</div>';
-
-return;
-
-}
-
-const redirectTo=
-window.location.origin+
-window.location.pathname;
-
-const {error}=
-await db.auth.resetPasswordForEmail(
-email,
-{redirectTo}
-);
-
-if(error){
-
-box.innerHTML=
-'<div class="msg error">'+
-escapeHtml(error.message)+
-'</div>';
-
-return;
-
-}
-
-box.innerHTML=
-'<div class="msg success">'+
-"لینک بازیابی رمز عبور ارسال شد."+
-'</div>';
-
-}
-
-
-/* =================================================
-   PASSWORD RECOVERY
-================================================= */
-
-db.auth.onAuthStateChange(
-async(event,session)=>{
-
-if(event==="PASSWORD_RECOVERY"){
-
-document.getElementById("loginPage")
-.classList.add("hidden");
-
-document.getElementById("forgotPage")
-.classList.add("hidden");
-
-document.getElementById("adminPage")
-.classList.add("hidden");
-
-document.getElementById("resetPage")
-.classList.remove("hidden");
-
-}
-
-});
-
-
-async function saveNewPassword(){
-
-const p1=
-document.getElementById("newPass").value;
-
-const p2=
-document.getElementById("newPass2").value;
-
-const box=
-document.getElementById("resetMsg");
-
-if(p1.length<6){
-
-box.innerHTML=
-'<div class="msg error">'+
-"رمز باید حداقل ۶ کاراکتر باشد."+
-'</div>';
-
-return;
-
-}
-
-if(p1!==p2){
-
-box.innerHTML=
-'<div class="msg error">'+
-"دو رمز یکسان نیستند."+
-'</div>';
-
-return;
-
-}
-
-const {error}=
-await db.auth.updateUser({
-password:p1
-});
-
-if(error){
-
-box.innerHTML=
-'<div class="msg error">'+
-escapeHtml(error.message)+
-'</div>';
-
-return;
-
-}
-
-box.innerHTML=
-'<div class="msg success">'+
-"رمز با موفقیت تغییر کرد."+
-'</div>';
-
-setTimeout(async()=>{
-
-history.replaceState(
-null,
-"",
-window.location.pathname
-);
-
-await db.auth.signOut();
-
-showLogin();
-
-},1500);
-
-}
-
-
-/* =================================================
-   DASHBOARD
-================================================= */
-
-async function dashboardData(){
-
-const users=
-await db
-.from("profiles")
-.select("*",{count:"exact",head:true});
-
-const drivers=
-await db
-.from("profiles")
-.select("*",{count:"exact",head:true})
-.eq("role","driver");
-
-const loads=
-await db
-.from("loads")
-.select("*",{count:"exact",head:true});
-
-const active=
-await db
-.from("loads")
-.select("*",{count:"exact",head:true})
-.in(
-"status",
-["waiting","turn","free","reserved"]
-);
-
-document.getElementById("usersCount")
-.textContent=users.count || 0;
-
-document.getElementById("driversCount")
-.textContent=drivers.count || 0;
-
-document.getElementById("loadsCount")
-.textContent=loads.count || 0;
-
-document.getElementById("activeCount")
-.textContent=active.count || 0;
-
-}
-
-
-/* =================================================
-   SECTION
-================================================= */
-
-function section(name){
-
-[
-"dashboard",
-"loads",
-"drivers",
-"wallet",
-"transactions"
-].forEach(x=>{
-
-document.getElementById(x)
-.classList.add("hidden");
-
-});
-
-document.getElementById(name)
-.classList.remove("hidden");
-
-if(name==="dashboard")
-dashboardData();
-
-if(name==="loads")
-showLoads();
-
-if(name==="drivers")
-showDrivers();
-
-if(name==="wallet")
-showWallets();
-
-if(name==="transactions")
-showTransactions();
-
-}
-
-
-/* =================================================
-   LOADS
-================================================= */
-
-async function showLoads(){
-
-const {data,error}=
-await db
-.from("loads")
-.select("*")
-.order("created_at",{ascending:false});
-
-if(error){
-
-alert(error.message);
-return;
-
-}
-
-allLoads=data || [];
-
-renderLoads(allLoads);
-
-}
-
-
-function renderLoads(rows){
-
-const table=
-document.getElementById("loadsTable");
-
-table.innerHTML="";
-
-rows.forEach((l,i)=>{
-
-const tr=document.createElement("tr");
-
-tr.innerHTML=`
-
-<td>${i+1}</td>
-
-<td>${escapeHtml(l.origin || "")}</td>
-
-<td>${escapeHtml(l.destination || "")}</td>
-
-<td>${escapeHtml(l.cargo || "")}</td>
-
-<td>${l.weight ?? ""}</td>
-
-<td>${escapeHtml(l.truck_type || "")}</td>
-
-<td>
-
-<select
-onchange="changeStatus('${l.id}',this.value)">
-
-<option value="waiting"
-${l.status==="waiting"?"selected":""}>
-در انتظار
-</option>
-
-<option value="turn"
-${l.status==="turn"?"selected":""}>
-نوبتی
-</option>
-
-<option value="free"
-${l.status==="free"?"selected":""}>
-آزاد
-</option>
-
-<option value="reserved"
-${l.status==="reserved"?"selected":""}>
-رزرو شده
-</option>
-
-<option value="completed"
-${l.status==="completed"?"selected":""}>
-تکمیل شده
-</option>
-
-</select>
-
-</td>
-
-<td>${l.urgent ? "🔴 بله":"خیر"}</td>
-
-<td>
-
-<button
-class="action"
-onclick="editLoad('${l.id}')">
-ویرایش
-</button>
-
-<button
-class="action red"
-onclick="deleteLoad('${l.id}')">
-حذف
-</button>
-
-</td>
-
-`;
-
-table.appendChild(tr);
-
-});
-
-}
-
-
-function filterLoads(){
-
-const q=
-document.getElementById("search")
-.value
-.trim()
-.toLowerCase();
-
-const status=
-document.getElementById("filterStatus")
-.value;
-
-const rows=
-allLoads.filter(l=>{
-
-const text=
-(
-(l.origin||"")+" "+
-(l.destination||"")+" "+
-(l.cargo||"")+" "+
-(l.truck_type||"")
-).toLowerCase();
-
-return
-(!q || text.includes(q)) &&
-(!status || l.status===status);
-
-});
-
-renderLoads(rows);
-
-}
-
-
-/* =================================================
-   NEW LOAD
-================================================= */
-
-function newLoad(){
-
-document.getElementById("loadId").value="";
-document.getElementById("origin").value="";
-document.getElementById("destination").value="";
-document.getElementById("cargo").value="";
-document.getElementById("weight").value="";
-document.getElementById("truckType").value="";
-document.getElementById("loadStatus").value="waiting";
-document.getElementById("urgent").checked=false;
-document.getElementById("loadMsg").innerHTML="";
-
-document.getElementById("loadModal")
-.classList.remove("hidden");
-
-}
-
-
-function editLoad(id){
-
-const l=
-allLoads.find(x=>x.id===id);
-
-if(!l)return;
-
-document.getElementById("loadId").value=l.id;
-document.getElementById("origin").value=l.origin||"";
-document.getElementById("destination").value=l.destination||"";
-document.getElementById("cargo").value=l.cargo||"";
-document.getElementById("weight").value=l.weight||"";
-document.getElementById("truckType").value=l.truck_type||"";
-document.getElementById("loadStatus").value=l.status||"waiting";
-document.getElementById("urgent").checked=!!l.urgent;
-
-document.getElementById("loadModal")
-.classList.remove("hidden");
-
-}
-
-
-async function saveLoad(){
-
-const id=
-document.getElementById("loadId").value;
-
-const payload={
-
-origin:
-document.getElementById("origin").value.trim(),
-
-destination:
-document.getElementById("destination").value.trim(),
-
-cargo:
-document.getElementById("cargo").value.trim(),
-
-weight:
-Number(document.getElementById("weight").value)||0,
-
-truck_type:
-document.getElementById("truckType").value.trim(),
-
-status:
-document.getElementById("loadStatus").value,
-
-urgent:
-document.getElementById("urgent").checked
-
-};
-
-if(!payload.origin ||
-!payload.destination ||
-!payload.cargo){
-
-document.getElementById("loadMsg").innerHTML=
-'<div class="msg error">'+
-"مبدا، مقصد و کالا الزامی است."+
-'</div>';
-
-return;
-
-}
-
-let result;
-
-if(id){
-
-result=await db
-.from("loads")
-.update(payload)
-.eq("id",id);
-
-}else{
-
-payload.created_by=currentUser.id;
-
-result=await db
-.from("loads")
-.insert(payload);
-
-}
-
-if(result.error){
-
-document.getElementById("loadMsg").innerHTML=
-'<div class="msg error">'+
-escapeHtml(result.error.message)+
-'</div>';
-
-return;
-
-}
-
-closeLoad();
-
-await showLoads();
-await dashboardData();
-
-}
-
-
-async function changeStatus(id,status){
-
-const {error}=
-await db
-.from("loads")
-.update({status})
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-await showLoads();
-return;
-
-}
-
-await showLoads();
-await dashboardData();
-
-}
-
-
-async function deleteLoad(id){
-
-if(!confirm("این بار حذف شود؟"))
-return;
-
-const {error}=
-await db
-.from("loads")
-.delete()
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-return;
-
-}
-
-await showLoads();
-await dashboardData();
-
-}
-
-
-function closeLoad(){
-
-document.getElementById("loadModal")
-.classList.add("hidden");
-
-}
-
-
-/* ====================================*
+if (!result.data.session) {
 ```
