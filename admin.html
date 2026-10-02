@@ -3,433 +3,357 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>پنل مدیریت صلایان بار</title>
+<title>پنل مدیریت صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{box-sizing:border-box}
 
-* {
-    box-sizing: border-box;
+body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:#f3f6f4;
+    color:#222;
 }
 
-body {
-    margin: 0;
-    font-family: Tahoma, Arial, sans-serif;
-    background: #f3f6f8;
-    color: #222;
+header{
+    background:#087f3e;
+    color:white;
+    padding:18px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
 }
 
-header {
-    background: #087f5b;
-    color: white;
-    padding: 18px;
-    text-align: center;
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 23px;
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
 }
 
-header p {
-    margin: 7px 0 0;
-    font-size: 13px;
+button{
+    border:0;
+    border-radius:10px;
+    padding:10px 15px;
+    cursor:pointer;
+    font-family:inherit;
 }
 
-.container {
-    max-width: 1250px;
-    margin: auto;
-    padding: 18px;
+.btn-green{background:#087f3e;color:white}
+.btn-red{background:#c62828;color:white}
+.btn-blue{background:#1976d2;color:white}
+.btn-gray{background:#777;color:white}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
 }
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 18px;
+.stat{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 2px 10px #00000012;
+    text-align:center;
 }
 
-.stat {
-    background: white;
-    border-radius: 14px;
-    padding: 18px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+.stat .num{
+    font-size:28px;
+    font-weight:bold;
+    color:#087f3e;
+    margin-top:8px;
 }
 
-.stat strong {
-    display: block;
-    font-size: 28px;
-    color: #087f5b;
-    margin-top: 8px;
+.menu{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+    margin-bottom:20px;
 }
 
-.menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+.menu button{
+    background:white;
+    border:1px solid #ddd;
+    padding:15px 8px;
 }
 
-.menu button {
-    border: none;
-    background: white;
-    padding: 18px;
-    border-radius: 14px;
-    cursor: pointer;
-    font-size: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+.menu button:hover{
+    background:#eaf7ef;
 }
 
-.menu button:hover {
-    background: #eaf7f2;
+.section{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #00000012;
 }
 
-.panel {
-    background: white;
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+.section h2{
+    margin-top:0;
+    color:#087f3e;
 }
 
-.panel-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
 }
 
-.panel-title h2 {
-    margin: 0;
-    font-size: 19px;
+input,select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-family:inherit;
 }
 
-.btn {
-    border: none;
-    border-radius: 9px;
-    padding: 10px 14px;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: inherit;
+input{
+    min-width:180px;
 }
 
-.btn-primary {
-    background: #087f5b;
-    color: white;
+.table-wrap{
+    overflow-x:auto;
 }
 
-.btn-secondary {
-    background: #e9ecef;
-    color: #222;
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
 }
 
-.btn-danger {
-    background: #d6336c;
-    color: white;
+th,td{
+    padding:11px;
+    border-bottom:1px solid #eee;
+    text-align:center;
 }
 
-.filters {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr auto;
-    gap: 10px;
-    margin-bottom: 15px;
+th{
+    background:#edf6f0;
 }
 
-input,
-select {
-    width: 100%;
-    padding: 11px;
-    border: 1px solid #ddd;
-    border-radius: 9px;
-    font-family: inherit;
-    background: white;
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    display:inline-block;
 }
 
-.table-wrap {
-    overflow-x: auto;
+.waiting{background:#fff3cd;color:#856404}
+.turn{background:#d1ecf1;color:#0c5460}
+.free{background:#d4edda;color:#155724}
+.reserved{background:#cce5ff;color:#004085}
+.completed{background:#e2e3e5;color:#383d41}
+
+.status-select{
+    min-width:120px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1000px;
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
-th,
-td {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    text-align: center;
-    font-size: 13px;
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:600px;
+    border-radius:18px;
+    padding:25px;
+    max-height:90vh;
+    overflow:auto;
 }
 
-th {
-    background: #f1f3f5;
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.status-select {
-    width: 125px;
-    padding: 7px 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 12px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
+.form-grid .full{
+    grid-column:1/-1;
 }
 
-.status-select.waiting {
-    background: #e7f5ff;
-    color: #1971c2;
+.form-grid label{
+    display:block;
+    margin-bottom:5px;
+    font-size:13px;
 }
 
-.status-select.turn {
-    background: #fff3bf;
-    color: #9c6500;
+.form-grid input,
+.form-grid select{
+    width:100%;
 }
 
-.status-select.free {
-    background: #d3f9d8;
-    color: #2b8a3e;
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
 }
 
-.status-select.reserved {
-    background: #e5dbff;
-    color: #6741d9;
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:#222;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    display:none;
+    z-index:3000;
 }
 
-.status-select.completed {
-    background: #dee2e6;
-    color: #495057;
+.driver-card{
+    display:none;
 }
 
-.badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
+.driver-active{
+    background:#d4edda;
+    color:#155724;
 }
 
-.badge-urgent {
-    background: #ffe3e3;
-    color: #c92a2a;
+.driver-disabled{
+    background:#f8d7da;
+    color:#721c24;
 }
 
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    flex-wrap: wrap;
-}
-
-.actions button {
-    padding: 6px 9px;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 11px;
-    font-family: inherit;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.55);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-}
-
-.modal-box {
-    background: white;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 18px;
-    padding: 22px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-box h2 {
-    margin-top: 0;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.form-group {
-    margin-bottom: 10px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 13px;
-}
-
-.full {
-    grid-column: 1 / -1;
-}
-
-.checkbox {
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-}
-
-.checkbox input {
-    width: auto;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-}
-
-.toast {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    background: #212529;
-    color: white;
-    padding: 13px 17px;
-    border-radius: 10px;
-    display: none;
-    z-index: 2000;
-    max-width: 90%;
-}
-
-.empty {
-    text-align: center;
-    padding: 30px;
-    color: #777;
-}
-
-.loading {
-    text-align: center;
-    padding: 25px;
-}
-
-@media(max-width: 800px) {
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
+@media(max-width:900px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .menu {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .filters {
-        grid-template-columns: 1fr;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .full {
-        grid-column: auto;
+    .menu{
+        grid-template-columns:repeat(3,1fr);
     }
 }
 
-@media(max-width: 500px) {
-
-    .container {
-        padding: 10px;
+@media(max-width:600px){
+    .container{
+        padding:10px;
     }
 
-    .menu {
-        grid-template-columns: 1fr;
+    .stats{
+        grid-template-columns:1fr 1fr;
     }
 
-    header h1 {
-        font-size: 19px;
+    .menu{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .driver-card{
+        display:block;
+        background:#fff;
+        border:1px solid #eee;
+        border-radius:12px;
+        padding:15px;
+        margin-bottom:10px;
+    }
+
+    .driver-table{
+        display:none;
     }
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
-    <h1>پنل مدیریت صلایان بار</h1>
-
-    <p>سامانه اعلام بار هوشمند</p>
-
+    🚛 صلایان بار نیمبلوک
+    <div style="font-size:13px;margin-top:5px;font-weight:normal">
+        پنل مدیریت سامانه
+    </div>
 </header>
-
 
 <div class="container">
 
+<div class="topbar">
+    <div>
+        <b>مدیریت سامانه</b>
+    </div>
 
-<!-- ================= آمار ================= -->
+    <div>
+        <button class="btn-green" onclick="refreshAll()">🔄 بروزرسانی</button>
+        <button class="btn-red" onclick="logout()">خروج</button>
+    </div>
+</div>
 
+<!-- آمار -->
 <div class="stats">
 
     <div class="stat">
         کاربران
-        <strong id="usersCount">-</strong>
+        <div class="num" id="usersCount">0</div>
     </div>
 
     <div class="stat">
         رانندگان
-        <strong id="driversCount">-</strong>
+        <div class="num" id="driversCount">0</div>
     </div>
 
     <div class="stat">
         کل بارها
-        <strong id="loadsCount">-</strong>
+        <div class="num" id="loadsCount">0</div>
     </div>
 
     <div class="stat">
         بارهای فعال
-        <strong id="activeLoadsCount">-</strong>
+        <div class="num" id="activeLoadsCount">0</div>
     </div>
 
 </div>
 
-
-<!-- ================= منو ================= -->
-
+<!-- منو -->
 <div class="menu">
 
     <button onclick="scrollToLoads()">
-        📦 مدیریت بارها
+        🚚<br>مدیریت بارها
     </button>
 
-    <button onclick="driverManagement()">
-        🚛 مدیریت رانندگان
+    <button onclick="scrollToDrivers()">
+        👤<br>مدیریت رانندگان
     </button>
 
-    <button onclick="walletManagement()">
-        💰 کیف پول و تراکنش‌ها
+    <button onclick="showToast('بخش کیف پول در مرحله بعد تکمیل می‌شود')">
+        💰<br>کیف پول
     </button>
 
-    <button onclick="inquiryManagement()">
-        🔍 استعلام‌ها
+    <button onclick="showToast('بخش استعلام‌ها در مرحله بعد تکمیل می‌شود')">
+        🔍<br>استعلام‌ها
     </button>
 
-    <button onclick="notificationManagement()">
-        🔔 اعلان‌ها
+    <button onclick="showToast('بخش اعلان‌ها در مرحله بعد تکمیل می‌شود')">
+        🔔<br>اعلان‌ها
     </button>
 
-    <button onclick="settingsManagement()">
-        ⚙️ تنظیمات سامانه
+    <button onclick="showToast('تنظیمات سامانه در مرحله بعد تکمیل می‌شود')">
+        ⚙️<br>تنظیمات
     </button>
 
 </div>
@@ -437,1841 +361,1301 @@ th {
 
 <!-- ================= مدیریت بارها ================= -->
 
-<div class="panel" id="loadsPanel">
+<div class="section" id="loadsSection">
 
-    <div class="panel-title">
+<h2>🚚 مدیریت بارها</h2>
 
-        <h2>مدیریت بارها</h2>
+<div class="filters">
 
-        <div>
+<input
+    id="loadSearch"
+    placeholder="جستجوی مبدأ، مقصد، بار..."
+    oninput="filterLoads()">
 
-            <button
-                class="btn btn-primary"
-                onclick="openNewLoad()"
-            >
-                ➕ ثبت بار جدید
-            </button>
+<select id="loadStatusFilter" onchange="filterLoads()">
+    <option value="">همه وضعیت‌ها</option>
+    <option value="waiting">در انتظار</option>
+    <option value="turn">نوبتی</option>
+    <option value="free">آزاد</option>
+    <option value="reserved">رزرو شده</option>
+    <option value="completed">تکمیل شده</option>
+</select>
 
-            <button
-                class="btn btn-secondary"
-                onclick="refreshAll()"
-            >
-                🔄 بروزرسانی
-            </button>
+<select id="urgentFilter" onchange="filterLoads()">
+    <option value="">همه</option>
+    <option value="true">فوری</option>
+    <option value="false">عادی</option>
+</select>
 
-        </div>
+<button class="btn-gray" onclick="clearLoadFilters()">پاک کردن فیلتر</button>
 
-    </div>
+<button class="btn-green" onclick="openNewLoad()">➕ ثبت بار جدید</button>
 
+</div>
 
-    <!-- ================= فیلتر ================= -->
+<div class="table-wrap">
 
-    <div class="filters">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>مبدأ</th>
+<th>مقصد</th>
+<th>نوع بار</th>
+<th>وزن</th>
+<th>نوع کامیون</th>
+<th>وضعیت</th>
+<th>فوری</th>
+<th>تاریخ</th>
+<th>عملیات</th>
+</tr>
+</thead>
 
-        <input
-            id="searchInput"
-            placeholder="جستجو در مبدأ، مقصد، بار یا کامیون..."
-            oninput="filterLoads()"
-        >
+<tbody id="loadsTable"></tbody>
 
-        <select
-            id="statusFilter"
-            onchange="filterLoads()"
-        >
-
-            <option value="">همه وضعیت‌ها</option>
-
-            <option value="waiting">
-                در انتظار
-            </option>
-
-            <option value="turn">
-                نوبتی
-            </option>
-
-            <option value="free">
-                آزاد
-            </option>
-
-            <option value="reserved">
-                رزرو شده
-            </option>
-
-            <option value="completed">
-                تکمیل شده
-            </option>
-
-        </select>
-
-
-        <select
-            id="urgentFilter"
-            onchange="filterLoads()"
-        >
-
-            <option value="">
-                همه بارها
-            </option>
-
-            <option value="true">
-                فقط فوری
-            </option>
-
-            <option value="false">
-                غیرفوری
-            </option>
-
-        </select>
-
-
-        <button
-            class="btn btn-secondary"
-            onclick="clearFilters()"
-        >
-            پاک کردن
-        </button>
-
-    </div>
-
-
-    <!-- ================= جدول ================= -->
-
-    <div class="table-wrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>#</th>
-
-                    <th>مبدأ</th>
-
-                    <th>مقصد</th>
-
-                    <th>بار</th>
-
-                    <th>وزن</th>
-
-                    <th>نوع کامیون</th>
-
-                    <th>وضعیت</th>
-
-                    <th>فوری</th>
-
-                    <th>تاریخ</th>
-
-                    <th>عملیات</th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="loadsTable">
-
-                <tr>
-
-                    <td
-                        colspan="10"
-                        class="loading"
-                    >
-                        در حال دریافت اطلاعات...
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
+</table>
 
 </div>
 
 </div>
 
 
-<!-- ================= پنجره ثبت بار ================= -->
+<!-- ================= مدیریت رانندگان ================= -->
 
-<div
-    class="modal"
-    id="loadModal"
->
+<div class="section" id="driversSection">
 
-    <div class="modal-box">
+<h2>👤 مدیریت رانندگان</h2>
 
-        <h2 id="modalTitle">
-            ثبت بار جدید
-        </h2>
+<div class="filters">
 
+<input
+    id="driverSearch"
+    placeholder="جستجوی نام یا شماره موبایل..."
+    oninput="filterDrivers()">
 
-        <div class="form-grid">
+<select id="driverRoleFilter" onchange="filterDrivers()">
+    <option value="">همه نقش‌ها</option>
+    <option value="driver">راننده</option>
+    <option value="owner">مالک بار</option>
+    <option value="company">شرکت</option>
+    <option value="admin">مدیر</option>
+</select>
 
+<button class="btn-gray" onclick="clearDriverFilters()">
+    پاک کردن فیلتر
+</button>
 
-            <div class="form-group">
-
-                <label>
-                    مبدأ
-                </label>
-
-                <input
-                    id="origin"
-                    placeholder="مثلاً قاین"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    مقصد
-                </label>
-
-                <input
-                    id="destination"
-                    placeholder="مثلاً مشهد"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    نوع بار
-                </label>
-
-                <input
-                    id="cargo"
-                    placeholder="مثلاً فولاد"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    وزن
-                </label>
-
-                <input
-                    id="weight"
-                    type="number"
-                    step="0.01"
-                    placeholder="مثلاً 25"
-                >
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>
-                    نوع کامیون
-                </label>
-
-                <input
-                    id="truck_type"
-                    placeholder="مثلاً کمپرسی"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    وضعیت بار
-                </label>
-
-                <select id="load_status">
-
-                    <option value="waiting">
-                        در انتظار
-                    </option>
-
-                    <option value="turn" selected>
-                        نوبتی
-                    </option>
-
-                    <option value="free">
-                        آزاد
-                    </option>
-
-                    <option value="reserved">
-                        رزرو شده
-                    </option>
-
-                    <option value="completed">
-                        تکمیل شده
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    فوری
-                </label>
-
-                <label class="checkbox">
-
-                    <input
-                        type="checkbox"
-                        id="urgent"
-                    >
-
-                    بار فوری
-
-                </label>
-
-            </div>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-            <button
-                class="btn btn-primary"
-                onclick="saveLoad()"
-            >
-                ذخیره بار
-            </button>
-
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()"
-            >
-                انصراف
-            </button>
-
-        </div>
-
-    </div>
+<button class="btn-green" onclick="loadDrivers()">
+    🔄 بروزرسانی رانندگان
+</button>
 
 </div>
 
 
-<div
-    class="toast"
-    id="toast"
-></div>
+<div class="table-wrap driver-table">
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>نام</th>
+<th>موبایل</th>
+<th>نقش</th>
+<th>وضعیت</th>
+<th>کامیون</th>
+<th>کیف پول</th>
+<th>تاریخ عضویت</th>
+<th>عملیات</th>
+</tr>
+</thead>
+
+<tbody id="driversTable"></tbody>
+
+</table>
+
+</div>
+
+<div id="driversMobile"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= مودال بار ================= -->
+
+<div class="modal" id="loadModal">
+
+<div class="modal-box">
+
+<h2 id="loadModalTitle">ثبت بار جدید</h2>
+
+<input type="hidden" id="editLoadId">
+
+<div class="form-grid">
+
+<div>
+<label>مبدأ</label>
+<input id="origin">
+</div>
+
+<div>
+<label>مقصد</label>
+<input id="destination">
+</div>
+
+<div>
+<label>نوع بار</label>
+<input id="cargo">
+</div>
+
+<div>
+<label>وزن</label>
+<input id="weight" type="number">
+</div>
+
+<div>
+<label>نوع کامیون</label>
+<input id="truck_type">
+</div>
+
+<div>
+<label>وضعیت</label>
+
+<select id="load_status">
+
+<option value="waiting">در انتظار</option>
+<option value="turn">نوبتی</option>
+<option value="free">آزاد</option>
+<option value="reserved">رزرو شده</option>
+<option value="completed">تکمیل شده</option>
+
+</select>
+
+</div>
+
+<div class="full">
+
+<label>
+<input type="checkbox" id="urgent">
+بار فوری
+</label>
+
+</div>
+
+</div>
+
+<div class="modal-actions">
+
+<button class="btn-green" onclick="saveLoad()">
+ذخیره
+</button>
+
+<button class="btn-gray" onclick="closeLoadModal()">
+انصراف
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= مودال راننده ================= -->
+
+<div class="modal" id="driverModal">
+
+<div class="modal-box">
+
+<h2>👤 اطلاعات راننده</h2>
+
+<div id="driverDetails"></div>
+
+<div class="modal-actions">
+
+<button class="btn-gray" onclick="closeDriverModal()">
+بستن
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-
-/* =====================================================
-   اتصال به Supabase
-===================================================== */
-
 const SUPABASE_URL =
-    "https://ntirixjflgqihobpnmya.supabase.co";
+"https://ntirixjflgqihobpnmya.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
+"sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
 
-const client =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
-
-
-/* =====================================================
-   متغیرها
-===================================================== */
-
-let allLoads = [];
-
-let editingLoadId = null;
-
-
-/* =====================================================
-   شروع برنامه
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function() {
-
-        await checkAdmin();
-
-    }
+const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =====================================================
-   بررسی مدیر بودن کاربر
-===================================================== */
+let currentUser = null;
 
-async function checkAdmin() {
+let allLoads = [];
+let allDrivers = [];
 
-    try {
+
+/* ================= شروع ================= */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await checkAdmin();
+
+});
+
+
+/* ================= بررسی ادمین ================= */
+
+async function checkAdmin(){
+
+    try{
 
         const {
-            data: authData,
-            error: authError
-        } =
-        await client.auth.getUser();
+            data:{user},
+            error
+        } = await client.auth.getUser();
 
+        if(error || !user){
 
-        if (authError) {
+            alert("جلسه ورود پیدا نشد");
 
-            throw authError;
-
-        }
-
-
-        const user =
-            authData.user;
-
-
-        if (!user) {
-
-            document.body.innerHTML =
-
-                `
-                <div style="
-                    text-align:center;
-                    padding:50px;
-                    font-family:Tahoma;
-                ">
-
-                    <h2>
-                        ابتدا وارد سامانه شوید.
-                    </h2>
-
-                </div>
-                `;
+            location.href = "index.html";
 
             return;
-
         }
 
+        currentUser = user;
 
-        const {
-            data: profile,
-            error: profileError
-        } =
+        const {data:profile,error:profileError} =
         await client
-            .from("profiles")
-            .select("role")
-            .eq("id", user.id)
-            .single();
+        .from("profiles")
+        .select("id,phone,role")
+        .eq("id",user.id)
+        .maybeSingle();
 
+        if(profileError){
 
-        if (profileError) {
-
-            throw profileError;
-
-        }
-
-
-        if (
-            !profile ||
-            profile.role !== "admin"
-        ) {
-
-            document.body.innerHTML =
-
-                `
-                <div style="
-                    text-align:center;
-                    padding:50px;
-                    font-family:Tahoma;
-                ">
-
-                    <h2 style="color:#c92a2a">
-                        دسترسی فقط برای مدیر سامانه مجاز است.
-                    </h2>
-
-                </div>
-                `;
+            alert("خطا در بررسی مدیر: " + profileError.message);
 
             return;
-
         }
 
+        if(!profile || profile.role !== "admin"){
+
+            alert("دسترسی شما به پنل مدیریت مجاز نیست");
+
+            location.href = "index.html";
+
+            return;
+        }
 
         await refreshAll();
 
-    }
-    catch(error) {
+    }catch(err){
 
-        console.error(
-            "ADMIN CHECK ERROR:",
-            error
-        );
-
-        document.body.innerHTML =
-
-            `
-            <div style="
-                text-align:center;
-                padding:50px;
-                font-family:Tahoma;
-            ">
-
-                <h2>
-                    خطا در بررسی دسترسی
-                </h2>
-
-                <p>
-                    ${safe(error.message)}
-                </p>
-
-            </div>
-            `;
+        alert("خطای واقعی: " + err.message);
 
     }
 
 }
 
 
-/* =====================================================
-   بروزرسانی کامل
-===================================================== */
+/* ================= بروزرسانی همه ================= */
 
-async function refreshAll() {
+async function refreshAll(){
 
     await loadDashboard();
 
     await loadLoads();
 
+    await loadDrivers();
+
 }
 
 
-/* =====================================================
-   داشبورد
-===================================================== */
+/* ================= داشبورد ================= */
 
-async function loadDashboard() {
+async function loadDashboard(){
 
-    try {
+    try{
 
-        const usersResult =
-            await client
-                .from("profiles")
-                .select(
-                    "id",
-                    {
-                        count: "exact",
-                        head: true
-                    }
-                );
+        const {count:usersCount,error:uError} =
+        await client
+        .from("profiles")
+        .select("*",{count:"exact",head:true});
+
+        if(!uError)
+            document.getElementById("usersCount").innerText =
+            usersCount || 0;
 
 
-        const driversResult =
-            await client
-                .from("drivers")
-                .select(
-                    "id",
-                    {
-                        count: "exact",
-                        head: true
-                    }
-                );
+        const {count:driversCount,error:dError} =
+        await client
+        .from("drivers")
+        .select("*",{count:"exact",head:true});
+
+        if(!dError)
+            document.getElementById("driversCount").innerText =
+            driversCount || 0;
 
 
-        const loadsResult =
-            await client
-                .from("loads")
-                .select(
-                    "id",
-                    {
-                        count: "exact",
-                        head: true
-                    }
-                );
+        const {count:loadsCount,error:lError} =
+        await client
+        .from("loads")
+        .select("*",{count:"exact",head:true});
+
+        if(!lError)
+            document.getElementById("loadsCount").innerText =
+            loadsCount || 0;
 
 
-        const activeResult =
-            await client
-                .from("loads")
-                .select(
-                    "id",
-                    {
-                        count: "exact",
-                        head: true
-                    }
-                )
-                .in(
-                    "status",
-                    [
-                        "waiting",
-                        "turn",
-                        "free"
-                    ]
-                );
+        const {count:activeCount,error:aError} =
+        await client
+        .from("loads")
+        .select("*",{count:"exact",head:true})
+        .in("status",["waiting","turn","free"]);
 
+        if(!aError)
+            document.getElementById("activeLoadsCount").innerText =
+            activeCount || 0;
 
-        document.getElementById(
-            "usersCount"
-        ).textContent =
-            usersResult.count ?? 0;
+    }catch(err){
 
-
-        document.getElementById(
-            "driversCount"
-        ).textContent =
-            driversResult.count ?? 0;
-
-
-        document.getElementById(
-            "loadsCount"
-        ).textContent =
-            loadsResult.count ?? 0;
-
-
-        document.getElementById(
-            "activeLoadsCount"
-        ).textContent =
-            activeResult.count ?? 0;
-
-    }
-    catch(error) {
-
-        console.error(
-            "DASHBOARD ERROR:",
-            error
-        );
+        console.error(err);
 
     }
 
 }
 
 
-/* =====================================================
-   دریافت بارها
-===================================================== */
+/* ================= بارها ================= */
 
-async function loadLoads() {
+async function loadLoads(){
 
-    const table =
-        document.getElementById(
-            "loadsTable"
-        );
+    const {data,error} =
+    await client
+    .from("loads")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+    if(error){
+
+        alert("خطا در دریافت بارها:\n" + error.message);
+
+        return;
+    }
+
+    allLoads = data || [];
+
+    renderLoads(allLoads);
+
+}
 
 
-    table.innerHTML =
+function renderLoads(list){
 
-        `
-        <tr>
+    const tbody =
+    document.getElementById("loadsTable");
 
-            <td
-                colspan="10"
-                class="loading"
-            >
-                در حال دریافت اطلاعات...
-            </td>
+    tbody.innerHTML = "";
 
-        </tr>
+    list.forEach((load,index)=>{
+
+        const tr =
+        document.createElement("tr");
+
+        tr.innerHTML = `
+
+        <td>${index+1}</td>
+
+        <td>${safe(load.origin)}</td>
+
+        <td>${safe(load.destination)}</td>
+
+        <td>${safe(load.cargo)}</td>
+
+        <td>${safe(load.weight)}</td>
+
+        <td>${safe(load.truck_type)}</td>
+
+        <td>
+            ${statusSelect(load)}
+        </td>
+
+        <td>
+            ${load.urgent ? "🔴 فوری" : "عادی"}
+        </td>
+
+        <td>
+            ${formatDate(load.created_at)}
+        </td>
+
+        <td>
+
+            <button
+            class="btn-blue"
+            onclick="editLoad('${load.id}')">
+            ویرایش
+            </button>
+
+            <button
+            class="btn-red"
+            onclick="deleteLoad('${load.id}')">
+            حذف
+            </button>
+
+        </td>
+
         `;
 
+        tbody.appendChild(tr);
 
-    const {
-        data,
-        error
-    } =
-    await client
-        .from("loads")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-
-    if (error) {
-
-        console.error(
-            "LOADS ERROR:",
-            error
-        );
-
-
-        table.innerHTML =
-
-            `
-            <tr>
-
-                <td
-                    colspan="10"
-                    class="empty"
-                >
-                    خطا در دریافت بارها
-                </td>
-
-            </tr>
-            `;
-
-        return;
-
-    }
-
-
-    allLoads =
-        data || [];
-
-
-    renderLoads(
-        allLoads
-    );
-
-}
-
-
-/* =====================================================
-   نمایش بارها
-===================================================== */
-
-function renderLoads(loads) {
-
-    const table =
-        document.getElementById(
-            "loadsTable"
-        );
-
-
-    if (!loads.length) {
-
-        table.innerHTML =
-
-            `
-            <tr>
-
-                <td
-                    colspan="10"
-                    class="empty"
-                >
-                    هیچ باری پیدا نشد.
-                </td>
-
-            </tr>
-            `;
-
-        return;
-
-    }
-
-
-    table.innerHTML =
-
-        loads.map(
-            function(load, index) {
-
-                return `
-
-                <tr>
-
-                    <td>
-                        ${index + 1}
-                    </td>
-
-
-                    <td>
-                        ${safe(load.origin)}
-                    </td>
-
-
-                    <td>
-                        ${safe(load.destination)}
-                    </td>
-
-
-                    <td>
-                        ${safe(load.cargo)}
-                    </td>
-
-
-                    <td>
-                        ${safe(load.weight)}
-                    </td>
-
-
-                    <td>
-                        ${safe(
-                            load.truck_type || "-"
-                        )}
-                    </td>
-
-
-                    <td>
-
-                        ${statusSelect(load)}
-
-                    </td>
-
-
-                    <td>
-
-                        ${
-                            load.urgent
-
-                            ?
-
-                            '<span class="badge badge-urgent">فوری</span>'
-
-                            :
-
-                            "-"
-                        }
-
-                    </td>
-
-
-                    <td>
-                        ${formatDate(
-                            load.created_at
-                        )}
-                    </td>
-
-
-                    <td>
-
-                        <div class="actions">
-
-                            <button
-                                style="
-                                    background:#e9ecef;
-                                "
-                                onclick="
-                                    editLoad('${load.id}')
-                                "
-                            >
-                                ویرایش
-                            </button>
-
-
-                            <button
-                                style="
-                                    background:#d6336c;
-                                    color:white;
-                                "
-                                onclick="
-                                    deleteLoad('${load.id}')
-                                "
-                            >
-                                حذف
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-                `;
-
-            }
-        ).join("");
-
-}
-
-
-/* =====================================================
-   کشویی وضعیت
-===================================================== */
-
-function statusSelect(load) {
-
-    const current =
-        load.status || "turn";
-
-
-    return `
-
-        <select
-
-            class="status-select ${current}"
-
-            onchange="
-                changeStatus(
-                    '${load.id}',
-                    this.value
-                )
-            "
-
-        >
-
-            <option
-                value="waiting"
-                ${current === "waiting" ? "selected" : ""}
-            >
-                در انتظار
-            </option>
-
-
-            <option
-                value="turn"
-                ${current === "turn" ? "selected" : ""}
-            >
-                نوبتی
-            </option>
-
-
-            <option
-                value="free"
-                ${current === "free" ? "selected" : ""}
-            >
-                آزاد
-            </option>
-
-
-            <option
-                value="reserved"
-                ${current === "reserved" ? "selected" : ""}
-            >
-                رزرو شده
-            </option>
-
-
-            <option
-                value="completed"
-                ${current === "completed" ? "selected" : ""}
-            >
-                تکمیل شده
-            </option>
-
-        </select>
-
-    `;
-
-}
-
-
-/* =====================================================
-   تغییر وضعیت مستقیم
-===================================================== */
-
-async function changeStatus(
-    id,
-    newStatus
-) {
-
-    const allowed = [
-
-        "waiting",
-
-        "turn",
-
-        "free",
-
-        "reserved",
-
-        "completed"
-
-    ];
-
-
-    if (!allowed.includes(newStatus)) {
-
-        alert(
-            "وضعیت انتخاب شده معتبر نیست."
-        );
-
-        await loadLoads();
-
-        return;
-
-    }
-
-
-    const load =
-        allLoads.find(
-            function(item) {
-
-                return item.id === id;
-
-            }
-        );
-
-
-    if (!load) {
-
-        alert(
-            "بار پیدا نشد."
-        );
-
-        return;
-
-    }
-
-
-    const oldStatus =
-        load.status;
-
-
-    if (
-        oldStatus === newStatus
-    ) {
-
-        return;
-
-    }
-
-
-    const {
-        error
-    } =
-    await client
-        .from("loads")
-        .update({
-            status: newStatus
-        })
-        .eq(
-            "id",
-            id
-        );
-
-
-    if (error) {
-
-        console.error(
-            "STATUS UPDATE ERROR:",
-            error
-        );
-
-
-        alert(
-
-            "خطا در تغییر وضعیت:\n\n" +
-
-            error.message +
-
-            "\n\nجزئیات:\n" +
-
-            (error.details || "") +
-
-            "\n\nکد خطا:\n" +
-
-            (error.code || "")
-
-        );
-
-
-        await loadLoads();
-
-        return;
-
-    }
-
-
-    const statusNames = {
-
-        waiting: "در انتظار",
-
-        turn: "نوبتی",
-
-        free: "آزاد",
-
-        reserved: "رزرو شده",
-
-        completed: "تکمیل شده"
-
-    };
-
-
-    showToast(
-
-        "وضعیت بار به «" +
-
-        statusNames[newStatus] +
-
-        "» تغییر کرد ✅"
-
-    );
-
-
-    await loadDashboard();
-
-    await loadLoads();
-
-}
-
-
-/* =====================================================
-   فیلتر
-===================================================== */
-
-function filterLoads() {
-
-    const search =
-        document.getElementById(
-            "searchInput"
-        )
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const status =
-        document.getElementById(
-            "statusFilter"
-        )
-        .value;
-
-
-    const urgent =
-        document.getElementById(
-            "urgentFilter"
-        )
-        .value;
-
-
-    const filtered =
-        allLoads.filter(
-            function(load) {
-
-                const text = `
-
-                    ${load.origin || ""}
-
-                    ${load.destination || ""}
-
-                    ${load.cargo || ""}
-
-                    ${load.truck_type || ""}
-
-                `.toLowerCase();
-
-
-                if (
-                    search &&
-                    !text.includes(search)
-                ) {
-
-                    return false;
-
-                }
-
-
-                if (
-                    status &&
-                    load.status !== status
-                ) {
-
-                    return false;
-
-                }
-
-
-                if (
-                    urgent &&
-                    String(load.urgent) !== urgent
-                ) {
-
-                    return false;
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    renderLoads(
-        filtered
-    );
-
-}
-
-
-/* =====================================================
-   پاک کردن فیلتر
-===================================================== */
-
-function clearFilters() {
-
-    document.getElementById(
-        "searchInput"
-    ).value = "";
-
-
-    document.getElementById(
-        "statusFilter"
-    ).value = "";
-
-
-    document.getElementById(
-        "urgentFilter"
-    ).value = "";
-
-
-    renderLoads(
-        allLoads
-    );
-
-}
-
-
-/* =====================================================
-   ثبت بار جدید
-===================================================== */
-
-function openNewLoad() {
-
-    editingLoadId = null;
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "ثبت بار جدید";
-
-
-    document.getElementById(
-        "origin"
-    ).value = "";
-
-
-    document.getElementById(
-        "destination"
-    ).value = "";
-
-
-    document.getElementById(
-        "cargo"
-    ).value = "";
-
-
-    document.getElementById(
-        "weight"
-    ).value = "";
-
-
-    document.getElementById(
-        "truck_type"
-    ).value = "";
-
-
-    document.getElementById(
-        "load_status"
-    ).value = "turn";
-
-
-    document.getElementById(
-        "urgent"
-    ).checked = false;
-
-
-    document.getElementById(
-        "loadModal"
-    ).style.display =
-        "flex";
-
-}
-
-
-/* =====================================================
-   ویرایش بار
-===================================================== */
-
-function editLoad(id) {
-
-    const load =
-        allLoads.find(
-            function(item) {
-
-                return item.id === id;
-
-            }
-        );
-
-
-    if (!load) {
-
-        alert(
-            "بار پیدا نشد."
-        );
-
-        return;
-
-    }
-
-
-    editingLoadId =
-        id;
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "ویرایش بار";
-
-
-    document.getElementById(
-        "origin"
-    ).value =
-        load.origin || "";
-
-
-    document.getElementById(
-        "destination"
-    ).value =
-        load.destination || "";
-
-
-    document.getElementById(
-        "cargo"
-    ).value =
-        load.cargo || "";
-
-
-    document.getElementById(
-        "weight"
-    ).value =
-        load.weight || "";
-
-
-    document.getElementById(
-        "truck_type"
-    ).value =
-        load.truck_type || "";
-
-
-    document.getElementById(
-        "load_status"
-    ).value =
-        load.status || "turn";
-
-
-    document.getElementById(
-        "urgent"
-    ).checked =
-        !!load.urgent;
-
-
-    document.getElementById(
-        "loadModal"
-    ).style.display =
-        "flex";
-
-}
-
-
-/* =====================================================
-   ذخیره بار
-===================================================== */
-
-async function saveLoad() {
-
-    try {
-
-        const origin =
-            document.getElementById(
-                "origin"
-            ).value.trim();
-
-
-        const destination =
-            document.getElementById(
-                "destination"
-            ).value.trim();
-
-
-        const cargo =
-            document.getElementById(
-                "cargo"
-            ).value.trim();
-
-
-        const weightValue =
-            document.getElementById(
-                "weight"
-            ).value;
-
-
-        const truck_type =
-            document.getElementById(
-                "truck_type"
-            ).value.trim();
-
-
-        const status =
-            document.getElementById(
-                "load_status"
-            ).value;
-
-
-        const urgent =
-            document.getElementById(
-                "urgent"
-            ).checked;
-
-
-        if (
-            !origin ||
-            !destination ||
-            !cargo ||
-            !weightValue
-        ) {
-
-            alert(
-                "مبدأ، مقصد، نوع بار و وزن را کامل وارد کنید."
-            );
-
-            return;
-
-        }
-
-
-        const weight =
-            Number(weightValue);
-
-
-        if (
-            !Number.isFinite(weight) ||
-            weight <= 0
-        ) {
-
-            alert(
-                "وزن وارد شده صحیح نیست."
-            );
-
-            return;
-
-        }
-
-
-        const {
-            data: authData,
-            error: authError
-        } =
-        await client.auth.getUser();
-
-
-        if (authError) {
-
-            throw authError;
-
-        }
-
-
-        const user =
-            authData.user;
-
-
-        if (!user) {
-
-            throw new Error(
-                "کاربر وارد سیستم نشده است."
-            );
-
-        }
-
-
-        const loadData = {
-
-            origin,
-
-            destination,
-
-            cargo,
-
-            weight,
-
-            truck_type:
-                truck_type || null,
-
-            status,
-
-            urgent,
-
-            created_by:
-                user.id
-
-        };
-
-
-        let result;
-
-
-        if (editingLoadId) {
-
-            result =
-                await client
-                    .from("loads")
-                    .update(
-                        loadData
-                    )
-                    .eq(
-                        "id",
-                        editingLoadId
-                    )
-                    .select();
-
-        }
-        else {
-
-            result =
-                await client
-                    .from("loads")
-                    .insert(
-                        loadData
-                    )
-                    .select();
-
-        }
-
-
-        if (result.error) {
-
-            console.error(
-                "SAVE LOAD ERROR:",
-                result.error
-            );
-
-
-            alert(
-
-                "خطای واقعی ثبت بار:\n\n" +
-
-                "Message: " +
-                (
-                    result.error.message ||
-                    ""
-                ) +
-
-                "\n\nDetails: " +
-                (
-                    result.error.details ||
-                    ""
-                ) +
-
-                "\n\nHint: " +
-                (
-                    result.error.hint ||
-                    ""
-                ) +
-
-                "\n\nCode: " +
-                (
-                    result.error.code ||
-                    ""
-                )
-
-            );
-
-
-            return;
-
-        }
-
-
-        alert(
-
-            editingLoadId
-
-            ?
-
-            "بار با موفقیت ویرایش شد ✅"
-
-            :
-
-            "بار جدید با موفقیت ثبت شد ✅"
-
-        );
-
-
-        closeModal();
-
-
-        await refreshAll();
-
-    }
-    catch(error) {
-
-        console.error(
-            "SAVE ERROR:",
-            error
-        );
-
-
-        alert(
-
-            "خطای ثبت بار:\n\n" +
-
-            (
-                error?.message ||
-                String(error)
-            )
-
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   حذف بار
-===================================================== */
-
-async function deleteLoad(id) {
-
-    const load =
-        allLoads.find(
-            function(item) {
-
-                return item.id === id;
-
-            }
-        );
-
-
-    if (!load) {
-
-        return;
-
-    }
-
-
-    const confirmed =
-        confirm(
-
-            "آیا از حذف این بار مطمئن هستید؟\n\n" +
-
-            load.origin +
-
-            " → " +
-
-            load.destination
-
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    const {
-        error
-    } =
-    await client
-        .from("loads")
-        .delete()
-        .eq(
-            "id",
-            id
-        );
-
-
-    if (error) {
-
-        alert(
-
-            "خطا در حذف بار:\n\n" +
-
-            error.message
-
-        );
-
-        return;
-
-    }
-
-
-    showToast(
-        "بار با موفقیت حذف شد."
-    );
-
-
-    await refreshAll();
-
-}
-
-
-/* =====================================================
-   بستن پنجره
-===================================================== */
-
-function closeModal() {
-
-    document.getElementById(
-        "loadModal"
-    ).style.display =
-        "none";
-
-}
-
-
-/* =====================================================
-   منوهای بعدی
-===================================================== */
-
-function scrollToLoads() {
-
-    document.getElementById(
-        "loadsPanel"
-    )
-    .scrollIntoView({
-        behavior: "smooth"
     });
 
 }
 
 
-function driverManagement() {
+function statusSelect(load){
 
-    alert(
-        "مدیریت رانندگان در مرحله بعد فعال می‌شود."
-    );
+    const statuses = [
+        ["waiting","در انتظار"],
+        ["turn","نوبتی"],
+        ["free","آزاد"],
+        ["reserved","رزرو شده"],
+        ["completed","تکمیل شده"]
+    ];
 
-}
-
-
-function walletManagement() {
-
-    alert(
-        "مدیریت کیف پول در مرحله بعد فعال می‌شود."
-    );
-
-}
-
-
-function inquiryManagement() {
-
-    alert(
-        "مدیریت استعلام‌ها در مرحله بعد فعال می‌شود."
-    );
-
-}
-
-
-function notificationManagement() {
-
-    alert(
-        "مدیریت اعلان‌ها در مرحله بعد فعال می‌شود."
-    );
+    return `
+    <select
+        class="status-select"
+        onchange="changeStatus('${load.id}',this.value)"
+    >
+        ${
+            statuses.map(s=>`
+                <option
+                    value="${s[0]}"
+                    ${load.status===s[0]?"selected":""}
+                >
+                    ${s[1]}
+                </option>
+            `).join("")
+        }
+    </select>
+    `;
 
 }
 
 
-function settingsManagement() {
+/* ================= تغییر وضعیت ================= */
 
-    alert(
-        "تنظیمات سامانه در مرحله بعد فعال می‌شود."
-    );
+async function changeStatus(id,newStatus){
+
+    const {error} =
+    await client
+    .from("loads")
+    .update({
+        status:newStatus
+    })
+    .eq("id",id);
+
+    if(error){
+
+        alert("خطا در تغییر وضعیت:\n" + error.message);
+
+        await loadLoads();
+
+        return;
+    }
+
+    showToast("وضعیت بار با موفقیت تغییر کرد");
+
+    await loadLoads();
 
 }
 
 
-/* =====================================================
-   ابزارها
-===================================================== */
+/* ================= فیلتر بار ================= */
 
-function safe(value) {
+function filterLoads(){
 
-    if (
-        value === null ||
-        value === undefined
-    ) {
+    const search =
+    document
+    .getElementById("loadSearch")
+    .value
+    .trim()
+    .toLowerCase();
 
-        return "";
+    const status =
+    document
+    .getElementById("loadStatusFilter")
+    .value;
+
+    const urgent =
+    document
+    .getElementById("urgentFilter")
+    .value;
+
+
+    const result =
+    allLoads.filter(load=>{
+
+        const text =
+        `${load.origin||""} ${load.destination||""} ${load.cargo||""}`
+        .toLowerCase();
+
+        if(search && !text.includes(search))
+            return false;
+
+        if(status && load.status !== status)
+            return false;
+
+        if(urgent !== ""){
+
+            const wanted =
+            urgent === "true";
+
+            if(Boolean(load.urgent) !== wanted)
+                return false;
+        }
+
+        return true;
+
+    });
+
+    renderLoads(result);
+
+}
+
+
+function clearLoadFilters(){
+
+    document.getElementById("loadSearch").value="";
+    document.getElementById("loadStatusFilter").value="";
+    document.getElementById("urgentFilter").value="";
+
+    renderLoads(allLoads);
+
+}
+
+
+/* ================= ثبت بار ================= */
+
+function openNewLoad(){
+
+    document.getElementById("loadModalTitle").innerText =
+    "ثبت بار جدید";
+
+    document.getElementById("editLoadId").value="";
+
+    document.getElementById("origin").value="";
+    document.getElementById("destination").value="";
+    document.getElementById("cargo").value="";
+    document.getElementById("weight").value="";
+    document.getElementById("truck_type").value="";
+    document.getElementById("load_status").value="turn";
+    document.getElementById("urgent").checked=false;
+
+    document.getElementById("loadModal").style.display="flex";
+
+}
+
+
+function editLoad(id){
+
+    const load =
+    allLoads.find(x=>x.id===id);
+
+    if(!load)
+        return;
+
+    document.getElementById("loadModalTitle").innerText =
+    "ویرایش بار";
+
+    document.getElementById("editLoadId").value =
+    load.id;
+
+    document.getElementById("origin").value =
+    load.origin || "";
+
+    document.getElementById("destination").value =
+    load.destination || "";
+
+    document.getElementById("cargo").value =
+    load.cargo || "";
+
+    document.getElementById("weight").value =
+    load.weight || "";
+
+    document.getElementById("truck_type").value =
+    load.truck_type || "";
+
+    document.getElementById("load_status").value =
+    load.status || "turn";
+
+    document.getElementById("urgent").checked =
+    Boolean(load.urgent);
+
+    document.getElementById("loadModal").style.display="flex";
+
+}
+
+
+async function saveLoad(){
+
+    try{
+
+        const id =
+        document.getElementById("editLoadId").value;
+
+        const loadData = {
+
+            origin:
+            document.getElementById("origin").value.trim(),
+
+            destination:
+            document.getElementById("destination").value.trim(),
+
+            cargo:
+            document.getElementById("cargo").value.trim(),
+
+            weight:
+            Number(document.getElementById("weight").value || 0),
+
+            truck_type:
+            document.getElementById("truck_type").value.trim(),
+
+            status:
+            document.getElementById("load_status").value,
+
+            urgent:
+            document.getElementById("urgent").checked
+
+        };
+
+
+        if(!loadData.origin ||
+           !loadData.destination ||
+           !loadData.cargo){
+
+            alert("مبدأ، مقصد و نوع بار الزامی است");
+
+            return;
+        }
+
+
+        if(id){
+
+            const {error} =
+            await client
+            .from("loads")
+            .update(loadData)
+            .eq("id",id);
+
+            if(error){
+
+                alert("خطای واقعی ویرایش بار:\n" + error.message);
+
+                return;
+            }
+
+            showToast("بار با موفقیت ویرایش شد");
+
+        }else{
+
+            loadData.created_by =
+            currentUser.id;
+
+            const {error} =
+            await client
+            .from("loads")
+            .insert(loadData);
+
+            if(error){
+
+                alert("خطای واقعی ثبت بار:\n" + error.message);
+
+                return;
+            }
+
+            showToast("بار با موفقیت ثبت شد");
+
+        }
+
+
+        closeLoadModal();
+
+        await loadLoads();
+
+        await loadDashboard();
+
+    }catch(err){
+
+        alert("خطای واقعی:\n" + err.message);
 
     }
 
+}
 
-    return String(value)
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+async function deleteLoad(id){
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+    if(!confirm("آیا از حذف این بار مطمئن هستید؟"))
+        return;
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+    const {error} =
+    await client
+    .from("loads")
+    .delete()
+    .eq("id",id);
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+
+    if(error){
+
+        alert("خطا در حذف بار:\n" + error.message);
+
+        return;
+    }
+
+    showToast("بار حذف شد");
+
+    await loadLoads();
+
+    await loadDashboard();
 
 }
 
 
-function formatDate(value) {
+function closeLoadModal(){
 
-    if (!value) {
+    document.getElementById("loadModal").style.display="none";
+
+}
+
+
+/* ================= رانندگان ================= */
+
+async function loadDrivers(){
+
+    try{
+
+        const {data:profiles,error:pError} =
+        await client
+        .from("profiles")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+
+        if(pError){
+
+            alert("خطا در دریافت کاربران:\n" + pError.message);
+
+            return;
+        }
+
+
+        const {data:drivers,error:dError} =
+        await client
+        .from("drivers")
+        .select("*");
+
+
+        if(dError){
+
+            alert("خطا در دریافت رانندگان:\n" + dError.message);
+
+            return;
+        }
+
+
+        let wallets = [];
+
+        const walletResult =
+        await client
+        .from("wallets")
+        .select("*");
+
+        if(!walletResult.error)
+            wallets = walletResult.data || [];
+
+
+        allDrivers =
+        (profiles || []).map(profile=>{
+
+            const driver =
+            (drivers || []).find(d=>
+                d.user_id === profile.id ||
+                d.profile_id === profile.id
+            );
+
+            const wallet =
+            wallets.find(w=>
+                w.user_id === profile.id
+            );
+
+
+            return {
+
+                profile:profile,
+
+                driver:driver || null,
+
+                wallet:wallet || null
+
+            };
+
+        });
+
+
+        filterDrivers();
+
+    }catch(err){
+
+        alert("خطای واقعی رانندگان:\n" + err.message);
+
+    }
+
+}
+
+
+function driverName(item){
+
+    const p = item.profile || {};
+    const d = item.driver || {};
+
+    return (
+        d.full_name ||
+        d.name ||
+        p.full_name ||
+        p.name ||
+        p.first_name ||
+        "بدون نام"
+    );
+
+}
+
+
+function driverPhone(item){
+
+    const p = item.profile || {};
+    const d = item.driver || {};
+
+    return (
+        p.phone ||
+        d.phone ||
+        d.mobile ||
+        "ثبت نشده"
+    );
+
+}
+
+
+function driverTruck(item){
+
+    const d = item.driver || {};
+
+    return (
+        d.truck_type ||
+        d.vehicle_type ||
+        d.truck ||
+        d.vehicle ||
+        "ثبت نشده"
+    );
+
+}
+
+
+function driverWallet(item){
+
+    const w = item.wallet || {};
+
+    const balance =
+    Number(
+        w.balance ??
+        w.amount ??
+        0
+    );
+
+    return balance.toLocaleString("fa-IR") + " تومان";
+
+}
+
+
+function driverActive(item){
+
+    const d = item.driver || {};
+    const p = item.profile || {};
+
+    if(
+        d.is_active === false ||
+        p.is_active === false
+    )
+        return false;
+
+    return true;
+
+}
+
+
+function driverRole(item){
+
+    return item.profile?.role || "driver";
+
+}
+
+
+function roleText(role){
+
+    const roles = {
+
+        driver:"راننده",
+        owner:"مالک بار",
+        company:"شرکت",
+        admin:"مدیر"
+
+    };
+
+    return roles[role] || role;
+
+}
+
+
+function filterDrivers(){
+
+    const search =
+    document
+    .getElementById("driverSearch")
+    .value
+    .trim()
+    .toLowerCase();
+
+    const role =
+    document
+    .getElementById("driverRoleFilter")
+    .value;
+
+
+    const result =
+    allDrivers.filter(item=>{
+
+        const text =
+        `${driverName(item)} ${driverPhone(item)}`
+        .toLowerCase();
+
+        if(search && !text.includes(search))
+            return false;
+
+        if(role && driverRole(item)!==role)
+            return false;
+
+        return true;
+
+    });
+
+
+    renderDrivers(result);
+
+}
+
+
+function renderDrivers(list){
+
+    const tbody =
+    document.getElementById("driversTable");
+
+    const mobile =
+    document.getElementById("driversMobile");
+
+    tbody.innerHTML="";
+    mobile.innerHTML="";
+
+
+    list.forEach((item,index)=>{
+
+        const active =
+        driverActive(item);
+
+        const tr =
+        document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+        <td>${index+1}</td>
+
+        <td>${safe(driverName(item))}</td>
+
+        <td>${safe(driverPhone(item))}</td>
+
+        <td>
+            ${roleText(driverRole(item))}
+        </td>
+
+        <td>
+            <span class="badge ${
+                active
+                ? "driver-active"
+                : "driver-disabled"
+            }">
+                ${active ? "فعال" : "غیرفعال"}
+            </span>
+        </td>
+
+        <td>
+            ${safe(driverTruck(item))}
+        </td>
+
+        <td>
+            ${driverWallet(item)}
+        </td>
+
+        <td>
+            ${formatDate(item.profile?.created_at)}
+        </td>
+
+        <td>
+
+            <button
+            class="btn-blue"
+            onclick="viewDriver('${item.profile.id}')">
+            مشاهده
+            </button>
+
+        </td>
+
+        `;
+
+        tbody.appendChild(tr);
+
+
+        const card =
+        document.createElement("div");
+
+        card.className="driver-card";
+
+
+        card.innerHTML = `
+
+        <b>${safe(driverName(item))}</b>
+
+        <hr>
+
+        📱 ${safe(driverPhone(item))}<br><br>
+
+        👤 نقش:
+        ${roleText(driverRole(item))}<br><br>
+
+        🚛 کامیون:
+        ${safe(driverTruck(item))}<br><br>
+
+        💰 کیف پول:
+        ${driverWallet(item)}<br><br>
+
+        <span class="badge ${
+            active
+            ? "driver-active"
+            : "driver-disabled"
+        }">
+            ${active ? "فعال" : "غیرفعال"}
+        </span>
+
+        <br><br>
+
+        <button
+        class="btn-blue"
+        onclick="viewDriver('${item.profile.id}')">
+        مشاهده اطلاعات
+        </button>
+
+        `;
+
+
+        mobile.appendChild(card);
+
+    });
+
+}
+
+
+function clearDriverFilters(){
+
+    document.getElementById("driverSearch").value="";
+    document.getElementById("driverRoleFilter").value="";
+
+    renderDrivers(allDrivers);
+
+}
+
+
+/* ================= جزئیات راننده ================= */
+
+function viewDriver(id){
+
+    const item =
+    allDrivers.find(x=>
+        x.profile &&
+        x.profile.id === id
+    );
+
+    if(!item)
+        return;
+
+
+    const p = item.profile || {};
+    const d = item.driver || {};
+    const w = item.wallet || {};
+
+
+    document.getElementById("driverDetails").innerHTML = `
+
+        <div style="line-height:2">
+
+            <b>نام:</b>
+            ${safe(driverName(item))}
+            <br>
+
+            <b>شماره موبایل:</b>
+            ${safe(driverPhone(item))}
+            <br>
+
+            <b>نقش:</b>
+            ${roleText(driverRole(item))}
+            <br>
+
+            <b>وضعیت:</b>
+            ${driverActive(item) ? "🟢 فعال" : "🔴 غیرفعال"}
+            <br>
+
+            <b>نوع کامیون:</b>
+            ${safe(driverTruck(item))}
+            <br>
+
+            <b>موجودی کیف پول:</b>
+            ${
+                Number(
+                    w.balance ??
+                    w.amount ??
+                    0
+                ).toLocaleString("fa-IR")
+            }
+            تومان
+
+            <hr>
+
+            <b>شناسه کاربر:</b>
+            <small>${safe(p.id)}</small>
+
+        </div>
+
+    `;
+
+
+    document.getElementById("driverModal").style.display="flex";
+
+}
+
+
+function closeDriverModal(){
+
+    document.getElementById("driverModal").style.display="none";
+
+}
+
+
+/* ================= ابزارها ================= */
+
+function scrollToLoads(){
+
+    document
+    .getElementById("loadsSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+function scrollToDrivers(){
+
+    document
+    .getElementById("driversSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+function safe(value){
+
+    if(value === null ||
+       value === undefined)
+        return "";
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function formatDate(date){
+
+    if(!date)
+        return "-";
+
+    try{
+
+        return new Date(date)
+        .toLocaleDateString("fa-IR");
+
+    }catch(e){
 
         return "-";
 
     }
 
+}
 
-    try {
 
-        return new Date(
-            value
-        )
-        .toLocaleString(
-            "fa-IR"
-        );
+function showToast(message){
 
-    }
-    catch {
+    const toast =
+    document.getElementById("toast");
 
-        return value;
+    toast.innerText=message;
 
-    }
+    toast.style.display="block";
+
+    setTimeout(()=>{
+        toast.style.display="none";
+    },2500);
 
 }
 
 
-function showToast(message) {
+async function logout(){
 
-    const toast =
-        document.getElementById(
-            "toast"
-        );
+    await client.auth.signOut();
 
-
-    toast.textContent =
-        message;
-
-
-    toast.style.display =
-        "block";
-
-
-    setTimeout(
-        function() {
-
-            toast.style.display =
-                "none";
-
-        },
-        3000
-    );
+    location.href="index.html";
 
 }
 
