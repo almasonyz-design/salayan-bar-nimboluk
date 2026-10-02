@@ -1,101 +1,253 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>مدیریت صلایان بار نیمبلوک</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>پنل مدیریت صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+*{box-sizing:border-box}
+
 body{
- margin:0;
- font-family:Tahoma,Arial,sans-serif;
- background:#f2f5f3;
- color:#222
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:#f3f6f8;
+  color:#222;
 }
+
 header{
- background:#087f3d;
- color:white;
- padding:22px;
- text-align:center
+  background:#087f3d;
+  color:#fff;
+  padding:18px;
+  text-align:center;
 }
-main{
- max-width:1100px;
- margin:auto;
- padding:20px
+
+header h1{
+  margin:0;
+  font-size:23px;
 }
-.box{
- background:white;
- padding:20px;
- border-radius:15px;
- margin-bottom:15px;
- box-shadow:0 2px 10px #0001
+
+header p{
+  margin:7px 0 0;
+  opacity:.9;
 }
-input,button,select{
- width:100%;
- box-sizing:border-box;
- padding:13px;
- margin:7px 0;
- border-radius:9px;
- border:1px solid #ddd;
- font-family:inherit
+
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:16px;
 }
+
+.card{
+  background:#fff;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
+}
+
+.login{
+  max-width:440px;
+  margin:55px auto;
+}
+
+.title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+input,select,textarea,button{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:9px;
+  border:1px solid #ddd;
+  font-family:inherit;
+  font-size:14px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
 button{
- background:#087f3d;
- color:white;
- border:0;
- cursor:pointer;
- font-weight:bold
+  background:#087f3d;
+  color:#fff;
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
 }
-button.red{background:#c62828}
+
+button:hover{
+  opacity:.92;
+}
+
 button.gray{background:#666}
-.msg{
- padding:12px;
- border-radius:9px;
- margin:10px 0;
- line-height:1.8
+button.red{background:#c62828}
+button.orange{background:#e68a00}
+button.blue{background:#1565c0}
+
+.hidden{
+  display:none!important;
 }
-.error{background:#ffdede;color:#900}
-.ok{background:#dff5e5;color:#075b28}
-.hidden{display:none}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.menu button{
+  min-height:70px;
+  font-size:15px;
+}
+
 .stats{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
- gap:12px
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
 }
+
 .stat{
- background:white;
- padding:20px;
- border-radius:14px;
- text-align:center
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
-.num{
- font-size:28px;
- font-weight:bold;
- color:#087f3d;
- margin-top:8px
+
+.number{
+  font-size:30px;
+  font-weight:bold;
+  color:#087f3d;
+  margin-top:10px;
 }
-nav{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
- gap:8px;
- margin-bottom:15px
+
+.table-wrap{
+  overflow-x:auto;
 }
+
 table{
- width:100%;
- border-collapse:collapse;
- min-width:700px
+  width:100%;
+  border-collapse:collapse;
+  min-width:900px;
 }
+
 th,td{
- padding:10px;
- border-bottom:1px solid #eee;
- text-align:center
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:center;
 }
-th{background:#eee}
-.table{
- overflow:auto
+
+th{
+  background:#eef2f3;
+}
+
+.action{
+  width:auto;
+  padding:7px 10px;
+  margin:2px;
+  font-size:12px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:9999;
+}
+
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:620px;
+  max-height:92vh;
+  overflow:auto;
+  border-radius:16px;
+  padding:20px;
+}
+
+.msg{
+  padding:12px;
+  border-radius:9px;
+  margin:8px 0;
+  background:#fff3cd;
+}
+
+.success{
+  background:#d1e7dd;
+  color:#0f5132;
+}
+
+.error{
+  background:#f8d7da;
+  color:#842029;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.badge.green{
+  background:#d1e7dd;
+  color:#0f5132;
+}
+
+.badge.orange{
+  background:#fff0d5;
+  color:#8a4b00;
+}
+
+.badge.red{
+  background:#f8d7da;
+  color:#842029;
+}
+
+.badge.gray{
+  background:#e9ecef;
+  color:#495057;
+}
+
+.small{
+  font-size:12px;
+  color:#666;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+@media(max-width:700px){
+  .grid2{
+    grid-template-columns:1fr;
+  }
+
+  table{
+    min-width:850px;
+  }
 }
 </style>
 </head>
@@ -103,341 +255,1949 @@ th{background:#eee}
 <body>
 
 <header>
-<h1>پنل مدیریت صلایان بار نیمبلوک</h1>
-<div>اعلام بار هوشمند</div>
+  <h1>پنل مدیریت صلایان بار نیمبلوک</h1>
+  <p>اعلام بار هوشمند</p>
 </header>
 
-<main>
+<div class="container">
 
 <!-- LOGIN -->
-<section id="loginBox" class="box">
+<div id="loginPage" class="card login">
 
-<h2>🔐 ورود مدیر</h2>
+  <div class="title">🔐 ورود مدیر</div>
 
-<div id="loginMsg"></div>
+  <div id="loginMsg"></div>
 
-<input
- id="email"
- type="email"
- autocomplete="username"
- placeholder="ایمیل">
+  <input
+    id="email"
+    type="email"
+    autocomplete="username"
+    placeholder="ایمیل مدیر">
 
-<input
- id="password"
- type="password"
- autocomplete="current-password"
- placeholder="رمز عبور">
+  <input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+    placeholder="رمز عبور">
 
-<button onclick="login()">ورود به پنل</button>
+  <button onclick="login()">
+    ورود به پنل مدیریت
+  </button>
 
-<button class="gray" onclick="forgot()">
-فراموشی رمز عبور
-</button>
+  <button class="gray" onclick="showForgot()">
+    فراموشی رمز عبور
+  </button>
 
-</section>
+</div>
 
 
 <!-- FORGOT -->
-<section id="forgotBox" class="box hidden">
+<div id="forgotPage" class="card login hidden">
 
-<h2>بازیابی رمز</h2>
+  <div class="title">🔑 بازیابی رمز عبور</div>
 
-<div id="forgotMsg"></div>
+  <div id="forgotMsg"></div>
 
-<input
- id="forgotEmail"
- type="email"
- placeholder="ایمیل">
+  <input
+    id="forgotEmail"
+    type="email"
+    placeholder="ایمیل مدیر">
 
-<button onclick="sendReset()">
-ارسال لینک بازیابی
-</button>
+  <button onclick="sendReset()">
+    ارسال لینک بازیابی
+  </button>
 
-<button class="gray" onclick="showLogin()">
-بازگشت
-</button>
+  <button class="gray" onclick="showLogin()">
+    بازگشت
+  </button>
 
-</section>
+</div>
+
+
+<!-- RESET -->
+<div id="resetPage" class="card login hidden">
+
+  <div class="title">🔐 تعیین رمز جدید</div>
+
+  <div id="resetMsg"></div>
+
+  <input
+    id="newPass"
+    type="password"
+    placeholder="رمز عبور جدید">
+
+  <input
+    id="newPass2"
+    type="password"
+    placeholder="تکرار رمز عبور جدید">
+
+  <button onclick="saveNewPassword()">
+    ثبت رمز جدید
+  </button>
+
+</div>
 
 
 <!-- ADMIN -->
-<section id="adminBox" class="hidden">
+<div id="adminPage" class="hidden">
 
-<div class="box">
+  <div class="card">
+    <div class="top">
 
-<b>مدیریت صلایان بار</b>
+      <div>
+        <b>پنل مدیریت صلایان بار</b>
+        <div id="adminEmail" class="small"></div>
+      </div>
 
-<div
- id="userEmail"
- style="margin-top:8px;color:#666">
+      <button
+        class="red"
+        style="width:auto"
+        onclick="logout()">
+        خروج
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- MENU -->
+  <div class="menu">
+
+    <button onclick="section('dashboard')">
+      📊 داشبورد
+    </button>
+
+    <button onclick="section('loads')">
+      📦 مدیریت بارها
+    </button>
+
+    <button onclick="section('drivers')">
+      🚛 رانندگان
+    </button>
+
+    <button onclick="section('wallet')">
+      💰 کیف پول
+    </button>
+
+    <button onclick="section('transactions')">
+      💳 تراکنش‌ها
+    </button>
+
+  </div>
+
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+
+    <div class="title">
+      📊 داشبورد
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        👤 کاربران
+        <div id="usersCount" class="number">0</div>
+      </div>
+
+      <div class="stat">
+        🚛 رانندگان
+        <div id="driversCount" class="number">0</div>
+      </div>
+
+      <div class="stat">
+        📦 کل بارها
+        <div id="loadsCount" class="number">0</div>
+      </div>
+
+      <div class="stat">
+        🟢 بارهای فعال
+        <div id="activeCount" class="number">0</div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="title">وضعیت سیستم</div>
+      <div id="systemStatus">
+        در حال بررسی...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- LOADS -->
+  <div id="loads" class="hidden">
+
+    <div class="card">
+
+      <div class="top">
+
+        <div class="title">
+          📦 مدیریت بارها
+        </div>
+
+        <button
+          style="width:auto"
+          onclick="newLoad()">
+          ➕ ثبت بار
+        </button>
+
+      </div>
+
+      <div class="grid2">
+
+        <input
+          id="search"
+          placeholder="جستجوی بار..."
+          oninput="filterLoads()">
+
+        <select
+          id="filterStatus"
+          onchange="filterLoads()">
+
+          <option value="">
+            همه وضعیت‌ها
+          </option>
+
+          <option value="waiting">
+            در انتظار
+          </option>
+
+          <option value="turn">
+            نوبتی
+          </option>
+
+          <option value="free">
+            آزاد
+          </option>
+
+          <option value="reserved">
+            رزرو شده
+          </option>
+
+          <option value="completed">
+            تکمیل شده
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>مبدا</th>
+            <th>مقصد</th>
+            <th>کالا</th>
+            <th>وزن</th>
+            <th>نوع کامیون</th>
+            <th>وضعیت</th>
+            <th>فوری</th>
+            <th>عملیات</th>
+          </tr>
+          </thead>
+
+          <tbody id="loadsTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DRIVERS -->
+  <div id="drivers" class="hidden">
+
+    <div class="card">
+
+      <div class="title">
+        🚛 مدیریت رانندگان
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>شماره تلفن</th>
+            <th>شناسه</th>
+            <th>نقش</th>
+            <th>تاریخ</th>
+          </tr>
+          </thead>
+
+          <tbody id="driversTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- WALLET -->
+  <div id="wallet" class="hidden">
+
+    <div class="card">
+
+      <div class="title">
+        💰 کیف پول رانندگان
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>کاربر</th>
+            <th>موجودی</th>
+            <th>عملیات</th>
+          </tr>
+          </thead>
+
+          <tbody id="walletTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TRANSACTIONS -->
+  <div id="transactions" class="hidden">
+
+    <div class="card">
+
+      <div class="title">
+        💳 تراکنش‌ها
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>کاربر</th>
+            <th>مبلغ</th>
+            <th>شرح</th>
+            <th>تاریخ</th>
+          </tr>
+          </thead>
+
+          <tbody id="transactionsTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
-<button
- class="red"
- onclick="logout()">
-خروج
-</button>
-
 </div>
 
 
-<nav>
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
 
-<button onclick="showSection('dashboard')">
-📊 داشبورد
-</button>
+  <div class="modal-box">
 
-<button onclick="showSection('loads')">
-📦 بارها
-</button>
+    <div class="top">
 
-<button onclick="showSection('drivers')">
-🚛 رانندگان
-</button>
+      <div id="modalTitle" class="title">
+        ثبت اطلاعات
+      </div>
 
-<button onclick="showSection('wallets')">
-💰 کیف پول
-</button>
+      <button
+        class="red"
+        style="width:auto"
+        onclick="closeModal()">
+        ✕
+      </button>
 
-<button onclick="showSection('transactions')">
-💳 تراکنش‌ها
-</button>
+    </div>
 
-</nav>
+    <div id="modalContent"></div>
 
-
-<!-- DASHBOARD -->
-<div id="dashboard">
-
-<div class="stats">
-
-<div class="stat">
-👤 کاربران
-<div id="users" class="num">0</div>
-</div>
-
-<div class="stat">
-🚛 رانندگان
-<div id="drivers" class="num">0</div>
-</div>
-
-<div class="stat">
-📦 بارها
-<div id="loads" class="num">0</div>
-</div>
-
-<div class="stat">
-🟢 بارهای فعال
-<div id="active" class="num">0</div>
-</div>
+  </div>
 
 </div>
-
-</div>
-
-
-<!-- LOADS -->
-<div id="loadsSection" class="box hidden">
-
-<h2>📦 بارها</h2>
-
-<button onclick="addLoad()">
-➕ ثبت بار
-</button>
-
-<div class="table">
-
-<table>
-
-<thead>
-<tr>
-<th>مبدا</th>
-<th>مقصد</th>
-<th>کالا</th>
-<th>وزن</th>
-<th>وضعیت</th>
-</tr>
-</thead>
-
-<tbody id="loadsTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<!-- DRIVERS -->
-<div id="driversSection" class="box hidden">
-
-<h2>🚛 رانندگان</h2>
-
-<div class="table">
-
-<table>
-
-<thead>
-<tr>
-<th>شماره</th>
-<th>شناسه</th>
-<th>نقش</th>
-</tr>
-</thead>
-
-<tbody id="driversTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<!-- WALLETS -->
-<div id="walletsSection" class="box hidden">
-
-<h2>💰 کیف پول</h2>
-
-<div class="table">
-
-<table>
-
-<thead>
-<tr>
-<th>کاربر</th>
-<th>موجودی</th>
-<th>عملیات</th>
-</tr>
-</thead>
-
-<tbody id="walletTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-<!-- TRANSACTIONS -->
-<div id="transactionsSection" class="box hidden">
-
-<h2>💳 تراکنش‌ها</h2>
-
-<div class="table">
-
-<table>
-
-<thead>
-<tr>
-<th>کاربر</th>
-<th>مبلغ</th>
-<th>نوع</th>
-<th>شرح</th>
-<th>تاریخ</th>
-</tr>
-</thead>
-
-<tbody id="transactionsTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
 
 
 <script>
 
-/* ==============================
+/* =========================================================
    SUPABASE
-============================== */
+========================================================= */
 
 const SUPABASE_URL =
 "https://ntirixjflgqihobpnmya.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
+"sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
 
-const supabaseClient =
+const db =
 window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  }
 );
 
 
-/* ==============================
-   LOGIN
-============================== */
+/* =========================================================
+   GLOBAL
+========================================================= */
 
-async function login(){
+let currentUser = null;
+let loadsData = [];
 
- const email =
- document.getElementById("email").value.trim();
 
- const password =
- document.getElementById("password").value;
+/* =========================================================
+   HELPERS
+========================================================= */
 
- const msg =
- document.getElementById("loginMsg");
+function $(id){
+  return document.getElementById(id);
+}
 
- if(!email || !password){
+function escapeHtml(value){
 
-  msg.innerHTML =
-  '<div class="msg error">ایمیل و رمز را وارد کنید.</div>';
+  if(value === null || value === undefined)
+    return "";
 
-  return;
- }
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
- msg.innerHTML =
- '<div class="msg">در حال ورود...</div>';
+function money(value){
 
- try{
+  const n = Number(value || 0);
 
-  const {data,error} =
-  await supabaseClient.auth.signInWithPassword({
-   email:email,
-   password:password
-  });
+  return n.toLocaleString("fa-IR") + " تومان";
+}
 
-  if(error){
+function dateFa(value){
 
-   msg.innerHTML =
-   '<div class="msg error">'+
-   escapeHtml(error.message)+
-   '</div>';
+  if(!value)
+    return "-";
 
-   return;
+  try{
+
+    return new Date(value).toLocaleString("fa-IR");
+
+  }catch(e){
+
+    return value;
   }
+}
 
-  if(!data.user){
+function message(id,text,type=""){
 
-   msg.innerHTML =
-   '<div class="msg error">کاربر پیدا نشد.</div>';
+  const el = $(id);
 
-   return;
-  }
+  if(!el) return;
 
-  await checkAdmin(data.user);
+  el.innerHTML =
+    `<div class="msg ${type}">
+      ${escapeHtml(text)}
+    </div>`;
+}
 
- }catch(e){
+function statusText(status){
 
-  msg.innerHTML =
-  '<div class="msg error">'+
-  escapeHtml(e.message)+
-  '</div>';
+  const map = {
 
- }
+    waiting:"در انتظار",
+    turn:"نوبتی",
+    free:"آزاد",
+    reserved:"رزرو شده",
+    completed:"تکمیل شده"
 
+  };
+
+  return map[status] || status || "-";
+}
+
+function statusBadge(status){
+
+  let cls = "gray";
+
+  if(status === "turn")
+    cls = "orange";
+
+  if(status === "free")
+    cls = "green";
+
+  if(status === "reserved")
+    cls = "red";
+
+  if(status === "completed")
+    cls = "gray";
+
+  return `
+    <span class="badge ${cls}">
+      ${escapeHtml(statusText(status))}
+    </span>
+  `;
 }
 
 
-/* ==============================
-   CHECK ADMIN
-==============
-```
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function login(){
+
+  const email =
+    $("email").value.trim();
+
+  const password =
+    $("password").value;
+
+  if(!email || !password){
+
+    message(
+      "loginMsg",
+      "ایمیل و رمز عبور را وارد کنید.",
+      "error"
+    );
+
+    return;
+  }
+
+  message(
+    "loginMsg",
+    "در حال ورود..."
+  );
+
+  try{
+
+    const {data,error} =
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if(error)
+      throw error;
+
+    if(!data.user)
+      throw new Error("کاربر پیدا نشد.");
+
+    currentUser = data.user;
+
+    const {data:profile,error:profileError} =
+      await db
+        .from("profiles")
+        .select("id,role,phone")
+        .eq("id",currentUser.id)
+        .maybeSingle();
+
+    if(profileError)
+      throw profileError;
+
+    if(!profile){
+
+      await db.auth.signOut();
+
+      throw new Error(
+        "پروفایل این کاربر در جدول profiles پیدا نشد."
+      );
+    }
+
+    if(profile.role !== "admin"){
+
+      await db.auth.signOut();
+
+      throw new Error(
+        "این حساب دسترسی مدیر ندارد."
+      );
+    }
+
+    $("loginPage").classList.add("hidden");
+    $("forgotPage").classList.add("hidden");
+    $("resetPage").classList.add("hidden");
+    $("adminPage").classList.remove("hidden");
+
+    $("adminEmail").textContent =
+      currentUser.email || "";
+
+    await loadDashboard();
+
+  }catch(error){
+
+    console.error(error);
+
+    message(
+      "loginMsg",
+      "ورود ناموفق: " +
+      (error.message || error),
+      "error"
+    );
+  }
+}
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+async function checkSession(){
+
+  try{
+
+    const {data} =
+      await db.auth.getSession();
+
+    if(data.session){
+
+      currentUser =
+        data.session.user;
+
+      const {data:profile} =
+        await db
+          .from("profiles")
+          .select("id,role,phone")
+          .eq("id",currentUser.id)
+          .maybeSingle();
+
+      if(profile && profile.role === "admin"){
+
+        $("loginPage").classList.add("hidden");
+        $("adminPage").classList.remove("hidden");
+
+        $("adminEmail").textContent =
+          currentUser.email || "";
+
+        await loadDashboard();
+
+      }else{
+
+        await db.auth.signOut();
+      }
+    }
+
+  }catch(error){
+
+    console.error(error);
+  }
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+  await db.auth.signOut();
+
+  currentUser = null;
+
+  $("adminPage").classList.add("hidden");
+
+  $("loginPage").classList.remove("hidden");
+
+  $("password").value = "";
+
+  message(
+    "loginMsg",
+    "با موفقیت خارج شدید.",
+    "success"
+  );
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+function showForgot(){
+
+  $("loginPage").classList.add("hidden");
+
+  $("forgotPage").classList.remove("hidden");
+}
+
+function showLogin(){
+
+  $("forgotPage").classList.add("hidden");
+
+  $("resetPage").classList.add("hidden");
+
+  $("loginPage").classList.remove("hidden");
+}
+
+async function sendReset(){
+
+  const email =
+    $("forgotEmail").value.trim();
+
+  if(!email){
+
+    message(
+      "forgotMsg",
+      "ایمیل را وارد کنید.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const redirect =
+      window.location.origin +
+      window.location.pathname;
+
+    const {error} =
+      await db.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:redirect
+        }
+      );
+
+    if(error)
+      throw error;
+
+    message(
+      "forgotMsg",
+      "لینک بازیابی رمز عبور ارسال شد.",
+      "success"
+    );
+
+  }catch(error){
+
+    message(
+      "forgotMsg",
+      error.message || "خطا در ارسال لینک.",
+      "error"
+    );
+  }
+}
+
+async function saveNewPassword(){
+
+  const p1 =
+    $("newPass").value;
+
+  const p2 =
+    $("newPass2").value;
+
+  if(!p1 || !p2){
+
+    message(
+      "resetMsg",
+      "هر دو قسمت رمز را وارد کنید.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(p1.length < 6){
+
+    message(
+      "resetMsg",
+      "رمز عبور حداقل ۶ کاراکتر باشد.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(p1 !== p2){
+
+    message(
+      "resetMsg",
+      "دو رمز یکسان نیستند.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db.auth.updateUser({
+        password:p1
+      });
+
+    if(error)
+      throw error;
+
+    message(
+      "resetMsg",
+      "رمز عبور با موفقیت تغییر کرد.",
+      "success"
+    );
+
+  }catch(error){
+
+    message(
+      "resetMsg",
+      error.message || "خطا در تغییر رمز.",
+      "error"
+    );
+  }
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+function section(name){
+
+  const ids = [
+    "dashboard",
+    "loads",
+    "drivers",
+    "wallet",
+    "transactions"
+  ];
+
+  ids.forEach(id => {
+
+    $(id).classList.add("hidden");
+
+  });
+
+  $(name).classList.remove("hidden");
+
+  if(name === "dashboard")
+    loadDashboard();
+
+  if(name === "loads")
+    loadLoads();
+
+  if(name === "drivers")
+    loadDrivers();
+
+  if(name === "wallet")
+    loadWallets();
+
+  if(name === "transactions")
+    loadTransactions();
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+async function loadDashboard(){
+
+  try{
+
+    const users =
+      await db
+        .from("profiles")
+        .select("id",{count:"exact",head:true});
+
+    const drivers =
+      await db
+        .from("drivers")
+        .select("id",{count:"exact",head:true});
+
+    const loads =
+      await db
+        .from("loads")
+        .select("id,status",{count:"exact"});
+
+    $("usersCount").textContent =
+      users.count || 0;
+
+    $("driversCount").textContent =
+      drivers.count || 0;
+
+    $("loadsCount").textContent =
+      loads.count || 0;
+
+    let active = 0;
+
+    if(loads.data){
+
+      active =
+        loads.data.filter(
+          x =>
+            ["waiting","turn","free","reserved"]
+              .includes(x.status)
+        ).length;
+    }
+
+    $("activeCount").textContent =
+      active;
+
+    $("systemStatus").innerHTML =
+      `<div class="msg success">
+        اتصال به Supabase برقرار است.
+      </div>`;
+
+  }catch(error){
+
+    console.error(error);
+
+    $("systemStatus").innerHTML =
+      `<div class="msg error">
+        خطا در دریافت اطلاعات داشبورد:
+        ${escapeHtml(error.message)}
+      </div>`;
+  }
+}
+
+
+/* =========================================================
+   LOADS
+========================================================= */
+
+async function loadLoads(){
+
+  const tbody =
+    $("loadsTable");
+
+  tbody.innerHTML =
+    `<tr><td colspan="9">در حال دریافت...</td></tr>`;
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("loads")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+    if(error)
+      throw error;
+
+    loadsData =
+      data || [];
+
+    renderLoads(loadsData);
+
+  }catch(error){
+
+    console.error(error);
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="9">
+          خطا:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+  }
+}
+
+function renderLoads(data){
+
+  const tbody =
+    $("loadsTable");
+
+  if(!data.length){
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="9">
+          هنوز باری ثبت نشده است.
+        </td>
+      </tr>`;
+
+    return;
+  }
+
+  tbody.innerHTML =
+    data.map((load,index)=>{
+
+      const immediate =
+        load.is_urgent ||
+        load.urgent ||
+        load.is_immediate;
+
+      const truck =
+        load.truck_type ||
+        load.vehicle_type ||
+        "-";
+
+      return `
+        <tr>
+
+          <td>${index+1}</td>
+
+          <td>
+            ${escapeHtml(load.origin || "-")}
+          </td>
+
+          <td>
+            ${escapeHtml(load.destination || "-")}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              load.cargo ||
+              load.cargo_type ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(load.weight || "-")}
+          </td>
+
+          <td>
+            ${escapeHtml(truck)}
+          </td>
+
+          <td>
+            ${statusBadge(load.status)}
+          </td>
+
+          <td>
+            ${immediate ? "🔴 بله" : "خیر"}
+          </td>
+
+          <td>
+
+            <button
+              class="action blue"
+              onclick="editLoad('${load.id}')">
+              ویرایش
+            </button>
+
+            <button
+              class="action orange"
+              onclick="changeLoadStatus('${load.id}')">
+              وضعیت
+            </button>
+
+            <button
+              class="action red"
+              onclick="deleteLoad('${load.id}')">
+              حذف
+            </button>
+
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+}
+
+
+/* =========================================================
+   FILTER LOADS
+========================================================= */
+
+function filterLoads(){
+
+  const search =
+    $("search").value
+      .trim()
+      .toLowerCase();
+
+  const status =
+    $("filterStatus").value;
+
+  const filtered =
+    loadsData.filter(load=>{
+
+      const text =
+        [
+          load.origin,
+          load.destination,
+          load.cargo,
+          load.truck_type,
+          load.vehicle_type,
+          load.weight
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      const searchOK =
+        !search ||
+        text.includes(search);
+
+      const statusOK =
+        !status ||
+        load.status === status;
+
+      return searchOK && statusOK;
+
+    });
+
+  renderLoads(filtered);
+}
+
+
+/* =========================================================
+   NEW LOAD
+========================================================= */
+
+function newLoad(){
+
+  $("modalTitle").textContent =
+    "➕ ثبت بار جدید";
+
+  $("modalContent").innerHTML = `
+
+    <div class="grid2">
+
+      <div>
+        <label>مبدا</label>
+        <input id="f_origin">
+      </div>
+
+      <div>
+        <label>مقصد</label>
+        <input id="f_destination">
+      </div>
+
+      <div>
+        <label>نوع کالا</label>
+        <input id="f_cargo">
+      </div>
+
+      <div>
+        <label>وزن</label>
+        <input id="f_weight">
+      </div>
+
+      <div>
+        <label>نوع کامیون</label>
+        <input id="f_truck_type">
+      </div>
+
+      <div>
+        <label>وضعیت</label>
+        <select id="f_status">
+          <option value="turn">نوبتی</option>
+          <option value="waiting">در انتظار</option>
+          <option value="free">آزاد</option>
+        </select>
+      </div>
+
+    </div>
+
+    <label>
+      <input
+        id="f_urgent"
+        type="checkbox"
+        style="width:auto">
+      بار فوری
+    </label>
+
+    <textarea
+      id="f_description"
+      placeholder="توضیحات بار">
+    </textarea>
+
+    <button onclick="createLoad()">
+      ثبت بار
+    </button>
+  `;
+
+  openModal();
+}
+
+
+/* =========================================================
+   CREATE LOAD
+========================================================= */
+
+async function createLoad(){
+
+  const payload = {
+
+    origin:
+      $("f_origin").value.trim(),
+
+    destination:
+      $("f_destination").value.trim(),
+
+    cargo:
+      $("f_cargo").value.trim(),
+
+    weight:
+      $("f_weight").value.trim(),
+
+    truck_type:
+      $("f_truck_type").value.trim(),
+
+    status:
+      $("f_status").value,
+
+    is_urgent:
+      $("f_urgent").checked,
+
+    description:
+      $("f_description").value.trim()
+
+  };
+
+  if(!payload.origin ||
+     !payload.destination ||
+     !payload.cargo){
+
+    alert("مبدا، مقصد و کالا الزامی است.");
+
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db
+        .from("loads")
+        .insert(payload);
+
+    if(error)
+      throw error;
+
+    closeModal();
+
+    await loadLoads();
+
+    await loadDashboard();
+
+    alert("بار با موفقیت ثبت شد.");
+
+  }catch(error){
+
+    alert(
+      "خطا در ثبت بار:\n" +
+      error.message
+    );
+
+    console.error(error);
+  }
+}
+
+
+/* =========================================================
+   EDIT LOAD
+========================================================= */
+
+async function editLoad(id){
+
+  const load =
+    loadsData.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!load)
+    return;
+
+  $("modalTitle").textContent =
+    "✏️ ویرایش بار";
+
+  $("modalContent").innerHTML = `
+
+    <div class="grid2">
+
+      <div>
+        <label>مبدا</label>
+        <input
+          id="e_origin"
+          value="${escapeHtml(load.origin || "")}">
+      </div>
+
+      <div>
+        <label>مقصد</label>
+        <input
+          id="e_destination"
+          value="${escapeHtml(load.destination || "")}">
+      </div>
+
+      <div>
+        <label>کالا</label>
+        <input
+          id="e_cargo"
+          value="${escapeHtml(load.cargo || "")}">
+      </div>
+
+      <div>
+        <label>وزن</label>
+        <input
+          id="e_weight"
+          value="${escapeHtml(load.weight || "")}">
+      </div>
+
+      <div>
+        <label>نوع کامیون</label>
+        <input
+          id="e_truck"
+          value="${escapeHtml(
+            load.truck_type ||
+            load.vehicle_type ||
+            ""
+          )}">
+      </div>
+
+      <div>
+        <label>وضعیت</label>
+        <select id="e_status">
+
+          <option value="waiting">
+            در انتظار
+          </option>
+
+          <option value="turn">
+            نوبتی
+          </option>
+
+          <option value="free">
+            آزاد
+          </option>
+
+          <option value="reserved">
+            رزرو شده
+          </option>
+
+          <option value="completed">
+            تکمیل شده
+          </option>
+
+        </select>
+      </div>
+
+    </div>
+
+    <button onclick="saveLoad('${id}')">
+      💾 ذخیره تغییرات
+    </button>
+  `;
+
+  $("e_status").value =
+    load.status || "turn";
+
+  openModal();
+}
+
+
+/* =========================================================
+   SAVE LOAD
+========================================================= */
+
+async function saveLoad(id){
+
+  const update = {
+
+    origin:
+      $("e_origin").value.trim(),
+
+    destination:
+      $("e_destination").value.trim(),
+
+    cargo:
+      $("e_cargo").value.trim(),
+
+    weight:
+      $("e_weight").value.trim(),
+
+    truck_type:
+      $("e_truck").value.trim(),
+
+    status:
+      $("e_status").value
+
+  };
+
+  try{
+
+    const {error} =
+      await db
+        .from("loads")
+        .update(update)
+        .eq("id",id);
+
+    if(error)
+      throw error;
+
+    closeModal();
+
+    await loadLoads();
+
+    await loadDashboard();
+
+    alert("بار ویرایش شد.");
+
+  }catch(error){
+
+    alert(
+      "خطا در ویرایش:\n" +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   CHANGE LOAD STATUS
+========================================================= */
+
+async function changeLoadStatus(id){
+
+  const load =
+    loadsData.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!load)
+    return;
+
+  const value =
+    prompt(
+      "وضعیت جدید را وارد کنید:\n" +
+      "waiting = در انتظار\n" +
+      "turn = نوبتی\n" +
+      "free = آزاد\n" +
+      "reserved = رزرو شده\n" +
+      "completed = تکمیل شده",
+      load.status || "turn"
+    );
+
+  if(!value)
+    return;
+
+  const valid = [
+    "waiting",
+    "turn",
+    "free",
+    "reserved",
+    "completed"
+  ];
+
+  if(!valid.includes(value)){
+
+    alert("وضعیت واردشده معتبر نیست.");
+
+    return;
+  }
+
+  try{
+
+    const {error} =
+      await db
+        .from("loads")
+        .update({
+          status:value
+        })
+        .eq("id",id);
+
+    if(error)
+      throw error;
+
+    await loadLoads();
+
+    await loadDashboard();
+
+  }catch(error){
+
+    alert(
+      "خطا:\n" +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   DELETE LOAD
+========================================================= */
+
+async function deleteLoad(id){
+
+  if(!confirm(
+    "آیا از حذف این بار مطمئن هستید؟"
+  ))
+    return;
+
+  try{
+
+    const {error} =
+      await db
+        .from("loads")
+        .delete()
+        .eq("id",id);
+
+    if(error)
+      throw error;
+
+    await loadLoads();
+
+    await loadDashboard();
+
+  }catch(error){
+
+    alert(
+      "خطا در حذف بار:\n" +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   DRIVERS
+========================================================= */
+
+async function loadDrivers(){
+
+  const tbody =
+    $("driversTable");
+
+  tbody.innerHTML =
+    `<tr>
+      <td colspan="5">
+        در حال دریافت...
+      </td>
+    </tr>`;
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("profiles")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+    if(error)
+      throw error;
+
+    const rows =
+      (data || []).filter(
+        x =>
+          x.role === "driver"
+      );
+
+    if(!rows.length){
+
+      tbody.innerHTML =
+        `<tr>
+          <td colspan="5">
+            راننده‌ای ثبت نشده است.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+    tbody.innerHTML =
+      rows.map((driver,index)=>`
+
+        <tr>
+
+          <td>${index+1}</td>
+
+          <td>
+            ${escapeHtml(
+              driver.phone || "-"
+            )}
+          </td>
+
+          <td style="direction:ltr">
+            ${escapeHtml(driver.id)}
+          </td>
+
+          <td>
+            <span class="badge green">
+              راننده
+            </span>
+          </td>
+
+          <td>
+            ${dateFa(driver.created_at)}
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="5">
+          خطا:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+  }
+}
+
+
+/* =========================================================
+   WALLETS
+========================================================= */
+
+async function loadWallets(){
+
+  const tbody =
+    $("walletTable");
+
+  tbody.innerHTML =
+    `<tr>
+      <td colspan="4">
+        در حال دریافت...
+      </td>
+    </tr>`;
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("wallets")
+        .select("*")
+        .order("balance",{ascending:false});
+
+    if(error)
+      throw error;
+
+    if(!data || !data.length){
+
+      tbody.innerHTML =
+        `<tr>
+          <td colspan="4">
+            کیف پولی ثبت نشده است.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+    tbody.innerHTML =
+      data.map((wallet,index)=>`
+
+        <tr>
+
+          <td>${index+1}</td>
+
+          <td style="direction:ltr">
+            ${escapeHtml(
+              wallet.user_id ||
+              wallet.id ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${money(wallet.balance)}
+          </td>
+
+          <td>
+
+            <button
+              class="action"
+              onclick="adjustWallet(
+                '${wallet.user_id || wallet.id}'
+              )">
+              شارژ / برداشت
+            </button>
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="4">
+          خطا:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+  }
+}
+
+
+/* =========================================================
+   WALLET ADJUST
+========================================================= */
+
+function adjustWallet(userId){
+
+  $("modalTitle").textContent =
+    "💰 تغییر موجودی کیف پول";
+
+  $("modalContent").innerHTML = `
+
+    <div class="msg">
+      مبلغ مثبت = شارژ کیف پول<br>
+      مبلغ منفی = برداشت از کیف پول
+    </div>
+
+    <input
+      id="walletAmount"
+      type="number"
+      placeholder="مثلاً 100000 یا -10000">
+
+    <textarea
+      id="walletDescription"
+      placeholder="شرح تراکنش">
+    </textarea>
+
+    <button onclick="saveWallet('${userId}')">
+      ثبت تراکنش
+    </button>
+  `;
+
+  openModal();
+}
+
+
+async function saveWallet(userId){
+
+  const amount =
+    Number(
+      $("walletAmount").value
+    );
+
+  const description =
+    $("walletDescription").value.trim();
+
+  if(!amount || amount === 0){
+
+    alert("مبلغ را وارد کنید.");
+
+    return;
+  }
+
+  try{
+
+    const {data,error} =
+      await db.rpc(
+        "admin_adjust_wallet",
+        {
+          p_user_id:userId,
+          p_amount:amount,
+          p_description:
+            description || null
+        }
+      );
+
+    if(error)
+      throw error;
+
+    closeModal();
+
+    await loadWallets();
+
+    await loadTransactions();
+
+    alert(
+      "موجودی با موفقیت تغییر کرد."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "خطا در تغییر موجودی:\n" +
+      error.message
+    );
+  }
+}
+
+
+/* =========================================================
+   TRANSACTIONS
+========================================================= */
+
+async function loadTransactions(){
+
+  const tbody =
+    $("transactionsTable");
+
+  tbody.innerHTML =
+    `<tr>
+      <td colspan="5">
+        در حال دریافت...
+      </td>
+    </tr>`;
+
+  try{
+
+    const {data,error} =
+      await db
+        .from("transactions")
+        .select("*")
+        .order("created_at",{ascending:false})
+        .limit(200);
+
+    if(error)
+      throw error;
+
+    if(!data || !data.length){
+
+      tbody.innerHTML =
+        `<tr>
+          <td colspan="5">
+            تراکنشی ثبت نشده است.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+    tbody.innerHTML =
+      data.map((tx,index)=>`
+
+        <tr>
+
+          <td>${index+1}</td>
+
+          <td style="direction:ltr">
+            ${escapeHtml(
+              tx.user_id ||
+              tx.wallet_id ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${money(tx.amount)}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              tx.description ||
+              tx.type ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${dateFa(
+              tx.created_at
+            )}
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="5">
+          خطا:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+  }
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(){
+
+  $("modal")
+    .classList
+    .remove("hidden");
+}
+
+function closeModal(){
+
+  $("modal")
+    .classList
+    .add("hidden");
+
+  $("modalContent").innerHTML = "";
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+db.auth.onAuthStateChange(
+  async(event,session)=>{
+
+    if(event === "PASSWORD_RECOVERY"){
+
+      $("loginPage")
+        .classList
+        .add("hidden");
+
+      $("resetPage")
+        .classList
+        .remove("hidden");
+
+      return;
+    }
+
+    if(session){
+
+      currentUser =
+        session.user;
+
+    }
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+    checkSession();
+  }
+);
+
+</script>
+
+</body>
+</html>
