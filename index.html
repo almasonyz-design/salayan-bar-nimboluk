@@ -436,5 +436,1607 @@ label{
                         data-inquiry="road">
 
                     <div class="status-icon">🛣️</div>
-                    <div class="status-t
+                    <div class="status-title">استعلام راهداری</div>
+                    <div class="status-state">● بررسی آزمایشی</div>
+
+                </button>
+
+
+                <button type="button"
+                        class="status-btn warning inquiry-btn"
+                        data-inquiry="all">
+
+                    <div class="status-icon">📋</div>
+                    <div class="status-title">استعلام کامل</div>
+                    <div class="status-state">● مشاهده همه موارد</div>
+
+                </button>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h2>دسترسی سریع</h2>
+
+            <div class="quick-grid">
+
+                <button class="quick-btn"
+                        type="button"
+                        onclick="showPage('loadsPage');showLoads();">
+                    🚛 تالار بار
+                </button>
+
+                <button class="quick-btn"
+                        type="button"
+                        onclick="showPage('myLoadsPage');showMyLoads();">
+                    📦 بارهای من
+                </button>
+
+                <button class="quick-btn"
+                        type="button"
+                        onclick="showPage('createLoadPage');">
+                    ➕ اعلام بار
+                </button>
+
+                <button class="quick-btn"
+                        type="button"
+                        onclick="showPage('walletPage');showWallet();">
+                    💰 کیف پول
+                </button>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h2>منوی بیشتر</h2>
+
+            <div class="menu-grid">
+
+                <button class="menu-btn"
+                        onclick="showPage('walletPage');showWallet();">
+                    💰 کیف پول
+                </button>
+
+                <button class="menu-btn"
+                        onclick="showPage('profilePage');">
+                    👤 پروفایل
+                </button>
+
+                <button class="menu-btn"
+                        onclick="showPage('truckPage');">
+                    🚚 اطلاعات کامیون
+                </button>
+
+                <button class="menu-btn"
+                        onclick="openInquiry('all');">
+                    🔎 استعلام‌ها
+                </button>
+
+                <button class="menu-btn"
+                        onclick="showPage('notificationsPage');">
+                    🔔 اعلان‌ها
+                </button>
+
+                <button class="menu-btn"
+                        onclick="showPage('supportPage');">
+                    ☎️ پشتیبانی
+                </button>
+
+                <button class="menu-btn"
+                        onclick="logout();">
+                    🚪 خروج
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- LOADS -->
+    <div id="loadsPage" class="hidden">
+
+        <div class="card">
+            <h2>تالار بار</h2>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+        </div>
+
+        <div id="loadsList" class="loading">
+            در حال دریافت بارها...
+        </div>
+
+    </div>
+
+
+    <!-- MY LOADS -->
+    <div id="myLoadsPage" class="hidden">
+
+        <div class="card">
+            <h2>بارهای من</h2>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+        </div>
+
+        <div id="myLoadsList" class="loading">
+            در حال دریافت اطلاعات...
+        </div>
+
+    </div>
+
+
+    <!-- CREATE LOAD -->
+    <div id="createLoadPage" class="hidden">
+
+        <div class="card">
+
+            <h2>اعلام بار</h2>
+
+            <label>مبدأ</label>
+            <input id="origin" placeholder="مثلاً نیمبلوک">
+
+            <label>مقصد</label>
+            <input id="destination" placeholder="مثلاً مشهد">
+
+            <label>نوع کالا</label>
+            <input id="cargo" placeholder="مثلاً سیمان">
+
+            <label>وزن</label>
+            <input id="weight" type="number" placeholder="وزن به تن">
+
+            <label>نوع کامیون</label>
+            <select id="truckType">
+                <option value="">انتخاب کنید</option>
+                <option value="کمپرسی">کمپرسی</option>
+                <option value="تریلی">تریلی</option>
+                <option value="جفت">جفت</option>
+                <option value="تک">تک</option>
+                <option value="کشنده">کشنده</option>
+            </select>
+
+            <label>کرایه</label>
+            <input id="fare" type="number" placeholder="مبلغ به تومان">
+
+            <label>نوع بار</label>
+            <select id="loadType">
+                <option value="turn">نوبتی</option>
+                <option value="free">آزاد</option>
+            </select>
+
+            <div class="notice">
+                بارهای نوبتی در شعاع ۲۰۰ کیلومتری برای رانندگان واجد شرایط نمایش داده می‌شوند.
+                در نسخه نهایی، پس از پایان مهلت انتخاب، بار نوبتی به صورت خودکار آزاد خواهد شد.
+            </div>
+
+            <button class="btn"
+                    id="createLoadBtn"
+                    onclick="createLoad();">
+                ثبت بار
+            </button>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                انصراف
+            </button>
+
+            <div id="createLoadMessage"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- WALLET -->
+    <div id="walletPage" class="hidden">
+
+        <div class="card">
+
+            <h2>کیف پول</h2>
+
+            <div class="money" id="walletBalance">
+                ۰ تومان
+            </div>
+
+            <p style="font-size:13px;color:#777">
+                هزینه انتخاب هر بار در نسخه فعلی: ۱۰٬۰۰۰ تومان
+            </p>
+
+            <button class="btn"
+                    onclick="testCharge();">
+                شارژ آزمایشی کیف پول
+            </button>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+    <div id="profilePage" class="hidden">
+
+        <div class="card">
+
+            <h2>پروفایل</h2>
+
+            <p>
+                شماره موبایل:
+                <strong id="profilePhone">---</strong>
+            </p>
+
+            <p>
+                وضعیت حساب:
+                <strong style="color:#2b8a3e">فعال</strong>
+            </p>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- TRUCK -->
+    <div id="truckPage" class="hidden">
+
+        <div class="card">
+
+            <h2>اطلاعات کامیون</h2>
+
+            <p style="color:#777">
+                اطلاعات کامیون در نسخه بعدی از پروفایل راننده دریافت خواهد شد.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+    <div id="notificationsPage" class="hidden">
+
+        <div class="card">
+
+            <h2>اعلان‌ها</h2>
+
+            <p style="color:#777">
+                فعلاً اعلان جدیدی وجود ندارد.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+    <div id="supportPage" class="hidden">
+
+        <div class="card">
+
+            <h2>پشتیبانی</h2>
+
+            <p>
+                برای پشتیبانی صلایان بار با مدیریت سامانه تماس بگیرید.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="showPage('homePage');">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- MODAL -->
+<div id="modal"
+     class="modal-bg hidden">
+
+    <div class="modal">
+
+        <h3 id="modalTitle">
+            استعلام
+        </h3>
+
+        <div id="modalContent"></div>
+
+        <button class="btn"
+                id="mockInquiryBtn">
+            اجرای استعلام آزمایشی
+        </button>
+
+        <button class="btn secondary"
+                onclick="closeModal();">
+            بستن
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+    صلایان بار نیمبلوک — اعلام بار هوشمند
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    "https://ntirixjflgqihobpnmya.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =====================================================
+   CONSTANTS
+===================================================== */
+
+const LOAD_SELECTION_FEE = 10000;
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+let currentUser = null;
+let currentInquiryType = null;
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function showPage(pageId){
+
+    const pages = [
+        "homePage",
+        "loadsPage",
+        "myLoadsPage",
+        "createLoadPage",
+        "walletPage",
+        "profilePage",
+        "truckPage",
+        "notificationsPage",
+        "supportPage"
+    ];
+
+    pages.forEach(id => {
+
+        const el = document.getElementById(id);
+
+        if(el){
+            el.classList.add("hidden");
+        }
+
+    });
+
+    const target =
+        document.getElementById(pageId);
+
+    if(target){
+        target.classList.remove("hidden");
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    const message =
+        document.getElementById("loginMessage");
+
+    if(!phone){
+
+        message.innerHTML =
+            `<div class="error">شماره موبایل را وارد کنید.</div>`;
+
+        return;
+    }
+
+    message.innerHTML =
+        `<div class="notice">در حال ورود...</div>`;
+
+    try{
+
+        let { data: sessionData } =
+            await supabaseClient.auth.getSession();
+
+        if(sessionData && sessionData.session){
+
+            currentUser =
+                sessionData.session.user;
+
+        }else{
+
+            const result =
+                await supabaseClient.auth.signInAnonymously();
+
+            if(result.error){
+                throw result.error;
+            }
+
+            currentUser =
+                result.data.user;
+
+        }
+
+        localStorage.setItem(
+            "salayan_phone",
+            phone
+        );
+
+        document.getElementById(
+            "profilePhone"
+        ).textContent = phone;
+
+        document.getElementById(
+            "loginPage"
+        ).classList.add("hidden");
+
+        document.getElementById(
+            "appPage"
+        ).classList.remove("hidden");
+
+        showPage("homePage");
+
+        await showWallet();
+
+    }catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+            `<div class="error">
+                خطا در ورود: ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTO LOGIN
+===================================================== */
+
+async function checkSession(){
+
+    try{
+
+        const {
+            data
+        } = await supabaseClient.auth.getSession();
+
+        if(data && data.session){
+
+            currentUser =
+                data.session.user;
+
+            const phone =
+                localStorage.getItem(
+                    "salayan_phone"
+                ) || "کاربر سامانه";
+
+            document.getElementById(
+                "profilePhone"
+            ).textContent = phone;
+
+            document.getElementById(
+                "loginPage"
+            ).classList.add("hidden");
+
+            document.getElementById(
+                "appPage"
+            ).classList.remove("hidden");
+
+            showPage("homePage");
+
+            await showWallet();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout(){
+
+    try{
+
+        await supabaseClient.auth.signOut();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+    currentUser = null;
+
+    document.getElementById(
+        "appPage"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "loginPage"
+    ).classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   INQUIRY SYSTEM
+   FIXED CLICKABLE BUTTONS
+===================================================== */
+
+const inquiryData = {
+
+    technical:{
+        title:"معاینه فنی کامیون",
+        icon:"🔧",
+        text:
+        "وضعیت معاینه فنی کامیون در این نسخه آزمایشی نمایش داده می‌شود.",
+        state:"معتبر / آزمایشی"
+    },
+
+    health:{
+        title:"کارت سلامت راننده",
+        icon:"❤️",
+        text:
+        "وضعیت کارت سلامت راننده در این نسخه آزمایشی نمایش داده می‌شود.",
+        state:"معتبر / آزمایشی"
+    },
+
+    insurance:{
+        title:"بیمه بدنه کامیون",
+        icon:"🛡️",
+        text:
+        "وضعیت بیمه بدنه کامیون در این نسخه آزمایشی نمایش داده می‌شود.",
+        state:"نیازمند استعلام رسمی"
+    },
+
+    smartcard:{
+        title:"کارت هوشمند راننده",
+        icon:"🪪",
+        text:
+        "وضعیت کارت هوشمند راننده در این نسخه آزمایشی نمایش داده می‌شود.",
+        state:"معتبر / آزمایشی"
+    },
+
+    road:{
+        title:"استعلام راهداری",
+        icon:"🛣️",
+        text:
+        "استعلام راهداری فعلاً آزمایشی است. اتصال به سامانه رسمی راهداری در مرحله بعد انجام خواهد شد.",
+        state:"اتصال رسمی هنوز فعال نیست"
+    },
+
+    all:{
+        title:"استعلام کامل",
+        icon:"📋",
+        text:
+        "در این قسمت وضعیت تمام مدارک راننده و کامیون نمایش داده خواهد شد.",
+        state:"نسخه آزمایشی"
+    }
+
+};
+
+
+/* مهم:
+   این تابع بدون onclick مستقیم روی div کار می‌کند.
+*/
+
+function openInquiry(type){
+
+    currentInquiryType = type;
+
+    const item =
+        inquiryData[type];
+
+    if(!item){
+        return;
+    }
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        item.icon + " " + item.title;
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML =
+        `
+        <div class="notice">
+            <strong>وضعیت:</strong>
+            ${escapeHtml(item.state)}
+        </div>
+
+        <p style="line-height:2">
+            ${escapeHtml(item.text)}
+        </p>
+
+        <div class="notice">
+            ⚠️ توجه: این استعلام‌ها در حال حاضر
+            <strong>آزمایشی</strong> هستند و
+            به سامانه‌های رسمی متصل نیستند.
+        </div>
+        `;
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("hidden");
+
+}
+
+
+/* سازگاری با نسخه قبلی */
+
+function showInquiry(type){
+    openInquiry(type);
+}
+
+
+/* اجرای استعلام آزمایشی */
+
+function runMockInquiry(name){
+
+    alert(
+        "استعلام «" +
+        name +
+        "» در نسخه آزمایشی اجرا شد.\n\n" +
+        "اتصال به سامانه رسمی در مرحله بعد اضافه خواهد شد."
+    );
+
+}
+
+
+/* بستن مودال */
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   ATTACH INQUIRY BUTTON EVENTS
+===================================================== */
+
+function initInquiryButtons(){
+
+    const buttons =
+        document.querySelectorAll(
+            ".inquiry-btn"
+        );
+
+    buttons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const type =
+                    this.getAttribute(
+                        "data-inquiry"
+                    );
+
+                openInquiry(type);
+
+            }
+        );
+
+    });
+
+}
+
+
+/* =====================================================
+   LOADS
+===================================================== */
+
+async function showLoads(){
+
+    const list =
+        document.getElementById(
+            "loadsList"
+        );
+
+    list.innerHTML =
+        `<div class="loading">
+            در حال دریافت بارها...
+        </div>`;
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("loads")
+        .select("*")
+        .in(
+            "status",
+            [
+                "waiting",
+                "turn",
+                "free",
+                "reserved"
+            ]
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+        if(error){
+            throw error;
+        }
+
+        if(!data || data.length === 0){
+
+            list.innerHTML =
+                `<div class="card">
+                    فعلاً باری ثبت نشده است.
+                </div>`;
+
+            return;
+        }
+
+        list.innerHTML =
+            data.map(
+                renderLoad
+            ).join("");
+
+    }catch(error){
+
+        console.error(error);
+
+        list.innerHTML =
+            `<div class="error">
+                خطا در دریافت بارها:
+                ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER LOAD
+===================================================== */
+
+function renderLoad(load){
+
+    let badgeClass =
+        "waiting";
+
+    let badgeText =
+        "در انتظار";
+
+    if(load.load_type === "turn"){
+
+        badgeClass = "turn";
+        badgeText = "نوبتی";
+
+    }
+
+    if(load.load_type === "free"){
+
+        badgeClass = "free";
+        badgeText = "آزاد";
+
+    }
+
+    if(load.status === "reserved"){
+
+        badgeClass = "reserved";
+        badgeText = "رزرو شده";
+
+    }
+
+    return `
+        <div class="load-item">
+
+            <span class="badge ${badgeClass}">
+                ${badgeText}
+            </span>
+
+            <h3>
+                ${escapeHtml(load.origin || "-")}
+                ←
+                ${escapeHtml(load.destination || "-")}
+            </h3>
+
+            <div class="row">
+                <span>کالا</span>
+                <strong>
+                    ${escapeHtml(load.cargo || "-")}
+                </strong>
+            </div>
+
+            <div class="row">
+                <span>وزن</span>
+                <strong>
+                    ${escapeHtml(String(load.weight || "-"))}
+                    تن
+                </strong>
+            </div>
+
+            <div class="row">
+                <span>نوع کامیون</span>
+                <strong>
+                    ${escapeHtml(load.truck_type || "-")}
+                </strong>
+            </div>
+
+            <div class="row">
+                <span>کرایه</span>
+                <strong>
+                    ${formatMoney(load.fare)}
+                    تومان
+                </strong>
+            </div>
+
+            ${
+                load.status !== "reserved"
+                ?
+                `<button
+                    class="btn"
+                    onclick="selectLoad('${load.id}')">
+                    انتخاب بار — ۱۰٬۰۰۰ تومان
+                </button>`
+                :
+                `<div class="notice">
+                    این بار قبلاً رزرو شده است.
+                </div>`
+            }
+
+        </div>
+    `;
+
+}
+
+
+/* =====================================================
+   CREATE LOAD
+===================================================== */
+
+async function createLoad(){
+
+    const message =
+        document.getElementById(
+            "createLoadMessage"
+        );
+
+    if(!currentUser){
+
+        message.innerHTML =
+            `<div class="error">
+                ابتدا وارد سامانه شوید.
+            </div>`;
+
+        return;
+    }
+
+    const origin =
+        document.getElementById(
+            "origin"
+        ).value.trim();
+
+    const destination =
+        document.getElementById(
+            "destination"
+        ).value.trim();
+
+    const cargo =
+        document.getElementById(
+            "cargo"
+        ).value.trim();
+
+    const weight =
+        document.getElementById(
+            "weight"
+        ).value;
+
+    const truckType =
+        document.getElementById(
+            "truckType"
+        ).value;
+
+    const fare =
+        document.getElementById(
+            "fare"
+        ).value;
+
+    const loadType =
+        document.getElementById(
+            "loadType"
+        ).value;
+
+
+    if(
+        !origin ||
+        !destination ||
+        !cargo ||
+        !weight ||
+        !fare
+    ){
+
+        message.innerHTML =
+            `<div class="error">
+                لطفاً اطلاعات بار را کامل وارد کنید.
+            </div>`;
+
+        return;
+    }
+
+
+    message.innerHTML =
+        `<div class="notice">
+            در حال ثبت بار...
+        </div>`;
+
+
+    try{
+
+        const insertData = {
+
+            created_by:
+                currentUser.id,
+
+            origin:
+                origin,
+
+            destination:
+                destination,
+
+            cargo:
+                cargo,
+
+            weight:
+                Number(weight),
+
+            truck_type:
+                truckType,
+
+            fare:
+                Number(fare),
+
+            load_type:
+                loadType,
+
+            status:
+                loadType === "free"
+                ? "free"
+                : "turn",
+
+            max_distance_km:
+                loadType === "turn"
+                ? 200
+                : null
+
+        };
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("loads")
+        .insert(
+            insertData
+        )
+        .select()
+        .single();
+
+
+        if(error){
+            throw error;
+        }
+
+
+        message.innerHTML =
+            `<div class="success">
+                بار با موفقیت ثبت شد.
+            </div>`;
+
+
+        document.getElementById(
+            "origin"
+        ).value = "";
+
+        document.getElementById(
+            "destination"
+        ).value = "";
+
+        document.getElementById(
+            "cargo"
+        ).value = "";
+
+        document.getElementById(
+            "weight"
+        ).value = "";
+
+        document.getElementById(
+            "fare"
+        ).value = "";
+
+
+        setTimeout(
+            () => {
+
+                showPage(
+                    "loadsPage"
+                );
+
+                showLoads();
+
+            },
+            700
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+            `<div class="error">
+                خطا در ثبت بار:
+                ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   SELECT LOAD
+===================================================== */
+
+async function selectLoad(loadId){
+
+    if(!currentUser){
+
+        alert(
+            "ابتدا وارد سامانه شوید."
+        );
+
+        return;
+    }
+
+
+    if(
+        !confirm(
+            "هزینه انتخاب این بار ۱۰٬۰۰۰ تومان است.\nآیا ادامه می‌دهید؟"
+        )
+    ){
+
+        return;
+    }
+
+
+    try{
+
+        /*
+         * هزینه و رزرو در سمت سرور انجام می‌شود.
+         * این قسمت به RPC نسخه V2 متصل است.
+         */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .rpc(
+            "select_load",
+            {
+                p_load_id:
+                    loadId,
+
+                /*
+                 * فعلاً برای تست مقدار 0 ارسال می‌شود.
+                 * در نسخه بعدی GPS واقعی جایگزین می‌شود.
+                 */
+                p_distance_km:
+                    0
+            }
+        );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        const result =
+            Array.isArray(data)
+            ? data[0]
+            : data;
+
+
+        if(
+            result &&
+            result.success === false
+        ){
+
+            alert(
+                result.message ||
+                "انتخاب بار انجام نشد."
+            );
+
+            return;
+        }
+
+
+        alert(
+            result?.message ||
+            "بار با موفقیت انتخاب شد."
+        );
+
+
+        await showLoads();
+
+        await showWallet();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "خطا در انتخاب بار:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MY LOADS
+===================================================== */
+
+async function showMyLoads(){
+
+    const list =
+        document.getElementById(
+            "myLoadsList"
+        );
+
+    list.innerHTML =
+        `<div class="loading">
+            در حال دریافت بارهای شما...
+        </div>`;
+
+
+    if(!currentUser){
+
+        list.innerHTML =
+            `<div class="error">
+                ابتدا وارد سامانه شوید.
+            </div>`;
+
+        return;
+    }
+
+
+    try{
+
+        const {
+            data: driver,
+            error: driverError
+        } =
+        await supabaseClient
+        .from("drivers")
+        .select("id")
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .maybeSingle();
+
+
+        if(driverError){
+            throw driverError;
+        }
+
+
+        if(!driver){
+
+            list.innerHTML =
+                `<div class="notice">
+                    هنوز پروفایل راننده برای این حساب ایجاد نشده است.
+                </div>`;
+
+            return;
+        }
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("load_selections")
+        .select(
+            `
+            *,
+            loads(*)
+            `
+        )
+        .eq(
+            "driver_id",
+            driver.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        if(!data || data.length === 0){
+
+            list.innerHTML =
+                `<div class="card">
+                    هنوز باری انتخاب نکرده‌اید.
+                </div>`;
+
+            return;
+        }
+
+
+        list.innerHTML =
+            data.map(
+                item => {
+
+                    const load =
+                        item.loads;
+
+                    return `
+                        <div class="load-item">
+
+                            <span class="badge reserved">
+                                انتخاب شده
+                            </span>
+
+                            <h3>
+                                ${escapeHtml(load.origin || "-")}
+                                ←
+                                ${escapeHtml(load.destination || "-")}
+                            </h3>
+
+                            <div class="row">
+                                <span>کالا</span>
+                                <strong>
+                                    ${escapeHtml(load.cargo || "-")}
+                                </strong>
+                            </div>
+
+                            <div class="row">
+                                <span>کرایه</span>
+                                <strong>
+                                    ${formatMoney(load.fare)}
+                                    تومان
+                                </strong>
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            ).join("");
+
+
+    }catch(error){
+
+        console.error(error);
+
+        list.innerHTML =
+            `<div class="error">
+                خطا در دریافت بارهای من:
+                ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   WALLET
+===================================================== */
+
+async function showWallet(){
+
+    if(!currentUser){
+        return;
+    }
+
+
+    const balanceElement =
+        document.getElementById(
+            "walletBalance"
+        );
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .from("wallets")
+        .select("balance")
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .maybeSingle();
+
+
+        if(error){
+            throw error;
+        }
+
+
+        const balance =
+            data?.balance || 0;
+
+
+        balanceElement.textContent =
+            formatMoney(balance) +
+            " تومان";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        balanceElement.textContent =
+            "خطا در دریافت موجودی";
+
+    }
+
+}
+
+
+/*
+ * فقط برای تست رابط کاربری.
+ * شارژ واقعی باید با درگاه پرداخت انجام شود.
+ */
+
+function testCharge(){
+
+    alert(
+        "شارژ واقعی کیف پول هنوز به درگاه پرداخت متصل نشده است.\n\n" +
+        "موجودی و کسر هزینه انتخاب بار از سمت سرور مدیریت می‌شود."
+    );
+
+}
+
+
+/* =====================================================
+   UTILITY
+===================================================== */
+
+function formatMoney(value){
+
+    const number =
+        Number(value || 0);
+
+    return number.toLocaleString(
+        "fa-IR"
+    );
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   MODAL CLOSE WHEN CLICK OUTSIDE
+===================================================== */
+
+document
+.getElementById("modal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+document
+.getElementById("loginBtn")
+.addEventListener(
+    "click",
+    login
+);
+
+
+/* =====================================================
+   MOCK INQUIRY BUTTON
+===================================================== */
+
+document
+.getElementById("mockInquiryBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        if(!currentInquiryType){
+            return;
+        }
+
+        const item =
+            inquiryData[
+                currentInquiryType
+            ];
+
+        if(item){
+
+            runMockInquiry(
+                item.title
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        initInquiryButtons();
+
+        checkSession();
+
+    }
+);
+
+
+/* =====================================================
+   SUPABASE AUTH LISTENER
+===================================================== */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+    function(event, session){
+
+        if(session){
+
+            currentUser =
+                session.user;
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
 ```
