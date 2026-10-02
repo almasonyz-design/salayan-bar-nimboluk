@@ -2,251 +2,627 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>پنل مدیریت صلایان بار نیمبلوک</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#146b45">
+<title>پنل مدیریت | صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+:root{
+  --green:#146b45;
+  --green2:#0d5134;
+  --green3:#e9f6ef;
+  --bg:#f3f6f5;
+  --white:#fff;
+  --text:#17231e;
+  --muted:#718079;
+  --border:#dce5e0;
+  --danger:#b52d2d;
+  --danger-bg:#fdeaea;
+  --warning:#a86d00;
+  --warning-bg:#fff4d8;
+  --info:#17669a;
+  --info-bg:#e8f3fb;
+  --shadow:0 4px 20px rgba(0,0,0,.07);
+}
+
 *{box-sizing:border-box}
 
-body{
+html,body{
   margin:0;
+  padding:0;
   font-family:Tahoma,Arial,sans-serif;
-  background:#f3f6f8;
-  color:#222;
+  background:var(--bg);
+  color:var(--text);
 }
 
-header{
-  background:#087f3d;
-  color:#fff;
-  padding:18px;
-  text-align:center;
-}
-
-header h1{
-  margin:0;
-  font-size:23px;
-}
-
-header p{
-  margin:7px 0 0;
-  opacity:.9;
-}
-
-.container{
-  max-width:1250px;
-  margin:auto;
-  padding:16px;
-}
-
-.card{
-  background:#fff;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
-}
-
-.login{
-  max-width:440px;
-  margin:55px auto;
-}
-
-.title{
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-input,select,textarea,button{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:9px;
-  border:1px solid #ddd;
+button,input,select,textarea{
   font-family:inherit;
-  font-size:14px;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
 }
 
 button{
-  background:#087f3d;
-  color:#fff;
-  border:0;
   cursor:pointer;
-  font-weight:bold;
 }
-
-button:hover{
-  opacity:.92;
-}
-
-button.gray{background:#666}
-button.red{background:#c62828}
-button.orange{background:#e68a00}
-button.blue{background:#1565c0}
 
 .hidden{
   display:none!important;
 }
 
-.menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:16px;
-}
+/* LOGIN */
 
-.menu button{
-  min-height:70px;
-  font-size:15px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
-}
-
-.stat{
-  background:#fff;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-
-.number{
-  font-size:30px;
-  font-weight:bold;
-  color:#087f3d;
-  margin-top:10px;
-}
-
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:900px;
-}
-
-th,td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-  text-align:center;
-}
-
-th{
-  background:#eef2f3;
-}
-
-.action{
-  width:auto;
-  padding:7px 10px;
-  margin:2px;
-  font-size:12px;
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
+.login-screen{
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:15px;
-  z-index:9999;
+  padding:20px;
+  background:
+    radial-gradient(circle at top right,#2d8d62 0,#146b45 38%,#0d3f29 100%);
 }
 
-.modal-box{
-  background:#fff;
+.login-card{
   width:100%;
-  max-width:620px;
+  max-width:430px;
+  background:#fff;
+  border-radius:22px;
+  padding:34px;
+  box-shadow:0 20px 70px rgba(0,0,0,.25);
+}
+
+.login-logo{
+  width:78px;
+  height:78px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--green);
+  color:#fff;
+  font-size:35px;
+}
+
+.login-title{
+  text-align:center;
+  font-size:25px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.login-subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:28px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.form-control{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 13px;
+  outline:none;
+  background:#fff;
+  transition:.2s;
+}
+
+.form-control:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(20,107,69,.1);
+}
+
+.login-button{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.login-button:hover{
+  background:var(--green2);
+}
+
+.login-error{
+  margin-top:14px;
+  background:var(--danger-bg);
+  color:var(--danger);
+  padding:11px;
+  border-radius:9px;
+  font-size:13px;
+}
+
+/* APP */
+
+.app{
+  min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  width:260px;
+  background:#103d29;
+  color:#fff;
+  padding:18px 14px;
+  overflow-y:auto;
+  z-index:100;
+}
+
+.brand{
+  text-align:center;
+  padding:12px 8px 22px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.brand-icon{
+  font-size:34px;
+  margin-bottom:7px;
+}
+
+.brand-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.brand-sub{
+  font-size:11px;
+  opacity:.65;
+  margin-top:5px;
+}
+
+.menu{
+  margin-top:20px;
+}
+
+.menu button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#fff;
+  text-align:right;
+  padding:12px 13px;
+  border-radius:9px;
+  margin-bottom:4px;
+  font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+  background:#1b6645;
+}
+
+.menu-separator{
+  height:1px;
+  background:rgba(255,255,255,.12);
+  margin:14px 4px;
+}
+
+.logout-btn{
+  background:#8d2929!important;
+  margin-top:8px;
+}
+
+.main{
+  margin-right:260px;
+  min-height:100vh;
+  padding:22px;
+}
+
+.topbar{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:15px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.page-title{
+  margin:0;
+  font-size:22px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.admin-user{
+  padding:9px 12px;
+  border-radius:9px;
+  background:var(--green3);
+  color:var(--green2);
+  font-size:12px;
+}
+
+/* PAGES */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* CARDS */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.stat-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+
+.stat-icon{
+  font-size:24px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:10px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+/* PANELS */
+
+.panel{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  margin-top:18px;
+}
+
+.panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.panel-title{
+  margin:0;
+  font-size:17px;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 13px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.btn-primary{
+  background:var(--green);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--green2);
+}
+
+.btn-secondary{
+  background:#68777f;
+  color:#fff;
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:#fff;
+}
+
+.btn-warning{
+  background:#b57800;
+  color:#fff;
+}
+
+.btn-light{
+  background:#edf2f0;
+  color:#23332b;
+}
+
+.btn-info{
+  background:#17669a;
+  color:#fff;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.search-box{
+  flex:1;
+  min-width:220px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:10px 12px;
+  outline:none;
+}
+
+.filter-select{
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:10px;
+  background:#fff;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow:auto;
+}
+
+.data-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+.data-table th{
+  background:#f1f5f3;
+  font-size:12px;
+  padding:11px 9px;
+  text-align:right;
+  white-space:nowrap;
+}
+
+.data-table td{
+  border-bottom:1px solid #edf1ef;
+  padding:11px 9px;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.data-table tr:hover td{
+  background:#fafcfb;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:35px!important;
+}
+
+/* BADGES */
+
+.badge{
+  display:inline-block;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.badge-green{
+  background:#dcf4e7;
+  color:#12643e;
+}
+
+.badge-red{
+  background:#fde3e3;
+  color:#922525;
+}
+
+.badge-yellow{
+  background:#fff0ca;
+  color:#765000;
+}
+
+.badge-blue{
+  background:#dceefb;
+  color:#155b86;
+}
+
+.badge-gray{
+  background:#e9edef;
+  color:#58656b;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:1000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+  width:100%;
+  max-width:720px;
   max-height:92vh;
   overflow:auto;
+  background:#fff;
   border-radius:16px;
   padding:20px;
 }
 
-.msg{
-  padding:12px;
-  border-radius:9px;
-  margin:8px 0;
-  background:#fff3cd;
-}
-
-.success{
-  background:#d1e7dd;
-  color:#0f5132;
-}
-
-.error{
-  background:#f8d7da;
-  color:#842029;
-}
-
-.top{
+.modal-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+  margin-bottom:18px;
 }
 
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
+.modal-title{
+  margin:0;
+  font-size:18px;
 }
 
-.badge.green{
-  background:#d1e7dd;
-  color:#0f5132;
+.close-btn{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:0;
+  background:#edf1ef;
+  font-size:20px;
 }
 
-.badge.orange{
-  background:#fff0d5;
-  color:#8a4b00;
-}
-
-.badge.red{
-  background:#f8d7da;
-  color:#842029;
-}
-
-.badge.gray{
-  background:#e9ecef;
-  color:#495057;
-}
-
-.small{
-  font-size:12px;
-  color:#666;
-}
-
-.grid2{
+.form-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
 }
 
-@media(max-width:700px){
-  .grid2{
+.form-grid .full{
+  grid-column:1/-1;
+}
+
+.modal-footer{
+  display:flex;
+  gap:8px;
+  justify-content:flex-start;
+  margin-top:20px;
+}
+
+/* QUICK STATUS */
+
+.status-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.status-box{
+  padding:15px;
+  border-radius:12px;
+  background:#f5f8f6;
+  border:1px solid var(--border);
+}
+
+.status-box strong{
+  display:block;
+  margin-bottom:7px;
+}
+
+/* ALERT */
+
+.alert{
+  padding:12px 14px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.alert-success{
+  background:#e2f5e9;
+  color:#12623e;
+}
+
+.alert-danger{
+  background:#fde5e5;
+  color:#902525;
+}
+
+.alert-warning{
+  background:#fff3d4;
+  color:#765000;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+  .stats-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:800px){
+  .sidebar{
+    position:relative;
+    width:100%;
+    bottom:auto;
+  }
+
+  .main{
+    margin-right:0;
+  }
+
+  .menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:4px;
+  }
+
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .status-grid{
     grid-template-columns:1fr;
   }
 
-  table{
-    min-width:850px;
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+
+@media(max-width:550px){
+  .main{
+    padding:12px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid .full{
+    grid-column:auto;
   }
 }
 </style>
@@ -254,444 +630,1085 @@ th{
 
 <body>
 
-<header>
-  <h1>پنل مدیریت صلایان بار نیمبلوک</h1>
-  <p>اعلام بار هوشمند</p>
-</header>
-
-<div class="container">
-
 <!-- LOGIN -->
-<div id="loginPage" class="card login">
 
-  <div class="title">🔐 ورود مدیر</div>
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
 
-  <div id="loginMsg"></div>
+    <div class="login-logo">🚚</div>
 
-  <input
-    id="email"
-    type="email"
-    autocomplete="username"
-    placeholder="ایمیل مدیر">
+    <div class="login-title">
+      صلایان بار نیمبلوک
+    </div>
 
-  <input
-    id="password"
-    type="password"
-    autocomplete="current-password"
-    placeholder="رمز عبور">
+    <div class="login-subtitle">
+      ورود به پنل مدیریت
+    </div>
 
-  <button onclick="login()">
-    ورود به پنل مدیریت
-  </button>
+    <div class="form-group">
+      <label>ایمیل مدیر</label>
+      <input
+        id="loginEmail"
+        class="form-control"
+        type="email"
+        autocomplete="username"
+        placeholder="ایمیل"
+      >
+    </div>
 
-  <button class="gray" onclick="showForgot()">
-    فراموشی رمز عبور
-  </button>
+    <div class="form-group">
+      <label>رمز عبور</label>
+      <input
+        id="loginPassword"
+        class="form-control"
+        type="password"
+        autocomplete="current-password"
+        placeholder="رمز عبور"
+      >
+    </div>
 
+    <button
+      id="loginBtn"
+      class="login-button"
+      onclick="loginAdmin()"
+    >
+      ورود
+    </button>
+
+    <div id="loginError" class="login-error hidden"></div>
+
+  </div>
 </div>
 
 
-<!-- FORGOT -->
-<div id="forgotPage" class="card login hidden">
+<!-- APP -->
 
-  <div class="title">🔑 بازیابی رمز عبور</div>
+<div id="app" class="app hidden">
 
-  <div id="forgotMsg"></div>
+  <!-- SIDEBAR -->
 
-  <input
-    id="forgotEmail"
-    type="email"
-    placeholder="ایمیل مدیر">
+  <aside class="sidebar">
 
-  <button onclick="sendReset()">
-    ارسال لینک بازیابی
-  </button>
+    <div class="brand">
+      <div class="brand-icon">🚚</div>
+      <div class="brand-title">صلایان بار نیمبلوک</div>
+      <div class="brand-sub">پنل مدیریت سامانه</div>
+    </div>
 
-  <button class="gray" onclick="showLogin()">
-    بازگشت
-  </button>
-
-</div>
-
-
-<!-- RESET -->
-<div id="resetPage" class="card login hidden">
-
-  <div class="title">🔐 تعیین رمز جدید</div>
-
-  <div id="resetMsg"></div>
-
-  <input
-    id="newPass"
-    type="password"
-    placeholder="رمز عبور جدید">
-
-  <input
-    id="newPass2"
-    type="password"
-    placeholder="تکرار رمز عبور جدید">
-
-  <button onclick="saveNewPassword()">
-    ثبت رمز جدید
-  </button>
-
-</div>
-
-
-<!-- ADMIN -->
-<div id="adminPage" class="hidden">
-
-  <div class="card">
-    <div class="top">
-
-      <div>
-        <b>پنل مدیریت صلایان بار</b>
-        <div id="adminEmail" class="small"></div>
-      </div>
+    <div class="menu">
 
       <button
-        class="red"
-        style="width:auto"
-        onclick="logout()">
-        خروج
+        data-page="dashboard"
+        class="active"
+        onclick="showPage('dashboard')"
+      >
+        📊 داشبورد
+      </button>
+
+      <button
+        data-page="loads"
+        onclick="showPage('loads')"
+      >
+        📦 مدیریت بارها
+      </button>
+
+      <button
+        data-page="drivers"
+        onclick="showPage('drivers')"
+      >
+        🚚 رانندگان
+      </button>
+
+      <button
+        data-page="vehicles"
+        onclick="showPage('vehicles')"
+      >
+        🚛 کامیون‌ها
+      </button>
+
+      <button
+        data-page="wallets"
+        onclick="showPage('wallets')"
+      >
+        💰 کیف پول
+      </button>
+
+      <button
+        data-page="transactions"
+        onclick="showPage('transactions')"
+      >
+        💳 تراکنش‌ها
+      </button>
+
+      <button
+        data-page="notifications"
+        onclick="showPage('notifications')"
+      >
+        🔔 اعلان‌ها
+      </button>
+
+      <button
+        data-page="sessions"
+        onclick="showPage('sessions')"
+      >
+        🔐 نشست‌ها
+      </button>
+
+      <button
+        data-page="reports"
+        onclick="showPage('reports')"
+      >
+        📈 گزارش‌ها
+      </button>
+
+      <div class="menu-separator"></div>
+
+      <button onclick="refreshEverything()">
+        🔄 بروزرسانی همه
+      </button>
+
+      <button
+        class="logout-btn"
+        onclick="logoutAdmin()"
+      >
+        🚪 خروج
       </button>
 
     </div>
-  </div>
+
+  </aside>
 
 
-  <!-- MENU -->
-  <div class="menu">
+  <!-- MAIN -->
 
-    <button onclick="section('dashboard')">
-      📊 داشبورد
-    </button>
+  <main class="main">
 
-    <button onclick="section('loads')">
-      📦 مدیریت بارها
-    </button>
+    <div class="topbar">
 
-    <button onclick="section('drivers')">
-      🚛 رانندگان
-    </button>
+      <div>
+        <h1 id="pageTitle" class="page-title">
+          داشبورد
+        </h1>
 
-    <button onclick="section('wallet')">
-      💰 کیف پول
-    </button>
-
-    <button onclick="section('transactions')">
-      💳 تراکنش‌ها
-    </button>
-
-  </div>
-
-
-  <!-- DASHBOARD -->
-  <div id="dashboard">
-
-    <div class="title">
-      📊 داشبورد
-    </div>
-
-    <div class="stats">
-
-      <div class="stat">
-        👤 کاربران
-        <div id="usersCount" class="number">0</div>
+        <div class="page-subtitle">
+          مدیریت سامانه صلایان بار نیمبلوک
+        </div>
       </div>
 
-      <div class="stat">
-        🚛 رانندگان
-        <div id="driversCount" class="number">0</div>
-      </div>
-
-      <div class="stat">
-        📦 کل بارها
-        <div id="loadsCount" class="number">0</div>
-      </div>
-
-      <div class="stat">
-        🟢 بارهای فعال
-        <div id="activeCount" class="number">0</div>
+      <div id="adminUser" class="admin-user">
+        مدیر سامانه
       </div>
 
     </div>
 
-    <div class="card" style="margin-top:16px">
-      <div class="title">وضعیت سیستم</div>
-      <div id="systemStatus">
-        در حال بررسی...
+
+    <!-- DASHBOARD -->
+
+    <section
+      id="page-dashboard"
+      class="page active"
+    >
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">کل بارها</div>
+          <div id="statLoads" class="stat-value">۰</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-label">بارهای نوبتی</div>
+          <div id="statTurn" class="stat-value">۰</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-label">بارهای آزاد</div>
+          <div id="statFree" class="stat-value">۰</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🚚</div>
+          <div class="stat-label">رانندگان</div>
+          <div id="statDrivers" class="stat-value">۰</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">مجموع موجودی کیف پول</div>
+          <div id="statWallet" class="stat-value">۰</div>
+        </div>
+
       </div>
-    </div>
-
-  </div>
 
 
-  <!-- LOADS -->
-  <div id="loads" class="hidden">
+      <div class="panel">
 
-    <div class="card">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            وضعیت سامانه
+          </h2>
 
-      <div class="top">
+          <button
+            class="btn btn-light"
+            onclick="refreshEverything()"
+          >
+            بروزرسانی
+          </button>
+        </div>
 
-        <div class="title">
-          📦 مدیریت بارها
+        <div
+          id="connectionStatus"
+          class="alert alert-success"
+        >
+          اتصال به Supabase برقرار است.
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-header">
+          <h2 class="panel-title">
+            آخرین بارها
+          </h2>
+
+          <button
+            class="btn btn-primary"
+            onclick="showPage('loads');openLoadModal()"
+          >
+            + ثبت بار
+          </button>
+        </div>
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>شناسه</th>
+                <th>مبدا</th>
+                <th>مقصد</th>
+                <th>نوع بار</th>
+                <th>وزن</th>
+                <th>وضعیت</th>
+              </tr>
+            </thead>
+
+            <tbody id="recentLoadsBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOADS -->
+
+    <section
+      id="page-loads"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2 class="panel-title">
+            مدیریت بارها
+          </h2>
+
+          <button
+            class="btn btn-primary"
+            onclick="openLoadModal()"
+          >
+            ➕ ثبت بار جدید
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="loadSearch"
+            class="search-box"
+            placeholder="جست‌وجوی مبدا، مقصد، بار..."
+            oninput="renderLoads()"
+          >
+
+          <select
+            id="loadStatusFilter"
+            class="filter-select"
+            onchange="renderLoads()"
+          >
+            <option value="">همه وضعیت‌ها</option>
+            <option value="waiting">در انتظار</option>
+            <option value="turn">نوبتی</option>
+            <option value="free">آزاد</option>
+            <option value="reserved">رزرو شده</option>
+            <option value="completed">تکمیل شده</option>
+          </select>
+
+          <button
+            class="btn btn-light"
+            onclick="loadLoads()"
+          >
+            🔄
+          </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>شناسه</th>
+                <th>مبدا</th>
+                <th>مقصد</th>
+                <th>نوع بار</th>
+                <th>وزن</th>
+                <th>وضعیت</th>
+                <th>مهلت</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+
+            <tbody id="loadsBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DRIVERS -->
+
+    <section
+      id="page-drivers"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2 class="panel-title">
+            مدیریت رانندگان
+          </h2>
+
+          <button
+            class="btn btn-light"
+            onclick="loadDrivers()"
+          >
+            🔄 بروزرسانی
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="driverSearch"
+            class="search-box"
+            placeholder="جست‌وجوی نام، موبایل یا شناسه..."
+            oninput="renderDrivers()"
+          >
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+
+              <tr>
+                <th>نام</th>
+                <th>موبایل</th>
+                <th>شناسه</th>
+                <th>نقش</th>
+                <th>کارت هوشمند</th>
+                <th>کارت سلامت</th>
+                <th>عملیات</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="driversBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- VEHICLES -->
+
+    <section
+      id="page-vehicles"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2 class="panel-title">
+            کامیون‌ها
+          </h2>
+
+          <button
+            class="btn btn-light"
+            onclick="loadVehicles()"
+          >
+            🔄 بروزرسانی
+          </button>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>مالک</th>
+                <th>پلاک</th>
+                <th>نوع</th>
+                <th>مدل</th>
+                <th>معاینه فنی</th>
+                <th>بیمه بدنه</th>
+              </tr>
+            </thead>
+
+            <tbody id="vehiclesBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WALLETS -->
+
+    <section
+      id="page-wallets"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2 class="panel-title">
+            کیف پول کاربران
+          </h2>
+
+          <button
+            class="btn btn-primary"
+            onclick="openWalletModal()"
+          >
+            💰 تغییر موجودی
+          </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>کاربر</th>
+                <th>موجودی</th>
+                <th>بروزرسانی</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+
+            <tbody id="walletsBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRANSACTIONS -->
+
+    <section
+      id="page-transactions"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <div class="panel-header">
+
+          <h2 class="panel-title">
+            تراکنش‌ها
+          </h2>
+
+          <button
+            class="btn btn-light"
+            onclick="loadTransactions()"
+          >
+            🔄 بروزرسانی
+          </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="transactionSearch"
+            class="search-box"
+            placeholder="جست‌وجوی شناسه کاربر یا شرح..."
+            oninput="renderTransactions()"
+          >
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table class="data-table">
+
+            <thead>
+              <tr>
+                <th>زمان</th>
+                <th>کاربر</th>
+                <th>مبلغ</th>
+                <th>نوع</th>
+                <th>شرح</th>
+              </tr>
+            </thead>
+
+            <tbody id="transactionsBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <section
+      id="page-notifications"
+      class="page"
+    >
+
+      <div class="panel">
+
+        <h2 class="panel-title">
+          ارسال اعلان
+        </h2>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>شناسه کاربر</label>
+            <input
+              id="notificationUser"
+              class="form-control"
+              placeholder="UUID کاربر"
+            >
+          </div>
+
+          <div class="form-group">
+            <label>عنوان اعلان</label>
+            <input
+              id="notificationTitle"
+              class="form-control"
+              placeholder="عنوان"
+            >
+          </div>
+
+          <div class="form-group full">
+            <label>متن اعلان</label>
+            <textarea
+              id="notificationBody"
+              class="form-control"
+              rows="5"
+              placeholder="متن اعلان..."
+            ></textarea>
+          </div>
+
         </div>
 
         <button
-          style="width:auto"
-          onclick="newLoad()">
-          ➕ ثبت بار
+          class="btn btn-primary"
+          onclick="sendNotification()"
+        >
+          🔔 ارسال اعلان
         </button>
 
       </div>
 
-      <div class="grid2">
+    </section>
 
-        <input
-          id="search"
-          placeholder="جستجوی بار..."
-          oninput="filterLoads()">
 
-        <select
-          id="filterStatus"
-          onchange="filterLoads()">
+    <!-- SESSIONS -->
 
-          <option value="">
-            همه وضعیت‌ها
-          </option>
+    <section
+      id="page-sessions"
+      class="page"
+    >
 
-          <option value="waiting">
-            در انتظار
-          </option>
+      <div class="panel">
 
-          <option value="turn">
-            نوبتی
-          </option>
+        <div class="panel-header">
 
-          <option value="free">
-            آزاد
-          </option>
+          <h2 class="panel-title">
+            نشست‌های کاربران
+          </h2>
 
-          <option value="reserved">
-            رزرو شده
-          </option>
+          <button
+            class="btn btn-light"
+            onclick="loadSessions()"
+          >
+            🔄 بروزرسانی
+          </button>
 
-          <option value="completed">
-            تکمیل شده
-          </option>
+        </div>
 
-        </select>
+        <div class="table-wrap">
 
-      </div>
+          <table class="data-table">
 
-      <div class="table-wrap">
+            <thead>
+              <tr>
+                <th>کاربر</th>
+                <th>دستگاه</th>
+                <th>IP</th>
+                <th>آخرین فعالیت</th>
+                <th>وضعیت</th>
+              </tr>
+            </thead>
 
-        <table>
+            <tbody id="sessionsBody"></tbody>
 
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>مبدا</th>
-            <th>مقصد</th>
-            <th>کالا</th>
-            <th>وزن</th>
-            <th>نوع کامیون</th>
-            <th>وضعیت</th>
-            <th>فوری</th>
-            <th>عملیات</th>
-          </tr>
-          </thead>
+          </table>
 
-          <tbody id="loadsTable"></tbody>
-
-        </table>
+        </div>
 
       </div>
 
-    </div>
-
-  </div>
+    </section>
 
 
-  <!-- DRIVERS -->
-  <div id="drivers" class="hidden">
+    <!-- REPORTS -->
 
-    <div class="card">
+    <section
+      id="page-reports"
+      class="page"
+    >
 
-      <div class="title">
-        🚛 مدیریت رانندگان
-      </div>
+      <div class="stats-grid">
 
-      <div class="table-wrap">
+        <div class="stat-card">
+          <div class="stat-icon">💳</div>
+          <div class="stat-label">تعداد تراکنش</div>
+          <div id="reportTxCount" class="stat-value">۰</div>
+        </div>
 
-        <table>
+        <div class="stat-card">
+          <div class="stat-icon">➖</div>
+          <div class="stat-label">مجموع برداشت</div>
+          <div id="reportDebit" class="stat-value">۰</div>
+        </div>
 
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>شماره تلفن</th>
-            <th>شناسه</th>
-            <th>نقش</th>
-            <th>تاریخ</th>
-          </tr>
-          </thead>
-
-          <tbody id="driversTable"></tbody>
-
-        </table>
+        <div class="stat-card">
+          <div class="stat-icon">➕</div>
+          <div class="stat-label">مجموع شارژ</div>
+          <div id="reportCredit" class="stat-value">۰</div>
+        </div>
 
       </div>
 
-    </div>
 
-  </div>
+      <div class="panel">
 
+        <h2 class="panel-title">
+          وضعیت بارها
+        </h2>
 
-  <!-- WALLET -->
-  <div id="wallet" class="hidden">
+        <div class="status-grid">
 
-    <div class="card">
+          <div class="status-box">
+            <strong>نوبتی</strong>
+            <span id="reportTurn">۰</span>
+          </div>
 
-      <div class="title">
-        💰 کیف پول رانندگان
-      </div>
+          <div class="status-box">
+            <strong>آزاد</strong>
+            <span id="reportFree">۰</span>
+          </div>
 
-      <div class="table-wrap">
+          <div class="status-box">
+            <strong>رزرو شده</strong>
+            <span id="reportReserved">۰</span>
+          </div>
 
-        <table>
-
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>کاربر</th>
-            <th>موجودی</th>
-            <th>عملیات</th>
-          </tr>
-          </thead>
-
-          <tbody id="walletTable"></tbody>
-
-        </table>
+        </div>
 
       </div>
 
-    </div>
+    </section>
 
-  </div>
-
-
-  <!-- TRANSACTIONS -->
-  <div id="transactions" class="hidden">
-
-    <div class="card">
-
-      <div class="title">
-        💳 تراکنش‌ها
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>کاربر</th>
-            <th>مبلغ</th>
-            <th>شرح</th>
-            <th>تاریخ</th>
-          </tr>
-          </thead>
-
-          <tbody id="transactionsTable"></tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
+  </main>
 
 </div>
 
 
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
+<!-- LOAD MODAL -->
 
-  <div class="modal-box">
+<div
+  id="loadModal"
+  class="modal"
+>
 
-    <div class="top">
+  <div class="modal-card">
 
-      <div id="modalTitle" class="title">
-        ثبت اطلاعات
-      </div>
+    <div class="modal-header">
+
+      <h2
+        id="loadModalTitle"
+        class="modal-title"
+      >
+        ثبت بار جدید
+      </h2>
 
       <button
-        class="red"
-        style="width:auto"
-        onclick="closeModal()">
-        ✕
+        class="close-btn"
+        onclick="closeModal('loadModal')"
+      >
+        ×
       </button>
 
     </div>
 
-    <div id="modalContent"></div>
+
+    <input
+      id="loadId"
+      type="hidden"
+    >
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>مبدا *</label>
+        <input
+          id="loadOrigin"
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>مقصد *</label>
+        <input
+          id="loadDestination"
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>نوع بار *</label>
+        <input
+          id="loadCargo"
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>وزن</label>
+        <input
+          id="loadWeight"
+          class="form-control"
+          type="number"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>وضعیت</label>
+        <select
+          id="loadStatus"
+          class="form-control"
+        >
+          <option value="waiting">در انتظار</option>
+          <option value="turn">نوبتی</option>
+          <option value="free">آزاد</option>
+          <option value="reserved">رزرو شده</option>
+          <option value="completed">تکمیل شده</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>مهلت انتخاب</label>
+        <input
+          id="loadDeadline"
+          class="form-control"
+          type="datetime-local"
+        >
+      </div>
+
+      <div class="form-group full">
+        <label>توضیحات</label>
+        <textarea
+          id="loadDescription"
+          class="form-control"
+          rows="4"
+        ></textarea>
+      </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        class="btn btn-primary"
+        onclick="saveLoad()"
+      >
+        💾 ذخیره
+      </button>
+
+      <button
+        class="btn btn-light"
+        onclick="closeModal('loadModal')"
+      >
+        انصراف
+      </button>
+
+    </div>
 
   </div>
 
 </div>
+
+
+<!-- WALLET MODAL -->
+
+<div
+  id="walletModal"
+  class="modal"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <h2 class="modal-title">
+        تغییر موجودی کیف پول
+      </h2>
+
+      <button
+        class="close-btn"
+        onclick="closeModal('walletModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="alert alert-warning">
+      برای افزایش موجودی مبلغ مثبت و برای کاهش موجودی مبلغ منفی وارد کنید.
+    </div>
+
+
+    <div class="form-group">
+      <label>شناسه کاربر *</label>
+      <input
+        id="walletUser"
+        class="form-control"
+        placeholder="UUID"
+      >
+    </div>
+
+
+    <div class="form-group">
+      <label>مبلغ *</label>
+      <input
+        id="walletAmount"
+        class="form-control"
+        type="number"
+        placeholder="مثلاً 100000 یا -10000"
+      >
+    </div>
+
+
+    <div class="form-group">
+      <label>شرح</label>
+      <input
+        id="walletDescription"
+        class="form-control"
+        placeholder="مثلاً شارژ کیف پول"
+      >
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        class="btn btn-primary"
+        onclick="adjustWallet()"
+      >
+        ثبت
+      </button>
+
+      <button
+        class="btn btn-light"
+        onclick="closeModal('walletModal')"
+      >
+        انصراف
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+  id="toast"
+  style="
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    z-index:2000;
+    background:#17231e;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:10px;
+    display:none;
+    max-width:360px;
+    font-size:13px;
+  "
+></div>
 
 
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIG
 ========================================================= */
 
 const SUPABASE_URL =
-"https://ntirixjflgqihobpnmya.supabase.co";
+  "https://ntirixjflgqihobpnmya.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
+  "sb_publishable_eqsmcIqZz_YAMEbmvMEXv_VBd6YZJ2";
+
+const ADMIN_UID =
+  "f4c7e069-9703-4b15-85cb-1e8392c13184";
 
 const db =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true
-    }
-  }
-);
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
 /* =========================================================
-   GLOBAL
+   DATA
 ========================================================= */
 
-let currentUser = null;
-let loadsData = [];
+let loads = [];
+let drivers = [];
+let vehicles = [];
+let wallets = [];
+let transactions = [];
+let sessions = [];
 
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function $(id){
-  return document.getElementById(id);
+function faNumber(value){
+
+  return Number(value || 0)
+    .toLocaleString("fa-IR");
+
 }
+
+
+function formatMoney(value){
+
+  return faNumber(value) + " تومان";
+
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "-";
+  }
+
+  try{
+
+    return new Date(value)
+      .toLocaleString(
+        "fa-IR",
+        {
+          year:"numeric",
+          month:"2-digit",
+          day:"2-digit",
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+  }catch(e){
+
+    return "-";
+
+  }
+
+}
+
 
 function escapeHtml(value){
 
-  if(value === null || value === undefined)
+  if(value === null || value === undefined){
     return "";
+  }
 
   return String(value)
     .replace(/&/g,"&amp;")
@@ -699,485 +1716,277 @@ function escapeHtml(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
-function money(value){
 
-  const n = Number(value || 0);
+function showToast(message){
 
-  return n.toLocaleString("fa-IR") + " تومان";
+  const el =
+    document.getElementById("toast");
+
+  el.textContent = message;
+  el.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(
+      ()=>{
+        el.style.display = "none";
+      },
+      3000
+    );
+
 }
 
-function dateFa(value){
 
-  if(!value)
-    return "-";
+function showLoginError(message){
 
-  try{
+  const el =
+    document.getElementById("loginError");
 
-    return new Date(value).toLocaleString("fa-IR");
+  el.textContent = message;
+  el.classList.remove("hidden");
 
-  }catch(e){
-
-    return value;
-  }
 }
 
-function message(id,text,type=""){
 
-  const el = $(id);
+function clearLoginError(){
 
-  if(!el) return;
+  document
+    .getElementById("loginError")
+    .classList.add("hidden");
 
-  el.innerHTML =
-    `<div class="msg ${type}">
-      ${escapeHtml(text)}
-    </div>`;
 }
 
-function statusText(status){
 
-  const map = {
+function closeModal(id){
 
-    waiting:"در انتظار",
-    turn:"نوبتی",
-    free:"آزاد",
-    reserved:"رزرو شده",
-    completed:"تکمیل شده"
+  document
+    .getElementById(id)
+    .classList.remove("show");
 
-  };
-
-  return map[status] || status || "-";
-}
-
-function statusBadge(status){
-
-  let cls = "gray";
-
-  if(status === "turn")
-    cls = "orange";
-
-  if(status === "free")
-    cls = "green";
-
-  if(status === "reserved")
-    cls = "red";
-
-  if(status === "completed")
-    cls = "gray";
-
-  return `
-    <span class="badge ${cls}">
-      ${escapeHtml(statusText(status))}
-    </span>
-  `;
 }
 
 
 /* =========================================================
-   LOGIN
+   PAGE NAVIGATION
 ========================================================= */
 
-async function login(){
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      x=>x.classList.remove("active")
+    );
+
+  const target =
+    document.getElementById(
+      "page-"+page
+    );
+
+  if(target){
+    target.classList.add("active");
+  }
+
+
+  document
+    .querySelectorAll(".menu button[data-page]")
+    .forEach(
+      x=>{
+        x.classList.toggle(
+          "active",
+          x.dataset.page === page
+        );
+      }
+    );
+
+
+  const titles = {
+
+    dashboard:"داشبورد",
+
+    loads:"مدیریت بارها",
+
+    drivers:"رانندگان",
+
+    vehicles:"کامیون‌ها",
+
+    wallets:"کیف پول",
+
+    transactions:"تراکنش‌ها",
+
+    notifications:"اعلان‌ها",
+
+    sessions:"نشست‌ها",
+
+    reports:"گزارش‌ها"
+
+  };
+
+
+  document
+    .getElementById("pageTitle")
+    .textContent =
+      titles[page] || "پنل مدیریت";
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function loginAdmin(){
+
+  clearLoginError();
 
   const email =
-    $("email").value.trim();
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
 
   const password =
-    $("password").value;
+    document
+      .getElementById("loginPassword")
+      .value;
+
 
   if(!email || !password){
 
-    message(
-      "loginMsg",
-      "ایمیل و رمز عبور را وارد کنید.",
-      "error"
+    showLoginError(
+      "ایمیل و رمز عبور را وارد کنید."
     );
 
     return;
   }
 
-  message(
-    "loginMsg",
-    "در حال ورود..."
-  );
+
+  const btn =
+    document.getElementById("loginBtn");
+
+  btn.disabled = true;
+  btn.textContent = "در حال ورود...";
+
 
   try{
 
     const {data,error} =
       await db.auth.signInWithPassword({
+
         email,
         password
+
       });
 
-    if(error)
-      throw error;
 
-    if(!data.user)
-      throw new Error("کاربر پیدا نشد.");
+    if(error){
 
-    currentUser = data.user;
+      showLoginError(
+        "ورود ناموفق: " +
+        error.message
+      );
+
+      return;
+    }
+
+
+    if(!data || !data.user){
+
+      showLoginError(
+        "کاربر احراز هویت نشد."
+      );
+
+      return;
+    }
+
+
+    if(data.user.id !== ADMIN_UID){
+
+      await db.auth.signOut();
+
+      showLoginError(
+        "این حساب مجوز ورود به پنل مدیریت را ندارد."
+      );
+
+      return;
+    }
+
 
     const {data:profile,error:profileError} =
       await db
         .from("profiles")
-        .select("id,role,phone")
-        .eq("id",currentUser.id)
-        .maybeSingle();
+        .select("id,role")
+        .eq("id",data.user.id)
+        .single();
 
-    if(profileError)
-      throw profileError;
 
-    if(!profile){
-
-      await db.auth.signOut();
-
-      throw new Error(
-        "پروفایل این کاربر در جدول profiles پیدا نشد."
-      );
-    }
-
-    if(profile.role !== "admin"){
+    if(
+      profileError ||
+      !profile ||
+      profile.role !== "admin"
+    ){
 
       await db.auth.signOut();
 
-      throw new Error(
-        "این حساب دسترسی مدیر ندارد."
+      showLoginError(
+        "نقش این حساب admin نیست."
       );
+
+      return;
     }
 
-    $("loginPage").classList.add("hidden");
-    $("forgotPage").classList.add("hidden");
-    $("resetPage").classList.add("hidden");
-    $("adminPage").classList.remove("hidden");
 
-    $("adminEmail").textContent =
-      currentUser.email || "";
-
-    await loadDashboard();
+    startApplication(data.user);
 
   }catch(error){
 
-    console.error(error);
-
-    message(
-      "loginMsg",
-      "ورود ناموفق: " +
-      (error.message || error),
-      "error"
+    showLoginError(
+      "خطای غیرمنتظره: " +
+      error.message
     );
+
+  }finally{
+
+    btn.disabled = false;
+    btn.textContent = "ورود";
+
   }
+
 }
 
 
-/* =========================================================
-   SESSION
-========================================================= */
-
-async function checkSession(){
-
-  try{
-
-    const {data} =
-      await db.auth.getSession();
-
-    if(data.session){
-
-      currentUser =
-        data.session.user;
-
-      const {data:profile} =
-        await db
-          .from("profiles")
-          .select("id,role,phone")
-          .eq("id",currentUser.id)
-          .maybeSingle();
-
-      if(profile && profile.role === "admin"){
-
-        $("loginPage").classList.add("hidden");
-        $("adminPage").classList.remove("hidden");
-
-        $("adminEmail").textContent =
-          currentUser.email || "";
-
-        await loadDashboard();
-
-      }else{
-
-        await db.auth.signOut();
-      }
-    }
-
-  }catch(error){
-
-    console.error(error);
-  }
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
+async function logoutAdmin(){
 
   await db.auth.signOut();
 
-  currentUser = null;
+  location.reload();
 
-  $("adminPage").classList.add("hidden");
-
-  $("loginPage").classList.remove("hidden");
-
-  $("password").value = "";
-
-  message(
-    "loginMsg",
-    "با موفقیت خارج شدید.",
-    "success"
-  );
 }
 
 
-/* =========================================================
-   FORGOT PASSWORD
-========================================================= */
+function startApplication(user){
 
-function showForgot(){
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
 
-  $("loginPage").classList.add("hidden");
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
 
-  $("forgotPage").classList.remove("hidden");
-}
 
-function showLogin(){
+  document
+    .getElementById("adminUser")
+    .textContent =
+      user.email || "مدیر سامانه";
 
-  $("forgotPage").classList.add("hidden");
 
-  $("resetPage").classList.add("hidden");
+  refreshEverything();
 
-  $("loginPage").classList.remove("hidden");
-}
-
-async function sendReset(){
-
-  const email =
-    $("forgotEmail").value.trim();
-
-  if(!email){
-
-    message(
-      "forgotMsg",
-      "ایمیل را وارد کنید.",
-      "error"
-    );
-
-    return;
-  }
-
-  try{
-
-    const redirect =
-      window.location.origin +
-      window.location.pathname;
-
-    const {error} =
-      await db.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo:redirect
-        }
-      );
-
-    if(error)
-      throw error;
-
-    message(
-      "forgotMsg",
-      "لینک بازیابی رمز عبور ارسال شد.",
-      "success"
-    );
-
-  }catch(error){
-
-    message(
-      "forgotMsg",
-      error.message || "خطا در ارسال لینک.",
-      "error"
-    );
-  }
-}
-
-async function saveNewPassword(){
-
-  const p1 =
-    $("newPass").value;
-
-  const p2 =
-    $("newPass2").value;
-
-  if(!p1 || !p2){
-
-    message(
-      "resetMsg",
-      "هر دو قسمت رمز را وارد کنید.",
-      "error"
-    );
-
-    return;
-  }
-
-  if(p1.length < 6){
-
-    message(
-      "resetMsg",
-      "رمز عبور حداقل ۶ کاراکتر باشد.",
-      "error"
-    );
-
-    return;
-  }
-
-  if(p1 !== p2){
-
-    message(
-      "resetMsg",
-      "دو رمز یکسان نیستند.",
-      "error"
-    );
-
-    return;
-  }
-
-  try{
-
-    const {error} =
-      await db.auth.updateUser({
-        password:p1
-      });
-
-    if(error)
-      throw error;
-
-    message(
-      "resetMsg",
-      "رمز عبور با موفقیت تغییر کرد.",
-      "success"
-    );
-
-  }catch(error){
-
-    message(
-      "resetMsg",
-      error.message || "خطا در تغییر رمز.",
-      "error"
-    );
-  }
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-function section(name){
-
-  const ids = [
-    "dashboard",
-    "loads",
-    "drivers",
-    "wallet",
-    "transactions"
-  ];
-
-  ids.forEach(id => {
-
-    $(id).classList.add("hidden");
-
-  });
-
-  $(name).classList.remove("hidden");
-
-  if(name === "dashboard")
-    loadDashboard();
-
-  if(name === "loads")
-    loadLoads();
-
-  if(name === "drivers")
-    loadDrivers();
-
-  if(name === "wallet")
-    loadWallets();
-
-  if(name === "transactions")
-    loadTransactions();
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-async function loadDashboard(){
-
-  try{
-
-    const users =
-      await db
-        .from("profiles")
-        .select("id",{count:"exact",head:true});
-
-    const drivers =
-      await db
-        .from("drivers")
-        .select("id",{count:"exact",head:true});
-
-    const loads =
-      await db
-        .from("loads")
-        .select("id,status",{count:"exact"});
-
-    $("usersCount").textContent =
-      users.count || 0;
-
-    $("driversCount").textContent =
-      drivers.count || 0;
-
-    $("loadsCount").textContent =
-      loads.count || 0;
-
-    let active = 0;
-
-    if(loads.data){
-
-      active =
-        loads.data.filter(
-          x =>
-            ["waiting","turn","free","reserved"]
-              .includes(x.status)
-        ).length;
-    }
-
-    $("activeCount").textContent =
-      active;
-
-    $("systemStatus").innerHTML =
-      `<div class="msg success">
-        اتصال به Supabase برقرار است.
-      </div>`;
-
-  }catch(error){
-
-    console.error(error);
-
-    $("systemStatus").innerHTML =
-      `<div class="msg error">
-        خطا در دریافت اطلاعات داشبورد:
-        ${escapeHtml(error.message)}
-      </div>`;
-  }
 }
 
 
@@ -1187,589 +1996,623 @@ async function loadDashboard(){
 
 async function loadLoads(){
 
-  const tbody =
-    $("loadsTable");
+  const {data,error} =
+    await db
+      .from("loads")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
 
-  tbody.innerHTML =
-    `<tr><td colspan="9">در حال دریافت...</td></tr>`;
 
-  try{
-
-    const {data,error} =
-      await db
-        .from("loads")
-        .select("*")
-        .order("created_at",{ascending:false});
-
-    if(error)
-      throw error;
-
-    loadsData =
-      data || [];
-
-    renderLoads(loadsData);
-
-  }catch(error){
+  if(error){
 
     console.error(error);
 
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="9">
-          خطا:
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-  }
-}
-
-function renderLoads(data){
-
-  const tbody =
-    $("loadsTable");
-
-  if(!data.length){
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="9">
-          هنوز باری ثبت نشده است.
-        </td>
-      </tr>`;
+    showToast(
+      "خطا در دریافت بارها: " +
+      error.message
+    );
 
     return;
   }
 
-  tbody.innerHTML =
-    data.map((load,index)=>{
 
-      const immediate =
-        load.is_urgent ||
-        load.urgent ||
-        load.is_immediate;
+  loads = data || [];
 
-      const truck =
-        load.truck_type ||
-        load.vehicle_type ||
-        "-";
+  renderLoads();
+  renderRecentLoads();
+  updateDashboard();
+  updateReports();
 
-      return `
+}
+
+
+function renderLoads(){
+
+  const body =
+    document.getElementById(
+      "loadsBody"
+    );
+
+  if(!body){
+    return;
+  }
+
+
+  const search =
+    (
+      document
+        .getElementById("loadSearch")
+        ?.value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const status =
+    document
+      .getElementById("loadStatusFilter")
+      ?.value || "";
+
+
+  const filtered =
+    loads.filter(
+      item=>{
+
+        const text =
+          [
+            item.origin,
+            item.destination,
+            item.cargo,
+            item.description,
+            item.status
+          ]
+          .join(" ")
+          .toLowerCase();
+
+
+        const searchOK =
+          !search ||
+          text.includes(search);
+
+
+        const statusOK =
+          !status ||
+          item.status === status;
+
+
+        return searchOK && statusOK;
+
+      }
+    );
+
+
+  if(!filtered.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="8" class="empty">
+          باری پیدا نشد.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    filtered
+      .map(
+        item=>{
+
+          return `
+          <tr>
+
+            <td>
+              ${escapeHtml(item.id)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.origin)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.destination)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.cargo)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.weight ?? "-")}
+            </td>
+
+            <td>
+              ${statusBadge(item.status)}
+            </td>
+
+            <td>
+              ${formatDate(item.deadline)}
+            </td>
+
+            <td>
+
+              <button
+                class="btn btn-light"
+                onclick="editLoad('${escapeJs(item.id)}')"
+              >
+                ویرایش
+              </button>
+
+              <button
+                class="btn btn-danger"
+                onclick="deleteLoad('${escapeJs(item.id)}')"
+              >
+                حذف
+              </button>
+
+            </td>
+
+          </tr>
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+function renderRecentLoads(){
+
+  const body =
+    document.getElementById(
+      "recentLoadsBody"
+    );
+
+  if(!body){
+    return;
+  }
+
+
+  const list =
+    loads.slice(0,8);
+
+
+  if(!list.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="6" class="empty">
+          هنوز باری ثبت نشده است.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    list
+      .map(
+        item=>`
+
         <tr>
 
-          <td>${index+1}</td>
-
           <td>
-            ${escapeHtml(load.origin || "-")}
+            ${escapeHtml(item.id)}
           </td>
 
           <td>
-            ${escapeHtml(load.destination || "-")}
+            ${escapeHtml(item.origin)}
           </td>
 
           <td>
-            ${escapeHtml(
-              load.cargo ||
-              load.cargo_type ||
-              "-"
-            )}
+            ${escapeHtml(item.destination)}
           </td>
 
           <td>
-            ${escapeHtml(load.weight || "-")}
+            ${escapeHtml(item.cargo)}
           </td>
 
           <td>
-            ${escapeHtml(truck)}
+            ${escapeHtml(item.weight ?? "-")}
           </td>
 
           <td>
-            ${statusBadge(load.status)}
-          </td>
-
-          <td>
-            ${immediate ? "🔴 بله" : "خیر"}
-          </td>
-
-          <td>
-
-            <button
-              class="action blue"
-              onclick="editLoad('${load.id}')">
-              ویرایش
-            </button>
-
-            <button
-              class="action orange"
-              onclick="changeLoadStatus('${load.id}')">
-              وضعیت
-            </button>
-
-            <button
-              class="action red"
-              onclick="deleteLoad('${load.id}')">
-              حذف
-            </button>
-
+            ${statusBadge(item.status)}
           </td>
 
         </tr>
-      `;
 
-    }).join("");
+      `
+      )
+      .join("");
+
 }
 
 
-/* =========================================================
-   FILTER LOADS
-========================================================= */
+function statusBadge(status){
 
-function filterLoads(){
+  const map = {
 
-  const search =
-    $("search").value
-      .trim()
-      .toLowerCase();
+    waiting:
+      ["در انتظار","badge-yellow"],
 
-  const status =
-    $("filterStatus").value;
+    turn:
+      ["نوبتی","badge-yellow"],
 
-  const filtered =
-    loadsData.filter(load=>{
+    free:
+      ["آزاد","badge-green"],
 
-      const text =
-        [
-          load.origin,
-          load.destination,
-          load.cargo,
-          load.truck_type,
-          load.vehicle_type,
-          load.weight
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+    reserved:
+      ["رزرو شده","badge-blue"],
 
-      const searchOK =
-        !search ||
-        text.includes(search);
-
-      const statusOK =
-        !status ||
-        load.status === status;
-
-      return searchOK && statusOK;
-
-    });
-
-  renderLoads(filtered);
-}
-
-
-/* =========================================================
-   NEW LOAD
-========================================================= */
-
-function newLoad(){
-
-  $("modalTitle").textContent =
-    "➕ ثبت بار جدید";
-
-  $("modalContent").innerHTML = `
-
-    <div class="grid2">
-
-      <div>
-        <label>مبدا</label>
-        <input id="f_origin">
-      </div>
-
-      <div>
-        <label>مقصد</label>
-        <input id="f_destination">
-      </div>
-
-      <div>
-        <label>نوع کالا</label>
-        <input id="f_cargo">
-      </div>
-
-      <div>
-        <label>وزن</label>
-        <input id="f_weight">
-      </div>
-
-      <div>
-        <label>نوع کامیون</label>
-        <input id="f_truck_type">
-      </div>
-
-      <div>
-        <label>وضعیت</label>
-        <select id="f_status">
-          <option value="turn">نوبتی</option>
-          <option value="waiting">در انتظار</option>
-          <option value="free">آزاد</option>
-        </select>
-      </div>
-
-    </div>
-
-    <label>
-      <input
-        id="f_urgent"
-        type="checkbox"
-        style="width:auto">
-      بار فوری
-    </label>
-
-    <textarea
-      id="f_description"
-      placeholder="توضیحات بار">
-    </textarea>
-
-    <button onclick="createLoad()">
-      ثبت بار
-    </button>
-  `;
-
-  openModal();
-}
-
-
-/* =========================================================
-   CREATE LOAD
-========================================================= */
-
-async function createLoad(){
-
-  const payload = {
-
-    origin:
-      $("f_origin").value.trim(),
-
-    destination:
-      $("f_destination").value.trim(),
-
-    cargo:
-      $("f_cargo").value.trim(),
-
-    weight:
-      $("f_weight").value.trim(),
-
-    truck_type:
-      $("f_truck_type").value.trim(),
-
-    status:
-      $("f_status").value,
-
-    is_urgent:
-      $("f_urgent").checked,
-
-    description:
-      $("f_description").value.trim()
+    completed:
+      ["تکمیل شده","badge-green"]
 
   };
 
-  if(!payload.origin ||
-     !payload.destination ||
-     !payload.cargo){
 
-    alert("مبدا، مقصد و کالا الزامی است.");
+  const result =
+    map[status] ||
+    [status || "-", "badge-gray"];
+
+
+  return `
+    <span class="badge ${result[1]}">
+      ${result[0]}
+    </span>
+  `;
+
+}
+
+
+function escapeJs(value){
+
+  return String(value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+
+}
+
+
+/* =========================================================
+   LOAD MODAL
+========================================================= */
+
+function openLoadModal(){
+
+  document
+    .getElementById("loadId")
+    .value = "";
+
+  document
+    .getElementById("loadOrigin")
+    .value = "";
+
+  document
+    .getElementById("loadDestination")
+    .value = "";
+
+  document
+    .getElementById("loadCargo")
+    .value = "";
+
+  document
+    .getElementById("loadWeight")
+    .value = "";
+
+  document
+    .getElementById("loadStatus")
+    .value = "turn";
+
+  document
+    .getElementById("loadDeadline")
+    .value = "";
+
+  document
+    .getElementById("loadDescription")
+    .value = "";
+
+
+  document
+    .getElementById("loadModalTitle")
+    .textContent =
+      "ثبت بار جدید";
+
+
+  document
+    .getElementById("loadModal")
+    .classList.add("show");
+
+}
+
+
+function editLoad(id){
+
+  const item =
+    loads.find(
+      x=>String(x.id) === String(id)
+    );
+
+
+  if(!item){
+
+    showToast("بار پیدا نشد.");
 
     return;
   }
 
-  try{
 
-    const {error} =
+  document
+    .getElementById("loadId")
+    .value = item.id;
+
+
+  document
+    .getElementById("loadOrigin")
+    .value = item.origin || "";
+
+
+  document
+    .getElementById("loadDestination")
+    .value =
+      item.destination || "";
+
+
+  document
+    .getElementById("loadCargo")
+    .value = item.cargo || "";
+
+
+  document
+    .getElementById("loadWeight")
+    .value =
+      item.weight ?? "";
+
+
+  document
+    .getElementById("loadStatus")
+    .value =
+      item.status || "turn";
+
+
+  document
+    .getElementById("loadDescription")
+    .value =
+      item.description || "";
+
+
+  if(item.deadline){
+
+    const date =
+      new Date(item.deadline);
+
+    if(!isNaN(date.getTime())){
+
+      const local =
+        new Date(
+          date.getTime() -
+          date.getTimezoneOffset()*60000
+        )
+        .toISOString()
+        .slice(0,16);
+
+      document
+        .getElementById("loadDeadline")
+        .value = local;
+
+    }
+
+  }else{
+
+    document
+      .getElementById("loadDeadline")
+      .value = "";
+
+  }
+
+
+  document
+    .getElementById("loadModalTitle")
+    .textContent =
+      "ویرایش بار";
+
+
+  document
+    .getElementById("loadModal")
+    .classList.add("show");
+
+}
+
+
+async function saveLoad(){
+
+  const id =
+    document
+      .getElementById("loadId")
+      .value;
+
+
+  const origin =
+    document
+      .getElementById("loadOrigin")
+      .value
+      .trim();
+
+
+  const destination =
+    document
+      .getElementById("loadDestination")
+      .value
+      .trim();
+
+
+  const cargo =
+    document
+      .getElementById("loadCargo")
+      .value
+      .trim();
+
+
+  const weight =
+    document
+      .getElementById("loadWeight")
+      .value;
+
+
+  const status =
+    document
+      .getElementById("loadStatus")
+      .value;
+
+
+  const description =
+    document
+      .getElementById("loadDescription")
+      .value
+      .trim();
+
+
+  const deadline =
+    document
+      .getElementById("loadDeadline")
+      .value;
+
+
+  if(!origin || !destination || !cargo){
+
+    showToast(
+      "مبدا، مقصد و نوع بار الزامی است."
+    );
+
+    return;
+  }
+
+
+  const payload = {
+
+    origin,
+    destination,
+    cargo,
+    weight:
+      weight === ""
+        ? null
+        : Number(weight),
+
+    status,
+
+    description:
+      description || null
+
+  };
+
+
+  if(deadline){
+
+    payload.deadline =
+      new Date(deadline).toISOString();
+
+  }else{
+
+    payload.deadline = null;
+
+  }
+
+
+  let result;
+
+
+  if(id){
+
+    result =
+      await db
+        .from("loads")
+        .update(payload)
+        .eq("id",id);
+
+  }else{
+
+    result =
       await db
         .from("loads")
         .insert(payload);
 
-    if(error)
-      throw error;
-
-    closeModal();
-
-    await loadLoads();
-
-    await loadDashboard();
-
-    alert("بار با موفقیت ثبت شد.");
-
-  }catch(error){
-
-    alert(
-      "خطا در ثبت بار:\n" +
-      error.message
-    );
-
-    console.error(error);
   }
-}
 
 
-/* =========================================================
-   EDIT LOAD
-========================================================= */
+  if(result.error){
 
-async function editLoad(id){
+    console.error(result.error);
 
-  const load =
-    loadsData.find(
-      x => String(x.id) === String(id)
+    showToast(
+      "خطا در ذخیره بار: " +
+      result.error.message
     );
-
-  if(!load)
-    return;
-
-  $("modalTitle").textContent =
-    "✏️ ویرایش بار";
-
-  $("modalContent").innerHTML = `
-
-    <div class="grid2">
-
-      <div>
-        <label>مبدا</label>
-        <input
-          id="e_origin"
-          value="${escapeHtml(load.origin || "")}">
-      </div>
-
-      <div>
-        <label>مقصد</label>
-        <input
-          id="e_destination"
-          value="${escapeHtml(load.destination || "")}">
-      </div>
-
-      <div>
-        <label>کالا</label>
-        <input
-          id="e_cargo"
-          value="${escapeHtml(load.cargo || "")}">
-      </div>
-
-      <div>
-        <label>وزن</label>
-        <input
-          id="e_weight"
-          value="${escapeHtml(load.weight || "")}">
-      </div>
-
-      <div>
-        <label>نوع کامیون</label>
-        <input
-          id="e_truck"
-          value="${escapeHtml(
-            load.truck_type ||
-            load.vehicle_type ||
-            ""
-          )}">
-      </div>
-
-      <div>
-        <label>وضعیت</label>
-        <select id="e_status">
-
-          <option value="waiting">
-            در انتظار
-          </option>
-
-          <option value="turn">
-            نوبتی
-          </option>
-
-          <option value="free">
-            آزاد
-          </option>
-
-          <option value="reserved">
-            رزرو شده
-          </option>
-
-          <option value="completed">
-            تکمیل شده
-          </option>
-
-        </select>
-      </div>
-
-    </div>
-
-    <button onclick="saveLoad('${id}')">
-      💾 ذخیره تغییرات
-    </button>
-  `;
-
-  $("e_status").value =
-    load.status || "turn";
-
-  openModal();
-}
-
-
-/* =========================================================
-   SAVE LOAD
-========================================================= */
-
-async function saveLoad(id){
-
-  const update = {
-
-    origin:
-      $("e_origin").value.trim(),
-
-    destination:
-      $("e_destination").value.trim(),
-
-    cargo:
-      $("e_cargo").value.trim(),
-
-    weight:
-      $("e_weight").value.trim(),
-
-    truck_type:
-      $("e_truck").value.trim(),
-
-    status:
-      $("e_status").value
-
-  };
-
-  try{
-
-    const {error} =
-      await db
-        .from("loads")
-        .update(update)
-        .eq("id",id);
-
-    if(error)
-      throw error;
-
-    closeModal();
-
-    await loadLoads();
-
-    await loadDashboard();
-
-    alert("بار ویرایش شد.");
-
-  }catch(error){
-
-    alert(
-      "خطا در ویرایش:\n" +
-      error.message
-    );
-  }
-}
-
-
-/* =========================================================
-   CHANGE LOAD STATUS
-========================================================= */
-
-async function changeLoadStatus(id){
-
-  const load =
-    loadsData.find(
-      x => String(x.id) === String(id)
-    );
-
-  if(!load)
-    return;
-
-  const value =
-    prompt(
-      "وضعیت جدید را وارد کنید:\n" +
-      "waiting = در انتظار\n" +
-      "turn = نوبتی\n" +
-      "free = آزاد\n" +
-      "reserved = رزرو شده\n" +
-      "completed = تکمیل شده",
-      load.status || "turn"
-    );
-
-  if(!value)
-    return;
-
-  const valid = [
-    "waiting",
-    "turn",
-    "free",
-    "reserved",
-    "completed"
-  ];
-
-  if(!valid.includes(value)){
-
-    alert("وضعیت واردشده معتبر نیست.");
 
     return;
   }
 
-  try{
 
-    const {error} =
-      await db
-        .from("loads")
-        .update({
-          status:value
-        })
-        .eq("id",id);
+  closeModal("loadModal");
 
-    if(error)
-      throw error;
+  showToast(
+    id
+      ? "بار ویرایش شد."
+      : "بار جدید ثبت شد."
+  );
 
-    await loadLoads();
 
-    await loadDashboard();
+  await loadLoads();
 
-  }catch(error){
-
-    alert(
-      "خطا:\n" +
-      error.message
-    );
-  }
 }
 
-
-/* =========================================================
-   DELETE LOAD
-========================================================= */
 
 async function deleteLoad(id){
 
-  if(!confirm(
-    "آیا از حذف این بار مطمئن هستید؟"
-  ))
+  if(
+    !confirm(
+      "آیا از حذف این بار مطمئن هستید؟"
+    )
+  ){
+
     return;
+  }
 
-  try{
 
-    const {error} =
-      await db
-        .from("loads")
-        .delete()
-        .eq("id",id);
+  const {error} =
+    await db
+      .from("loads")
+      .delete()
+      .eq("id",id);
 
-    if(error)
-      throw error;
 
-    await loadLoads();
+  if(error){
 
-    await loadDashboard();
-
-  }catch(error){
-
-    alert(
-      "خطا در حذف بار:\n" +
+    showToast(
+      "خطا در حذف: " +
       error.message
     );
+
+    return;
   }
+
+
+  showToast(
+    "بار حذف شد."
+  );
+
+
+  await loadLoads();
+
 }
 
 
@@ -1779,88 +2622,346 @@ async function deleteLoad(id){
 
 async function loadDrivers(){
 
-  const tbody =
-    $("driversTable");
+  const {data:profiles,error} =
+    await db
+      .from("profiles")
+      .select("*")
+      .order("id");
 
-  tbody.innerHTML =
-    `<tr>
-      <td colspan="5">
-        در حال دریافت...
-      </td>
-    </tr>`;
+
+  if(error){
+
+    console.error(error);
+
+    showToast(
+      "خطا در دریافت رانندگان."
+    );
+
+    return;
+  }
+
+
+  drivers =
+    profiles || [];
+
 
   try{
 
-    const {data,error} =
+    const {data:driverRows} =
       await db
-        .from("profiles")
-        .select("*")
-        .order("created_at",{ascending:false});
+        .from("drivers")
+        .select("*");
 
-    if(error)
-      throw error;
 
-    const rows =
-      (data || []).filter(
-        x =>
-          x.role === "driver"
-      );
+    if(driverRows){
 
-    if(!rows.length){
+      drivers =
+        drivers.map(
+          profile=>({
 
-      tbody.innerHTML =
-        `<tr>
-          <td colspan="5">
-            راننده‌ای ثبت نشده است.
-          </td>
-        </tr>`;
+            ...profile,
 
-      return;
+            ...(
+              driverRows.find(
+                x=>x.id === profile.id
+              ) || {}
+            )
+
+          })
+        );
+
     }
 
-    tbody.innerHTML =
-      rows.map((driver,index)=>`
+  }catch(e){
+
+    console.warn(e);
+
+  }
+
+
+  renderDrivers();
+  updateDashboard();
+
+}
+
+
+function renderDrivers(){
+
+  const body =
+    document.getElementById(
+      "driversBody"
+    );
+
+
+  if(!body){
+    return;
+  }
+
+
+  const search =
+    (
+      document
+        .getElementById("driverSearch")
+        ?.value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const list =
+    drivers.filter(
+      item=>{
+
+        const text =
+          JSON.stringify(item)
+            .toLowerCase();
+
+
+        return (
+          !search ||
+          text.includes(search)
+        );
+
+      }
+    );
+
+
+  if(!list.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="7" class="empty">
+          راننده‌ای پیدا نشد.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    list
+      .map(
+        item=>`
 
         <tr>
 
-          <td>${index+1}</td>
-
           <td>
             ${escapeHtml(
-              driver.phone || "-"
+              item.full_name ||
+              item.name ||
+              "-"
             )}
           </td>
 
-          <td style="direction:ltr">
-            ${escapeHtml(driver.id)}
+          <td>
+            ${escapeHtml(
+              item.phone ||
+              item.mobile ||
+              "-"
+            )}
           </td>
 
           <td>
-            <span class="badge green">
-              راننده
-            </span>
+            <small>
+              ${escapeHtml(item.id)}
+            </small>
           </td>
 
           <td>
-            ${dateFa(driver.created_at)}
+            ${escapeHtml(
+              item.role || "-"
+            )}
+          </td>
+
+          <td>
+            ${
+              smartBadge(
+                item.smart_status ??
+                item.smart_active
+              )
+            }
+          </td>
+
+          <td>
+            ${
+              smartBadge(
+                item.health_status ??
+                item.health_active
+              )
+            }
+          </td>
+
+          <td>
+
+            <button
+              class="btn btn-light"
+              onclick="copyText('${escapeJs(item.id)}')"
+            >
+              کپی شناسه
+            </button>
+
           </td>
 
         </tr>
 
-      `).join("");
+      `
+      )
+      .join("");
 
-  }catch(error){
+}
+
+
+function smartBadge(value){
+
+  if(
+    value === true ||
+    value === "true" ||
+    value === "active" ||
+    value === "فعال"
+  ){
+
+    return `
+      <span class="badge badge-green">
+        فعال
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="badge badge-gray">
+      نامشخص
+    </span>
+  `;
+
+}
+
+
+/* =========================================================
+   VEHICLES
+========================================================= */
+
+async function loadVehicles(){
+
+  const {data,error} =
+    await db
+      .from("vehicles")
+      .select("*")
+      .order("id");
+
+
+  if(error){
 
     console.error(error);
 
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="5">
-          خطا:
+    document
+      .getElementById("vehiclesBody")
+      .innerHTML =
+      `
+      <tr>
+        <td colspan="6" class="empty">
+          خطا در دریافت کامیون‌ها:
           ${escapeHtml(error.message)}
         </td>
-      </tr>`;
+      </tr>
+      `;
+
+    return;
   }
+
+
+  vehicles =
+    data || [];
+
+
+  renderVehicles();
+
+}
+
+
+function renderVehicles(){
+
+  const body =
+    document.getElementById(
+      "vehiclesBody"
+    );
+
+
+  if(!vehicles.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="6" class="empty">
+          کامیونی ثبت نشده است.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    vehicles
+      .map(
+        item=>`
+
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              item.user_id ||
+              item.owner_id ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.plate ||
+              item.plate_number ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.type ||
+              item.vehicle_type ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.model ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${smartBadge(
+              item.technical_inspection
+            )}
+          </td>
+
+          <td>
+            ${smartBadge(
+              item.body_insurance
+            )}
+          </td>
+
+        </tr>
+
+      `
+      )
+      .join("");
+
 }
 
 
@@ -1870,176 +2971,237 @@ async function loadDrivers(){
 
 async function loadWallets(){
 
-  const tbody =
-    $("walletTable");
+  const {data,error} =
+    await db
+      .from("wallets")
+      .select("*")
+      .order(
+        "balance",
+        {ascending:false}
+      );
 
-  tbody.innerHTML =
-    `<tr>
-      <td colspan="4">
-        در حال دریافت...
-      </td>
-    </tr>`;
 
-  try{
+  if(error){
 
-    const {data,error} =
-      await db
-        .from("wallets")
-        .select("*")
-        .order("balance",{ascending:false});
+    console.error(error);
 
-    if(error)
-      throw error;
+    showToast(
+      "خطا در دریافت کیف پول‌ها: " +
+      error.message
+    );
 
-    if(!data || !data.length){
+    return;
+  }
 
-      tbody.innerHTML =
-        `<tr>
-          <td colspan="4">
-            کیف پولی ثبت نشده است.
-          </td>
-        </tr>`;
 
-      return;
-    }
+  wallets =
+    data || [];
 
-    tbody.innerHTML =
-      data.map((wallet,index)=>`
+
+  renderWallets();
+  updateDashboard();
+  updateReports();
+
+}
+
+
+function renderWallets(){
+
+  const body =
+    document.getElementById(
+      "walletsBody"
+    );
+
+
+  if(!wallets.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="4" class="empty">
+          کیف پولی ثبت نشده است.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    wallets
+      .map(
+        item=>`
 
         <tr>
 
-          <td>${index+1}</td>
-
-          <td style="direction:ltr">
+          <td>
             ${escapeHtml(
-              wallet.user_id ||
-              wallet.id ||
+              item.user_id ||
+              item.id ||
               "-"
             )}
           </td>
 
           <td>
-            ${money(wallet.balance)}
+            <strong>
+              ${formatMoney(item.balance)}
+            </strong>
+          </td>
+
+          <td>
+            ${formatDate(
+              item.updated_at
+            )}
           </td>
 
           <td>
 
             <button
-              class="action"
-              onclick="adjustWallet(
-                '${wallet.user_id || wallet.id}'
-              )">
-              شارژ / برداشت
+              class="btn btn-light"
+              onclick="fillWallet('${escapeJs(
+                item.user_id || item.id
+              )}')"
+            >
+              تغییر موجودی
             </button>
 
           </td>
 
         </tr>
 
-      `).join("");
+      `
+      )
+      .join("");
 
-  }catch(error){
-
-    console.error(error);
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="4">
-          خطا:
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-  }
 }
 
 
-/* =========================================================
-   WALLET ADJUST
-========================================================= */
+function openWalletModal(){
 
-function adjustWallet(userId){
+  document
+    .getElementById("walletUser")
+    .value = "";
 
-  $("modalTitle").textContent =
-    "💰 تغییر موجودی کیف پول";
+  document
+    .getElementById("walletAmount")
+    .value = "";
 
-  $("modalContent").innerHTML = `
+  document
+    .getElementById("walletDescription")
+    .value = "";
 
-    <div class="msg">
-      مبلغ مثبت = شارژ کیف پول<br>
-      مبلغ منفی = برداشت از کیف پول
-    </div>
 
-    <input
-      id="walletAmount"
-      type="number"
-      placeholder="مثلاً 100000 یا -10000">
+  document
+    .getElementById("walletModal")
+    .classList.add("show");
 
-    <textarea
-      id="walletDescription"
-      placeholder="شرح تراکنش">
-    </textarea>
-
-    <button onclick="saveWallet('${userId}')">
-      ثبت تراکنش
-    </button>
-  `;
-
-  openModal();
 }
 
 
-async function saveWallet(userId){
+function fillWallet(id){
+
+  document
+    .getElementById("walletUser")
+    .value = id;
+
+
+  document
+    .getElementById("walletAmount")
+    .value = "";
+
+
+  document
+    .getElementById("walletDescription")
+    .value = "";
+
+
+  document
+    .getElementById("walletModal")
+    .classList.add("show");
+
+}
+
+
+async function adjustWallet(){
+
+  const userId =
+    document
+      .getElementById("walletUser")
+      .value
+      .trim();
+
 
   const amount =
     Number(
-      $("walletAmount").value
+      document
+        .getElementById("walletAmount")
+        .value
     );
 
+
   const description =
-    $("walletDescription").value.trim();
+    document
+      .getElementById("walletDescription")
+      .value
+      .trim();
 
-  if(!amount || amount === 0){
 
-    alert("مبلغ را وارد کنید.");
+  if(!userId){
+
+    showToast(
+      "شناسه کاربر را وارد کنید."
+    );
 
     return;
   }
 
-  try{
 
-    const {data,error} =
-      await db.rpc(
-        "admin_adjust_wallet",
-        {
-          p_user_id:userId,
-          p_amount:amount,
-          p_description:
-            description || null
-        }
-      );
+  if(!amount){
 
-    if(error)
-      throw error;
-
-    closeModal();
-
-    await loadWallets();
-
-    await loadTransactions();
-
-    alert(
-      "موجودی با موفقیت تغییر کرد."
+    showToast(
+      "مبلغ نمی‌تواند صفر باشد."
     );
 
-  }catch(error){
+    return;
+  }
+
+
+  const {error} =
+    await db.rpc(
+      "admin_adjust_wallet",
+      {
+        p_user_id:userId,
+        p_amount:amount,
+        p_description:
+          description || null
+      }
+    );
+
+
+  if(error){
 
     console.error(error);
 
-    alert(
-      "خطا در تغییر موجودی:\n" +
+    showToast(
+      "خطا در تغییر کیف پول: " +
       error.message
     );
+
+    return;
   }
+
+
+  closeModal("walletModal");
+
+  showToast(
+    "موجودی کیف پول با موفقیت تغییر کرد."
+  );
+
+
+  await loadWallets();
+  await loadTransactions();
+
 }
 
 
@@ -2049,153 +3211,735 @@ async function saveWallet(userId){
 
 async function loadTransactions(){
 
-  const tbody =
-    $("transactionsTable");
+  const {data,error} =
+    await db
+      .from("transactions")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      )
+      .limit(500);
 
-  tbody.innerHTML =
-    `<tr>
-      <td colspan="5">
-        در حال دریافت...
-      </td>
-    </tr>`;
 
-  try{
+  if(error){
 
-    const {data,error} =
-      await db
-        .from("transactions")
-        .select("*")
-        .order("created_at",{ascending:false})
-        .limit(200);
+    console.error(error);
 
-    if(error)
-      throw error;
+    showToast(
+      "خطا در تراکنش‌ها: " +
+      error.message
+    );
 
-    if(!data || !data.length){
+    return;
+  }
 
-      tbody.innerHTML =
-        `<tr>
-          <td colspan="5">
-            تراکنشی ثبت نشده است.
-          </td>
-        </tr>`;
 
-      return;
-    }
+  transactions =
+    data || [];
 
-    tbody.innerHTML =
-      data.map((tx,index)=>`
+
+  renderTransactions();
+  updateReports();
+
+}
+
+
+function renderTransactions(){
+
+  const body =
+    document.getElementById(
+      "transactionsBody"
+    );
+
+
+  const search =
+    (
+      document
+        .getElementById(
+          "transactionSearch"
+        )
+        ?.value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const list =
+    transactions.filter(
+      item=>{
+
+        const text =
+          [
+            item.user_id,
+            item.description,
+            item.type,
+            item.amount
+          ]
+          .join(" ")
+          .toLowerCase();
+
+
+        return (
+          !search ||
+          text.includes(search)
+        );
+
+      }
+    );
+
+
+  if(!list.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="5" class="empty">
+          تراکنشی وجود ندارد.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    list
+      .map(
+        item=>`
 
         <tr>
 
-          <td>${index+1}</td>
-
-          <td style="direction:ltr">
-            ${escapeHtml(
-              tx.user_id ||
-              tx.wallet_id ||
-              "-"
+          <td>
+            ${formatDate(
+              item.created_at
             )}
           </td>
 
           <td>
-            ${money(tx.amount)}
-          </td>
-
-          <td>
             ${escapeHtml(
-              tx.description ||
-              tx.type ||
-              "-"
+              item.user_id || "-"
             )}
           </td>
 
           <td>
-            ${dateFa(
-              tx.created_at
+            <strong>
+              ${formatMoney(
+                item.amount
+              )}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.type || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.description || "-"
             )}
           </td>
 
         </tr>
 
-      `).join("");
+      `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+async function sendNotification(){
+
+  const userId =
+    document
+      .getElementById(
+        "notificationUser"
+      )
+      .value
+      .trim();
+
+
+  const title =
+    document
+      .getElementById(
+        "notificationTitle"
+      )
+      .value
+      .trim();
+
+
+  const bodyText =
+    document
+      .getElementById(
+        "notificationBody"
+      )
+      .value
+      .trim();
+
+
+  if(!userId || !title || !bodyText){
+
+    showToast(
+      "تمام فیلدهای اعلان را تکمیل کنید."
+    );
+
+    return;
+  }
+
+
+  const {error} =
+    await db
+      .from("notifications")
+      .insert({
+
+        user_id:userId,
+
+        title:title,
+
+        body:bodyText
+
+      });
+
+
+  if(error){
+
+    showToast(
+      "خطا در ارسال اعلان: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  document
+    .getElementById(
+      "notificationUser"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "notificationTitle"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "notificationBody"
+    )
+    .value = "";
+
+
+  showToast(
+    "اعلان با موفقیت ارسال شد."
+  );
+
+}
+
+
+/* =========================================================
+   SESSIONS
+========================================================= */
+
+async function loadSessions(){
+
+  const {data,error} =
+    await db
+      .from("user_sessions")
+      .select("*")
+      .order(
+        "last_seen_at",
+        {ascending:false}
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    const body =
+      document.getElementById(
+        "sessionsBody"
+      );
+
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="5" class="empty">
+          خطا در دریافت نشست‌ها:
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  sessions =
+    data || [];
+
+
+  renderSessions();
+
+}
+
+
+function renderSessions(){
+
+  const body =
+    document.getElementById(
+      "sessionsBody"
+    );
+
+
+  if(!sessions.length){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td colspan="5" class="empty">
+          نشست فعالی ثبت نشده است.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    sessions
+      .map(
+        item=>`
+
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              item.user_id || "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.device ||
+              item.user_agent ||
+              "-"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              item.ip_address || "-"
+            )}
+          </td>
+
+          <td>
+            ${formatDate(
+              item.last_seen_at ||
+              item.updated_at
+            )}
+          </td>
+
+          <td>
+            <span class="badge badge-green">
+              فعال
+            </span>
+          </td>
+
+        </tr>
+
+      `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+  const totalLoads =
+    loads.length;
+
+
+  const turnLoads =
+    loads.filter(
+      x=>
+        x.status === "turn" ||
+        x.status === "waiting"
+    ).length;
+
+
+  const freeLoads =
+    loads.filter(
+      x=>x.status === "free"
+    ).length;
+
+
+  const driverCount =
+    drivers.filter(
+      x=>x.role === "driver"
+    ).length;
+
+
+  const walletTotal =
+    wallets.reduce(
+      (sum,item)=>
+        sum + Number(
+          item.balance || 0
+        ),
+      0
+    );
+
+
+  document
+    .getElementById("statLoads")
+    .textContent =
+      faNumber(totalLoads);
+
+
+  document
+    .getElementById("statTurn")
+    .textContent =
+      faNumber(turnLoads);
+
+
+  document
+    .getElementById("statFree")
+    .textContent =
+      faNumber(freeLoads);
+
+
+  document
+    .getElementById("statDrivers")
+    .textContent =
+      faNumber(driverCount);
+
+
+  document
+    .getElementById("statWallet")
+    .textContent =
+      formatMoney(walletTotal);
+
+}
+
+
+function updateReports(){
+
+  const debit =
+    transactions
+      .filter(
+        x=>Number(x.amount)<0
+      )
+      .reduce(
+        (sum,x)=>
+          sum +
+          Math.abs(
+            Number(x.amount)
+          ),
+        0
+      );
+
+
+  const credit =
+    transactions
+      .filter(
+        x=>Number(x.amount)>0
+      )
+      .reduce(
+        (sum,x)=>
+          sum +
+          Number(x.amount),
+        0
+      );
+
+
+  document
+    .getElementById(
+      "reportTxCount"
+    )
+    .textContent =
+      faNumber(
+        transactions.length
+      );
+
+
+  document
+    .getElementById(
+      "reportDebit"
+    )
+    .textContent =
+      formatMoney(debit);
+
+
+  document
+    .getElementById(
+      "reportCredit"
+    )
+    .textContent =
+      formatMoney(credit);
+
+
+  document
+    .getElementById(
+      "reportTurn"
+    )
+    .textContent =
+      faNumber(
+        loads.filter(
+          x=>
+            x.status==="turn" ||
+            x.status==="waiting"
+        ).length
+      );
+
+
+  document
+    .getElementById(
+      "reportFree"
+    )
+    .textContent =
+      faNumber(
+        loads.filter(
+          x=>x.status==="free"
+        ).length
+      );
+
+
+  document
+    .getElementById(
+      "reportReserved"
+    )
+    .textContent =
+      faNumber(
+        loads.filter(
+          x=>x.status==="reserved"
+        ).length
+      );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+async function refreshEverything(){
+
+  const status =
+    document.getElementById(
+      "connectionStatus"
+    );
+
+
+  status.className =
+    "alert alert-warning";
+
+
+  status.textContent =
+    "در حال بروزرسانی اطلاعات...";
+
+
+  try{
+
+    await Promise.all([
+
+      loadLoads(),
+
+      loadDrivers(),
+
+      loadVehicles(),
+
+      loadWallets(),
+
+      loadTransactions(),
+
+      loadSessions()
+
+    ]);
+
+
+    updateDashboard();
+    updateReports();
+
+
+    status.className =
+      "alert alert-success";
+
+
+    status.textContent =
+      "اطلاعات با موفقیت بروزرسانی شد.";
 
   }catch(error){
 
     console.error(error);
 
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="5">
-          خطا:
-          ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
+
+    status.className =
+      "alert alert-danger";
+
+
+    status.textContent =
+      "خطا در بروزرسانی اطلاعات.";
+
   }
+
 }
 
 
 /* =========================================================
-   MODAL
+   COPY
 ========================================================= */
 
-function openModal(){
+async function copyText(text){
 
-  $("modal")
-    .classList
-    .remove("hidden");
-}
+  try{
 
-function closeModal(){
+    await navigator.clipboard.writeText(
+      text
+    );
 
-  $("modal")
-    .classList
-    .add("hidden");
+    showToast(
+      "شناسه کپی شد."
+    );
 
-  $("modalContent").innerHTML = "";
+  }catch(e){
+
+    showToast(
+      text
+    );
+
+  }
+
 }
 
 
 /* =========================================================
-   AUTH STATE
+   KEYBOARD
 ========================================================= */
 
-db.auth.onAuthStateChange(
-  async(event,session)=>{
+document
+  .getElementById("loginPassword")
+  .addEventListener(
+    "keydown",
+    event=>{
 
-    if(event === "PASSWORD_RECOVERY"){
+      if(event.key === "Enter"){
 
-      $("loginPage")
-        .classList
-        .add("hidden");
+        loginAdmin();
 
-      $("resetPage")
-        .classList
-        .remove("hidden");
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   MODAL CLICK OUTSIDE
+========================================================= */
+
+document.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      event.target.classList.contains(
+        "modal"
+      )
+    ){
+
+      event.target.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   AUTO SESSION
+========================================================= */
+
+(async function(){
+
+  try{
+
+    const {data,error} =
+      await db.auth.getSession();
+
+
+    if(
+      error ||
+      !data ||
+      !data.session
+    ){
 
       return;
     }
 
-    if(session){
 
-      currentUser =
-        session.user;
+    const user =
+      data.session.user;
+
+
+    if(
+      !user ||
+      user.id !== ADMIN_UID
+    ){
+
+      await db.auth.signOut();
+
+      return;
+    }
+
+
+    const {data:profile} =
+      await db
+        .from("profiles")
+        .select("role")
+        .eq("id",user.id)
+        .single();
+
+
+    if(
+      profile &&
+      profile.role === "admin"
+    ){
+
+      startApplication(user);
+
+    }else{
+
+      await db.auth.signOut();
 
     }
+
+  }catch(error){
+
+    console.error(error);
+
   }
-);
 
-
-/* =========================================================
-   START
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
-    checkSession();
-  }
-);
+})();
 
 </script>
 
