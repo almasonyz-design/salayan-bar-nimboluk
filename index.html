@@ -1295,22 +1295,7 @@ function renderLoad(load){
                     ${escapeHtml(String(load.weight || "-"))}
                     تن
                 </strong>
-            </div>
-
-            <div class="row">
-                <span>نوع کامیون</span>
-                <strong>
-                    ${escapeHtml(load.truck_type || "-")}
-                </strong>
-            </div>
-
-            <div class="row">
-                <span>کرایه</span>
-                <strong>
-                    ${formatMoney(load.fare)}
-                    تومان
-                </strong>
-            </div>
+            </div>
 
             ${
                 load.status !== "reserved"
@@ -1431,23 +1416,14 @@ async function createLoad(){
             weight:
                 Number(weight),
 
-            truck_type:
-                truckType,
-
-            fare:
-                Number(fare),
-
-            load_type:
-                loadType,
-
             status:
                 loadType === "free"
                 ? "free"
                 : "turn",
 
-            max_distance_km:
+            deadline:
                 loadType === "turn"
-                ? 200
+                ? new Date(Date.now() + 30 * 60 * 1000).toISOString()
                 : null
 
         };
