@@ -867,22 +867,44 @@ function showPage(pageId){
 ===================================================== */
 
 async function login(){
-let phone=document.getElementById("phone").value.trim(), message=document.getElementById("loginMessage");
-phone=phone.replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d))).replace(/[\\s-]/g,"");
+const input=document.getElementById("phone");
+const message=document.getElementById("loginMessage");
+let phone=(input.value||"").trim();
+
+phone=phone
+.replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d))
+.replace(/[\s-]/g,"");
+
 if(phone.startsWith("+98")) phone="0"+phone.slice(3);
-if(phone.startsWith("0098")) phone="0"+phone.slice(4);
-document.getElementById("phone").value=phone;
-if(!/^09\\d{9}$/.test(phone)){message.innerHTML=`<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.<br>مثال: 09123456789</div>`;return;}
+else if(phone.startsWith("0098")) phone="0"+phone.slice(4);
+
+input.value=phone;
+
+if(phone.length!==11 || phone.substring(0,2)!=="09" || !/^[0-9]+$/.test(phone)){
+message.innerHTML=`<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.<br>مثال: 09123456789</div>`;
+return;
+}
+
 message.innerHTML=`<div class="notice">در حال ارسال کد ورود...</div>`;
+
 try{
-const {error}=await supabaseClient.auth.signInWithOtp({phone:"+98"+phone.slice(1),options:{channel:"sms"}});
+const {error}=await supabaseClient.auth.signInWithOtp({
+phone:"+98"+phone.substring(1),
+options:{channel:"sms"}
+});
 if(error) throw error;
+
 document.getElementById("otpCode").style.display="block";
 document.getElementById("verifyOtpBtn").style.display="block";
 document.getElementById("loginBtn").style.display="none";
 message.innerHTML=`<div class="success">کد ورود پیامک شد.</div>`;
-}catch(error){console.error(error);message.innerHTML=`<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;}
+}catch(error){
+console.error(error);
+message.innerHTML=`<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;
 }
+}
+
 async function verifyOtp(){
 let phone=document.getElementById("phone").value.trim(), token=document.getElementById("otpCode").value.trim(), message=document.getElementById("loginMessage");
 phone=phone.replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d))).replace(/[\\s-]/g,"");
