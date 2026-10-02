@@ -369,6 +369,38 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
 .section-line span{font-size:11px;color:#7c8984;}
 @media(max-width:560px){.status-grid{grid-template-columns:1fr 1fr;}}
 
+
+/* ===== Login screen redesign ===== */
+.login-shell{padding-top:8px;}
+.login-hero{
+  background:linear-gradient(135deg,#046a4c 0%,#0a946c 100%);
+  color:#fff;border-radius:20px;padding:20px 18px;margin-bottom:12px;
+  box-shadow:0 7px 22px rgba(5,90,64,.20);
+}
+.login-hero-row{display:flex;align-items:center;gap:14px;}
+.login-hero-logo{
+  width:58px;height:58px;flex:none;border-radius:18px;display:grid;place-items:center;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.22);font-size:30px;
+}
+.login-hero h2{margin:0;font-size:21px;}
+.login-hero p{margin:5px 0 0;font-size:12px;line-height:1.8;opacity:.92;}
+.role-switch{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#eef6f2;
+  padding:5px;border-radius:14px;margin:12px 0 15px;
+}
+.role-switch button{
+  border:0;border-radius:11px;padding:12px 8px;font-family:inherit;font-weight:700;
+  background:transparent;color:#53635c;cursor:pointer;
+}
+.role-switch button.selected{background:#087f5b;color:#fff;box-shadow:0 3px 9px rgba(8,127,91,.18);}
+.login-panel{border:1px solid #deebe6;border-radius:16px;padding:15px;background:#fff;}
+.login-panel h3{margin:0 0 5px;color:#263a32;}
+.login-note{font-size:11px;color:#7b8883;line-height:1.8;margin-bottom:8px;}
+.login-badge{
+  display:inline-block;background:#e9f7f1;color:#087f5b;border-radius:999px;
+  padding:4px 9px;font-size:10px;font-weight:700;margin-bottom:8px;
+}
+
 </style>
 </head>
 
@@ -390,15 +422,27 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
 <div class="container">
 
 <!-- LOGIN -->
-<section id="loginPage">
-<div class="card">
-<h2>ورود به صلایان بار</h2>
-<p style="font-size:13px;color:#666;line-height:1.8">ابتدا نقش خود را انتخاب کنید.</p>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0">
-<button type="button" class="btn" id="driverRoleBtn">🚛 راننده</button>
-<button type="button" class="btn secondary" id="adminRoleBtn">🔐 مدیر</button>
+<section id="loginPage" class="login-shell">
+<div class="login-hero">
+  <div class="login-hero-row">
+    <div class="login-hero-logo">🚛</div>
+    <div>
+      <h2>صلایان بار نیمبلوک</h2>
+      <p>سامانه هوشمند اعلام و انتخاب بار برای رانندگان و صاحبان بار</p>
+    </div>
+  </div>
 </div>
-<div id="driverLoginBox">
+
+<div class="card">
+  <div class="login-badge">ورود امن به سامانه</div>
+  <h2 style="margin:0 0 4px;font-size:18px;">انتخاب نوع کاربری</h2>
+  <p class="login-note">نقش خود را انتخاب کنید و سپس اطلاعات ورود را وارد نمایید.</p>
+  <div class="role-switch">
+    <button type="button" class="selected" id="driverRoleBtn">🚛 راننده</button>
+    <button type="button" id="adminRoleBtn">🔐 مدیر</button>
+  </div>
+
+<div id="driverLoginBox" class="login-panel">
 <h3>ورود راننده</h3>
 <label>شماره موبایل</label>
 <input id="phone" type="tel" inputmode="numeric" placeholder="09123456789">
@@ -406,7 +450,7 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
 <input id="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="کد پیامک را وارد کنید" style="display:none;margin-top:10px">
 <button class="btn secondary" id="verifyOtpBtn" style="display:none">تأیید کد و ورود</button>
 </div>
-<div id="adminLoginBox" style="display:none">
+<div id="adminLoginBox" class="login-panel" style="display:none">
 <h3>ورود مدیر</h3>
 <label>ایمیل مدیر</label>
 <input id="adminEmail" type="email" autocomplete="username" placeholder="ایمیل مدیر">
@@ -1343,7 +1387,7 @@ function renderLoad(load){
                     ${escapeHtml(String(load.weight || "-"))}
                     تن
                 </strong>
-            </div>
+            </div>
 
             ${
                 load.status !== "reserved"
