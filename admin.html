@@ -628,6 +628,7 @@ button{
 </style>
 
 <!-- Supabase publishable key verified: 2026-10-02 -->
+<!-- LOADS: description field disabled because public.loads has no description column -->
 </head>
 
 <body>
@@ -2309,12 +2310,6 @@ function openLoadModal(){
   document
     .getElementById("loadDeadline")
     .value = "";
-
-  document
-    .getElementById("loadDescription")
-    .value = "";
-
-
   document
     .getElementById("loadModalTitle")
     .textContent =
@@ -2375,14 +2370,6 @@ function editLoad(id){
     .getElementById("loadStatus")
     .value =
       item.status || "turn";
-
-
-  document
-    .getElementById("loadDescription")
-    .value =
-      item.description || "";
-
-
   if(item.deadline){
 
     const date =
@@ -2465,15 +2452,6 @@ async function saveLoad(){
     document
       .getElementById("loadStatus")
       .value;
-
-
-  const description =
-    document
-      .getElementById("loadDescription")
-      .value
-      .trim();
-
-
   const deadline =
     document
       .getElementById("loadDeadline")
