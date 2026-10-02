@@ -345,32 +345,32 @@ label{
 
 <!-- LOGIN -->
 <section id="loginPage">
-
-    <div class="card">
-        <h2>ورود به صلایان بار</h2>
-
-        <p style="font-size:13px;color:#666;line-height:1.8">
-            برای ورود شماره موبایل خود را وارد کنید.
-            در این نسخه، ورود آزمایشی با حساب کاربری امن انجام می‌شود.
-        </p>
-
-        <label>شماره موبایل</label>
-        <input
-            id="phone"
-            type="tel"
-            inputmode="numeric"
-            placeholder="09123456789"
-        >
-
-        <button class="btn" id="loginBtn">
-            ورود به سامانه
-        </button>
-
-        <div id="loginMessage"></div>
-    </div>
-
+<div class="card">
+<h2>ورود به صلایان بار</h2>
+<p style="font-size:13px;color:#666;line-height:1.8">ابتدا نقش خود را انتخاب کنید.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0">
+<button type="button" class="btn" id="driverRoleBtn">🚛 راننده</button>
+<button type="button" class="btn secondary" id="adminRoleBtn">🔐 مدیر</button>
+</div>
+<div id="driverLoginBox">
+<h3>ورود راننده</h3>
+<label>شماره موبایل</label>
+<input id="phone" type="tel" inputmode="numeric" placeholder="09123456789">
+<button class="btn" id="loginBtn">ارسال کد ورود</button>
+<input id="otpCode" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="کد پیامک را وارد کنید" style="display:none;margin-top:10px">
+<button class="btn secondary" id="verifyOtpBtn" style="display:none">تأیید کد و ورود</button>
+</div>
+<div id="adminLoginBox" style="display:none">
+<h3>ورود مدیر</h3>
+<label>ایمیل مدیر</label>
+<input id="adminEmail" type="email" autocomplete="username" placeholder="ایمیل مدیر">
+<label>رمز عبور</label>
+<input id="adminPassword" type="password" autocomplete="current-password" placeholder="رمز عبور">
+<button class="btn" id="adminLoginBtn">ورود مدیر</button>
+</div>
+<div id="loginMessage"></div>
+</div>
 </section>
-
 
 <!-- APP -->
 <section id="appPage" class="hidden">
@@ -867,105 +867,72 @@ function showPage(pageId){
 ===================================================== */
 
 async function login(){
-    const phone = document.getElementById("phone").value.trim();
-    const message = document.getElementById("loginMessage");
-    if(!/^09\\d{9}$/.test(phone)){
-        message.innerHTML = `<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.</div>`;
-        return;
-    }
-    message.innerHTML = `<div class="notice">در حال ارسال کد ورود...</div>`;
-    try{
-        const { error } = await supabaseClient.auth.signInWithOtp({
-            phone: "+98" + phone.slice(1),
-            options: { channel: "sms" }
-        });
-        if(error) throw error;
-        document.getElementById("otpCode").style.display = "block";
-        document.getElementById("verifyOtpBtn").style.display = "block";
-        document.getElementById("loginBtn").style.display = "none";
-        message.innerHTML = `<div class="success">کد ورود پیامک شد.</div>`;
-    }catch(error){
-        console.error(error);
-        message.innerHTML = `<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;
-    }
+const phone=document.getElementById("phone").value.trim(), message=document.getElementById("loginMessage");
+if(!/^09\d{9}$/.test(phone)){message.innerHTML=`<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.</div>`;return;}
+message.innerHTML=`<div class="notice">در حال ارسال کد ورود...</div>`;
+try{
+const {error}=await supabaseClient.auth.signInWithOtp({phone:"+98"+phone.slice(1),options:{channel:"sms"}});
+if(error) throw error;
+document.getElementById("otpCode").style.display="block";
+document.getElementById("verifyOtpBtn").style.display="block";
+document.getElementById("loginBtn").style.display="none";
+message.innerHTML=`<div class="success">کد ورود پیامک شد.</div>`;
+}catch(error){console.error(error);message.innerHTML=`<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;}
 }
-
 async function verifyOtp(){
-    const phone = document.getElementById("phone").value.trim();
-    const token = document.getElementById("otpCode").value.trim();
-    const message = document.getElementById("loginMessage");
-    if(!token){
-        message.innerHTML = `<div class="error">کد ورود را وارد کنید.</div>`;
-        return;
-    }
-    try{
-        const { data, error } = await supabaseClient.auth.verifyOtp({
-            phone: "+98" + phone.slice(1),
-            token,
-            type: "sms"
-        });
-        if(error) throw error;
-        currentUser = data.user;
-        localStorage.setItem("salayan_phone", phone);
-        document.getElementById("profilePhone").textContent = phone;
-        document.getElementById("loginPage").classList.add("hidden");
-        document.getElementById("appPage").classList.remove("hidden");
-        showPage("homePage");
-        await showWallet();
-    }catch(error){
-        console.error(error);
-        message.innerHTML = `<div class="error">کد ورود نامعتبر است: ${escapeHtml(error.message)}</div>`;
-    }
+const phone=document.getElementById("phone").value.trim(), token=document.getElementById("otpCode").value.trim(), message=document.getElementById("loginMessage");
+if(!token){message.innerHTML=`<div class="error">کد ورود را وارد کنید.</div>`;return;}
+try{
+const {data,error}=await supabaseClient.auth.verifyOtp({phone:"+98"+phone.slice(1),token,type:"sms"});
+if(error) throw error;
+currentUser=data.user;
+const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();
+if(profileError) throw profileError;
+if(!profile||profile.role!=="driver"){await supabaseClient.auth.signOut();throw new Error("این شماره به عنوان راننده ثبت نشده است.");}
+localStorage.setItem("salayan_phone",phone);
+document.getElementById("profilePhone").textContent=phone;
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("appPage").classList.remove("hidden");
+showPage("homePage");await showWallet();
+}catch(error){console.error(error);message.innerHTML=`<div class="error">ورود راننده ناموفق: ${escapeHtml(error.message)}</div>`;}
 }
-
+async function adminLogin(){
+const email=document.getElementById("adminEmail").value.trim(), password=document.getElementById("adminPassword").value, message=document.getElementById("loginMessage");
+if(!email||!password){message.innerHTML=`<div class="error">ایمیل و رمز عبور را وارد کنید.</div>`;return;}
+message.innerHTML=`<div class="notice">در حال ورود مدیر...</div>`;
+try{
+const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+if(error) throw error;
+const uid=data.user.id;
+const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("role").eq("id",uid).maybeSingle();
+if(profileError) throw profileError;
+if(uid!=="f4c7e069-9703-4b15-85cb-1e8392c13184"||!profile||profile.role!=="admin"){await supabaseClient.auth.signOut();throw new Error("این حساب مجوز مدیر ندارد.");}
+window.location.href="admin.html";
+}catch(error){console.error(error);message.innerHTML=`<div class="error">ورود مدیر ناموفق: ${escapeHtml(error.message)}</div>`;}
+}
+function selectRole(role){
+const driver=role==="driver";
+document.getElementById("driverLoginBox").style.display=driver?"block":"none";
+document.getElementById("adminLoginBox").style.display=driver?"none":"block";
+document.getElementById("loginMessage").innerHTML="";
+}
 async function checkSession(){
-
-    try{
-
-        const {
-            data
-        } = await supabaseClient.auth.getSession();
-
-        if(data && data.session){
-
-            currentUser =
-                data.session.user;
-
-            const phone =
-                localStorage.getItem(
-                    "salayan_phone"
-                ) || "کاربر سامانه";
-
-            document.getElementById(
-                "profilePhone"
-            ).textContent = phone;
-
-            document.getElementById(
-                "loginPage"
-            ).classList.add("hidden");
-
-            document.getElementById(
-                "appPage"
-            ).classList.remove("hidden");
-
-            showPage("homePage");
-
-            await showWallet();
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
+try{
+const {data}=await supabaseClient.auth.getSession();
+if(!data||!data.session)return;
+currentUser=data.session.user;
+const {data:profile}=await supabaseClient.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();
+if(profile&&profile.role==="admin"){window.location.href="admin.html";return;}
+if(profile&&profile.role==="driver"){
+const phone=localStorage.getItem("salayan_phone")||"";
+document.getElementById("profilePhone").textContent=phone;
+document.getElementById("loginPage").classList.add("hidden");
+document.getElementById("appPage").classList.remove("hidden");
+showPage("homePage");await showWallet();return;
 }
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
+await supabaseClient.auth.signOut();
+}catch(error){console.error(error);}
+}
 
 async function logout(){
 
@@ -1907,12 +1874,11 @@ document
    LOGIN BUTTON
 ===================================================== */
 
-document
-.getElementById("loginBtn")
-.addEventListener(
-    "click",
-    login
-);
+document.getElementById("driverRoleBtn").addEventListener("click",()=>selectRole("driver"));
+document.getElementById("adminRoleBtn").addEventListener("click",()=>selectRole("admin"));
+document.getElementById("loginBtn").addEventListener("click",login);
+document.getElementById("verifyOtpBtn").addEventListener("click",verifyOtp);
+document.getElementById("adminLoginBtn").addEventListener("click",adminLogin);
 
 
 /* =====================================================
