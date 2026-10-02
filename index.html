@@ -403,6 +403,9 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
 
 /* ===== Load board smart features ===== */
 .load-tools{background:#f8fbfa;border:1px solid #dfeae6;border-radius:15px;padding:12px;margin-bottom:12px}.load-tools-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;font-weight:bold;font-size:14px}.load-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.load-tools-grid input,.load-tools-grid select{margin:0;padding:10px;font-size:13px}.load-chip-row{display:flex;gap:7px;overflow:auto;padding:3px 0 2px;margin-top:8px}.load-chip{white-space:nowrap;border:1px solid #d7e5df;background:#fff;color:#456057;border-radius:999px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.load-chip.active{background:#087f5b;color:#fff;border-color:#087f5b}.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.feature-box{background:#fff;border:1px solid #dfeae6;border-radius:14px;padding:11px;text-align:center}.feature-box b{display:block;font-size:13px;color:#294139}.feature-box small{display:block;color:#7a8882;font-size:10px;margin-top:4px;line-height:1.6}.load-extra{font-size:12px;color:#687770;line-height:1.9;margin-top:8px}.load-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.ear-btn{background:#fff8e6!important;color:#946200!important;border:1px solid #f2d28a!important}@media(max-width:480px){.load-tools-grid{grid-template-columns:1fr}.feature-strip{grid-template-columns:1fr 1fr 1fr}}
+
+/* ===== Driver Home Redesign ===== */
+.driver-home{padding-bottom:4px}.home-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.home-title h2{margin:0;font-size:20px}.home-title small{display:block;color:#75837d;margin-top:4px;font-size:11px}.home-avatar{width:46px;height:46px;border-radius:15px;background:#087f5b;color:#fff;display:grid;place-items:center;font-size:23px;box-shadow:0 5px 14px rgba(8,127,91,.18)}.home-alert{position:relative;border:0;background:#fff;border:1px solid #deebe6;border-radius:13px;width:42px;height:42px;font-size:19px}.home-alert i{position:absolute;right:6px;top:5px;width:8px;height:8px;background:#e03131;border-radius:50%;border:2px solid #fff}.home-search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #dce9e4;border-radius:14px;padding:8px;margin-bottom:12px}.home-search input{border:0;margin:0;padding:8px;background:transparent}.home-search button{border:0;background:#087f5b;color:#fff;border-radius:10px;padding:9px 12px}.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.home-stat{background:#fff;border:1px solid #deebe6;border-radius:14px;padding:12px 8px;text-align:center}.home-stat b{display:block;color:#087f5b;font-size:18px}.home-stat span{font-size:10px;color:#77847f}.home-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.home-action{border:1px solid #dce9e4;background:#fff;border-radius:14px;padding:12px 5px;color:#33453d;font-family:inherit;font-weight:bold;cursor:pointer}.home-action span{display:block;font-size:21px;margin-bottom:5px}.home-section{background:#fff;border:1px solid #deebe6;border-radius:16px;padding:14px;margin-bottom:12px}.home-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.home-section-head h3{margin:0;font-size:15px}.home-section-head button{border:0;background:transparent;color:#087f5b;font:inherit;font-size:11px}.home-load-tabs{display:flex;gap:7px;overflow:auto;margin-bottom:10px}.home-load-tab{white-space:nowrap;border:1px solid #dbe8e3;background:#f7faf9;color:#56665f;border-radius:999px;padding:7px 12px;font:inherit;font-size:11px}.home-load-tab.active{background:#087f5b;color:#fff;border-color:#087f5b}.mini-load{border:1px solid #e0eae6;border-radius:13px;padding:11px;margin-bottom:8px}.mini-load:last-child{margin-bottom:0}.mini-load-route{font-weight:bold;font-size:14px}.mini-load-meta{display:flex;justify-content:space-between;gap:6px;margin-top:7px;color:#718078;font-size:11px}.mini-load-fare{color:#087f5b;font-weight:bold}.doc-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.doc-item{display:flex;align-items:center;gap:8px;border:1px solid #e2ebe7;border-radius:12px;padding:9px}.doc-icon{font-size:20px}.doc-item b{font-size:11px}.doc-item small{display:block;color:#2b8a3e;font-size:10px;margin-top:2px}.home-location{background:linear-gradient(135deg,#effaf5,#fff);border:1px solid #d9ebe4;border-radius:15px;padding:13px;display:flex;justify-content:space-between;align-items:center;gap:10px}.home-location button{border:0;border-radius:10px;background:#087f5b;color:#fff;padding:9px 11px;font:inherit;font-size:11px}.home-note{font-size:10px;color:#7a8882;line-height:1.7;margin-top:7px}@media(max-width:480px){.home-actions{grid-template-columns:repeat(4,1fr)}.home-action{font-size:10px}.doc-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 
@@ -468,174 +471,75 @@ body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padd
 <section id="appPage" class="hidden">
 
     <!-- HOME -->
-    <div id="homePage">
-
-        <div class="card driver-banner">
-            <div class="driver-banner-row">
-                <div>
-                    <strong>داشبورد راننده</strong>
-                    <small>بارهای نزدیک، وضعیت مدارک و خدمات سامانه را از همین صفحه مدیریت کنید.</small>
-                </div>
-                <div class="driver-banner-icon">🚛</div>
+    <div id="homePage" class="driver-home">
+        <div class="home-top">
+            <div class="home-title">
+                <h2>داشبورد راننده</h2>
+                <small>بار مناسب مسیرت را سریع پیدا کن</small>
+            </div>
+            <div style="display:flex;gap:7px;align-items:center">
+                <button class="home-alert" onclick="showPage('notificationsPage')">🔔<i></i></button>
+                <div class="home-avatar">🚛</div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="section-line"><h2>وضعیت استعلام‌ها</h2><span>آخرین وضعیت</span></div>
+        <div class="home-search">
+            <span>🔎</span>
+            <input id="homeLoadSearch" placeholder="مبدأ، مقصد یا نوع بار را جستجو کن">
+            <button onclick="showPage('loadsPage');showLoads();setTimeout(()=>{const x=document.getElementById('loadSearch');if(x){x.value=document.getElementById('homeLoadSearch').value;x.dispatchEvent(new Event('input'));}},150)">جستجو</button>
+        </div>
 
-            <p style="font-size:12px;color:#777">
-                برای مشاهده جزئیات، روی هر مورد کلیک کنید.
-            </p>
+        <div class="home-stats">
+            <div class="home-stat"><b id="homeNearbyCount">-</b><span>بار نزدیک</span></div>
+            <div class="home-stat"><b id="homeTurnCount">-</b><span>بار نوبتی</span></div>
+            <div class="home-stat"><b id="homeFreeCount">-</b><span>بار آزاد</span></div>
+        </div>
 
-            <div class="status-grid">
+        <div class="home-actions">
+            <button class="home-action" onclick="showPage('loadsPage');showLoads()"><span>🚛</span>تالار بار</button>
+            <button class="home-action" onclick="salayanHomeFilter('turn')"><span>🔄</span>نوبتی</button>
+            <button class="home-action" onclick="salayanHomeFilter('free')"><span>🟢</span>آزاد</button>
+            <button class="home-action" onclick="showPage('myLoadsPage');showMyLoads()"><span>📦</span>بارهای من</button>
+        </div>
 
-                <button type="button"
-                        class="status-btn ok inquiry-btn"
-                        data-inquiry="technical">
+        <div class="home-section">
+            <div class="home-section-head"><h3>📍 بارهای پیشنهادی</h3><button onclick="showPage('loadsPage');showLoads()">مشاهده همه ←</button></div>
+            <div class="home-load-tabs">
+                <button class="home-load-tab active" onclick="salayanHomeFilter('all')">همه</button>
+                <button class="home-load-tab" onclick="salayanHomeFilter('turn')">نوبتی</button>
+                <button class="home-load-tab" onclick="salayanHomeFilter('free')">آزاد</button>
+                <button class="home-load-tab" onclick="salayanHomeFilter('return')">برگشت</button>
+            </div>
+            <div id="homeSuggestedLoads"><div class="loading">در حال دریافت بارهای پیشنهادی...</div></div>
+        </div>
 
-                    <div class="status-icon">🔧</div>
-                    <div class="status-title">معاینه فنی کامیون</div>
-                    <div class="status-state">● معتبر</div>
-
-                </button>
-
-
-                <button type="button"
-                        class="status-btn ok inquiry-btn"
-                        data-inquiry="health">
-
-                    <div class="status-icon">❤️</div>
-                    <div class="status-title">کارت سلامت راننده</div>
-                    <div class="status-state">● معتبر</div>
-
-                </button>
-
-
-                <button type="button"
-                        class="status-btn expired inquiry-btn"
-                        data-inquiry="insurance">
-
-                    <div class="status-icon">🛡️</div>
-                    <div class="status-title">بیمه بدنه کامیون</div>
-                    <div class="status-state">● نیازمند بررسی</div>
-
-                </button>
-
-
-                <button type="button"
-                        class="status-btn ok inquiry-btn"
-                        data-inquiry="smartcard">
-
-                    <div class="status-icon">🪪</div>
-                    <div class="status-title">کارت هوشمند راننده</div>
-                    <div class="status-state">● معتبر</div>
-
-                </button>
-
-
-                <button type="button"
-                        class="status-btn warning inquiry-btn"
-                        data-inquiry="road">
-
-                    <div class="status-icon">🛣️</div>
-                    <div class="status-title">استعلام راهداری</div>
-                    <div class="status-state">● بررسی آزمایشی</div>
-
-                </button>
-
-
-                <button type="button"
-                        class="status-btn warning inquiry-btn"
-                        data-inquiry="all">
-
-                    <div class="status-icon">📋</div>
-                    <div class="status-title">استعلام کامل</div>
-                    <div class="status-state">● مشاهده همه موارد</div>
-
-                </button>
-
+        <div class="home-section">
+            <div class="home-section-head"><h3>📄 وضعیت مدارک</h3><button onclick="openInquiry('all')">مشاهده همه ←</button></div>
+            <div class="doc-row">
+                <div class="doc-item"><div class="doc-icon">🔧</div><div><b>معاینه فنی</b><small>● معتبر</small></div></div>
+                <div class="doc-item"><div class="doc-icon">❤️</div><div><b>کارت سلامت</b><small>● معتبر</small></div></div>
+                <div class="doc-item"><div class="doc-icon">🛡️</div><div><b>بیمه بدنه</b><small style="color:#c92a2a">● نیازمند بررسی</small></div></div>
+                <div class="doc-item"><div class="doc-icon">🪪</div><div><b>کارت هوشمند</b><small>● معتبر</small></div></div>
             </div>
         </div>
 
-
-        <div class="card">
-            <h2>دسترسی سریع</h2>
-
-            <div class="quick-grid">
-
-                <button class="quick-btn"
-                        type="button"
-                        onclick="showPage('loadsPage');showLoads();">
-                    🚛 تالار بار
-                </button>
-
-                <button class="quick-btn"
-                        type="button"
-                        onclick="showPage('myLoadsPage');showMyLoads();">
-                    📦 بارهای من
-                </button>
-
-                <button class="quick-btn"
-                        type="button"
-                        onclick="showPage('createLoadPage');">
-                    ➕ اعلام بار
-                </button>
-
-                <button class="quick-btn"
-                        type="button"
-                        onclick="showPage('walletPage');showWallet();">
-                    💰 کیف پول
-                </button>
-
+        <div class="home-section">
+            <div class="home-location">
+                <div><strong>📍 موقعیت راننده</strong><div class="home-note">برای پیشنهاد هوشمند بارهای نزدیک، موقعیت خود را فعال کنید.</div></div>
+                <button onclick="salayanRequestLocation()">فعال‌سازی</button>
             </div>
         </div>
 
-
-        <div class="card">
-            <h2>منوی بیشتر</h2>
-
-            <div class="menu-grid">
-
-                <button class="menu-btn"
-                        onclick="showPage('walletPage');showWallet();">
-                    💰 کیف پول
-                </button>
-
-                <button class="menu-btn"
-                        onclick="showPage('profilePage');">
-                    👤 پروفایل
-                </button>
-
-                <button class="menu-btn"
-                        onclick="showPage('truckPage');">
-                    🚚 اطلاعات کامیون
-                </button>
-
-                <button class="menu-btn"
-                        onclick="openInquiry('all');">
-                    🔎 استعلام‌ها
-                </button>
-
-                <button class="menu-btn"
-                        onclick="showPage('notificationsPage');">
-                    🔔 اعلان‌ها
-                </button>
-
-                <button class="menu-btn"
-                        onclick="showPage('supportPage');">
-                    ☎️ پشتیبانی
-                </button>
-
-                <button class="menu-btn"
-                        onclick="logout();">
-                    🚪 خروج
-                </button>
-
+        <div class="home-section">
+            <div class="home-section-head"><h3>⚡ دسترسی سریع</h3></div>
+            <div class="home-actions" style="margin:0">
+                <button class="home-action" onclick="showPage('walletPage');showWallet()"><span>💰</span>کیف پول</button>
+                <button class="home-action" onclick="showPage('notificationsPage')"><span>🔔</span>اعلان‌ها</button>
+                <button class="home-action" onclick="showPage('profilePage')"><span>👤</span>پروفایل</button>
+                <button class="home-action" onclick="showPage('supportPage')"><span>☎️</span>پشتیبانی</button>
             </div>
         </div>
-
     </div>
-
 
     <!-- LOADS -->
     <div id="loadsPage" class="hidden">
@@ -2049,6 +1953,42 @@ document
     }
 );
 
+
+/* ===== HOME REDESIGN LOGIC ===== */
+function salayanHomeFilter(mode){
+  showPage("loadsPage");showLoads();
+  setTimeout(()=>{
+    if(typeof salayanResetFilters==="function")salayanResetFilters();
+    if(mode==="turn"||mode==="free"||mode==="return"){
+      salayanLoadMode=mode;
+      document.querySelectorAll("[data-load-chip]").forEach(x=>x.classList.toggle("active",x.dataset.loadChip===mode));
+      if(typeof salayanApplyFilters==="function")salayanApplyFilters();
+    }
+  },180);
+}
+function salayanRequestLocation(){
+ if(!navigator.geolocation){alert("مرورگر شما از موقعیت مکانی پشتیبانی نمی‌کند.");return;}
+ navigator.geolocation.getCurrentPosition(pos=>{
+   localStorage.setItem("salayan_lat",pos.coords.latitude);localStorage.setItem("salayan_lng",pos.coords.longitude);
+   alert("موقعیت راننده ثبت شد. در مرحله بعد فاصله واقعی بارها بر اساس موقعیت محاسبه می‌شود.");
+ },()=>alert("دسترسی به موقعیت مکانی فعال نشد."));
+}
+async function salayanLoadHomeSummary(){
+ try{
+  const {data,error}=await supabaseClient.from("loads").select("*").in("status",["waiting","turn","free","reserved"]).order("created_at",{ascending:false});
+  if(error)throw error;
+  const rows=data||[];
+  const turn=rows.filter(x=>x.status==="turn"),free=rows.filter(x=>x.status==="free");
+  const near=rows.filter(x=>{const d=Number(x.distance_km??x.distance??x.distanceKm);return Number.isFinite(d)&&d<=200;});
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=Number(v).toLocaleString("fa-IR");};
+  set("homeNearbyCount",near.length);set("homeTurnCount",turn.length);set("homeFreeCount",free.length);
+  const box=document.getElementById("homeSuggestedLoads");
+  if(!box)return;
+  const top=rows.slice(0,4);
+  box.innerHTML=top.length?top.map(x=>'<div class="mini-load"><div class="mini-load-route">'+escapeHtml(x.origin||"-")+' ← '+escapeHtml(x.destination||"-")+'</div><div class="mini-load-meta"><span>'+escapeHtml(x.cargo||"-")+' · '+escapeHtml(String(x.weight??"-"))+' تن</span><span class="mini-load-fare">'+(x.fare!=null?formatMoney(x.fare)+" تومان":salayanLoadStatusText(x.status))+'</span></div></div>').join(""):'<div class="notice">فعلاً بار فعالی ثبت نشده است.</div>';
+ }catch(e){console.error(e);const box=document.getElementById("homeSuggestedLoads");if(box)box.innerHTML='<div class="error">دریافت بارهای پیشنهادی انجام نشد.</div>';}
+}
+document.addEventListener("DOMContentLoaded",salayanLoadHomeSummary);
 
 /* ===== SMART LOAD BOARD V3 ===== */
 let salayanLoadsCache=[];let salayanLoadMode="all";
