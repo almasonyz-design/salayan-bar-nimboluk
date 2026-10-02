@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>صلایان بار نیمبلوک</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,526 +10,672 @@
 <style>
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
+    font-family:Tahoma,Arial,sans-serif;
 }
 
 body{
-    font-family:Tahoma,Arial,sans-serif;
-    background:#f3f7f4;
-    color:#17231b;
-}
-
-button,input,select{
-    font-family:inherit;
-}
-
-.container{
-    max-width:650px;
-    margin:auto;
-    min-height:100vh;
-    background:#fff;
+    margin:0;
+    background:#f4f7f5;
+    color:#17251d;
 }
 
 header{
-    background:linear-gradient(135deg,#087f45,#0ca65a);
+    background:linear-gradient(135deg,#087f3f,#0aa85a);
     color:white;
-    padding:22px 18px;
+    padding:18px 15px;
     text-align:center;
-    border-radius:0 0 25px 25px;
+    box-shadow:0 2px 8px #0002;
 }
 
-.logo{
-    font-size:28px;
-    font-weight:bold;
+header h1{
+    margin:0;
+    font-size:23px;
 }
 
-.slogan{
-    margin-top:7px;
-    opacity:.9;
-    font-size:14px;
+header p{
+    margin:7px 0 0;
+    font-size:13px;
 }
 
-main{
-    padding:18px;
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:15px;
 }
 
 .card{
     background:white;
-    border-radius:18px;
-    padding:17px;
-    margin-bottom:15px;
-    box-shadow:0 3px 14px rgba(0,0,0,.07);
-    border:1px solid #edf1ee;
-}
-
-.section-title{
-    font-size:18px;
-    font-weight:bold;
+    border-radius:16px;
+    padding:16px;
     margin-bottom:14px;
+    box-shadow:0 3px 12px #00000010;
 }
 
-.status-grid{
+.card h3{
+    margin-top:0;
+}
+
+button{
+    border:0;
+    border-radius:12px;
+    padding:12px 15px;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.btn{
+    background:#078640;
+    color:white;
+    width:100%;
+}
+
+.btn.secondary{
+    background:#e9f5ee;
+    color:#08743a;
+}
+
+.btn.danger{
+    background:#c62828;
+    color:white;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    border:1px solid #ddd;
+    border-radius:11px;
+    margin:6px 0 12px;
+    font-size:14px;
+}
+
+.grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
 }
 
 .status{
-    padding:15px 10px;
+    background:white;
     border-radius:15px;
-    text-align:center;
+    padding:13px;
+    box-shadow:0 2px 8px #0000000c;
+    cursor:pointer;
+    border-right:5px solid #16a05d;
+}
+
+.status.expired{
+    border-right-color:#d32f2f;
+}
+
+.status.warning{
+    border-right-color:#f39c12;
+}
+
+.status-title{
     font-size:13px;
     font-weight:bold;
 }
 
-.status.green{
-    background:#e4f7eb;
-    color:#08763e;
+.status-value{
+    margin-top:7px;
+    font-size:12px;
+    color:#16834b;
 }
 
-.status.orange{
-    background:#fff2d8;
-    color:#a26700;
+.expired .status-value{
+    color:#d32f2f;
 }
 
-.status.red{
-    background:#fde4e4;
-    color:#b42318;
+.warning .status-value{
+    color:#d88900;
 }
 
-.actions{
+.quick{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:9px;
+}
+
+.quick button{
+    background:#fff;
+    color:#08743a;
+    box-shadow:0 2px 8px #0001;
+    min-height:65px;
+}
+
+.load{
+    border:1px solid #e4e4e4;
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:12px;
+    background:#fff;
+}
+
+.load-route{
+    font-size:16px;
+    font-weight:bold;
+    color:#075f32;
+}
+
+.load-info{
+    font-size:12px;
+    line-height:2;
+    color:#555;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:8px;
+    background:#e9f7ef;
+    color:#08743a;
+    font-size:11px;
+}
+
+.badge.free{
+    background:#fff3dc;
+    color:#a76600;
+}
+
+.wallet{
+    font-size:27px;
+    color:#087f3f;
+    font-weight:bold;
+}
+
+.menu{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
 }
 
-.btn{
-    border:0;
-    border-radius:13px;
-    padding:14px;
-    cursor:pointer;
-    font-weight:bold;
-    font-size:14px;
-}
-
-.btn-primary{
-    background:#087f45;
-    color:white;
-}
-
-.btn-secondary{
-    background:#e8f5ed;
-    color:#087f45;
-}
-
-.btn-danger{
-    background:#fce4e4;
-    color:#b42318;
-}
-
-input,select{
-    width:100%;
-    padding:13px;
-    border:1px solid #d8e0db;
-    border-radius:12px;
-    margin-bottom:10px;
-    outline:none;
-}
-
-input:focus,select:focus{
-    border-color:#087f45;
-}
-
-.load{
-    border:1px solid #e3e9e5;
-    border-radius:16px;
-    padding:15px;
-    margin-bottom:12px;
-}
-
-.load-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
-}
-
-.badge{
-    padding:5px 9px;
-    border-radius:8px;
-    font-size:11px;
-    font-weight:bold;
-}
-
-.badge-turn{
-    background:#fff0d1;
-    color:#9b6500;
-}
-
-.badge-free{
-    background:#e4f7eb;
-    color:#08763e;
-}
-
-.route{
-    font-size:16px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.details{
-    color:#66736b;
-    font-size:13px;
-    line-height:2;
-}
-
-.wallet{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.wallet-number{
-    font-size:25px;
-    font-weight:bold;
-    color:#087f45;
+.menu button{
+    background:#fff;
+    color:#075f32;
+    border:1px solid #e1eee6;
 }
 
 .hidden{
     display:none!important;
 }
 
-.login{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    background:linear-gradient(135deg,#e9f7ee,#f8fbf9);
-}
-
-.login-box{
-    width:100%;
-    max-width:430px;
-    background:white;
-    padding:30px 22px;
-    border-radius:25px;
-    box-shadow:0 5px 25px rgba(0,0,0,.09);
+.center{
     text-align:center;
 }
 
-.login-logo{
-    font-size:31px;
-    color:#087f45;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.login-sub{
-    color:#68736c;
-    margin-bottom:25px;
-    font-size:14px;
-}
-
-.message{
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:12px;
-    font-size:13px;
-    display:none;
-}
-
-.message.success{
-    display:block;
-    background:#e4f7eb;
-    color:#08763e;
-}
-
-.message.error{
-    display:block;
-    background:#fde4e4;
-    color:#b42318;
+.small{
+    font-size:12px;
+    color:#777;
+    line-height:1.9;
 }
 
 .loading{
     text-align:center;
-    padding:30px;
-    color:#68736c;
+    padding:25px;
+    color:#777;
 }
 
-.footer{
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:20px;
+}
+
+.modal{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 10px 40px #0005;
+}
+
+.modal h3{
+    margin-top:0;
+    color:#087f3f;
+}
+
+footer{
     text-align:center;
-    color:#8a948d;
+    color:#888;
     font-size:11px;
     padding:20px;
 }
 
-.menu{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    z-index:100;
+hr{
+    border:0;
+    border-top:1px solid #eee;
+    margin:15px 0;
 }
 
-.menu-box{
-    position:absolute;
-    right:0;
-    top:0;
-    height:100%;
-    width:290px;
-    background:white;
-    padding:25px 18px;
-}
-
-.menu-item{
-    padding:15px;
-    border-bottom:1px solid #eee;
-    cursor:pointer;
-}
-
-.close{
-    text-align:left;
-    font-size:24px;
-    cursor:pointer;
-    margin-bottom:15px;
-}
-
-.empty{
-    text-align:center;
-    padding:30px 10px;
-    color:#8a948d;
+#app{
+    min-height:100vh;
 }
 </style>
 </head>
 
 <body>
 
+<div id="app">
+
+<header>
+    <h1>صلایان بار نیمبلوک</h1>
+    <p>اعلام بار هوشمند</p>
+</header>
+
+<div class="container">
+
 <!-- LOGIN -->
-<div id="loginPage" class="login">
+<section id="loginPage">
 
-    <div class="login-box">
+    <div class="card center">
+        <h2>ورود به صلایان بار</h2>
 
-        <div class="login-logo">صلایان بار</div>
-
-        <div class="login-sub">
-            اعلام بار هوشمند نیمبلوک
-        </div>
-
-        <div id="loginMessage" class="message"></div>
+        <p class="small">
+            نسخه آزمایشی سامانه صلایان بار
+        </p>
 
         <input
-            id="loginPhone"
+            id="phoneInput"
             type="tel"
             placeholder="شماره موبایل"
             maxlength="11"
         >
 
-        <button
-            class="btn btn-primary"
-            style="width:100%"
-            onclick="login()"
-        >
-            ورود به صلایان بار
+        <button class="btn" onclick="login()">
+            ورود به سامانه
         </button>
 
-        <div style="margin-top:15px;font-size:11px;color:#999">
-            نسخه آزمایشی اتصال به سرور
-        </div>
-
-    </div>
-</div>
-
-
-<!-- APP -->
-<div id="app" class="container hidden">
-
-<header>
-
-    <div class="logo">
-        صلایان بار نیمبلوک
+        <p class="small">
+            در این نسخه برای تست از ورود آزمایشی استفاده می‌شود.
+        </p>
     </div>
 
-    <div class="slogan">
-        اعلام بار هوشمند
-    </div>
+</section>
 
-</header>
 
-<main>
+<!-- MAIN APP -->
+<section id="mainPage" class="hidden">
 
-    <!-- WALLET -->
-    <div class="card">
+    <!-- HOME -->
+    <div id="homePage">
 
-        <div class="wallet">
+        <div class="card">
+            <h3>وضعیت استعلام‌ها</h3>
 
-            <div>
-                <div style="font-size:13px;color:#777">
-                    موجودی کیف پول
+            <div class="grid">
+
+                <div class="status" onclick="showInquiry('technical')">
+                    <div class="status-title">
+                        🔧 معاینه فنی کامیون
+                    </div>
+                    <div class="status-value">
+                        ● معتبر
+                    </div>
                 </div>
 
-                <div id="walletBalance" class="wallet-number">
-                    ۰ تومان
+                <div class="status" onclick="showInquiry('health')">
+                    <div class="status-title">
+                        🩺 کارت سلامت راننده
+                    </div>
+                    <div class="status-value">
+                        ● معتبر
+                    </div>
                 </div>
+
+                <div class="status expired" onclick="showInquiry('insurance')">
+                    <div class="status-title">
+                        🛡 بیمه بدنه کامیون
+                    </div>
+                    <div class="status-value">
+                        ● نیازمند بررسی
+                    </div>
+                </div>
+
+                <div class="status" onclick="showInquiry('smartcard')">
+                    <div class="status-title">
+                        🪪 کارت هوشمند راننده
+                    </div>
+                    <div class="status-value">
+                        ● معتبر
+                    </div>
+                </div>
+
+                <div class="status" onclick="showInquiry('road')">
+                    <div class="status-title">
+                        🚛 استعلام راهداری
+                    </div>
+                    <div class="status-value">
+                        ● آماده استعلام
+                    </div>
+                </div>
+
+                <div class="status warning" onclick="showInquiry('all')">
+                    <div class="status-title">
+                        📋 همه استعلام‌ها
+                    </div>
+                    <div class="status-value">
+                        مشاهده جزئیات
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h3>دسترسی سریع</h3>
+
+            <div class="quick">
+
+                <button onclick="showPage('loads')">
+                    📦<br>
+                    تالار بار
+                </button>
+
+                <button onclick="showPage('myLoads')">
+                    🚛<br>
+                    بارهای من
+                </button>
+
+                <button onclick="showPage('announce')">
+                    📢<br>
+                    اعلام بار
+                </button>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h3>کیف پول</h3>
+
+            <div id="walletHome" class="wallet">
+                در حال دریافت...
             </div>
 
-            <button
-                class="btn btn-secondary"
-                onclick="showWallet()"
-            >
-                کیف پول
+            <button class="btn secondary" onclick="showPage('wallet')">
+                مشاهده کیف پول
             </button>
+        </div>
 
+
+        <div class="card">
+            <h3>منوی سامانه</h3>
+
+            <div class="menu">
+
+                <button onclick="showPage('wallet')">
+                    💰 کیف پول
+                </button>
+
+                <button onclick="showPage('profile')">
+                    👤 پروفایل
+                </button>
+
+                <button onclick="showPage('inquiries')">
+                    📋 استعلام‌ها
+                </button>
+
+                <button onclick="showPage('support')">
+                    ☎ پشتیبانی
+                </button>
+
+                <button onclick="logout()">
+                    🚪 خروج
+                </button>
+
+            </div>
         </div>
 
     </div>
 
 
-    <!-- STATUS -->
-    <div class="card">
+    <!-- LOADS -->
+    <div id="loadsPage" class="hidden">
 
-        <div class="section-title">
-            وضعیت مدارک
+        <div class="card">
+            <h3>📦 تالار بار</h3>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
         </div>
 
-        <div class="status-grid">
-
-            <div class="status green">
-                🔧<br>
-                معاینه فنی
-            </div>
-
-            <div class="status green">
-                ❤️<br>
-                کارت سلامت
-            </div>
-
-            <div class="status green">
-                🚛<br>
-                بیمه بدنه
-            </div>
-
-            <div class="status green">
-                🪪<br>
-                کارت هوشمند
-            </div>
-
-            <div class="status orange">
-                📍<br>
-                استعلام راهداری
-            </div>
-
+        <div id="loadsList" class="loading">
+            در حال دریافت بارها...
         </div>
 
     </div>
 
 
-    <!-- QUICK ACTIONS -->
-    <div class="card">
+    <!-- MY LOADS -->
+    <div id="myLoadsPage" class="hidden">
 
-        <div class="section-title">
-            دسترسی سریع
+        <div class="card">
+            <h3>🚛 بارهای من</h3>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
         </div>
 
-        <div class="actions">
-
-            <button
-                class="btn btn-primary"
-                onclick="showLoads()"
-            >
-                📦 تالار بار
-            </button>
-
-            <button
-                class="btn btn-secondary"
-                onclick="showMyLoads()"
-            >
-                🚛 بارهای من
-            </button>
-
-            <button
-                class="btn btn-secondary"
-                onclick="showAnnounce()"
-            >
-                📢 اعلام بار
-            </button>
-
-            <button
-                class="btn btn-secondary"
-                onclick="openMenu()"
-            >
-                ☰ امکانات بیشتر
-            </button>
-
+        <div id="myLoadsList" class="loading">
+            در حال دریافت...
         </div>
 
     </div>
 
 
-    <!-- CONTENT -->
-    <div id="content">
+    <!-- ANNOUNCE -->
+    <div id="announcePage" class="hidden">
 
         <div class="card">
 
-            <div class="section-title">
-                آخرین بارها
-            </div>
+            <h3>📢 اعلام بار</h3>
 
-            <div id="loads">
-                <div class="loading">
-                    در حال دریافت بارها از سرور...
-                </div>
-            </div>
+            <label>مبدأ</label>
+            <input id="origin" placeholder="مثلاً نیمبلوک">
+
+            <label>مقصد</label>
+            <input id="destination" placeholder="مثلاً مشهد">
+
+            <label>نوع کالا</label>
+            <input id="cargo" placeholder="مثلاً فولاد">
+
+            <label>وزن</label>
+            <input id="weight" placeholder="مثلاً 26 تن">
+
+            <label>نوع کامیون</label>
+            <input id="truckType" placeholder="مثلاً کمپرسی">
+
+            <label>کرایه</label>
+            <input id="fare" type="number" placeholder="مبلغ به تومان">
+
+            <label>نوع بار</label>
+            <select id="loadType">
+                <option value="turn">نوبتی</option>
+                <option value="free">آزاد</option>
+            </select>
+
+            <button class="btn" onclick="createLoad()">
+                ثبت بار
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
 
         </div>
 
     </div>
 
 
-    <div class="footer">
-        صلایان بار نیمبلوک © ۱۴۰۵
+    <!-- WALLET -->
+    <div id="walletPage" class="hidden">
+
+        <div class="card center">
+
+            <h3>💰 کیف پول</h3>
+
+            <div id="walletBalance" class="wallet">
+                در حال دریافت...
+            </div>
+
+            <hr>
+
+            <p class="small">
+                هزینه انتخاب هر بار در نسخه آزمایشی:
+                <b>۱۰٬۰۰۰ تومان</b>
+            </p>
+
+            <button class="btn secondary" onclick="testCharge()">
+                شارژ آزمایشی کیف پول
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
+
+        </div>
+
     </div>
 
-</main>
+
+    <!-- PROFILE -->
+    <div id="profilePage" class="hidden">
+
+        <div class="card">
+
+            <h3>👤 پروفایل</h3>
+
+            <div id="profileData">
+                در حال دریافت...
+            </div>
+
+            <br>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- INQUIRIES -->
+    <div id="inquiriesPage" class="hidden">
+
+        <div class="card">
+
+            <h3>📋 استعلام‌ها</h3>
+
+            <p class="small">
+                برای مشاهده وضعیت هر مورد روی آن کلیک کنید.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="showInquiry('technical')">
+                🔧 استعلام معاینه فنی
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary"
+                    onclick="showInquiry('health')">
+                🩺 استعلام کارت سلامت
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary"
+                    onclick="showInquiry('insurance')">
+                🛡 استعلام بیمه بدنه
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary"
+                    onclick="showInquiry('smartcard')">
+                🪪 استعلام کارت هوشمند
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary"
+                    onclick="showInquiry('road')">
+                🚛 استعلام راهداری
+            </button>
+
+            <br><br>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+    <div id="supportPage" class="hidden">
+
+        <div class="card center">
+
+            <h3>☎ پشتیبانی</h3>
+
+            <p>
+                پشتیبانی صلایان بار نیمبلوک
+            </p>
+
+            <p class="small">
+                این بخش در نسخه آزمایشی فعال است.
+            </p>
+
+            <button class="btn secondary" onclick="showPage('home')">
+                ← بازگشت
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    صلایان بار نیمبلوک © ۱۴۰۵
+</footer>
+
 </div>
 
 
-<!-- MENU -->
-<div id="menu" class="menu hidden">
+<!-- MODAL -->
+<div id="modal" class="modal-bg hidden">
 
-    <div class="menu-box">
+    <div class="modal">
 
-        <div class="close" onclick="closeMenu()">
-            ✕
-        </div>
+        <h3 id="modalTitle">
+            استعلام
+        </h3>
 
-        <div class="section-title">
-            امکانات صلایان بار
-        </div>
+        <div id="modalContent"></div>
 
-        <div class="menu-item" onclick="showLoads()">
-            📦 تالار بار
-        </div>
+        <br>
 
-        <div class="menu-item" onclick="showMyLoads()">
-            🚛 بارهای من
-        </div>
-
-        <div class="menu-item" onclick="showWallet()">
-            💰 کیف پول
-        </div>
-
-        <div class="menu-item" onclick="showProfile()">
-            👤 پروفایل
-        </div>
-
-        <div class="menu-item" onclick="showAnnounce()">
-            📢 اعلام بار
-        </div>
-
-        <div class="menu-item" onclick="logout()">
-            🚪 خروج
-        </div>
+        <button class="btn" onclick="closeModal()">
+            بستن
+        </button>
 
     </div>
 
@@ -539,607 +684,555 @@ input:focus,select:focus{
 
 <script>
 
-/* =========================================
+/* ================================
    SUPABASE
-========================================= */
+================================ */
 
 const SUPABASE_URL =
-    "https://ntirixjflgqihobpnmya.supabase.co";
+"https://ntirixjflgqihobpnmya.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
+"sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
-/* =========================================
-   GLOBAL
-========================================= */
+/* ================================
+   CONSTANTS
+================================ */
 
-let currentUser = null;
+const LOAD_SELECTION_FEE = 10000;
 
 
-/* =========================================
-   LOGIN - TEST VERSION
-========================================= */
+/* ================================
+   LOGIN
+================================ */
 
 async function login(){
 
     const phone =
-        document.getElementById("loginPhone").value.trim();
+        document.getElementById("phoneInput").value.trim();
 
-    if(!/^09\d{9}$/.test(phone)){
+    if(!phone){
 
-        showLoginMessage(
-            "شماره موبایل را صحیح وارد کنید.",
-            "error"
-        );
+        alert("شماره موبایل را وارد کنید.");
 
         return;
     }
-
-    showLoginMessage(
-        "در حال اتصال به سرور...",
-        "success"
-    );
-
-    /*
-      فعلاً برای تست اتصال از Anonymous Auth استفاده می‌کنیم.
-      در مرحله بعد OTP واقعی پیامکی را فعال می‌کنیم.
-    */
-
-    const { data, error } =
-        await supabaseClient.auth.signInAnonymously();
-
-    if(error){
-
-        showLoginMessage(
-            "ورود انجام نشد. Anonymous Sign-In در Supabase فعال نیست.",
-            "error"
-        );
-
-        console.error(error);
-
-        return;
-    }
-
-    currentUser = data.user;
 
     localStorage.setItem(
         "salayan_phone",
         phone
     );
 
-    document.getElementById("loginPage")
-        .classList.add("hidden");
+    try{
 
-    document.getElementById("app")
-        .classList.remove("hidden");
+        const {data,error} =
+            await supabaseClient.auth.getSession();
 
-    await initializeApp();
+        if(error)
+            throw error;
+
+        if(!data.session){
+
+            const result =
+                await supabaseClient.auth.signInAnonymously();
+
+            if(result.error)
+                throw result.error;
+        }
+
+        await afterLogin();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "خطا در ورود:\n" +
+            error.message
+        );
+    }
+}
+
+
+/* ================================
+   START
+================================ */
+
+async function init(){
+
+    try{
+
+        const {data,error} =
+            await supabaseClient.auth.getSession();
+
+        if(error)
+            throw error;
+
+        if(data.session){
+
+            await afterLogin();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
 
 }
 
 
-/* =========================================
-   INITIALIZE
-========================================= */
+/* ================================
+   AFTER LOGIN
+================================ */
 
-async function initializeApp(){
+async function afterLogin(){
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("mainPage")
+        .classList.remove("hidden");
+
+    showPage("home");
 
     await loadWallet();
 
-    await showLoads();
-
 }
 
 
-/* =========================================
-   LOAD WALLET
-========================================= */
+/* ================================
+   PAGE NAVIGATION
+================================ */
 
-async function loadWallet(){
+function hideAllPages(){
 
-    if(!currentUser){
+    const pages = [
+        "homePage",
+        "loadsPage",
+        "myLoadsPage",
+        "announcePage",
+        "walletPage",
+        "profilePage",
+        "inquiriesPage",
+        "supportPage"
+    ];
 
-        document.getElementById(
-            "walletBalance"
-        ).innerText = "۰ تومان";
+    pages.forEach(id => {
 
-        return;
-    }
+        const el =
+            document.getElementById(id);
 
-    const { data, error } =
-        await supabaseClient
-        .from("wallets")
-        .select("balance")
-        .eq("user_id", currentUser.id)
-        .maybeSingle();
-
-    if(error){
-
-        console.error(error);
-
-        document.getElementById(
-            "walletBalance"
-        ).innerText = "۰ تومان";
-
-        return;
-    }
-
-    const balance =
-        data?.balance || 0;
-
-    document.getElementById(
-        "walletBalance"
-    ).innerText =
-        Number(balance).toLocaleString("fa-IR")
-        + " تومان";
-}
-
-
-/* =========================================
-   LOADS
-========================================= */
-
-async function showLoads(){
-
-    closeMenu();
-
-    const container =
-        document.getElementById("loads");
-
-    container.innerHTML =
-        '<div class="loading">در حال دریافت بارها...</div>';
-
-    const { data, error } =
-        await supabaseClient
-        .from("loads")
-        .select("*")
-        .in("status",["waiting","turn","free"])
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.error(error);
-
-        container.innerHTML =
-            '<div class="empty">خطا در دریافت بارها از سرور</div>';
-
-        return;
-    }
-
-    if(!data || data.length === 0){
-
-        container.innerHTML =
-            '<div class="empty">هنوز باری ثبت نشده است.</div>';
-
-        return;
-    }
-
-    container.innerHTML = "";
-
-    data.forEach(load => {
-
-        const type =
-            load.load_type === "free"
-            ? "آزاد"
-            : "نوبتی";
-
-        const badge =
-            load.load_type === "free"
-            ? "badge-free"
-            : "badge-turn";
-
-        const div =
-            document.createElement("div");
-
-        div.className = "load";
-
-        div.innerHTML = `
-
-            <div class="load-top">
-
-                <span class="badge ${badge}">
-                    ${type}
-                </span>
-
-                <span style="font-size:12px;color:#777">
-                    ${formatDate(load.created_at)}
-                </span>
-
-            </div>
-
-            <div class="route">
-                ${escapeHtml(load.origin || "مبدأ نامشخص")}
-                ←
-                ${escapeHtml(load.destination || "مقصد نامشخص")}
-            </div>
-
-            <div class="details">
-
-                بار:
-                ${escapeHtml(load.cargo || "-")}
-
-                <br>
-
-                وزن:
-                ${load.weight || "-"} تن
-
-                <br>
-
-                نوع کامیون:
-                ${escapeHtml(load.truck_type || "-")}
-
-                ${load.fare ? `
-                <br>
-                کرایه:
-                ${Number(load.fare).toLocaleString("fa-IR")}
-                تومان
-                ` : ""}
-
-            </div>
-
-            <button
-                class="btn btn-primary"
-                style="width:100%;margin-top:12px"
-                onclick="selectLoad('${load.id}')"
-            >
-                انتخاب بار — ۱۰٬۰۰۰ تومان
-            </button>
-
-        `;
-
-        container.appendChild(div);
+        if(el)
+            el.classList.add("hidden");
 
     });
 
 }
 
 
-/* =========================================
+async function showPage(page){
+
+    hideAllPages();
+
+    if(page === "home"){
+
+        document
+            .getElementById("homePage")
+            .classList.remove("hidden");
+
+        await loadWallet();
+
+    }
+
+
+    if(page === "loads"){
+
+        document
+            .getElementById("loadsPage")
+            .classList.remove("hidden");
+
+        await showLoads();
+
+    }
+
+
+    if(page === "myLoads"){
+
+        document
+            .getElementById("myLoadsPage")
+            .classList.remove("hidden");
+
+        await showMyLoads();
+
+    }
+
+
+    if(page === "announce"){
+
+        document
+            .getElementById("announcePage")
+            .classList.remove("hidden");
+
+    }
+
+
+    if(page === "wallet"){
+
+        document
+            .getElementById("walletPage")
+            .classList.remove("hidden");
+
+        await loadWallet();
+
+    }
+
+
+    if(page === "profile"){
+
+        document
+            .getElementById("profilePage")
+            .classList.remove("hidden");
+
+        await showProfile();
+
+    }
+
+
+    if(page === "inquiries"){
+
+        document
+            .getElementById("inquiriesPage")
+            .classList.remove("hidden");
+
+    }
+
+
+    if(page === "support"){
+
+        document
+            .getElementById("supportPage")
+            .classList.remove("hidden");
+
+    }
+
+}
+
+
+/* ================================
+   WALLET
+================================ */
+
+async function loadWallet(){
+
+    const walletHome =
+        document.getElementById("walletHome");
+
+    const walletBalance =
+        document.getElementById("walletBalance");
+
+
+    try{
+
+        const {
+            data:{user},
+            error:userError
+        } =
+            await supabaseClient.auth.getUser();
+
+        if(userError)
+            throw userError;
+
+        if(!user){
+
+            if(walletHome)
+                walletHome.innerText = "۰ تومان";
+
+            return;
+        }
+
+
+        const {data,error} =
+            await supabaseClient
+                .from("wallets")
+                .select("balance")
+                .eq("user_id",user.id)
+                .maybeSingle();
+
+
+        if(error)
+            throw error;
+
+
+        const balance =
+            data?.balance || 0;
+
+
+        const formatted =
+            Number(balance).toLocaleString("fa-IR")
+            + " تومان";
+
+
+        if(walletHome)
+            walletHome.innerText =
+                formatted;
+
+
+        if(walletBalance)
+            walletBalance.innerText =
+                formatted;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        if(walletHome)
+            walletHome.innerText =
+                "خطا";
+
+        if(walletBalance)
+            walletBalance.innerText =
+                "خطا";
+
+    }
+
+}
+
+
+/* ================================
+   TEST CHARGE
+================================ */
+
+function testCharge(){
+
+    alert(
+        "شارژ واقعی درگاه پرداخت در مرحله بعد اضافه می‌شود.\n\n" +
+        "فعلاً فقط برای تست رابط کاربری است."
+    );
+
+}
+
+
+/* ================================
+   LOADS
+================================ */
+
+async function showLoads(){
+
+    const container =
+        document.getElementById("loadsList");
+
+    container.innerHTML =
+        '<div class="loading">در حال دریافت بارها...</div>';
+
+
+    try{
+
+        const {data,error} =
+            await supabaseClient
+                .from("loads")
+                .select("*")
+                .in(
+                    "status",
+                    ["waiting","turn","free","reserved"]
+                )
+                .order(
+                    "created_at",
+                    {ascending:false}
+                );
+
+
+        if(error)
+            throw error;
+
+
+        if(!data || data.length === 0){
+
+            container.innerHTML =
+                '<div class="card center">بار فعالی وجود ندارد.</div>';
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.forEach(load => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "load";
+
+
+            const type =
+                load.load_type === "free"
+                    ? "آزاد"
+                    : "نوبتی";
+
+
+            const badgeClass =
+                load.load_type === "free"
+                    ? "badge free"
+                    : "badge";
+
+
+            div.innerHTML = `
+
+                <div class="load-route">
+                    ${escapeHtml(load.origin || "")}
+                    ←
+                    ${escapeHtml(load.destination || "")}
+                </div>
+
+                <div class="load-info">
+
+                    <span class="${badgeClass}">
+                        ${type}
+                    </span>
+
+                    <br>
+
+                    📦 کالا:
+                    ${escapeHtml(load.cargo || "-")}
+
+                    <br>
+
+                    ⚖ وزن:
+                    ${escapeHtml(load.weight || "-")}
+
+                    <br>
+
+                    🚛 کامیون:
+                    ${escapeHtml(load.truck_type || "-")}
+
+                    <br>
+
+                    💰 کرایه:
+                    ${formatMoney(load.fare)}
+
+                </div>
+
+                <br>
+
+                ${
+                    load.status === "reserved"
+                    ?
+                    '<button class="btn secondary" disabled>رزرو شده</button>'
+                    :
+                    `<button class="btn"
+                        onclick="selectLoad('${load.id}')">
+                        انتخاب بار
+                    </button>`
+                }
+
+            `;
+
+
+            container.appendChild(div);
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+        container.innerHTML =
+            `<div class="card">
+                خطا در دریافت بارها:
+                <br>
+                ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* ================================
    SELECT LOAD
-========================================= */
+================================ */
 
 async function selectLoad(loadId){
 
-    if(!currentUser){
-
-        alert("ابتدا وارد حساب شوید.");
-
-        return;
-    }
-
     if(!confirm(
-        "هزینه انتخاب این بار ۱۰٬۰۰۰ تومان است.\nآیا ادامه می‌دهید؟"
+        "هزینه انتخاب این بار ۱۰٬۰۰۰ تومان است.\n\nادامه می‌دهید؟"
     )){
 
         return;
     }
 
-    let distance = null;
 
-    const { data:load } =
-        await supabaseClient
-        .from("loads")
-        .select("load_type,max_distance_km")
-        .eq("id",loadId)
-        .single();
+    try{
 
-    if(load?.load_type === "turn"){
-
-        if(!navigator.geolocation){
-
-            alert(
-                "برای انتخاب بار نوبتی، دسترسی موقعیت مکانی لازم است."
+        const {data,error} =
+            await supabaseClient.rpc(
+                "select_load",
+                {
+                    p_load_id:loadId,
+                    p_distance_km:0
+                }
             );
 
-            return;
-        }
 
-        try{
+        if(error)
+            throw error;
 
-            distance =
-                await getDistanceFromBrowser();
 
-        }catch(e){
+        console.log(data);
+
+
+        if(data && data.success){
 
             alert(
-                "دریافت موقعیت مکانی امکان‌پذیر نیست."
+                "بار با موفقیت انتخاب شد."
             );
 
-            return;
+            await loadWallet();
+
+            await showLoads();
+
+        }else{
+
+            alert(
+                data?.message ||
+                "امکان انتخاب بار وجود ندارد."
+            );
+
         }
 
-    }
 
-    const { data, error } =
-        await supabaseClient.rpc(
-            "select_load",
-            {
-                p_load_id:loadId,
-                p_distance_km:distance
-            }
-        );
-
-    if(error){
+    }catch(error){
 
         console.error(error);
 
         alert(
-            "خطا در ارتباط با سرور."
+            "خطا در انتخاب بار:\n" +
+            error.message
         );
 
-        return;
     }
-
-    if(!data?.success){
-
-        alert(
-            data?.message ||
-            "انتخاب بار انجام نشد."
-        );
-
-        return;
-    }
-
-    alert(
-        "بار با موفقیت انتخاب شد."
-    );
-
-    await loadWallet();
-
-    await showLoads();
 
 }
 
 
-/* =========================================
-   GPS
-========================================= */
-
-function getDistanceFromBrowser(){
-
-    return new Promise((resolve,reject)=>{
-
-        navigator.geolocation.getCurrentPosition(
-
-            position => {
-
-                /*
-                   فعلاً مختصات مقصد بار را نداریم.
-                   برای تست اتصال مقدار صفر ارسال می‌شود.
-                   در مرحله بعد مختصات واقعی مبدأ بار
-                   و فاصله واقعی اضافه خواهد شد.
-                */
-
-                resolve(0);
-
-            },
-
-            error => reject(error),
-
-            {
-                enableHighAccuracy:true,
-                timeout:10000,
-                maximumAge:0
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================
-   MY LOADS
-========================================= */
-
-async function showMyLoads(){
-
-    closeMenu();
-
-    const container =
-        document.getElementById("loads");
-
-    container.innerHTML =
-        '<div class="loading">در حال دریافت بارهای شما...</div>';
-
-    if(!currentUser){
-
-        container.innerHTML =
-            '<div class="empty">ابتدا وارد شوید.</div>';
-
-        return;
-    }
-
-    const { data:driver } =
-        await supabaseClient
-        .from("drivers")
-        .select("id")
-        .eq("user_id",currentUser.id)
-        .maybeSingle();
-
-    if(!driver){
-
-        container.innerHTML =
-            '<div class="empty">اطلاعات راننده هنوز ثبت نشده است.</div>';
-
-        return;
-    }
-
-    const { data,error } =
-        await supabaseClient
-        .from("load_selections")
-        .select(`
-            *,
-            loads(*)
-        `)
-        .eq("driver_id",driver.id)
-        .order("selected_at",{ascending:false});
-
-    if(error){
-
-        console.error(error);
-
-        container.innerHTML =
-            '<div class="empty">خطا در دریافت بارهای شما</div>';
-
-        return;
-    }
-
-    if(!data || data.length===0){
-
-        container.innerHTML =
-            '<div class="empty">هنوز باری انتخاب نکرده‌اید.</div>';
-
-        return;
-    }
-
-    container.innerHTML = "";
-
-    data.forEach(item=>{
-
-        const load=item.loads;
-
-        if(!load) return;
-
-        const div =
-            document.createElement("div");
-
-        div.className="load";
-
-        div.innerHTML=`
-
-            <div class="load-top">
-
-                <span class="badge badge-free">
-                    انتخاب شده
-                </span>
-
-            </div>
-
-            <div class="route">
-                ${escapeHtml(load.origin || "-")}
-                ←
-                ${escapeHtml(load.destination || "-")}
-            </div>
-
-            <div class="details">
-
-                بار:
-                ${escapeHtml(load.cargo || "-")}
-
-                <br>
-
-                وزن:
-                ${load.weight || "-"} تن
-
-            </div>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* =========================================
-   ANNOUNCE LOAD
-========================================= */
-
-function showAnnounce(){
-
-    closeMenu();
-
-    const container =
-        document.getElementById("loads");
-
-    container.innerHTML = `
-
-        <div class="card">
-
-            <div class="section-title">
-                📢 اعلام بار جدید
-            </div>
-
-            <input
-                id="origin"
-                placeholder="مبدأ"
-            >
-
-            <input
-                id="destination"
-                placeholder="مقصد"
-            >
-
-            <input
-                id="cargo"
-                placeholder="نوع بار"
-            >
-
-            <input
-                id="weight"
-                type="number"
-                placeholder="وزن به تن"
-            >
-
-            <input
-                id="truckType"
-                placeholder="نوع کامیون"
-            >
-
-            <input
-                id="fare"
-                type="number"
-                placeholder="کرایه به تومان"
-            >
-
-            <select id="loadType">
-
-                <option value="turn">
-                    نوبتی
-                </option>
-
-                <option value="free">
-                    آزاد
-                </option>
-
-            </select>
-
-            <button
-                class="btn btn-primary"
-                style="width:100%"
-                onclick="createLoad()"
-            >
-                ثبت بار
-            </button>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
+/* ================================
    CREATE LOAD
-========================================= */
+================================ */
 
 async function createLoad(){
-
-    if(!currentUser){
-
-        alert("ابتدا وارد حساب شوید.");
-
-        return;
-    }
 
     const origin =
         document.getElementById("origin").value.trim();
@@ -1151,307 +1244,637 @@ async function createLoad(){
         document.getElementById("cargo").value.trim();
 
     const weight =
-        Number(document.getElementById("weight").value);
+        document.getElementById("weight").value.trim();
 
     const truckType =
         document.getElementById("truckType").value.trim();
 
     const fare =
-        Number(document.getElementById("fare").value);
+        document.getElementById("fare").value.trim();
 
     const loadType =
         document.getElementById("loadType").value;
 
 
-    if(!origin || !destination || !cargo){
-
-        alert("مبدأ، مقصد و نوع بار را وارد کنید.");
-
-        return;
-    }
-
-
-    const { data,error } =
-        await supabaseClient
-        .from("loads")
-        .insert({
-
-            created_by:currentUser.id,
-
-            origin:origin,
-
-            destination:destination,
-
-            cargo:cargo,
-
-            weight:weight || null,
-
-            truck_type:truckType || null,
-
-            fare:fare || null,
-
-            load_type:loadType,
-
-            status:"waiting",
-
-            max_distance_km:
-                loadType==="turn"
-                ? 200
-                : null
-
-        })
-        .select()
-        .single();
-
-
-    if(error){
-
-        console.error(error);
+    if(
+        !origin ||
+        !destination ||
+        !cargo
+    ){
 
         alert(
-            "ثبت بار انجام نشد:\n" +
-            error.message
+            "مبدأ، مقصد و نوع کالا را وارد کنید."
         );
 
         return;
     }
 
 
-    alert(
-        "بار با موفقیت در سرور ثبت شد."
-    );
+    try{
 
-    await showLoads();
-
-}
-
-
-/* =========================================
-   WALLET
-========================================= */
-
-function showWallet(){
-
-    closeMenu();
-
-    document.getElementById("loads").innerHTML = `
-
-        <div class="card">
-
-            <div class="section-title">
-                💰 کیف پول
-            </div>
-
-            <div style="text-align:center;padding:15px">
-
-                <div style="font-size:13px;color:#777">
-                    موجودی فعلی
-                </div>
-
-                <div
-                    id="walletBig"
-                    class="wallet-number"
-                    style="margin:10px"
-                >
-                    در حال دریافت...
-                </div>
-
-                <button
-                    class="btn btn-secondary"
-                    style="width:100%;margin-top:10px"
-                    onclick="testWalletCharge()"
-                >
-                    شارژ آزمایشی ۵۰٬۰۰۰ تومان
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-    loadWalletBig();
-
-}
+        const {
+            data:{user},
+            error:userError
+        } =
+            await supabaseClient.auth.getUser();
 
 
-async function loadWalletBig(){
+        if(userError)
+            throw userError;
 
-    const {data} =
-        await supabaseClient
-        .from("wallets")
-        .select("balance")
-        .eq("user_id",currentUser.id)
-        .maybeSingle();
 
-    const balance =
-        data?.balance || 0;
+        if(!user){
 
-    const el =
-        document.getElementById("walletBig");
+            alert("ابتدا وارد سامانه شوید.");
 
-    if(el){
+            return;
+        }
 
-        el.innerText =
-            Number(balance).toLocaleString("fa-IR")
-            + " تومان";
+
+        const {data,error} =
+            await supabaseClient
+                .from("loads")
+                .insert({
+
+                    created_by:user.id,
+
+                    origin:origin,
+
+                    destination:destination,
+
+                    cargo:cargo,
+
+                    weight:weight,
+
+                    truck_type:truckType,
+
+                    fare:fare
+                        ? Number(fare)
+                        : 0,
+
+                    load_type:loadType,
+
+                    status:
+                        loadType === "free"
+                            ? "free"
+                            : "turn",
+
+                    max_distance_km:
+                        loadType === "turn"
+                            ? 200
+                            : null
+
+                })
+                .select()
+                .single();
+
+
+        if(error)
+            throw error;
+
+
+        alert(
+            "بار با موفقیت ثبت شد."
+        );
+
+
+        document.getElementById("origin").value="";
+        document.getElementById("destination").value="";
+        document.getElementById("cargo").value="";
+        document.getElementById("weight").value="";
+        document.getElementById("truckType").value="";
+        document.getElementById("fare").value="";
+
+
+        showPage("loads");
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "خطا در ثبت بار:\n" +
+            error.message
+        );
 
     }
 
 }
 
 
-function testWalletCharge(){
+/* ================================
+   MY LOADS
+================================ */
+
+async function showMyLoads(){
+
+    const container =
+        document.getElementById("myLoadsList");
+
+
+    container.innerHTML =
+        '<div class="loading">در حال دریافت...</div>';
+
+
+    try{
+
+        const {
+            data:{user},
+            error:userError
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if(userError)
+            throw userError;
+
+
+        if(!user){
+
+            container.innerHTML =
+                "کاربر وارد نشده است.";
+
+            return;
+        }
+
+
+        const {
+            data:driver,
+            error:driverError
+        } =
+            await supabaseClient
+                .from("drivers")
+                .select("id")
+                .eq("user_id",user.id)
+                .maybeSingle();
+
+
+        if(driverError)
+            throw driverError;
+
+
+        if(!driver){
+
+            container.innerHTML =
+                `<div class="card">
+                    هنوز پروفایل راننده برای این حساب ساخته نشده است.
+                </div>`;
+
+            return;
+        }
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("load_selections")
+                .select(`
+                    *,
+                    loads(*)
+                `)
+                .eq("driver_id",driver.id)
+                .order(
+                    "created_at",
+                    {ascending:false}
+                );
+
+
+        if(error)
+            throw error;
+
+
+        if(!data || data.length===0){
+
+            container.innerHTML =
+                `<div class="card center">
+                    هنوز باری انتخاب نکرده‌اید.
+                </div>`;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.forEach(item => {
+
+            const load =
+                item.loads;
+
+
+            const div =
+                document.createElement("div");
+
+            div.className="load";
+
+
+            div.innerHTML=`
+
+                <div class="load-route">
+                    ${escapeHtml(load?.origin || "")}
+                    ←
+                    ${escapeHtml(load?.destination || "")}
+                </div>
+
+                <div class="load-info">
+
+                    📦 ${escapeHtml(load?.cargo || "-")}
+
+                    <br>
+
+                    ⚖ ${escapeHtml(load?.weight || "-")}
+
+                    <br>
+
+                    💰 ${formatMoney(load?.fare)}
+
+                    <br>
+
+                    وضعیت:
+                    ${escapeHtml(load?.status || "-")}
+
+                </div>
+
+            `;
+
+
+            container.appendChild(div);
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+        container.innerHTML =
+            `<div class="card">
+                خطا:
+                ${escapeHtml(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* ================================
+   PROFILE
+================================ */
+
+async function showProfile(){
+
+    const container =
+        document.getElementById("profileData");
+
+
+    try{
+
+        const {
+            data:{user},
+            error:userError
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if(userError)
+            throw userError;
+
+
+        const phone =
+            localStorage.getItem(
+                "salayan_phone"
+            ) || "-";
+
+
+        const {data,error} =
+            await supabaseClient
+                .from("profiles")
+                .select("*")
+                .eq("id",user.id)
+                .maybeSingle();
+
+
+        if(error)
+            throw error;
+
+
+        container.innerHTML = `
+
+            <p>
+                <b>شماره موبایل:</b>
+                ${escapeHtml(phone)}
+            </p>
+
+            <p>
+                <b>نام:</b>
+                ${escapeHtml(data?.full_name || "ثبت نشده")}
+            </p>
+
+            <p>
+                <b>نوع حساب:</b>
+                ${escapeHtml(data?.role || "کاربر")}
+            </p>
+
+            <hr>
+
+            <p class="small">
+                شناسه حساب:
+                ${escapeHtml(user.id)}
+            </p>
+
+        `;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        container.innerHTML =
+            "خطا در دریافت پروفایل.";
+
+    }
+
+}
+
+
+/* ================================
+   INQUIRIES
+================================ */
+
+function showInquiry(type){
+
+    const title =
+        document.getElementById("modalTitle");
+
+    const content =
+        document.getElementById("modalContent");
+
+
+    let data = {
+        title:"استعلام",
+        text:""
+    };
+
+
+    if(type==="technical"){
+
+        data.title =
+            "🔧 استعلام معاینه فنی کامیون";
+
+        data.text = `
+            <p>
+                وضعیت:
+                <b style="color:#16834b">
+                    آماده استعلام
+                </b>
+            </p>
+
+            <p class="small">
+                اتصال به سامانه رسمی معاینه فنی
+                هنوز در نسخه آزمایشی انجام نشده است.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="runMockInquiry('معاینه فنی')">
+                اجرای استعلام آزمایشی
+            </button>
+        `;
+
+    }
+
+
+    if(type==="health"){
+
+        data.title =
+            "🩺 استعلام کارت سلامت راننده";
+
+        data.text = `
+            <p>
+                وضعیت:
+                <b style="color:#16834b">
+                    آماده استعلام
+                </b>
+            </p>
+
+            <p class="small">
+                اتصال به سامانه رسمی کارت سلامت
+                در مرحله بعد اضافه خواهد شد.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="runMockInquiry('کارت سلامت')">
+                اجرای استعلام آزمایشی
+            </button>
+        `;
+
+    }
+
+
+    if(type==="insurance"){
+
+        data.title =
+            "🛡 استعلام بیمه بدنه کامیون";
+
+        data.text = `
+            <p>
+                وضعیت:
+                <b style="color:#d88900">
+                    نیازمند بررسی
+                </b>
+            </p>
+
+            <p class="small">
+                اطلاعات بیمه هنوز از شرکت بیمه
+                دریافت نمی‌شود.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="runMockInquiry('بیمه بدنه')">
+                اجرای استعلام آزمایشی
+            </button>
+        `;
+
+    }
+
+
+    if(type==="smartcard"){
+
+        data.title =
+            "🪪 استعلام کارت هوشمند راننده";
+
+        data.text = `
+            <p>
+                وضعیت:
+                <b style="color:#16834b">
+                    آماده استعلام
+                </b>
+            </p>
+
+            <p class="small">
+                اتصال رسمی به سامانه راهداری
+                نیازمند دسترسی/API مجاز است.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="runMockInquiry('کارت هوشمند')">
+                اجرای استعلام آزمایشی
+            </button>
+        `;
+
+    }
+
+
+    if(type==="road"){
+
+        data.title =
+            "🚛 استعلام راهداری";
+
+        data.text = `
+            <p>
+                وضعیت:
+                <b style="color:#16834b">
+                    آماده استعلام
+                </b>
+            </p>
+
+            <p class="small">
+                این بخش فعلاً به سامانه رسمی راهداری
+                متصل نیست.
+            </p>
+
+            <button class="btn secondary"
+                    onclick="runMockInquiry('راهداری')">
+                اجرای استعلام آزمایشی
+            </button>
+        `;
+
+    }
+
+
+    if(type==="all"){
+
+        data.title =
+            "📋 وضعیت همه استعلام‌ها";
+
+        data.text = `
+
+            <p>🔧 معاینه فنی: <b>آماده استعلام</b></p>
+
+            <p>🩺 کارت سلامت: <b>آماده استعلام</b></p>
+
+            <p>🛡 بیمه بدنه: <b style="color:#d88900">نیازمند بررسی</b></p>
+
+            <p>🪪 کارت هوشمند: <b>آماده استعلام</b></p>
+
+            <p>🚛 راهداری: <b>آماده استعلام</b></p>
+
+            <hr>
+
+            <p class="small">
+                اتصال رسمی هر مورد در مرحله اتصال
+                به API سامانه مربوطه انجام می‌شود.
+            </p>
+
+        `;
+
+    }
+
+
+    title.innerText =
+        data.title;
+
+    content.innerHTML =
+        data.text;
+
+
+    document
+        .getElementById("modal")
+        .classList.remove("hidden");
+
+}
+
+
+function runMockInquiry(name){
 
     alert(
-        "شارژ واقعی کیف پول را در مرحله بعد با درگاه پرداخت و تراکنش امن سروری فعال می‌کنیم."
+        "استعلام آزمایشی «" +
+        name +
+        "» اجرا شد.\n\n" +
+        "این نتیجه هنوز از سامانه رسمی دریافت نشده است."
     );
 
 }
 
 
-/* =========================================
-   PROFILE
-========================================= */
-
-async function showProfile(){
-
-    closeMenu();
-
-    const {data} =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id",currentUser.id)
-        .maybeSingle();
-
-    document.getElementById("loads").innerHTML = `
-
-        <div class="card">
-
-            <div class="section-title">
-                👤 پروفایل
-            </div>
-
-            <div class="details">
-
-                نام:
-                ${escapeHtml(data?.full_name || "ثبت نشده")}
-
-                <br>
-
-                شماره:
-                ${localStorage.getItem("salayan_phone") || "ثبت نشده"}
-
-                <br>
-
-                نقش:
-                ${escapeHtml(data?.role || "driver")}
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
-   MENU
-========================================= */
-
-function openMenu(){
+function closeModal(){
 
     document
-        .getElementById("menu")
-        .classList.remove("hidden");
-
-}
-
-function closeMenu(){
-
-    document
-        .getElementById("menu")
+        .getElementById("modal")
         .classList.add("hidden");
 
 }
 
 
-/* =========================================
+/* ================================
    LOGOUT
-========================================= */
+================================ */
 
 async function logout(){
 
-    await supabaseClient.auth.signOut();
+    try{
 
-    currentUser=null;
+        await supabaseClient.auth.signOut();
 
-    localStorage.removeItem("salayan_phone");
+    }catch(error){
+
+        console.error(error);
+
+    }
+
 
     document
-        .getElementById("app")
+        .getElementById("mainPage")
         .classList.add("hidden");
 
     document
         .getElementById("loginPage")
         .classList.remove("hidden");
 
-    closeMenu();
-
 }
 
 
-/* =========================================
-   LOGIN MESSAGE
-========================================= */
+/* ================================
+   HELPERS
+================================ */
 
-function showLoginMessage(text,type){
+function formatMoney(value){
 
-    const el =
-        document.getElementById("loginMessage");
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
 
-    el.innerText=text;
-
-    el.className=
-        "message "+type;
-
-}
-
-
-/* =========================================
-   DATE
-========================================= */
-
-function formatDate(date){
-
-    if(!date) return "";
-
-    try{
-
-        return new Date(date)
-            .toLocaleDateString("fa-IR");
-
-    }catch(e){
-
-        return "";
+        return "توافقی";
 
     }
 
+
+    return Number(value)
+        .toLocaleString("fa-IR")
+        + " تومان";
+
 }
 
 
-/* =========================================
-   SECURITY / HTML ESCAPE
-========================================= */
-
 function escapeHtml(value){
 
-    if(value===null || value===undefined)
-        return "";
-
-    return String(value)
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -1461,38 +1884,11 @@ function escapeHtml(value){
 }
 
 
-/* =========================================
-   CHECK EXISTING SESSION
-========================================= */
+/* ================================
+   INIT
+================================ */
 
-async function checkSession(){
-
-    const {data} =
-        await supabaseClient.auth.getSession();
-
-    if(data?.session){
-
-        currentUser =
-            data.session.user;
-
-        document
-            .getElementById("loginPage")
-            .classList.add("hidden");
-
-        document
-            .getElementById("app")
-            .classList.remove("hidden");
-
-        await initializeApp();
-
-    }
-
-}
-
-
-/* START */
-
-checkSession();
+init();
 
 </script>
 
