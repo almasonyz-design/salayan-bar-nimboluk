@@ -331,14 +331,60 @@ label{
         grid-template-columns:1fr 1fr;
     }
 }
+
+/* ===== Salayan Bar Driver UI v2 ===== */
+body{background:linear-gradient(180deg,#edf7f2 0%,#f7f9f8 42%,#f3f6f5 100%);padding-bottom:76px;}
+.header{background:linear-gradient(135deg,#046a4c,#0b916a);box-shadow:0 4px 18px rgba(5,83,61,.20);padding:11px 14px;}
+.header .brand-row{max-width:700px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.header .brand{display:flex;align-items:center;gap:10px;text-align:right;}
+.header .brand-logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-size:22px;}
+.header .brand h1{font-size:18px;margin:0;}
+.header .brand small{margin-top:2px;font-size:10px;opacity:.9;}
+.header-action{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:9px 10px;font-family:inherit;cursor:pointer;}
+.card{border:1px solid #dfebe6;box-shadow:0 4px 14px rgba(15,55,42,.055);}
+.status-grid{grid-template-columns:repeat(3,1fr);gap:9px;}
+.status-btn{min-height:108px;padding:10px;border-radius:14px;}
+.status-icon{font-size:21px;}
+.status-title{font-size:12px;line-height:1.55;}
+.status-state{font-size:11px;}
+.quick-grid,.menu-grid{gap:9px;}
+.quick-btn{background:#fff;border:1px solid #deebe6;box-shadow:0 2px 8px rgba(15,55,42,.04);}
+.menu-btn{border:1px solid #e0eae6;min-height:72px;color:#33453d;}
+.load-item{border:1px solid #dde9e4;border-radius:16px;box-shadow:0 3px 10px rgba(15,55,42,.05);}
+.page-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.page-toolbar h2{margin:0;font-size:19px;}
+.icon-home{width:40px;height:40px;border:1px solid #dce9e4;border-radius:12px;background:#fff;color:#087f5b;cursor:pointer;font-size:17px;}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid #dfe9e5;box-shadow:0 -4px 15px rgba(0,0,0,.06);}
+.bottom-nav-inner{max-width:700px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 8px;}
+.bottom-nav button{border:0;background:transparent;color:#75837d;font-family:inherit;font-size:10px;padding:5px 2px;cursor:pointer;}
+.bottom-nav button span{display:block;font-size:18px;line-height:1.15;margin-bottom:3px;}
+.bottom-nav button.active{color:#087f5b;font-weight:bold;}
+.driver-banner{background:linear-gradient(135deg,#fff 0%,#effaf5 100%);border:1px solid #dbece6;}
+.driver-banner-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.driver-banner-icon{width:48px;height:48px;border-radius:15px;background:#087f5b;color:#fff;display:grid;place-items:center;font-size:24px;flex:none;}
+.driver-banner strong{font-size:15px;}
+.driver-banner small{display:block;color:#74827c;margin-top:4px;line-height:1.7;}
+.section-line{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.section-line h2{margin:0;font-size:16px;}
+.section-line span{font-size:11px;color:#7c8984;}
+@media(max-width:560px){.status-grid{grid-template-columns:1fr 1fr;}}
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-    <h1>صلایان بار نیمبلوک</h1>
-    <small>اعلام بار هوشمند</small>
+    <div class="brand-row">
+        <div class="brand">
+            <div class="brand-logo">🚛</div>
+            <div>
+                <h1>صلایان بار نیمبلوک</h1>
+                <small>سامانه هوشمند بار و حمل‌ونقل</small>
+            </div>
+        </div>
+        <button class="header-action" type="button" onclick="showPage('walletPage');showWallet();">💰 کیف پول</button>
+    </div>
 </div>
 
 <div class="container">
@@ -378,8 +424,18 @@ label{
     <!-- HOME -->
     <div id="homePage">
 
+        <div class="card driver-banner">
+            <div class="driver-banner-row">
+                <div>
+                    <strong>داشبورد راننده</strong>
+                    <small>بارهای نزدیک، وضعیت مدارک و خدمات سامانه را از همین صفحه مدیریت کنید.</small>
+                </div>
+                <div class="driver-banner-icon">🚛</div>
+            </div>
+        </div>
+
         <div class="card">
-            <h2>وضعیت استعلام‌ها</h2>
+            <div class="section-line"><h2>وضعیت استعلام‌ها</h2><span>آخرین وضعیت</span></div>
 
             <p style="font-size:12px;color:#777">
                 برای مشاهده جزئیات، روی هر مورد کلیک کنید.
@@ -758,6 +814,16 @@ label{
 </div>
 
 
+<div class="bottom-nav" id="bottomNav">
+    <div class="bottom-nav-inner">
+        <button class="active" id="navHome" onclick="showPage('homePage')"><span>🏠</span>خانه</button>
+        <button id="navLoads" onclick="showPage('loadsPage');showLoads()"><span>🚛</span>تالار بار</button>
+        <button id="navMine" onclick="showPage('myLoadsPage');showMyLoads()"><span>📦</span>بارهای من</button>
+        <button id="navWallet" onclick="showPage('walletPage');showWallet()"><span>💰</span>کیف پول</button>
+        <button id="navMore" onclick="showPage('supportPage')"><span>☰</span>منو</button>
+    </div>
+</div>
+
 <!-- MODAL -->
 <div id="modal"
      class="modal-bg hidden">
@@ -830,37 +896,23 @@ let currentInquiryType = null;
 
 function showPage(pageId){
 
-    const pages = [
-        "homePage",
-        "loadsPage",
-        "myLoadsPage",
-        "createLoadPage",
-        "walletPage",
-        "profilePage",
-        "truckPage",
-        "notificationsPage",
-        "supportPage"
-    ];
+    const pages=["homePage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage"];
 
-    pages.forEach(id => {
-
-        const el = document.getElementById(id);
-
-        if(el){
-            el.classList.add("hidden");
-        }
-
+    pages.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.classList.add("hidden");
     });
 
-    const target =
-        document.getElementById(pageId);
+    const target=document.getElementById(pageId);
+    if(target) target.classList.remove("hidden");
 
-    if(target){
-        target.classList.remove("hidden");
-    }
+    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};
+    document.querySelectorAll(".bottom-nav button").forEach(btn=>btn.classList.remove("active"));
+    const nav=document.getElementById(navMap[pageId] || "navMore");
+    if(nav) nav.classList.add("active");
 
+    window.scrollTo({top:0,behavior:"smooth"});
 }
-
 
 /* =====================================================
    LOGIN
@@ -1291,7 +1343,7 @@ function renderLoad(load){
                     ${escapeHtml(String(load.weight || "-"))}
                     تن
                 </strong>
-            </div>
+            </div>
 
             ${
                 load.status !== "reserved"
