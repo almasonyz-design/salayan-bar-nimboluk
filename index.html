@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -1042,21 +1041,33 @@ document.getElementById("adminLoginBox").style.display=driver?"none":"block";
 document.getElementById("loginMessage").innerHTML="";
 }
 async function checkSession(){
+/*
+ * صفحه اصلی سامانه همیشه باید از صفحه ورود شروع شود.
+ * اگر نشست قبلی مدیر یا راننده در مرورگر باقی مانده باشد،
+ * آن نشست در این صفحه دوباره به پنل بازگردانده نمی‌شود.
+ * ورود مدیر فقط از طریق فرم ورود و ورود راننده فقط با OTP انجام می‌شود.
+ */
 try{
-const {data}=await supabaseClient.auth.getSession();
-if(!data||!data.session)return;
-currentUser=data.session.user;
-const {data:profile}=await supabaseClient.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();
-if(profile&&profile.role==="admin"){window.location.href="admin.html";return;}
-if(profile&&profile.role==="driver"){
-const phone=localStorage.getItem("salayan_phone")||"";
-document.getElementById("profilePhone").textContent=phone;
-document.getElementById("loginPage").classList.add("hidden");
-document.getElementById("appPage").classList.remove("hidden");
-showPage("homePage");await showWallet();return;
+    currentUser=null;
+
+    const {data}=await supabaseClient.auth.getSession();
+
+    if(data && data.session){
+        await supabaseClient.auth.signOut();
+    }
+
+    localStorage.removeItem("salayan_phone");
+
+    document.getElementById("appPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
+    selectRole("driver");
+
+}catch(error){
+    console.error(error);
+    currentUser=null;
+    document.getElementById("appPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
 }
-await supabaseClient.auth.signOut();
-}catch(error){console.error(error);}
 }
 
 async function logout(){
