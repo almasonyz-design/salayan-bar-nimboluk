@@ -2469,7 +2469,6 @@ async function saveLoad(){
 
 
   const payload = {
-
     origin,
     destination,
     cargo,
@@ -2477,21 +2476,14 @@ async function saveLoad(){
       weight === ""
         ? null
         : Number(weight),
-
     status
-
   };
 
-
+  // deadline only sent when the user actually entered it.
+  // This avoids sending NULL to an optional column unnecessarily.
   if(deadline){
-
     payload.deadline =
       new Date(deadline).toISOString();
-
-  }else{
-
-    payload.deadline = null;
-
   }
 
 
@@ -2518,7 +2510,7 @@ async function saveLoad(){
 
   if(result.error){
 
-    console.error(result.error);
+    console.error("LOAD SAVE ERROR:", result.error);
 
     showToast(
       "خطا در ذخیره بار: " +
