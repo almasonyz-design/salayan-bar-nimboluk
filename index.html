@@ -867,86 +867,56 @@ function showPage(pageId){
 ===================================================== */
 
 async function login(){
-
-    const phone =
-        document.getElementById("phone").value.trim();
-
-    const message =
-        document.getElementById("loginMessage");
-
-    if(!phone){
-
-        message.innerHTML =
-            `<div class="error">شماره موبایل را وارد کنید.</div>`;
-
+    const phone = document.getElementById("phone").value.trim();
+    const message = document.getElementById("loginMessage");
+    if(!/^09\\d{9}$/.test(phone)){
+        message.innerHTML = `<div class="error">شماره موبایل ۱۱ رقمی معتبر وارد کنید.</div>`;
         return;
     }
-
-    message.innerHTML =
-        `<div class="notice">در حال ورود...</div>`;
-
+    message.innerHTML = `<div class="notice">در حال ارسال کد ورود...</div>`;
     try{
-
-        let { data: sessionData } =
-            await supabaseClient.auth.getSession();
-
-        if(sessionData && sessionData.session){
-
-            currentUser =
-                sessionData.session.user;
-
-        }else{
-
-            const result =
-                await supabaseClient.auth.signInAnonymously();
-
-            if(result.error){
-                throw result.error;
-            }
-
-            currentUser =
-                result.data.user;
-
-        }
-
-        localStorage.setItem(
-            "salayan_phone",
-            phone
-        );
-
-        document.getElementById(
-            "profilePhone"
-        ).textContent = phone;
-
-        document.getElementById(
-            "loginPage"
-        ).classList.add("hidden");
-
-        document.getElementById(
-            "appPage"
-        ).classList.remove("hidden");
-
-        showPage("homePage");
-
-        await showWallet();
-
+        const { error } = await supabaseClient.auth.signInWithOtp({
+            phone: "+98" + phone.slice(1),
+            options: { channel: "sms" }
+        });
+        if(error) throw error;
+        document.getElementById("otpCode").style.display = "block";
+        document.getElementById("verifyOtpBtn").style.display = "block";
+        document.getElementById("loginBtn").style.display = "none";
+        message.innerHTML = `<div class="success">کد ورود پیامک شد.</div>`;
     }catch(error){
-
         console.error(error);
-
-        message.innerHTML =
-            `<div class="error">
-                خطا در ورود: ${escapeHtml(error.message)}
-            </div>`;
-
+        message.innerHTML = `<div class="error">خطا در ارسال کد: ${escapeHtml(error.message)}</div>`;
     }
-
 }
 
-
-/* =====================================================
-   AUTO LOGIN
-===================================================== */
+async function verifyOtp(){
+    const phone = document.getElementById("phone").value.trim();
+    const token = document.getElementById("otpCode").value.trim();
+    const message = document.getElementById("loginMessage");
+    if(!token){
+        message.innerHTML = `<div class="error">کد ورود را وارد کنید.</div>`;
+        return;
+    }
+    try{
+        const { data, error } = await supabaseClient.auth.verifyOtp({
+            phone: "+98" + phone.slice(1),
+            token,
+            type: "sms"
+        });
+        if(error) throw error;
+        currentUser = data.user;
+        localStorage.setItem("salayan_phone", phone);
+        document.getElementById("profilePhone").textContent = phone;
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("appPage").classList.remove("hidden");
+        showPage("homePage");
+        await showWallet();
+    }catch(error){
+        console.error(error);
+        message.innerHTML = `<div class="error">کد ورود نامعتبر است: ${escapeHtml(error.message)}</div>`;
+    }
+}
 
 async function checkSession(){
 
@@ -1278,14 +1248,14 @@ function renderLoad(load){
     let badgeText =
         "در انتظار";
 
-    if(load.load_type === "turn"){
+    if(load.status === "turn"){
 
         badgeClass = "turn";
         badgeText = "نوبتی";
 
     }
 
-    if(load.load_type === "free"){
+    if(load.status === "free"){
 
         badgeClass = "free";
         badgeText = "آزاد";
