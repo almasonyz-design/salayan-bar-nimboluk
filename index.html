@@ -2101,6 +2101,19 @@ supabaseClient
 
 </script>
 
+<style id="peyvand-route-style">
+#peyvand-route{display:none;position:fixed;inset:0;z-index:99999;background:#eef7f3}
+#peyvand-route iframe{width:100%;height:100%;border:0}
+</style>
+<div id="peyvand-route"><iframe src="chat.html" title="پیوند"></iframe></div>
+<script>
+if(location.search.includes("chat=1")){
+ document.addEventListener("DOMContentLoaded",function(){
+   document.querySelectorAll("body>*:not(#peyvand-route):not(#peyvand-route-style):not(script)").forEach(function(x){x.style.display="none"});
+   document.getElementById("peyvand-route").style.display="block";
+ });
+}
+</script>
 </body>
 </html>
 ```
