@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پیوند | چت همکاران</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#eef7f3;color:#24332d}
+.app{max-width:760px;margin:auto;height:100vh;display:flex;flex-direction:column;background:#fff}
+header{background:linear-gradient(135deg,#087f5b,#0b9b70);color:#fff;padding:14px 16px;box-shadow:0 3px 12px #0002}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:44px;height:44px;border-radius:14px;background:#ffffff22;display:grid;place-items:center;font-size:24px}
+h1{font-size:18px;margin:0}small{opacity:.85}
+#login{padding:18px;background:#f8fbfa;margin:16px;border:1px solid #dceae4;border-radius:16px}
+input{width:100%;padding:12px;border:1px solid #d7e4df;border-radius:11px;margin:7px 0;font:inherit}
+button{border:0;border-radius:11px;padding:11px 15px;font:inherit;cursor:pointer}
+.primary{background:#087f5b;color:white}.secondary{background:#e9f3ef;color:#087f5b}
+#chat{display:none;flex:1;min-height:0;flex-direction:column}
+.info{padding:9px 12px;background:#f3faf7;border-bottom:1px solid #e1ece8;font-size:12px;display:flex;justify-content:space-between}
+#messages{flex:1;overflow:auto;padding:14px;background:#f5f8f7}
+.msg{max-width:82%;background:#fff;border:1px solid #e1ebe7;border-radius:14px;padding:9px 11px;margin:7px 0;box-shadow:0 2px 5px #00000009}
+.msg.mine{margin-right:auto;background:#e8f7f0;border-color:#c9e9dc}.name{font-size:11px;color:#087f5b;font-weight:bold;margin-bottom:4px}.time{font-size:9px;color:#87938e;margin-top:5px}
+.composer{display:flex;gap:7px;padding:10px;border-top:1px solid #dfe9e5;background:#fff}.composer input{margin:0;flex:1}.composer button{white-space:nowrap}
+#error{color:#c92a2a;font-size:12px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">🤝</div><div><h1>پیوند — چت همکاران</h1><small>اتاق گفت‌وگوی همکاران نیمبلوک</small></div></div></header>
+<section id="login">
+<h3 style="margin-top:0">ورود به اتاق</h3>
+<p style="font-size:12px;color:#697770;line-height:1.8">نام و شماره پرسنلی خود را وارد کنید. این نسخه برای شروع سریع است.</p>
+<input id="name" placeholder="نام و نام خانوادگی">
+<input id="employee" placeholder="شماره پرسنلی" inputmode="numeric">
+<button class="primary" onclick="enterChat()">ورود به چت</button><div id="error"></div>
+</section>
+<section id="chat">
+<div class="info"><span id="who"></span><button class="secondary" onclick="leave()">خروج</button></div>
+<div id="messages"></div>
+<div class="composer"><input id="text" placeholder="پیام خود را بنویسید..." maxlength="1000" onkeydown="if(event.key==='Enter')send()"><button class="primary" onclick="send()">ارسال</button></div>
+</section>
+</div>
+<script>
+const URL="https://ntirixjflgqihobpnmya.supabase.co";
+const KEY="sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
+const db=supabase.createClient(URL,KEY);
+let me=null,channel=null;
+function enterChat(){
+ const name=document.getElementById("name").value.trim(), employee=document.getElementById("employee").value.trim();
+ if(!name||!employee){document.getElementById("error").textContent="نام و شماره پرسنلی را کامل کنید.";return}
+ me={name,employee};localStorage.setItem("peyvand_user",JSON.stringify(me));
+ document.getElementById("login").style.display="none";document.getElementById("chat").style.display="flex";
+ document.getElementById("who").textContent="👤 "+name+" | "+employee;
+ load(); subscribe();
+}
+function leave(){localStorage.removeItem("peyvand_user");location.reload()}
+async function load(){
+ const {data,error}=await db.from("chat_messages").select("*").eq("room","nimboluk").order("created_at",{ascending:true}).limit(300);
+ if(error){document.getElementById("messages").innerHTML='<div style="padding:15px;color:#c92a2a">اتصال چت هنوز راه‌اندازی نشده است. فایل chat-setup.sql را در Supabase اجرا کنید.</div>';return}
+ render(data||[]);
+}
+function subscribe(){
+ channel=db.channel("peyvand-chat").on("postgres_changes",{event:"INSERT",schema:"public",table:"chat_messages",filter:"room=eq.nimboluk"},p=>{add(p.new)}).subscribe();
+}
+function render(rows){const box=document.getElementById("messages");box.innerHTML="";rows.forEach(add);box.scrollTop=box.scrollHeight}
+function add(m){const box=document.getElementById("messages");const d=document.createElement("div");d.className="msg "+(me&&m.employee===me.employee?"mine":"");d.innerHTML='<div class="name">'+esc(m.name)+' · '+esc(m.employee)+'</div><div>'+esc(m.message)+'</div><div class="time">'+new Date(m.created_at).toLocaleString("fa-IR")+'</div>';box.appendChild(d);box.scrollTop=box.scrollHeight}
+async function send(){const input=document.getElementById("text"),message=input.value.trim();if(!message||!me)return;input.value="";const {error}=await db.from("chat_messages").insert({room:"nimboluk",name:me.name,employee:me.employee,message});if(error){alert("ارسال نشد: "+error.message)}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+const saved=localStorage.getItem("peyvand_user");if(saved){try{me=JSON.parse(saved);document.getElementById("name").value=me.name;document.getElementById("employee").value=me.employee;enterChat()}catch(e){}}
+</script>
+</body></html>
