@@ -1174,6 +1174,42 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
 
 
 
+<style id="salayan-services-polish-v2">
+#supportPage{padding:0 0 28px!important;direction:rtl}
+#supportPage .sb-menu-heading{border-radius:0 0 26px 26px!important;padding:22px 17px 17px!important;margin:0 0 14px!important}
+#supportPage .sb-menu-search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #dcebe2;border-radius:15px;padding:4px 8px;margin-top:14px;box-shadow:0 5px 16px #032c1c18}
+#supportPage .sb-menu-search input{border:0!important;outline:none!important;box-shadow:none!important;background:transparent!important;min-width:0;flex:1;padding:10px 4px!important;margin:0!important;color:#173e2d}
+#supportPage .sb-menu-search button{border:0;border-radius:9px;width:31px;height:31px;background:#edf7f1;color:#4c7561;font-size:19px}
+#supportPage .sb-menu-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+#supportPage .sb-menu-pills span{padding:6px 9px;border-radius:999px;background:#ffffff17;border:1px solid #ffffff25;color:#e2f5e9;font-size:9px}
+#supportPage .sb-menu-section{margin:0 12px 11px;background:#fff;border:1px solid #e0ebe4;border-radius:18px;overflow:hidden;box-shadow:0 5px 18px #164b3208}
+#supportPage .sb-menu-section-head{width:100%;display:flex;align-items:center;gap:10px;padding:13px 12px;background:#fff;border:0;text-align:right;font-family:inherit;cursor:pointer}
+#supportPage .sb-menu-section-head:active{background:#f5faf7}
+#supportPage .sb-section-icon{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;font-size:11px;font-weight:900;flex:none}
+#supportPage .sb-section-title{flex:1;min-width:0}
+#supportPage .sb-section-title b{font-size:12px;color:#173f2d}
+#supportPage .sb-section-title small{display:block;font-size:10px;line-height:1.6;color:#7b8d83;margin-top:3px}
+#supportPage .sb-section-count{font-size:9px;color:#7b8d83;background:#f2f7f4;border-radius:999px;padding:5px 7px;white-space:nowrap}
+#supportPage .sb-section-chevron{font-size:18px;color:#0b8a60;transition:transform .2s}
+#supportPage .sb-menu-section.collapsed .sb-section-chevron{transform:rotate(180deg)}
+#supportPage .sb-menu-section.collapsed .sb-menu-grid{display:none}
+#supportPage .sb-menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 10px 10px}
+#supportPage .sb-menu-tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;min-height:125px;padding:12px;border:1px solid #e5eee8;border-radius:15px;background:linear-gradient(150deg,#fff,#f8fcf9);text-align:right;cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s;font-family:inherit}
+#supportPage .sb-menu-tile:active{transform:scale(.985)}
+#supportPage .sb-menu-tile:hover{border-color:#b9dcc8;box-shadow:0 7px 18px #0b694414}
+#supportPage .sb-menu-tile b{font-size:11px;color:#174a35;line-height:1.7}
+#supportPage .sb-menu-tile small{font-size:10px;color:#7a8d82;line-height:1.7}
+#supportPage .sb-tile-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-size:18px}
+#supportPage .sb-tile-arrow{margin-top:auto;color:#07855e;font-size:10px;font-weight:900}
+#supportPage .sb-menu-footer{margin:15px 12px 0;border-radius:16px;background:#f0f7f3;padding:12px}
+#supportPage .sb-pro-tools{margin:12px!important;border-radius:20px!important;box-shadow:0 7px 22px #123c2a0b!important}
+#supportPage .sb-pro-head{padding:17px!important}
+#supportPage .sb-pro-content{padding:12px!important}
+#supportPage .sb-pro-tile{display:flex;flex-direction:column;gap:8px}
+#supportPage .sb-pro-btn{cursor:pointer;min-height:39px}
+#supportPage .sb-top-dropdown-item{min-height:57px}
+@media(max-width:390px){#supportPage .sb-menu-section{margin-left:8px;margin-right:8px}#supportPage .sb-menu-grid{gap:6px;padding:0 7px 7px}#supportPage .sb-menu-tile{min-height:120px;padding:10px}#supportPage .sb-section-count{font-size:8px;padding:4px 6px}}
+</style>
 </head>
 
 <body>
@@ -1498,66 +1534,61 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
         <div class="sb-menu-search"><span>⌕</span><input id="sbMenuSearch" type="search" placeholder="جستجوی خدمات؛ مثلاً کیف پول، مدارک..." oninput="sbFilterMenu(this.value)"><button onclick="document.getElementById('sbMenuSearch').value='';sbFilterMenu('')" aria-label="پاک کردن">×</button></div>
         <div class="sb-menu-pills"><span>● طراحی ساده</span><span>۸ گروه خدمات</span><span>دسترسی سریع</span></div>
       </div>
-
-      <button class="sb-menu-featured" onclick="showPage('loadsPage');showLoads()">
-        <span class="sb-feature-icon">🚛</span><span class="sb-feature-copy"><b>تالار هوشمند بار</b><small>جستجو، فیلتر و بررسی بارهای موجود</small></span><span class="sb-feature-go">ورود <b>←</b></span>
-      </button>
-
-      <div class="sb-menu-section" data-menu-section>
-        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon green">01</span><span class="sb-section-title"><b>بار و حمل‌ونقل</b><small>انتخاب بار و مدیریت مسیرها</small></span><span class="sb-section-count">۵ خدمت</span><span class="sb-section-chevron">⌄</span></button>
+<div class="sb-menu-section" data-menu-section>
+        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon green">01</span><span class="sb-section-title"><b>بار و حمل‌ونقل</b><small>انتخاب بار و مدیریت مسیرها</small></span><span class="sb-section-count">۳ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="تالار هوشمند بار جستجو فیلتر بار" onclick="showPage('loadsPage');showLoads()"><span class="sb-tile-icon green">🧭</span><b>تالار هوشمند بار</b><small>جستجو و فیلتر بارها</small><span class="sb-tile-arrow">ورود ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="بارهای نوبتی نوبت" onclick="salayanHomeFilter('turn')"><span class="sb-tile-icon amber">🔄</span><b>بارهای نوبتی</b><small>بارهای دارای نوبت</small><span class="sb-tile-arrow">مشاهده ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="بارهای آزاد" onclick="salayanHomeFilter('free')"><span class="sb-tile-icon mint">🟢</span><b>بارهای آزاد</b><small>بارهای قابل انتخاب</small><span class="sb-tile-arrow">مشاهده ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="بارهای من بار انتخاب شده سوابق" onclick="showPage('myLoadsPage');showMyLoads()"><span class="sb-tile-icon blue">📦</span><b>بارهای من</b><small>پیگیری بارهای انتخاب‌شده</small><span class="sb-tile-arrow">پیگیری ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="اعلام بار ثبت بار جدید" onclick="showPage('createLoadPage')"><span class="sb-tile-icon violet">＋</span><b>اعلام بار جدید</b><small>ثبت مشخصات بار</small><span class="sb-tile-arrow">ثبت ←</span></button>
+          
+<button class="sb-menu-tile" data-menu-text="بارهای نوبتی نوبت" onclick="sbNavigateTo('loadsPage',true);setTimeout(()=>salayanHomeFilter('turn'),100)"><span class="sb-tile-icon amber">🔄</span><b>بارهای نوبتی</b><small>بارهای دارای نوبت</small><span class="sb-tile-arrow">مشاهده ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="بارهای آزاد" onclick="sbNavigateTo('loadsPage',true);setTimeout(()=>salayanHomeFilter('free'),100)"><span class="sb-tile-icon mint">🟢</span><b>بارهای آزاد</b><small>بارهای قابل انتخاب</small><span class="sb-tile-arrow">مشاهده ←</span></button>
+          
+<button class="sb-menu-tile" data-menu-text="اعلام بار ثبت بار جدید" onclick="sbNavigateTo('createLoadPage')"><span class="sb-tile-icon violet">＋</span><b>اعلام بار جدید</b><small>ثبت مشخصات بار</small><span class="sb-tile-arrow">ثبت ←</span></button>
         </div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
         <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon blue">02</span><span class="sb-section-title"><b>راننده و ناوگان</b><small>مدیریت حساب و مشخصات کامیون</small></span><span class="sb-section-count">۳ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="پروفایل راننده اطلاعات حساب" onclick="showPage('profilePage')"><span class="sb-tile-icon blue">👤</span><b>پروفایل راننده</b><small>اطلاعات حساب کاربری</small><span class="sb-tile-arrow">ورود ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="اطلاعات کامیون ناوگان خودرو" onclick="showPage('truckPage')"><span class="sb-tile-icon green">🚚</span><b>اطلاعات کامیون</b><small>مشخصات ناوگان</small><span class="sb-tile-arrow">ورود ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="مدارک راننده کارت هوشمند بیمه معاینه سلامت" onclick="showPage('homePage');setTimeout(()=>document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'}),120)"><span class="sb-tile-icon amber">🪪</span><b>مدارک و کارت هوشمند</b><small>مشاهده بخش مدارک</small><span class="sb-tile-arrow">مشاهده ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="پروفایل راننده اطلاعات حساب" onclick="sbNavigateTo('profilePage')"><span class="sb-tile-icon blue">👤</span><b>پروفایل راننده</b><small>اطلاعات حساب کاربری</small><span class="sb-tile-arrow">ورود ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="اطلاعات کامیون ناوگان خودرو" onclick="sbNavigateTo('truckPage')"><span class="sb-tile-icon green">🚚</span><b>اطلاعات کامیون</b><small>مشخصات ناوگان</small><span class="sb-tile-arrow">ورود ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="مدارک راننده کارت هوشمند بیمه معاینه سلامت" onclick="sbNavigateTo('homePage');setTimeout(()=>document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'}),180)"><span class="sb-tile-icon amber">🪪</span><b>مدارک و کارت هوشمند</b><small>مشاهده بخش مدارک</small><span class="sb-tile-arrow">مشاهده ←</span></button>
         </div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
-        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon amber">03</span><span class="sb-section-title"><b>کیف پول و امور مالی</b><small>اعتبار و تراکنش‌های حساب</small></span><span class="sb-section-count">۲ خدمت</span><span class="sb-section-chevron">⌄</span></button>
+        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon amber">03</span><span class="sb-section-title"><b>کیف پول و امور مالی</b><small>اعتبار و تراکنش‌های حساب</small></span><span class="sb-section-count">۱ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="کیف پول موجودی شارژ اعتبار" onclick="showPage('walletPage');showWallet()"><span class="sb-tile-icon green">💰</span><b>کیف پول</b><small>مشاهده موجودی و اعتبار</small><span class="sb-tile-arrow">ورود ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="هزینه انتخاب بار پرداخت" onclick="showPage('walletPage');showWallet()"><span class="sb-tile-icon amber">🧾</span><b>هزینه خدمات</b><small>اطلاع از هزینه انتخاب بار</small><span class="sb-tile-arrow">مشاهده ←</span></button>
+          
+<button class="sb-menu-tile" data-menu-text="هزینه انتخاب بار پرداخت" onclick="sbNavigateTo('walletPage')"><span class="sb-tile-icon amber">🧾</span><b>هزینه خدمات</b><small>اطلاع از هزینه انتخاب بار</small><span class="sb-tile-arrow">مشاهده ←</span></button>
         </div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
-        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon violet">04</span><span class="sb-section-title"><b>خدمات جاده و مدارک رسمی</b><small>دسترسی به خدمات و استعلام‌ها</small></span><span class="sb-section-count">۲ خدمت</span><span class="sb-section-chevron">⌄</span></button>
+        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon violet">04</span><span class="sb-section-title"><b>خدمات جاده و مدارک رسمی</b><small>دسترسی به خدمات و استعلام‌ها</small></span><span class="sb-section-count">۱ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
           <button class="sb-menu-tile" data-menu-text="راه من خدمات راهداری بارنامه صورت وضعیت" onclick="salayanOpenRahMan()"><span class="sb-tile-icon blue">🛣️</span><b>خدمات راه من</b><small>دسترسی به خدمات راه من</small><span class="sb-tile-arrow">ورود ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="استعلام مدارک وضعیت کارت هوشمند" onclick="showPage('homePage');setTimeout(()=>document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'}),120)"><span class="sb-tile-icon violet">✓</span><b>وضعیت مدارک</b><small>مشاهده بخش مدارک راننده</small><span class="sb-tile-arrow">بررسی ←</span></button>
-        </div>
+          
+</div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
-        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon mint">05</span><span class="sb-section-title"><b>موقعیت و ابزارهای مسیر</b><small>موقعیت مکانی و پیدا کردن بار</small></span><span class="sb-section-count">۲ خدمت</span><span class="sb-section-chevron">⌄</span></button>
+        <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon mint">05</span><span class="sb-section-title"><b>موقعیت و ابزارهای مسیر</b><small>موقعیت مکانی و پیدا کردن بار</small></span><span class="sb-section-count">۱ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="GPS موقعیت مکانی نقشه" onclick="showPage('homePage');setTimeout(()=>document.getElementById('sbcGpsButton')?.scrollIntoView({behavior:'smooth',block:'center'}),100)"><span class="sb-tile-icon green">⌖</span><b>موقعیت‌یاب GPS</b><small>فعال‌سازی موقعیت راننده</small><span class="sb-tile-arrow">فعال‌سازی ←</span></button>
-          <button class="sb-menu-tile" data-menu-text="پیدا کردن بار نزدیک من مسیر" onclick="showPage('loadsPage');showLoads()"><span class="sb-tile-icon blue">📍</span><b>بارهای نزدیک من</b><small>جستجوی بار در تالار</small><span class="sb-tile-arrow">جستجو ←</span></button>
-        </div>
+          <button class="sb-menu-tile" data-menu-text="GPS موقعیت مکانی نقشه" onclick="sbNavigateTo('gpsPage')"><span class="sb-tile-icon green">⌖</span><b>موقعیت‌یاب GPS</b><small>فعال‌سازی موقعیت راننده</small><span class="sb-tile-arrow">فعال‌سازی ←</span></button>
+          
+</div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
         <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon amber">06</span><span class="sb-section-title"><b>اعلان‌ها و ارتباطات</b><small>اطلاعیه‌ها و پیگیری درخواست‌ها</small></span><span class="sb-section-count">۱ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="اعلان ها اطلاعیه پیام" onclick="showPage('notificationsPage')"><span class="sb-tile-icon amber">🔔</span><b>اعلان‌ها و اطلاعیه‌ها</b><small>مشاهده پیام‌های سامانه</small><span class="sb-tile-arrow">مشاهده ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="اعلان ها اطلاعیه پیام" onclick="sbNavigateTo('notificationsPage')"><span class="sb-tile-icon amber">🔔</span><b>اعلان‌ها و اطلاعیه‌ها</b><small>مشاهده پیام‌های سامانه</small><span class="sb-tile-arrow">مشاهده ←</span></button>
         </div>
       </div>
 
       <div class="sb-menu-section" data-menu-section>
         <button class="sb-menu-section-head" onclick="sbToggleMenuGroup(this)"><span class="sb-section-icon blue">07</span><span class="sb-section-title"><b>راهنما و پشتیبانی</b><small>راهنمای استفاده از سامانه</small></span><span class="sb-section-count">۱ خدمت</span><span class="sb-section-chevron">⌄</span></button>
         <div class="sb-menu-grid">
-          <button class="sb-menu-tile" data-menu-text="راهنما پشتیبانی مشکل تماس" onclick="showPage('supportHelpPage')"><span class="sb-tile-icon blue">✦</span><b>راهنما و پشتیبانی</b><small>راهنمایی و پیگیری مشکل</small><span class="sb-tile-arrow">ورود ←</span></button>
+          <button class="sb-menu-tile" data-menu-text="راهنما پشتیبانی مشکل تماس" onclick="sbNavigateTo('supportHelpPage')"><span class="sb-tile-icon blue">✦</span><b>راهنما و پشتیبانی</b><small>راهنمایی و پیگیری مشکل</small><span class="sb-tile-arrow">ورود ←</span></button>
         </div>
       </div>
 
@@ -1659,25 +1690,19 @@ let currentInquiryType = null;
 ===================================================== */
 
 function showPage(pageId){
-
     const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
-
-    pages.forEach(id=>{
-        const el=document.getElementById(id);
-        if(el) el.classList.add("hidden");
-    });
-
     const target=document.getElementById(pageId);
-    if(target) target.classList.remove("hidden");
-
-    const navMap={homePage:"navHome",gpsPage:"navMore",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
+    if(!target){console.warn("Salayan Bar: page not found",pageId);return false;}
+    pages.forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add("hidden");});
+    target.classList.remove("hidden");
+    target.style.removeProperty("display");
+    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",gpsPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
     document.querySelectorAll(".bottom-nav button").forEach(btn=>btn.classList.remove("active"));
-    const nav=document.getElementById(navMap[pageId] || "navMore");
-    if(nav) nav.classList.add("active");
-
+    const nav=document.getElementById(navMap[pageId]||"navMore");if(nav)nav.classList.add("active");
+    if(typeof sbCloseTopMenu==="function")sbCloseTopMenu();
     window.scrollTo({top:0,behavior:"smooth"});
-    if(typeof sbCloseTopMenu==="function") sbCloseTopMenu();
-    if(pageId==="gpsPage" && typeof window.salayanRefreshMap==="function") setTimeout(()=>window.salayanRefreshMap(),250);
+    if(pageId==="gpsPage"&&typeof window.salayanRefreshMap==="function")setTimeout(()=>window.salayanRefreshMap(),280);
+    return true;
 }
 
 /* =====================================================
@@ -3431,7 +3456,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  const save=d=>{try{localStorage.setItem(K,JSON.stringify(d))}catch(e){}};
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  let tab='overview';
- function card(){const home=$('homePage');if(!home||$('sbProTools'))return;const e=document.createElement('section');e.id='sbProTools';e.className='sb-pro-tools';e.innerHTML='<div class="sb-pro-head"><h2>🚛 مرکز عملیات راننده صلایان</h2><p>مسیرهای دلخواه، مدارک، سوابق سفر، یادآورها و خدمات راننده در یک جا</p></div><div class="sb-pro-tabs" id="sbProTabs"><button class="sb-pro-tab active" data-pro-tab="overview">نمای کلی</button><button class="sb-pro-tab" data-pro-tab="routes">مسیرهای من</button><button class="sb-pro-tab" data-pro-tab="docs">مدارک و انقضا</button><button class="sb-pro-tab" data-pro-tab="trips">سوابق سفر</button><button class="sb-pro-tab" data-pro-tab="alerts">یادآورها</button><button class="sb-pro-tab" data-pro-tab="support">پشتیبانی</button></div><div class="sb-pro-content" id="sbProContent"></div>';const gps=$('sbGpsCard');if(gps)gps.insertAdjacentElement('afterend',e);else home.appendChild(e);e.addEventListener('click',ev=>{const b=ev.target.closest('[data-pro-tab]');if(b){tab=b.dataset.proTab;render();}const act=ev.target.closest('[data-pro-action]');if(act)action(act.dataset.proAction,act.dataset.id||'');});render();}
+ function card(){const home=$('supportPage');if(!home||$('sbProTools'))return;const e=document.createElement('section');e.id='sbProTools';e.className='sb-pro-tools';e.innerHTML='<div class="sb-pro-head"><h2>🚛 مرکز عملیات راننده صلایان</h2><p>مسیرهای دلخواه، مدارک، سوابق سفر، یادآورها و خدمات راننده در یک جا</p></div><div class="sb-pro-tabs" id="sbProTabs"><button class="sb-pro-tab active" data-pro-tab="overview">نمای کلی</button><button class="sb-pro-tab" data-pro-tab="routes">مسیرهای من</button><button class="sb-pro-tab" data-pro-tab="docs">مدارک و انقضا</button><button class="sb-pro-tab" data-pro-tab="trips">سوابق سفر</button><button class="sb-pro-tab" data-pro-tab="alerts">یادآورها</button><button class="sb-pro-tab" data-pro-tab="support">پشتیبانی</button></div><div class="sb-pro-content" id="sbProContent"></div>';const footer=home.querySelector('.sb-menu-footer');if(footer)footer.insertAdjacentElement('beforebegin',e);else home.appendChild(e);e.addEventListener('click',ev=>{const b=ev.target.closest('[data-pro-tab]');if(b){tab=b.dataset.proTab;render();}const act=ev.target.closest('[data-pro-action]');if(act)action(act.dataset.proAction,act.dataset.id||'');});render();}
  function render(){const c=$('sbProContent');if(!c)return;document.querySelectorAll('[data-pro-tab]').forEach(b=>b.classList.toggle('active',b.dataset.proTab===tab));const d=base();if(tab==='overview'){c.innerHTML='<div class="sb-pro-grid"><div class="sb-pro-tile"><b>🧭 مسیرهای ذخیره‌شده</b><small>مسیرهای پرتکرارت را نگه دار و سریع جست‌وجو کن.</small><button class="sb-pro-btn" data-pro-action="goto-routes">مدیریت مسیرها</button></div><div class="sb-pro-tile"><b>📄 مدارک راننده و کامیون</b><small>تاریخ انقضا را ثبت کن تا نزدیک سررسید یادت بماند.</small><button class="sb-pro-btn" data-pro-action="goto-docs">ثبت مدارک</button></div><div class="sb-pro-tile"><b>🧾 دفتر سفر و هزینه</b><small>سفرهای انجام‌شده و کرایه دریافتی را ثبت کن.</small><button class="sb-pro-btn" data-pro-action="goto-trips">ثبت سفر</button></div><div class="sb-pro-tile"><b>🔔 یادآورهای شخصی</b><small>یادآور بارگیری، تعمیرات و سررسیدها.</small><button class="sb-pro-btn" data-pro-action="goto-alerts">یادآورها</button></div></div><div class="sb-pro-note" style="margin-top:12px">این ابزارهای شخصی روی همین دستگاه ذخیره می‌شوند. برای همگام‌سازی بین گوشی‌ها و اعلان مطمئن، باید به پایگاه داده و سرویس اعلان سمت سرور متصل شوند.</div>';}else if(tab==='routes'){const routes=d.routes||[];c.innerHTML='<div class="sb-pro-note">مسیرهای پرتکرار را ذخیره کن؛ انتخاب هر مسیر، جست‌وجوی بار را با مبدأ/مقصد واردشده آماده می‌کند.</div><div class="sb-pro-form"><label>مبدأ<input id="sbProRouteFrom" placeholder="مثلاً قائن"></label><label>مقصد<input id="sbProRouteTo" placeholder="مثلاً مشهد"></label></div><button class="sb-pro-btn" data-pro-action="save-route">＋ ذخیره مسیر</button>'+ (routes.length?routes.map((r,i)=>'<div class="sb-pro-row"><span><b>'+esc(r.from)+' ← '+esc(r.to)+'</b></span><span><button data-pro-action="use-route" data-id="'+i+'">جست‌وجو</button> <button class="sb-pro-btn sb-pro-secondary" data-pro-action="del-route" data-id="'+i+'">حذف</button></span></div>').join(''):'<div class="sb-pro-empty">هنوز مسیری ذخیره نکرده‌ای.</div>');}else if(tab==='docs'){const docs=d.docs||[];c.innerHTML='<div class="sb-pro-note">تاریخ‌ها فقط روی همین گوشی نگهداری می‌شوند و استعلام رسمی از راهداری انجام نمی‌شود.</div><div class="sb-pro-form"><label>نوع مدرک<select id="sbProDocType"><option>کارت هوشمند راننده</option><option>کارت سلامت راننده</option><option>معاینه فنی کامیون</option><option>بیمه شخص ثالث</option><option>بیمه بدنه</option><option>گواهینامه</option><option>کارت خودرو</option><option>سایر</option></select></label><label>تاریخ انقضا<input id="sbProDocDate" type="date"></label></div><button class="sb-pro-btn" data-pro-action="save-doc">＋ ثبت تاریخ مدرک</button>'+ (docs.length?docs.map((x,i)=>{const days=Math.ceil((new Date(x.date+'T23:59:59')-new Date())/86400000),color=days<0?'#b42318':days<=30?'#b76e00':'#087f5b';return '<div class="sb-pro-row"><span><b>'+esc(x.type)+'</b><br><small>انقضا: '+esc(x.date)+'</small></span><span style="color:'+color+'">'+(days<0?'منقضی شده':days===0?'امروز':days+' روز مانده')+' <button class="sb-pro-btn sb-pro-secondary" data-pro-action="del-doc" data-id="'+i+'">حذف</button></span></div>'}).join(''):'<div class="sb-pro-empty">مدرکی ثبت نشده است.</div>');}else if(tab==='trips'){const trips=d.trips||[];c.innerHTML='<div class="sb-pro-note">دفتر ثبت سفر شخصی است و جایگزین بارنامه رسمی یا تسویه حساب شرکت نیست.</div><div class="sb-pro-form"><label>تاریخ سفر<input id="sbProTripDate" type="date" value="'+new Date().toISOString().slice(0,10)+'"></label><label>مسیر<input id="sbProTripRoute" placeholder="مبدأ ← مقصد"></label><label>کرایه دریافتی (تومان)<input id="sbProTripFare" type="number" min="0"></label><label>هزینه سفر (تومان)<input id="sbProTripCost" type="number" min="0"></label></div><button class="sb-pro-btn" data-pro-action="save-trip">＋ ثبت سفر</button>'+ (trips.length?trips.slice().reverse().map((x,i)=>'<div class="sb-pro-row"><span><b>'+esc(x.route)+'</b><br><small>'+esc(x.date)+' · سود ثبت‌شده: '+Number(x.fare-x.cost).toLocaleString('fa-IR')+' تومان</small></span><button class="sb-pro-btn sb-pro-secondary" data-pro-action="del-trip" data-id="'+(trips.length-1-i)+'">حذف</button></div>').join(''):'<div class="sb-pro-empty">هنوز سفری ثبت نشده است.</div>');}else if(tab==='alerts'){const alerts=d.alerts||[];c.innerHTML='<div class="sb-pro-form"><label>عنوان یادآور<input id="sbProAlertTitle" placeholder="مثلاً سرویس روغن ولوو"></label><label>تاریخ یادآوری<input id="sbProAlertDate" type="date"></label></div><button class="sb-pro-btn" data-pro-action="save-alert">＋ افزودن یادآور</button>'+ (alerts.length?alerts.map((x,i)=>'<div class="sb-pro-row"><span><b>'+esc(x.title)+'</b><br><small>'+esc(x.date||'بدون تاریخ')+'</small></span><button class="sb-pro-btn sb-pro-secondary" data-pro-action="del-alert" data-id="'+i+'">حذف</button></div>').join(''):'<div class="sb-pro-empty">یادآوری ثبت نشده است.</div>')+'<div class="sb-pro-note">اعلان مرورگر فقط با اجازه شما و در صورت پشتیبانی فعال می‌شود؛ برای اعلان در زمان بسته بودن سایت، سرویس پوش نوتیفیکیشن سمت سرور لازم است.</div>';}else if(tab==='support'){c.innerHTML='<div class="sb-pro-note">برای بررسی مشکل، اطلاعات را وارد کن. فعلاً گزارش روی همین دستگاه ذخیره می‌شود و برای تیم پشتیبانی ارسال خودکار نمی‌شود.</div><div class="sb-pro-form"><label>موضوع<select id="sbProIssueType"><option>مشکل انتخاب بار</option><option>مشکل GPS</option><option>مشکل کیف پول</option><option>اطلاعات نادرست بار</option><option>پیشنهاد بهبود</option><option>سایر</option></select></label><label>شماره تماس (اختیاری)<input id="sbProIssuePhone" inputmode="tel" placeholder="شماره تماس"></label><textarea id="sbProIssueText" placeholder="شرح مشکل یا پیشنهاد"></textarea></div><button class="sb-pro-btn" data-pro-action="save-issue">ثبت گزارش روی دستگاه</button><div class="sb-pro-note" style="margin-top:10px">خدماتی که نیاز به اتصال بیرونی دارند (استعلام کارت هوشمند، پلاک‌خوان، بارنامه الکترونیکی و تسویه آنلاین) تا زمان دسترسی به API رسمی و سرور، فعال محسوب نمی‌شوند.</div>';} }
  function action(a,id){const d=base();const arr=(k)=>Array.isArray(d[k])?d[k]:[];if(a.startsWith('goto-')){tab=a.slice(5);render();return;}if(a==='save-route'){const from=$('sbProRouteFrom').value.trim(),to=$('sbProRouteTo').value.trim();if(!from||!to)return alert('مبدأ و مقصد را وارد کن.');d.routes=arr('routes');d.routes.push({from,to});save(d);render();}if(a==='del-route'){d.routes=arr('routes');d.routes.splice(+id,1);save(d);render();}if(a==='use-route'){const r=arr('routes')[+id];if(!r)return;const search=$('loadSearch');if(search)search.value=r.from+' '+r.to;tab='overview';render();if(typeof showPage==='function')showPage('loadsPage');if(typeof showLoads==='function')showLoads();setTimeout(()=>{const q=$('loadSearch');if(q){q.value=r.from+' '+r.to;q.dispatchEvent(new Event('input',{bubbles:true}));}},400);}if(a==='save-doc'){const type=$('sbProDocType').value,date=$('sbProDocDate').value;if(!date)return alert('تاریخ انقضا را انتخاب کن.');d.docs=arr('docs');d.docs.push({type,date});save(d);render();}if(a==='del-doc'){d.docs=arr('docs');d.docs.splice(+id,1);save(d);render();}if(a==='save-trip'){const date=$('sbProTripDate').value,route=$('sbProTripRoute').value.trim(),fare=Number($('sbProTripFare').value),cost=Number($('sbProTripCost').value);if(!route||!date)return alert('تاریخ و مسیر را وارد کن.');d.trips=arr('trips');d.trips.push({date,route,fare,cost});save(d);render();}if(a==='del-trip'){d.trips=arr('trips');d.trips.splice(+id,1);save(d);render();}if(a==='save-alert'){const title=$('sbProAlertTitle').value.trim(),date=$('sbProAlertDate').value;if(!title)return alert('عنوان یادآور را وارد کن.');d.alerts=arr('alerts');d.alerts.push({title,date});save(d);if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();render();}if(a==='save-issue'){const type=$('sbProIssueType').value,phone=$('sbProIssuePhone').value.trim(),message=$('sbProIssueText').value.trim();if(!message)return alert('شرح گزارش را بنویس.');d.issues=arr('issues');d.issues.push({type,phone,message,createdAt:new Date().toISOString()});save(d);alert('گزارش روی همین دستگاه ذخیره شد؛ هنوز به پشتیبانی ارسال نشده است.');$('sbProIssueText').value='';}}
  function boot(){card();const home=$('homePage');if(home)new MutationObserver(()=>{if(!$('sbProTools'))card()}).observe(home,{childList:true});}
@@ -3796,6 +3821,21 @@ function sbCloseTopMenu(){
   if(panel)panel.classList.add('hidden');
   if(trigger)trigger.setAttribute('aria-expanded','false');
 }
+
+function sbNavigateTo(pageId,loadList=false,myLoads=false){
+  const target=document.getElementById(pageId);
+  if(!target){console.warn("Salayan Bar: صفحه پیدا نشد:",pageId);return;}
+  const panel=document.getElementById('sbTopDropdown');
+  const trigger=document.getElementById('sbTopMenuTrigger');
+  if(panel)panel.classList.add('hidden');
+  if(trigger)trigger.setAttribute('aria-expanded','false');
+  showPage(pageId);
+  if(loadList&&typeof showLoads==='function')showLoads();
+  if(myLoads&&typeof showMyLoads==='function')showMyLoads();
+  if(pageId==='walletPage'&&typeof showWallet==='function')showWallet();
+  if(pageId==='gpsPage'&&typeof window.salayanRefreshMap==='function')setTimeout(()=>window.salayanRefreshMap(),280);
+}
+
 function sbTopGo(page,loadList=false,myLoads=false){
   sbCloseTopMenu();
   showPage(page);
