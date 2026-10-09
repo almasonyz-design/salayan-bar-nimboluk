@@ -3041,8 +3041,8 @@ function salayanRahManInfo(){salayanOpenRahMan();}
     if(!btn){
       btn=document.createElement("button");
       btn.type="button";btn.id="salayan-rahman-floating";
-      btn.setAttribute("aria-label","ورود به برنامه رسمی راه من");
-      btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>ورود به برنامه راه من</strong><small>باز کردن برنامه رسمی راهداری</small></span><span class="srf-arrow">↗</span>';
+      btn.setAttribute("aria-label","باز کردن خدمات راه من داخل صلایان بار");
+      btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>خدمات راه من</strong><small>نمایش داخل صلایان بار</small></span><span class="srf-arrow">›</span>';
       btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{window.location.href="https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry";}});
       document.body.appendChild(btn);
     }
