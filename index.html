@@ -1457,8 +1457,8 @@ document.getElementById("loginMessage").innerHTML="";
 }
 async function checkSession(){
 try{
-    /* پیش‌نمایش موقت منوی اصلی بدون ورود با شماره؛ با لینک ?preview=1 */
-    if(new URLSearchParams(window.location.search).get("preview")==="1"){
+    /* ورود مستقیم موقت به منوی اصلی؛ برای دیدن صفحه ورود از ?login=1 استفاده کنید */
+    if(new URLSearchParams(window.location.search).get("login")!=="1"){
         localStorage.setItem("salayan_demo_login","1");
         currentUser={id:"00000000-0000-0000-0000-000000000001",phone:"+989120000000",user_metadata:{demo:true}};
         document.getElementById("profilePhone").textContent="حالت پیش‌نمایش";
