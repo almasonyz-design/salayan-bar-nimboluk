@@ -2100,6 +2100,9 @@ async function showLoads(){
             throw error;
         }
 
+        // Keep the latest load records available for eligibility checks and map routing.
+        window.salayanLoadsCache = Array.isArray(data) ? data : [];
+
         if(!data || data.length === 0){
 
             list.innerHTML =
