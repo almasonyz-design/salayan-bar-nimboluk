@@ -977,6 +977,138 @@ body{padding-bottom:18px!important}
 @media(max-width:390px){.header{padding:8px 8px!important}.header .brand{gap:6px}.header .brand-logo{width:33px!important;height:33px!important;font-size:18px!important}.header .brand h1{font-size:13px!important}.header .brand small{font-size:8px!important}.sb-top-actions{gap:5px}.sb-top-wallet{display:none!important}.sb-top-menu-trigger{padding:9px 9px;font-size:10px;gap:6px}.sb-top-dropdown{left:-1px;width:min(340px,calc(100vw - 16px));max-height:78vh}}
 </style>
 
+
+<style id="salayan-full-visual-redesign-2026">
+/* SALAYAN BAR — complete visual system refresh; keeps existing app logic and page IDs */
+:root{--sb-forest:#073b2e;--sb-green:#087f5b;--sb-green2:#0b9b6b;--sb-mint:#e8f7ef;--sb-lime:#d7f58a;--sb-ink:#142b23;--sb-muted:#708078;--sb-line:#e1ebe5;--sb-bg:#f3f7f4;--sb-card:#fff;--sb-shadow:0 12px 34px rgba(14,54,37,.075)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Tahoma,"Segoe UI",Arial,sans-serif!important;background:radial-gradient(ellipse at 90% 0%,#e4f4e9 0,transparent 34%),var(--sb-bg)!important;color:var(--sb-ink)!important;line-height:1.65;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit!important}
+button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
+button:active{transform:scale(.985)}
+.header{background:linear-gradient(115deg,#062f25 0%,#07583f 52%,#07835b 100%)!important;color:#fff!important;padding:12px 16px!important;box-shadow:0 8px 25px #063d2b20!important;border:0!important}
+.header:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 8% 0%,#ffffff12,transparent 32%)}
+.header .brand-row{max-width:1100px;margin:auto;align-items:center!important}
+.header .brand{gap:11px!important}
+.header .brand-logo{display:grid;place-items:center;background:linear-gradient(145deg,#d8f58b,#a8e56e)!important;color:#174b32!important;border:3px solid #ffffff24!important;border-radius:15px!important;box-shadow:0 6px 16px #001e142e!important;font-size:24px!important}
+.header .brand h1{font-size:clamp(14px,2.8vw,20px)!important;letter-spacing:-.3px;font-weight:900!important}
+.header .brand small{color:#d1ebdd!important;font-size:10px!important}
+.sb-top-wallet{border:1px solid #ffffff35!important;background:#ffffff14!important;color:#fff!important;border-radius:13px!important;font-weight:800!important}
+.sb-top-menu-trigger{background:linear-gradient(135deg,#e0f89e,#bce978)!important;border:1px solid #efffd0!important;border-radius:13px!important;box-shadow:0 5px 15px #001e142b!important;font-weight:900!important;color:#16452f!important}
+.sb-top-dropdown{border:1px solid #dbe9e0!important;border-radius:22px!important;box-shadow:0 24px 65px #062d1e30!important;backdrop-filter:blur(16px)}
+.sb-top-dropdown-item{border-radius:14px!important}
+.container{max-width:1100px!important;margin:0 auto!important;padding:22px 16px 34px!important}
+.card{border:1px solid #e7eee9!important;border-radius:22px!important;padding:22px!important;margin-bottom:18px!important;box-shadow:var(--sb-shadow)!important;background:#fff!important}
+.card h2,.card h3{color:var(--sb-forest);font-weight:900;letter-spacing:-.25px}
+.btn{background:linear-gradient(135deg,#0b9568,#087452)!important;border:0!important;border-radius:14px!important;padding:14px 17px!important;min-height:47px;font-weight:800!important;box-shadow:0 7px 16px #087f5b22!important}
+.btn:hover{box-shadow:0 10px 22px #087f5b30!important;filter:brightness(1.03)}
+.btn.secondary{background:#eaf6ef!important;color:#087452!important;border:1px solid #d6eadc!important;box-shadow:none!important}
+.btn.danger{background:linear-gradient(135deg,#d94d4d,#b92d38)!important}
+input,select,textarea{background:#fbfdfb!important;border:1px solid #dce7df!important;border-radius:13px!important;min-height:46px;padding:12px 14px!important;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:#3aa87d!important;box-shadow:0 0 0 4px #0b956814!important;background:#fff!important}
+label{font-weight:700;color:#465c50!important;font-size:12px!important}
+.hidden{display:none!important}
+/* Elegant login screen */
+.login-shell{max-width:480px!important;margin:22px auto 30px!important}
+.login-hero{position:relative;overflow:hidden;border-radius:27px!important;padding:25px 22px!important;background:linear-gradient(135deg,#06382b,#087c56 70%,#0c9869)!important;color:#fff!important;box-shadow:0 17px 36px #07583f24!important;margin-bottom:15px!important}
+.login-hero:after{content:"";position:absolute;width:230px;height:230px;border:1px solid #ffffff20;border-radius:50%;left:-90px;top:-125px;box-shadow:0 0 0 25px #ffffff08,0 0 0 52px #ffffff05}
+.login-hero-row{position:relative;z-index:1;gap:14px!important;align-items:center!important}
+.login-hero-logo{display:grid;place-items:center;width:64px!important;height:64px!important;border-radius:20px!important;background:linear-gradient(145deg,#e0f99d,#b9e878)!important;color:#15452e!important;font-size:31px!important;box-shadow:0 8px 20px #001d142e!important;flex:none}
+.login-hero h2{color:#fff!important;font-size:21px!important;font-weight:900!important;margin:0 0 5px!important}
+.login-hero p{color:#d8eee2!important;font-size:11px!important;line-height:1.9!important;margin:0!important}
+.login-shell>.card{padding:23px!important}
+.login-badge{display:inline-flex;align-items:center;gap:6px;background:#e8f7ef;color:#087452;border:1px solid #d8eee1;border-radius:99px;padding:6px 11px;font-size:10px;font-weight:900;margin-bottom:13px}
+.login-note{color:#77867d;font-size:12px;line-height:1.9}
+.role-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:5px;background:#f0f5f1;border:1px solid #e5ece6;border-radius:15px;margin:14px 0}
+.role-switch button{border:1px solid transparent!important;border-radius:11px!important;background:transparent!important;color:#64766b!important;padding:12px!important;font-weight:800!important}
+.role-switch button.selected{background:#fff!important;color:#087452!important;border-color:#dcebe1!important;box-shadow:0 4px 12px #123b280c!important}
+.login-panel{background:#fbfdfb;border:1px solid #e8efe9;border-radius:17px;padding:16px!important}
+.login-panel h3{margin:0 0 10px!important;font-size:15px!important}
+#loginMessage{font-size:12px;line-height:1.8;margin-top:12px}
+/* Main dashboard */
+.sbc-clean-home{background:transparent!important;padding:0 0 25px!important;max-width:100%!important}
+.sbc-home-header{margin:0 -16px 0!important;padding:25px 20px 32px!important;border-radius:0 0 30px 30px!important;background:linear-gradient(125deg,#062f25 0%,#076344 58%,#0b9264 100%)!important;box-shadow:0 14px 30px #063d2b18!important}
+.sbc-home-brand{gap:13px!important}
+.sbc-home-logo{width:54px!important;height:54px!important;border-radius:18px!important;background:linear-gradient(145deg,#dff89b,#b8e775)!important;color:#17482f!important;border:0!important;box-shadow:0 7px 18px #001b132b!important;font-size:17px!important}
+.sbc-home-brand span{color:#c5ead6!important;font-size:10px!important}
+.sbc-home-brand h2{font-size:20px!important;font-weight:900!important;letter-spacing:-.4px}
+.sbc-home-brand small{color:#d9eee3!important;font-size:10px!important}
+.sbc-home-bell{border-radius:14px!important;background:#ffffff16!important;border:1px solid #ffffff36!important}
+.sbc-gps-card{max-width:760px;margin:-15px auto 17px!important;padding:18px!important;border-radius:23px!important;border:1px solid #dcebe1!important;box-shadow:0 12px 28px #123c2a10!important;grid-template-columns:54px minmax(0,1fr)!important}
+.sbc-gps-orbit{width:51px!important;height:51px!important;border-radius:17px!important;background:linear-gradient(145deg,#e5f8ed,#d4f0df)!important;color:#087452!important}
+.sbc-overline{color:#84968a!important;font-weight:900!important;letter-spacing:.6px}
+.sbc-gps-copy h3{font-size:15px!important;font-weight:900!important;color:#143e2c!important}
+.sbc-gps-copy p{color:#7a8a80!important;font-size:11px!important;line-height:1.85!important}
+#sbcGpsButton{background:linear-gradient(135deg,#0b9568,#087452)!important;color:#fff!important;border-radius:12px!important;font-weight:900!important;box-shadow:0 5px 14px #087f5b24!important}
+.sbc-gps-status{border-top:1px solid #edf2ee!important;color:#73857a!important;font-size:10px!important}
+.sbc-find-load{max-width:760px!important;margin:0 auto 18px!important;border-radius:19px!important;padding:16px!important;background:linear-gradient(115deg,#e5f7eb,#f5fbe8)!important;border:1px solid #d4ebda!important;box-shadow:0 7px 20px #15482c09!important}
+.sbc-find-copy b{color:#12452f!important;font-size:15px!important}
+.sbc-find-copy small{color:#71867a!important;font-size:10px!important}
+.sbc-find-icon{background:#fff!important;color:#087452!important;border:1px solid #d6eadb!important;border-radius:14px!important}
+.sbc-find-arrow{background:#0a835b!important;color:#fff!important;border-radius:11px!important}
+.sbc-essential-grid{max-width:760px!important;margin:0 auto 18px!important;gap:11px!important}
+.sbc-essential-grid>button{min-height:124px!important;border:1px solid #e1ebe4!important;border-radius:19px!important;background:#fff!important;box-shadow:0 7px 20px #123c2a08!important;padding:15px 13px!important;text-align:right!important}
+.sbc-essential-grid>button:hover{border-color:#b7dec7!important;box-shadow:0 10px 24px #123c2a12!important;transform:translateY(-2px)}
+.sbc-essential-grid>button b{display:block;color:#1b3d2c!important;font-size:12px!important;font-weight:900!important;margin:8px 0 3px}
+.sbc-essential-grid>button small{color:#809087!important;font-size:10px!important}
+.sbc-essential-icon{width:40px!important;height:40px!important;border-radius:14px!important;display:grid!important;place-items:center!important;font-size:20px!important}
+.sbc-essential-icon.turn{background:#e9f6e9!important;color:#36864e!important}
+.sbc-essential-icon.free{background:#e5f5ed!important;color:#087452!important}
+.sbc-essential-icon.mine{background:#eef0ff!important;color:#6266bd!important}
+.sbc-essential-icon.wallet{background:#fff3dd!important;color:#ad7922!important}
+.sbc-all-services{max-width:760px!important;margin:0 auto!important;border-radius:16px!important;border:1px solid #d9e9de!important;background:#fff!important;color:#087452!important;font-weight:900!important;padding:14px!important}
+/* Shared pages, load listings, tables, profile and wallet */
+#appPage{min-height:70vh}
+#appPage h2{font-weight:900;letter-spacing:-.25px}
+#appPage .card{overflow:hidden}
+#appPage table{width:100%;border-collapse:separate;border-spacing:0;border-radius:14px;overflow:hidden}
+#appPage th{background:#eaf6ef;color:#17563c;font-size:12px;font-weight:900;padding:12px;border-bottom:1px solid #dbece0}
+#appPage td{padding:11px;border-bottom:1px solid #edf2ee;font-size:12px}
+#appPage tr:last-child td{border-bottom:0}
+#appPage .status-btn{border:1px solid #e0eae3!important;border-radius:17px!important;box-shadow:0 5px 16px #123c2a07!important}
+#appPage .status-btn:hover{border-color:#b6dcc6!important}
+#appPage .sb-menu-tile{border-radius:17px!important;border:1px solid #e1ebe4!important;box-shadow:0 5px 17px #123c2a08!important}
+#appPage .sb-menu-featured{border-radius:21px!important}
+#appPage .sb-menu-section{border-radius:20px!important}
+#appPage .sb-top-dropdown-label{color:#87968c!important;font-weight:900!important}
+#appPage .sb-top-dropdown-item:hover{background:#f0f8f3!important}
+#appPage .header-action{border-radius:12px!important}
+#appPage [onclick*="showPage"]{cursor:pointer}
+@media(min-width:760px){
+ .container{padding-top:26px!important}
+ .login-shell{margin-top:32px!important}
+ .sbc-home-header{margin:0 calc((760px - 100vw)/2) 0!important;padding-left:max(22px,calc((100vw - 760px)/2 + 22px))!important;padding-right:max(22px,calc((100vw - 760px)/2 + 22px))!important}
+ .sbc-essential-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:480px){
+ .container{padding:14px 11px 25px!important}
+ .header{padding:10px 10px!important}
+ .header .brand-logo{width:35px!important;height:35px!important;border-radius:12px!important;font-size:20px!important}
+ .header .brand h1{font-size:13px!important}
+ .header .brand small{font-size:8px!important}
+ .sb-top-menu-trigger{padding:9px 8px!important;font-size:10px!important}
+ .login-shell{margin:14px auto 24px!important}
+ .login-hero{padding:21px 17px!important;border-radius:23px!important}
+ .login-hero-logo{width:55px!important;height:55px!important;border-radius:17px!important;font-size:27px!important}
+ .login-hero h2{font-size:18px!important}
+ .login-shell>.card{padding:17px!important}
+ .sbc-home-header{margin:0 -11px 0!important;padding:21px 15px 29px!important}
+ .sbc-home-brand h2{font-size:17px!important}
+ .sbc-home-logo{width:47px!important;height:47px!important;border-radius:15px!important}
+ .sbc-gps-card{margin:-13px 0 14px!important;padding:14px!important;grid-template-columns:43px minmax(0,1fr)!important;gap:9px!important}
+ .sbc-gps-orbit{width:42px!important;height:42px!important;border-radius:14px!important}
+ .sbc-gps-copy h3{font-size:13px!important}
+ .sbc-gps-copy p{font-size:10px!important}
+ .sbc-essential-grid{gap:8px!important}
+ .sbc-essential-grid>button{min-height:112px!important;padding:11px 10px!important;border-radius:16px!important}
+ .sbc-essential-icon{width:35px!important;height:35px!important;border-radius:12px!important}
+ .sbc-essential-grid>button b{font-size:11px!important}
+ .card{padding:16px!important;border-radius:18px!important}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+
 </head>
 
 <body>
