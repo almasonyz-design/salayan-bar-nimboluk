@@ -5170,6 +5170,93 @@ function sbOpenDriverTool(type){
 #sbGpsCard .sb-gps-actions button:active{transform:scale(.98)}
 @media(max-width:380px){#sbGpsCard .sbx-map-stage{height:370px}#sbGpsCard .sbx-map-console-head b{font-size:14px}#sbGpsCard .sbx-map-layer{padding:9px 10px}#sbGpsCard .sbx-map-shortcuts{grid-template-columns:1fr 1fr}#sbGpsCard .sbx-map-shortcuts button:last-child{grid-column:1/-1}}
 </style>
+
+<!-- Final consolidated guide interaction fix: overrides legacy conflicting handlers safely. -->
+<style id="salayan-guide-final-fix">
+html body #sbGuideOverlay{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+html body #sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html body #sbGuideOverlay #sbGuideDialog{max-height:calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}
+html body #sbGuideFab{position:fixed!important;left:max(10px,env(safe-area-inset-left))!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;z-index:2147483000!important;pointer-events:auto!important;touch-action:manipulation!important}
+html body #sbGuideOverlay.open ~ #bottomNav{visibility:hidden!important}
+</style>
+<script id="salayan-guide-final-fix-js">
+(function(){
+ const byId=id=>document.getElementById(id);
+ function closeGuide(){
+   const overlay=byId('sbGuideOverlay'),fab=byId('sbGuideFab');
+   if(!overlay)return;
+   overlay.classList.remove('open');
+   overlay.style.setProperty('display','none','important');
+   overlay.style.setProperty('visibility','hidden','important');
+   overlay.style.setProperty('opacity','0','important');
+   overlay.style.setProperty('pointer-events','none','important');
+   overlay.setAttribute('aria-hidden','true');
+   document.body.classList.remove('sb-guide-is-open');
+   document.body.style.overflow='';
+   document.documentElement.style.overflow='';
+   if(fab)fab.setAttribute('aria-expanded','false');
+   try{localStorage.setItem('salayanGuideSeen2026','1')}catch(e){}
+ }
+ function openGuide(){
+   const overlay=byId('sbGuideOverlay'),fab=byId('sbGuideFab'),menu=byId('sbTopDropdown'),trigger=byId('sbTopMenuTrigger');
+   if(!overlay)return;
+   if(overlay.parentElement!==document.body)document.body.appendChild(overlay);
+   if(fab&&fab.parentElement!==document.body)document.body.appendChild(fab);
+   if(menu)menu.classList.add('hidden');
+   if(trigger)trigger.setAttribute('aria-expanded','false');
+   overlay.classList.add('open');
+   overlay.style.setProperty('position','fixed','important');
+   overlay.style.setProperty('inset','0','important');
+   overlay.style.setProperty('z-index','2147483647','important');
+   overlay.style.setProperty('display','flex','important');
+   overlay.style.setProperty('visibility','visible','important');
+   overlay.style.setProperty('opacity','1','important');
+   overlay.style.setProperty('pointer-events','auto','important');
+   overlay.setAttribute('aria-hidden','false');
+   document.body.classList.add('sb-guide-is-open');
+   document.body.style.overflow='hidden';
+   document.documentElement.style.overflow='hidden';
+   if(fab)fab.setAttribute('aria-expanded','true');
+   const dialog=byId('sbGuideDialog');if(dialog)dialog.scrollTop=0;
+ }
+ function navigate(page,loads,mine){
+   closeGuide();
+   if(typeof window.sbNavigateTo==='function')window.sbNavigateTo(page,!!loads,!!mine);
+   else if(typeof window.showPage==='function'){
+     window.showPage(page);
+     if(loads&&typeof window.showLoads==='function')window.showLoads();
+     if(mine&&typeof window.showMyLoads==='function')window.showMyLoads();
+   }
+ }
+ document.addEventListener('click',function(e){
+   const t=e.target&&e.target.closest?e.target.closest('#sbGuideFab,#sbGuideClose,#sbGuideStartLoads,[data-sb-guide-go]'):null;
+   if(t){
+     e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+     if(t.id==='sbGuideFab'){openGuide();return}
+     if(t.id==='sbGuideClose'){closeGuide();return}
+     if(t.id==='sbGuideStartLoads'){navigate('loadsPage',true,false);return}
+     if(t.hasAttribute('data-sb-guide-go')){navigate(t.getAttribute('data-sb-guide-go'),t.getAttribute('data-sb-guide-loads')==='1',t.getAttribute('data-sb-guide-mine')==='1');return}
+   }
+   const overlay=byId('sbGuideOverlay');
+   if(overlay&&e.target===overlay&&overlay.classList.contains('open')){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();closeGuide()}
+ },true);
+ document.addEventListener('keydown',function(e){
+   const overlay=byId('sbGuideOverlay');
+   if(e.key==='Escape'&&overlay&&overlay.classList.contains('open')){e.preventDefault();e.stopPropagation();closeGuide()}
+ },true);
+ window.addEventListener('pageshow',function(){
+   const overlay=byId('sbGuideOverlay');
+   if(overlay&&!overlay.classList.contains('open')){
+     overlay.style.setProperty('display','none','important');
+     overlay.setAttribute('aria-hidden','true');
+     document.body.classList.remove('sb-guide-is-open');
+     document.body.style.overflow='';
+     document.documentElement.style.overflow='';
+   }
+ });
+})();
+</script>
+
 </body>
 </html>
 
