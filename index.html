@@ -2425,7 +2425,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  };
  window.salayanShowFavorites=function(){
    const modal=$('salayanEvoFavModal'),body=$('sbFavModalBody');if(!modal||!body)return;
-   const ids=getFavs(),cache=window.salayanLoadsCache||[];
+   const ids=getFavs(),cache=typeof salayanLoadsCache!=="undefined"?salayanLoadsCache:[];
    const rows=cache.filter(x=>ids.includes(String(x.id)));
    body.innerHTML=rows.length?rows.map(x=>'<div class="load-item"><button class="sb-fav-btn on" onclick="salayanToggleFavorite(\''+String(x.id).replace(/'/g,'&#39;')+'\');salayanShowFavorites()">⭐ ذخیره‌شده</button><h3>'+esc(x.origin||'-')+' ← '+esc(x.destination||'-')+'</h3><div class="row"><span>کالا</span><strong>'+esc(x.cargo||'-')+'</strong></div><div class="row"><span>وزن</span><strong>'+esc(x.weight??'-')+' تن</strong></div><button class="btn" onclick="salayanCloseFavorites();showPage(\'loadsPage\');showLoads()">رفتن به تالار بار</button></div>').join(''):'<div class="card"><div style="font-size:32px;text-align:center">⭐</div><h3 style="text-align:center">هنوز باری ذخیره نکرده‌ای</h3><p style="text-align:center;color:#698177;font-size:12px">در تالار بار، کنار هر بار دکمه «ذخیره بار» را بزن تا بعداً سریع پیدایش کنی.</p><button class="btn" onclick="salayanCloseFavorites();showPage(\'loadsPage\');showLoads()">مشاهده تالار بار</button></div>';
    modal.style.display='flex';
@@ -2466,7 +2466,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
    return html;};wrapped.__sbWrapped=true;window.salayanRenderLoad=wrapped;
  }
  function refreshMetrics(){
-   const cache=window.salayanLoadsCache||[];
+   const cache=typeof salayanLoadsCache!=="undefined"?salayanLoadsCache:[];
    const a=$('sbEvoAllCount'),t=$('sbEvoTurnCount'),u=$('sbEvoUpdated'),f=$('sbEvoFavCount');
    if(a)a.textContent=cache.length.toLocaleString('fa-IR');
    if(t)t.textContent=cache.filter(x=>x.status==='turn').length.toLocaleString('fa-IR');
