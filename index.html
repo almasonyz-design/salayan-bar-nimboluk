@@ -3769,12 +3769,14 @@ function salayanRahManInfo(){salayanOpenRahMan();}
       var menuOpen=!!(menu && !menu.classList.contains("hidden") && getComputedStyle(menu).display!=="none" && getComputedStyle(menu).visibility!=="hidden");
       var rahmanModal=document.getElementById("salayan-rahman-inapp-modal");
       var modalOpen=!!(rahmanModal && getComputedStyle(rahmanModal).display!=="none");
-      /* Floating shortcut must never cover the dropdown menu's lower buttons. */
-      var visible=!!(app && !app.classList.contains("hidden") && home && !home.classList.contains("hidden") && !menuOpen && !modalOpen);
-      btn.style.setProperty("display",visible?"flex":"none","important");
-      btn.style.setProperty("visibility",visible?"visible":"hidden","important");
-      btn.style.setProperty("pointer-events",visible?"auto":"none","important");
-      btn.style.setProperty("opacity",visible?"1":"0","important");
+      /* FIX: the fixed floating shortcut was covering other buttons on small screens.
+         Remove it from the hit area entirely; Rah Man remains available in the service menu tile. */
+      var visible=false;
+      btn.style.setProperty("display","none","important");
+      btn.style.setProperty("visibility","hidden","important");
+      btn.style.setProperty("pointer-events","none","important");
+      btn.style.setProperty("opacity","0","important");
+      btn.setAttribute("aria-hidden","true");
     }
     updateVisibility();
     if(window.MutationObserver){
