@@ -4287,5 +4287,67 @@ function sbOpenDriverTool(type){
 })();
 </script>
 
+
+<style id="salayan-welcome-overlay-fix-2026">
+/* Keep welcome dialog above every navigation surface and keep its close action reachable */
+#sbGuideOverlay{position:fixed!important;inset:0!important;z-index:2147483646!important;padding:12px!important;align-items:center!important;justify-content:center!important;isolation:isolate!important;pointer-events:auto!important}
+#sbGuideOverlay.open{display:flex!important}
+#sbGuideDialog{position:relative!important;z-index:1!important;width:min(560px,100%)!important;max-height:calc(100dvh - 24px)!important;overflow:auto!important;overscroll-behavior:contain!important;padding:clamp(14px,3.5vw,24px)!important;border:1px solid #d9eee2!important;border-radius:25px!important;background:linear-gradient(180deg,#fff 0%,#fbfefc 100%)!important;box-shadow:0 28px 90px #002a1b70!important}
+#sbGuideDialog .sb-guide-brand{position:relative;overflow:hidden;padding:clamp(17px,4vw,25px)!important;border-radius:21px!important;background:linear-gradient(125deg,#063b2b 0%,#087f5b 60%,#16a36f 100%)!important;box-shadow:0 12px 28px #087f5b26!important}
+#sbGuideDialog .sb-guide-brand:after{content:"";position:absolute;left:-42px;top:-62px;width:150px;height:150px;border:1px solid #ffffff35;border-radius:50%;box-shadow:0 0 0 18px #ffffff0c,0 0 0 38px #ffffff08;pointer-events:none}
+#sbGuideDialog #sbGuideTitle{position:relative;z-index:1;font-size:clamp(20px,4.5vw,27px)!important;line-height:1.6!important;font-weight:900!important}
+#sbGuideDialog .sb-guide-brand p{position:relative;z-index:1;line-height:2!important;font-size:13px!important;color:#e2f8ed!important}
+#sbGuideDialog .sb-guide-steps{gap:8px!important;margin:12px 0!important}
+#sbGuideDialog .sb-guide-step{padding:11px!important;border-radius:15px!important;background:#f7fbf8!important}
+#sbGuideDialog .sb-guide-shortcuts button{min-height:44px!important;border-radius:13px!important}
+#sbGuideDialog .sb-guide-actions{position:sticky!important;bottom:-1px!important;z-index:5!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:9px!important;margin:12px -2px -2px!important;padding:10px 2px 2px!important;background:linear-gradient(180deg,#fbfefc00 0%,#fbfefc 22%)!important}
+#sbGuideDialog .sb-guide-actions button{min-height:48px!important;line-height:1.7!important;box-shadow:0 4px 12px #153e2c0a!important}
+#sbGuideDialog #sbGuideClose{background:#e9f5ee!important;border:1px solid #cde5d6!important;color:#15543d!important}
+#sbGuideDialog #sbGuideStartLoads{background:linear-gradient(135deg,#087f5b,#10a16e)!important;color:white!important;border:1px solid #087f5b!important}
+#sbGuideFab{z-index:9992!important}
+#sbTopDropdown.sb-top-dropdown{z-index:2147483000!important}
+@media(max-width:480px){
+ #sbGuideOverlay{padding:8px!important}
+ #sbGuideDialog{max-height:calc(100dvh - 16px)!important;border-radius:20px!important;padding:12px!important}
+ #sbGuideDialog .sb-guide-step{gap:9px!important;padding:9px!important}
+ #sbGuideDialog .sb-guide-step span{font-size:12px!important;line-height:1.75!important}
+ #sbGuideDialog .sb-guide-note{font-size:11px!important;line-height:1.8!important}
+ #sbGuideDialog .sb-guide-shortcuts{gap:7px!important}
+ #sbGuideDialog .sb-guide-shortcuts button{font-size:12px!important;padding:9px 6px!important}
+ #sbGuideDialog .sb-guide-actions{grid-template-columns:1fr!important;position:sticky!important}
+}
+</style>
+<script id="salayan-welcome-overlay-fix-2026-js">
+(function(){
+ const overlay=document.getElementById('sbGuideOverlay');
+ const dialog=document.getElementById('sbGuideDialog');
+ const close=document.getElementById('sbGuideClose');
+ if(!overlay||!dialog||!close)return;
+ function hideServiceMenu(){
+   const menu=document.getElementById('sbTopDropdown');
+   const trigger=document.getElementById('sbTopMenuTrigger');
+   if(menu)menu.classList.add('hidden');
+   if(trigger)trigger.setAttribute('aria-expanded','false');
+ }
+ const oldOpen=window.sbToggleTopMenu;
+ window.sbToggleTopMenu=function(e){
+   if(overlay.classList.contains('open')){if(e){e.preventDefault();e.stopPropagation()}return;}
+   if(typeof oldOpen==='function')oldOpen(e);
+ };
+ const openButton=document.getElementById('sbGuideFab');
+ if(openButton){
+   openButton.addEventListener('click',function(){hideServiceMenu();});
+ }
+ const oldCloseGuide=close.onclick;
+ close.addEventListener('click',function(){hideServiceMenu();});
+ overlay.addEventListener('click',function(e){if(e.target===overlay)hideServiceMenu()});
+ // Ensure close and primary action are brought into view on small screens.
+ function revealActions(){const actions=dialog.querySelector('.sb-guide-actions');if(actions&&overlay.classList.contains('open'))actions.scrollIntoView({block:'nearest'});}
+ window.addEventListener('resize',()=>{if(overlay.classList.contains('open'))setTimeout(revealActions,60)});
+ // Keep menu closed while onboarding is visible; close is handled by existing guide logic.
+ hideServiceMenu();
+})();
+</script>
+
 </body>
 </html>
