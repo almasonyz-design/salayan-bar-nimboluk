@@ -584,6 +584,25 @@ input:focus,select:focus{outline:0!important;border-color:#0b9a69!important;box-
 .salayan-menu-item:last-child{border-bottom:0}.salayan-menu-icon{width:39px;height:39px;border-radius:12px;background:#eef8f3;display:grid;place-items:center;flex:none;font-size:20px}
 .salayan-menu-item>span:nth-child(2){flex:1;min-width:0}.salayan-menu-item b{display:block;font-size:13px}.salayan-menu-item small{display:block;color:#7a8781;font-size:11px;line-height:1.7;margin-top:3px}.salayan-menu-arrow{font-size:24px;color:#8a9991}
 
+
+/* ===== Professional clickable service tiles ===== */
+.salayan-menu-hero{display:flex;align-items:center;gap:13px;padding:17px;border:1px solid #d7e9df;border-radius:20px;margin-bottom:14px;background:linear-gradient(125deg,#e6f7ee,#fff 72%);box-shadow:0 5px 16px rgba(8,80,55,.06)}
+.salayan-menu-hero h2{margin:0 0 5px;font-size:19px;color:#174b37}.salayan-menu-hero p{margin:0;color:#73827a;font-size:12px;line-height:1.8}
+.salayan-menu-hero-icon{width:50px;height:50px;display:grid;place-items:center;flex:none;border-radius:16px;background:linear-gradient(145deg,#087f5b,#0b9b70);color:#fff;font-size:24px;box-shadow:0 5px 12px rgba(8,127,91,.2)}
+.salayan-menu-section{margin:0 0 15px;padding:12px;background:rgba(255,255,255,.92);border:1px solid #deebe4;border-radius:19px;box-shadow:0 4px 15px rgba(24,65,46,.045)}
+.salayan-menu-section-head{display:flex;align-items:center;gap:10px;padding:3px 2px 12px;margin-bottom:10px;border-bottom:1px solid #edf3ef}
+.salayan-menu-section-symbol{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:#eaf7f0;font-size:20px;flex:none}
+.salayan-menu-section-head b{display:block;font-size:14px;color:#204b39}.salayan-menu-section-head small{display:block;color:#7a8981;font-size:11px;margin-top:4px}
+.salayan-menu-button-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.salayan-menu-tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:right;min-width:0;min-height:142px;padding:12px;border:1px solid #e0ebe5;border-radius:16px;background:linear-gradient(150deg,#fff,#f8fcf9);font-family:inherit;color:#29483a;cursor:pointer;box-shadow:0 2px 7px rgba(20,70,48,.035);transition:transform .16s,border-color .16s,box-shadow .16s}
+.salayan-menu-tile:active{transform:scale(.975);border-color:#79bea0;box-shadow:0 4px 12px rgba(8,127,91,.12)}
+.salayan-tile-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#eaf7f0;font-size:20px;margin-bottom:10px}
+.salayan-menu-tile b{font-size:13px;line-height:1.6}.salayan-menu-tile small{font-size:10px;color:#7b8982;line-height:1.7;margin-top:4px;min-height:30px}
+.salayan-tile-cta{display:block;margin-top:auto;padding-top:10px;color:#087f5b;font-size:10px;font-weight:800}
+.salayan-menu-tile-wide{grid-column:1/-1;min-height:100px;display:grid;grid-template-columns:42px 1fr;grid-template-rows:auto auto auto;column-gap:10px;align-items:center}
+.salayan-menu-tile-wide .salayan-tile-icon{grid-column:1;grid-row:1/4;margin:0}.salayan-menu-tile-wide b,.salayan-menu-tile-wide small,.salayan-menu-tile-wide .salayan-tile-cta{grid-column:2}
+@media(min-width:560px){.salayan-menu-button-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.salayan-menu-tile-wide{grid-column:span 1;display:flex;align-items:flex-start;min-height:142px}.salayan-menu-tile-wide .salayan-tile-icon{margin-bottom:10px}}
+
 </style>
 
 <style id="salayan-ultra-premium-v3">
@@ -1057,38 +1076,48 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
     </div>
 
 
-    <!-- MORE MENU: دسته‌بندی خدمات -->
+    <!-- MORE MENU: professional service dashboard -->
     <div id="supportPage" class="hidden">
-        <div class="card salayan-menu-hero">
-            <div class="salayan-menu-hero-icon">☰</div>
-            <div><h2>منو و خدمات</h2><p>همه امکانات صلایان بار، مرتب‌شده در بخش‌های مرتبط</p></div>
-        </div>
+      <div class="salayan-menu-hero">
+        <div class="salayan-menu-hero-icon">☰</div>
+        <div><h2>مرکز خدمات صلایان بار</h2><p>برای ورود به هر بخش، دکمه مربوط را انتخاب کنید.</p></div>
+      </div>
 
-        <div class="salayan-menu-group">
-            <div class="salayan-menu-heading">🚛 حمل‌ونقل و بار</div>
-            <button class="salayan-menu-item" onclick="showPage('loadsPage');showLoads()"><span class="salayan-menu-icon">🧭</span><span><b>تالار هوشمند بار</b><small>جستجو و فیلتر بارهای نوبتی، آزاد و برگشت</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="showPage('myLoadsPage');showMyLoads()"><span class="salayan-menu-icon">📦</span><span><b>بارهای من</b><small>بارهای انتخاب‌شده و وضعیت آن‌ها</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="showPage('createLoadPage')"><span class="salayan-menu-icon">➕</span><span><b>اعلام بار</b><small>ثبت بار جدید در سامانه</small></span><span class="salayan-menu-arrow">‹</span></button>
+      <div class="salayan-menu-section">
+        <div class="salayan-menu-section-head"><span class="salayan-menu-section-symbol">🚛</span><div><b>حمل‌ونقل و بار</b><small>جستجو، پیگیری و ثبت بار</small></div></div>
+        <div class="salayan-menu-button-grid">
+          <button class="salayan-menu-tile" onclick="showPage('loadsPage');showLoads()"><span class="salayan-tile-icon">🧭</span><b>تالار هوشمند بار</b><small>مشاهده و جستجوی بارها</small><span class="salayan-tile-cta">ورود به بخش ←</span></button>
+          <button class="salayan-menu-tile" onclick="showPage('myLoadsPage');showMyLoads()"><span class="salayan-tile-icon">📦</span><b>بارهای من</b><small>پیگیری بارهای انتخاب‌شده</small><span class="salayan-tile-cta">مشاهده بارها ←</span></button>
+          <button class="salayan-menu-tile" onclick="showPage('createLoadPage')"><span class="salayan-tile-icon">➕</span><b>اعلام بار</b><small>ثبت بار برای حمل</small><span class="salayan-tile-cta">ثبت بار ←</span></button>
+          <button class="salayan-menu-tile" onclick="salayanHomeFilter('turn')"><span class="salayan-tile-icon">🔄</span><b>بارهای نوبتی</b><small>مشاهده بارهای نوبتی</small><span class="salayan-tile-cta">مشاهده نوبتی‌ها ←</span></button>
+          <button class="salayan-menu-tile" onclick="salayanHomeFilter('free')"><span class="salayan-tile-icon">🟢</span><b>بارهای آزاد</b><small>مشاهده بارهای آزاد</small><span class="salayan-tile-cta">مشاهده آزادها ←</span></button>
         </div>
+      </div>
 
-        <div class="salayan-menu-group">
-            <div class="salayan-menu-heading">👤 حساب راننده و ناوگان</div>
-            <button class="salayan-menu-item" onclick="showPage('profilePage')"><span class="salayan-menu-icon">👤</span><span><b>پروفایل راننده</b><small>اطلاعات حساب و شماره همراه</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="showPage('truckPage')"><span class="salayan-menu-icon">🚚</span><span><b>اطلاعات کامیون</b><small>مشخصات وسیله نقلیه</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="showPage('homePage');setTimeout(()=>{document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'});},120)"><span class="salayan-menu-icon">🪪</span><span><b>وضعیت مدارک</b><small>مدارک راننده و کامیون</small></span><span class="salayan-menu-arrow">‹</span></button>
+      <div class="salayan-menu-section">
+        <div class="salayan-menu-section-head"><span class="salayan-menu-section-symbol">👤</span><div><b>حساب راننده و ناوگان</b><small>مدیریت مشخصات و مدارک</small></div></div>
+        <div class="salayan-menu-button-grid">
+          <button class="salayan-menu-tile" onclick="showPage('profilePage')"><span class="salayan-tile-icon">👤</span><b>پروفایل راننده</b><small>مشخصات حساب کاربری</small><span class="salayan-tile-cta">پروفایل من ←</span></button>
+          <button class="salayan-menu-tile" onclick="showPage('truckPage')"><span class="salayan-tile-icon">🚚</span><b>اطلاعات کامیون</b><small>مشخصات وسیله نقلیه</small><span class="salayan-tile-cta">اطلاعات کامیون ←</span></button>
+          <button class="salayan-menu-tile" onclick="showPage('homePage');setTimeout(()=>{document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'});},120)"><span class="salayan-tile-icon">🪪</span><b>مدارک و راه من</b><small>وضعیت مدارک و خدمات رسمی</small><span class="salayan-tile-cta">مشاهده خدمات ←</span></button>
         </div>
+      </div>
 
-        <div class="salayan-menu-group">
-            <div class="salayan-menu-heading">💳 مالی و خدمات رسمی</div>
-            <button class="salayan-menu-item" onclick="showPage('walletPage');showWallet()"><span class="salayan-menu-icon">💰</span><span><b>کیف پول</b><small>موجودی و هزینه انتخاب بار</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="salayanOpenRahMan()"><span class="salayan-menu-icon">🛣️</span><span><b>خدمات راه من</b><small>پروفایل، سوابق بارنامه و صورت‌وضعیت؛ اتصال رسمی در انتظار API</small></span><span class="salayan-menu-arrow">‹</span></button>
-            <button class="salayan-menu-item" onclick="showPage('notificationsPage')"><span class="salayan-menu-icon">🔔</span><span><b>اعلان‌ها</b><small>پیام‌ها و اطلاع‌رسانی‌ها</small></span><span class="salayan-menu-arrow">‹</span></button>
+      <div class="salayan-menu-section">
+        <div class="salayan-menu-section-head"><span class="salayan-menu-section-symbol">💳</span><div><b>مالی و اطلاع‌رسانی</b><small>کیف پول و پیام‌های سامانه</small></div></div>
+        <div class="salayan-menu-button-grid">
+          <button class="salayan-menu-tile" onclick="showPage('walletPage');showWallet()"><span class="salayan-tile-icon">💰</span><b>کیف پول</b><small>مشاهده موجودی و تراکنش‌ها</small><span class="salayan-tile-cta">ورود به کیف پول ←</span></button>
+          <button class="salayan-menu-tile" onclick="showPage('notificationsPage')"><span class="salayan-tile-icon">🔔</span><b>اعلان‌ها</b><small>پیام‌ها و اطلاعیه‌ها</small><span class="salayan-tile-cta">مشاهده اعلان‌ها ←</span></button>
+          <button class="salayan-menu-tile" onclick="salayanOpenRahMan()"><span class="salayan-tile-icon">🛣️</span><b>خدمات راه من</b><small>پروفایل، بارنامه و صورت‌وضعیت</small><span class="salayan-tile-cta">بازکردن پنل راه من ←</span></button>
         </div>
+      </div>
 
-        <div class="salayan-menu-group">
-            <div class="salayan-menu-heading">⚙️ راهنما و پشتیبانی</div>
-            <button class="salayan-menu-item" onclick="showPage('supportHelpPage')"><span class="salayan-menu-icon">💬</span><span><b>پشتیبانی و راهنما</b><small>راه‌های ارتباط و دریافت راهنمایی</small></span><span class="salayan-menu-arrow">‹</span></button>
+      <div class="salayan-menu-section">
+        <div class="salayan-menu-section-head"><span class="salayan-menu-section-symbol">🛟</span><div><b>راهنما و پشتیبانی</b><small>کمک برای استفاده از سامانه</small></div></div>
+        <div class="salayan-menu-button-grid">
+          <button class="salayan-menu-tile salayan-menu-tile-wide" onclick="showPage('supportHelpPage')"><span class="salayan-tile-icon">💬</span><b>پشتیبانی و راهنما</b><small>راهنمای استفاده و پیگیری مشکلات</small><span class="salayan-tile-cta">ورود به پشتیبانی ←</span></button>
         </div>
+      </div>
     </div>
 
     <div id="supportHelpPage" class="hidden">
