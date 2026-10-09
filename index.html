@@ -491,6 +491,88 @@ input:focus,select:focus{outline:none;border-color:#0a946c;box-shadow:0 0 0 3px 
 @media(max-width:480px){.container{padding:13px 11px 26px}.login-hero{padding:20px 16px}.login-hero h2{font-size:20px}.home-stat{padding:12px 5px}.home-stat b{font-size:19px}#salayanSmartBar{grid-template-columns:1fr;gap:9px}#salayanSmartBar .sb-smart-actions button{flex:1}.home-section{padding:13px}.load-item{padding:13px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
+
+/* ===== SALAYAN BAR SIGNATURE REDESIGN ===== */
+:root{--forest:#062f26;--green:#087b55;--green2:#0c9b6a;--mint:#e4f7ed;--lime:#d5f58b;--ink:#16372b;--muted:#75877e;--line:#dcebe2}
+body{background:#f3f7f4!important;color:var(--ink);background-image:radial-gradient(ellipse at 100% 0%,rgba(213,245,139,.17),transparent 30%)!important}
+.container{max-width:780px;padding:14px 12px 35px}
+.header{background:#062f26!important;background-image:linear-gradient(115deg,#052a22 0%,#07513b 60%,#087b55 100%)!important;box-shadow:0 8px 28px #063c2b30!important}
+.header:after{height:3px;background:linear-gradient(90deg,transparent,#d5f58b,#4ed39a,transparent)}
+.header .brand-logo{border-radius:15px;background:linear-gradient(145deg,#d5f58b,#a8e95c)!important;color:#123e2d!important;box-shadow:0 7px 18px #001b1438;border:0!important}
+.header .brand h1{font-weight:900;letter-spacing:-.5px}
+.header .brand small{color:#c9ead9}
+.card,.home-section,.home-stat,.home-search,.home-location,.load-tools,.load-item{border:1px solid #e0ebe4!important;box-shadow:0 7px 25px rgba(18,59,42,.055)!important}
+.card,.home-section{border-radius:21px!important}
+.btn{background:linear-gradient(120deg,#087b55,#0ca271)!important;box-shadow:0 5px 14px #087b5524!important;border-radius:13px!important;font-weight:800}
+.btn.secondary{background:#edf7f1!important;color:#087b55!important;border:1px solid #d5e9dd!important;box-shadow:none!important}
+input,select{border:1px solid #dce8e1!important;border-radius:12px!important;background:#fbfdfc!important}
+input:focus,select:focus{outline:0!important;border-color:#0b9a69!important;box-shadow:0 0 0 3px #0b9a691c!important}
+.driver-home{display:flex;flex-direction:column;gap:13px}
+.home-top{margin:0!important;padding:7px 2px 3px!important;align-items:center}
+.home-title h2{font-size:22px!important;font-weight:900!important;color:#123d2d!important}
+.home-title small{color:#75877e!important}
+.home-avatar{background:linear-gradient(145deg,#0d9a68,#064b37)!important;box-shadow:0 0 0 4px #e1f4e8,0 8px 16px #064b3722!important}
+.home-alert{border-radius:13px!important;background:#fff!important;border:1px solid #e1ece5!important}
+.home-search{border-radius:17px!important;padding:8px!important;gap:9px}
+.home-search input{min-width:0}
+.home-search button{border-radius:12px!important;padding:12px 17px!important}
+.home-stats{gap:9px!important}
+.home-stat{border-radius:17px!important;position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#f4faf6)!important;padding:14px 8px!important}
+.home-stat:after{content:"";position:absolute;inset:0 0 0 auto;width:4px;background:linear-gradient(#d5f58b,#0c9b6a)}
+.home-stat b{font-size:23px!important;color:#087b55!important;font-weight:900!important}
+.home-stat span{color:#6f8177!important;font-weight:700!important}
+.home-actions{gap:9px!important}
+.home-action{border-radius:17px!important;border:1px solid #e1ece5!important;background:linear-gradient(145deg,#fff,#f7fbf8)!important;box-shadow:0 5px 16px #153d2a09!important;font-weight:800!important;min-height:83px!important;transition:transform .18s,border-color .18s!important}
+.home-action:active{transform:scale(.97)}
+.home-action span{width:39px!important;height:39px!important;border-radius:14px!important;background:#e4f7ed!important;color:#087b55!important;font-size:19px!important}
+.home-section{padding:16px!important;background:linear-gradient(145deg,#fff,#fbfdfb)!important}
+.home-section-head{margin-bottom:13px!important}
+.home-section-head h3{font-size:15px!important;font-weight:900!important;color:#173d2d!important}
+.home-section-head button{font-size:11px!important;color:#087b55!important;font-weight:900!important}
+.home-load-tabs{gap:7px!important;overflow-x:auto;padding:2px 0 8px}
+.home-load-tab{border-radius:999px!important;padding:8px 14px!important;border:1px solid #e1ece5!important;background:#f6faf7!important;white-space:nowrap}
+.home-load-tab.active{background:#087b55!important;color:#fff!important;border-color:#087b55!important}
+.mini-load{border:1px solid #e0ebe4!important;border-radius:17px!important;background:linear-gradient(120deg,#fff,#f7fbf8)!important;padding:14px!important;margin-top:9px!important}
+.mini-load-route{font-size:14px!important;font-weight:900!important;color:#163c2c!important;line-height:1.9}
+.mini-load-meta{margin-top:7px!important;color:#73847b!important}
+.mini-load-fare{background:#e3f7eb!important;color:#087b55!important;font-weight:900!important;border-radius:10px!important;padding:6px 9px!important}
+.doc-row{gap:8px!important}
+.doc-item{border:1px solid #e2ece5!important;border-radius:14px!important;padding:10px!important;background:#fbfdfc!important}
+.doc-icon{border-radius:12px!important;background:#e5f7ed!important;color:#087b55!important}
+.home-location{border-radius:17px!important;background:linear-gradient(110deg,#e2f7e9,#f9fdf9)!important}
+.home-location button{border-radius:12px!important;background:#087b55!important;color:#fff!important;font-weight:800!important}
+.load-tools{border-radius:19px!important;background:linear-gradient(145deg,#f1faf5,#fff)!important}
+.load-tools-title{font-weight:900!important;color:#163c2c}
+.load-chip-row{gap:7px!important}
+.load-chip{border-radius:999px!important;border:1px solid #dfeae3!important;background:#fff!important;padding:8px 12px!important;white-space:nowrap}
+.load-chip.active{background:#087b55!important;border-color:#087b55!important;color:#fff!important}
+.load-item{border-radius:19px!important;padding:16px!important;margin-bottom:12px!important;background:#fff!important}
+.load-item h3{font-weight:900!important;font-size:16px!important;color:#153d2d!important}
+.load-item .row{padding:9px 0!important;border-bottom:1px solid #eef3ef!important}
+.load-item .row:last-of-type{border-bottom:0}
+.load-actions{gap:8px!important}
+.load-actions .btn{min-height:43px}
+.badge{border-radius:999px!important;font-weight:900!important}
+#salayanShowcase{position:relative;isolation:isolate;overflow:hidden;border-radius:25px;padding:21px 19px 17px;color:white;background:linear-gradient(125deg,#042b22 0%,#07523a 55%,#0a8c60 100%);box-shadow:0 14px 32px #063c2b30;margin:0 0 2px}
+#salayanShowcase:before{content:"";position:absolute;z-index:-1;width:220px;height:220px;left:-80px;top:-110px;border:1px solid #ffffff24;border-radius:50%;box-shadow:0 0 0 23px #ffffff08,0 0 0 48px #ffffff06}
+#salayanShowcase:after{content:"";position:absolute;z-index:-1;width:145px;height:145px;right:-55px;bottom:-85px;border-radius:50%;background:#d5f58b15}
+.sb-show-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.sb-show-kicker{font-size:10px;letter-spacing:1px;color:#c7efda;font-weight:900}
+.sb-show-title{font-size:23px;line-height:1.55;font-weight:950;letter-spacing:-.7px;margin:7px 0 3px}
+.sb-show-desc{font-size:11px;color:#d6eee1;line-height:1.9;max-width:275px}
+.sb-show-icon{flex:0 0 66px;height:66px;border-radius:21px;display:grid;place-items:center;background:linear-gradient(145deg,#d9f88f,#a9e75e);color:#16442f;font-size:35px;box-shadow:0 10px 22px #001c1435;transform:rotate(3deg)}
+.sb-show-cta{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}
+.sb-show-cta button{border:0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:11px;font-weight:900;cursor:pointer}
+.sb-show-primary{background:#d5f58b;color:#173c2b}
+.sb-show-secondary{background:#ffffff15;color:white;border:1px solid #ffffff35!important}
+.sb-show-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #ffffff24;margin-top:16px;padding-top:12px;font-size:10px;color:#d2ebdd}
+.sb-show-status{display:flex;align-items:center;gap:6px}
+.sb-show-dot{width:7px;height:7px;border-radius:50%;background:#d5f58b;box-shadow:0 0 0 4px #d5f58b1c}
+#salayanSmartBar{border-radius:17px!important;margin:0!important}
+#salayanSmartBar .sb-smart-title{font-size:12px!important}
+@media(min-width:620px){.driver-home{gap:15px}#salayanShowcase{padding:25px 26px 19px}.sb-show-title{font-size:27px}.sb-show-icon{flex-basis:78px;height:78px;font-size:42px}.home-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:420px){.container{padding:11px 9px 28px}.home-title h2{font-size:20px!important}#salayanShowcase{padding:18px 15px 15px}.sb-show-title{font-size:20px}.sb-show-icon{flex-basis:57px;height:57px;font-size:30px;border-radius:18px}.home-stat b{font-size:20px!important}.home-action{min-height:76px!important;font-size:10px!important}.home-section{padding:13px!important}}
+
 </style>
 </head>
 
@@ -2235,6 +2317,29 @@ if(location.search.includes("chat=1")){
     setInterval(updateSummary,60000);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initPremiumDashboard);else initPremiumDashboard();
+})();
+</script>
+
+
+<script id="salayan-signature-dashboard">
+(function(){
+function buildSalayanShowcase(){
+ const home=document.getElementById('homePage');
+ if(!home||document.getElementById('salayanShowcase'))return;
+ const hero=document.createElement('section');
+ hero.id='salayanShowcase';
+ hero.innerHTML='<div class="sb-show-top"><div><div class="sb-show-kicker">SALAYAN BAR · NIMBOLUK</div><div class="sb-show-title">بار مناسب،<br>مسیر پربازده‌تر.</div><div class="sb-show-desc">تالار هوشمند بار برای راننده‌ها؛ بارهای نوبتی، آزاد و مسیر برگشت، همه یک‌جا.</div></div><div class="sb-show-icon" aria-hidden="true">🚛</div></div><div class="sb-show-cta"><button class="sb-show-primary" type="button" id="sbOpenLoads">مشاهده تالار بار ←</button><button class="sb-show-secondary" type="button" id="sbSetReturn">↩ تنظیم مسیر برگشت</button></div><div class="sb-show-foot"><span class="sb-show-status"><i class="sb-show-dot"></i> پنل راننده</span><span id="sbHeroDate"></span></div>';
+ const top=home.querySelector('.home-top');
+ home.insertBefore(hero,top||home.firstChild);
+ document.getElementById('sbOpenLoads').addEventListener('click',function(){showPage('loadsPage');if(typeof showLoads==='function')showLoads();});
+ document.getElementById('sbSetReturn').addEventListener('click',function(){showPage('loadsPage');if(typeof showLoads==='function')showLoads();setTimeout(function(){const e=document.getElementById('returnRoute');if(e){e.focus();e.scrollIntoView({behavior:'smooth',block:'center'});}},250);});
+ const date=document.getElementById('sbHeroDate');
+ function tick(){if(date)date.textContent=new Date().toLocaleDateString('fa-IR',{weekday:'long',day:'numeric',month:'long'});}
+ tick();
+ const search=document.getElementById('homeLoadSearch');
+ if(search)search.placeholder='مثلاً: قائن، مشهد، سیمان، گندم…';
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSalayanShowcase);else buildSalayanShowcase();
 })();
 </script>
 
