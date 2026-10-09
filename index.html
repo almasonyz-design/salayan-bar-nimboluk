@@ -1457,6 +1457,18 @@ document.getElementById("loginMessage").innerHTML="";
 }
 async function checkSession(){
 try{
+    /* پیش‌نمایش موقت منوی اصلی بدون ورود با شماره؛ با لینک ?preview=1 */
+    if(new URLSearchParams(window.location.search).get("preview")==="1"){
+        localStorage.setItem("salayan_demo_login","1");
+        currentUser={id:"00000000-0000-0000-0000-000000000001",phone:"+989120000000",user_metadata:{demo:true}};
+        document.getElementById("profilePhone").textContent="حالت پیش‌نمایش";
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("appPage").classList.remove("hidden");
+        showPage("homePage");
+        try{await salayanLoadHomeSummary();}catch(e){console.warn("Home summary unavailable in preview",e);}
+        return;
+    }
+
     /* ورود آزمایشی در مرورگر؛ بدون وابستگی به SMS Provider */
     if(localStorage.getItem("salayan_demo_login")==="1"){
         currentUser={id:"00000000-0000-0000-0000-000000000001",phone:"+989120000000",user_metadata:{demo:true}};
