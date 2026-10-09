@@ -1497,7 +1497,24 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
                 <option value="کشنده">کشنده</option>
             </select>
 
-            <label>کرایه</label>
+            <label>نوع اتاق یا کاربری</label>
+            <select id="bodyType">
+                <option value="">انتخاب نشده</option>
+                <option value="کمپرسی">کمپرسی</option>
+                <option value="لبه‌دار">لبه‌دار</option>
+                <option value="کفی">کفی</option>
+                <option value="ترانزیت">ترانزیت</option>
+                <option value="یخچالی">یخچالی</option>
+                <option value="مخزن‌دار">مخزن‌دار</option>
+            </select>
+
+            <label>زمان بارگیری (اختیاری)</label>
+            <input id="loadingTime" type="datetime-local">
+
+            <label>توضیحات بار (اختیاری)</label>
+            <textarea id="loadNote" rows="3" placeholder="شرایط بارگیری، تسویه یا توضیحات ضروری" style="width:100%;border:1px solid #dce8e0;border-radius:12px;padding:12px;resize:vertical"></textarea>
+
+            <label>کرایه (تومان)</label>
             <input id="fare" type="number" placeholder="مبلغ به تومان">
 
             <label>نوع بار</label>
@@ -2526,6 +2543,10 @@ async function createLoad(){
             "truckType"
         ).value;
 
+    const bodyType = document.getElementById("bodyType")?.value || "";
+    const loadingTimeValue = document.getElementById("loadingTime")?.value || "";
+    const loadNote = document.getElementById("loadNote")?.value.trim() || "";
+
     const fare =
         document.getElementById(
             "fare"
@@ -2585,6 +2606,15 @@ async function createLoad(){
             truck_type:
                 truckType || null,
 
+            body_type:
+                bodyType || null,
+
+            loading_time:
+                loadingTimeValue ? new Date(loadingTimeValue).toISOString() : null,
+
+            note:
+                loadNote || null,
+
             status:
                 loadType === "free"
                 ? "free"
@@ -2641,6 +2671,9 @@ async function createLoad(){
         document.getElementById(
             "fare"
         ).value = "";
+        if(document.getElementById("bodyType"))document.getElementById("bodyType").value="";
+        if(document.getElementById("loadingTime"))document.getElementById("loadingTime").value="";
+        if(document.getElementById("loadNote"))document.getElementById("loadNote").value="";
 
 
         setTimeout(
