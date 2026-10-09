@@ -849,7 +849,47 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 @media(min-width:600px){#homePage .home-stats,#homePage .home-actions,#homePage .home-section,#homePage .salayan-rahman-card{max-width:760px;margin-left:auto!important;margin-right:auto!important}#homePage .home-top{padding-right:max(22px,calc((100% - 760px)/2))!important;padding-left:max(22px,calc((100% - 760px)/2))!important}#homePage .home-search{max-width:730px;margin-left:auto!important;margin-right:auto!important}#homePage .home-actions{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(max-width:360px){#homePage .home-stats{gap:5px!important;margin-left:9px!important;margin-right:9px!important}#homePage .home-stat{padding:10px 8px!important}#homePage .home-stat b{font-size:20px!important}#homePage .home-actions{margin-left:9px!important;margin-right:9px!important;gap:5px!important}#homePage .home-action{font-size:9px!important}#homePage .home-section{margin-left:9px!important;margin-right:9px!important;padding:11px!important}}
 
-</style>\n</head>
+</style>\n<style id="salayan-clean-home-v6">\n
+/* Clean focused driver home: GPS + essentials, grouped services live in Menu */
+.sbc-clean-home{padding:0 0 22px!important;background:#f5f8f6;min-height:100%;direction:rtl}
+.sbc-home-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 16px 25px;background:linear-gradient(135deg,#063b2c,#08734f 65%,#0b9065);border-radius:0 0 25px 25px;color:#fff;position:relative;overflow:hidden}
+.sbc-home-header:after{content:"";position:absolute;left:-65px;top:-110px;width:210px;height:210px;border:1px solid #ffffff1c;border-radius:50%;box-shadow:0 0 0 25px #ffffff08,0 0 0 50px #ffffff05;pointer-events:none}
+.sbc-home-brand{display:flex;align-items:center;gap:11px;position:relative;z-index:1}
+.sbc-home-logo{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:15px;font-weight:950;letter-spacing:-1px;background:#ffffff1b;border:1px solid #ffffff38;box-shadow:inset 0 1px 0 #ffffff18}
+.sbc-home-brand span{display:block;color:#c4ead7;font-size:10px;font-weight:700;margin-bottom:4px}
+.sbc-home-brand h2{font-size:18px;color:#fff;margin:0 0 4px;font-weight:900}
+.sbc-home-brand small{font-size:10px;line-height:1.7;color:#d6efe2}
+.sbc-home-bell{position:relative;z-index:1;width:39px;height:39px;border:1px solid #ffffff38;border-radius:13px;background:#ffffff16;color:#fff;font-size:21px;flex:none}
+.sbc-home-bell i{position:absolute;top:8px;right:8px;width:6px;height:6px;background:#a4f0c5;border-radius:50%}
+.sbc-gps-card{position:relative;margin:-12px 13px 14px;padding:17px 15px 12px;border:1px solid #dcebe2;border-radius:21px;background:#fff;box-shadow:0 8px 23px #123c2a0c;display:grid;grid-template-columns:51px minmax(0,1fr);gap:10px;align-items:center}
+.sbc-gps-orbit{position:relative;width:48px;height:48px;display:grid;place-items:center;border-radius:17px;background:#e7f7ee;color:#087f5b;font-size:27px;overflow:hidden}
+.sbc-gps-orbit i,.sbc-gps-orbit b{position:absolute;border:1px solid #0a966c38;border-radius:50%;width:35px;height:35px}
+.sbc-gps-orbit b{width:23px;height:23px}
+.sbc-gps-orbit span{position:relative;z-index:1}
+.sbc-gps-copy{min-width:0}.sbc-overline{font-size:9px;color:#7d8d83;font-weight:700}
+.sbc-gps-copy h3{font-size:14px;color:#183e2d;margin:3px 0 4px;font-weight:900}
+.sbc-gps-copy p{font-size:10px;line-height:1.8;color:#7b8b81;margin:0}
+#sbcGpsButton{grid-column:1/-1;width:100%;display:flex;align-items:center;justify-content:space-between;border:0;border-radius:12px;padding:12px 13px;background:linear-gradient(100deg,#087d58,#0a9968);color:#fff;font:inherit;font-size:11px;font-weight:900;box-shadow:0 5px 12px #087f5b1f}
+#sbcGpsButton span{font-size:17px}
+.sbc-gps-status{grid-column:1/-1;display:flex;align-items:center;gap:6px;padding-top:10px;border-top:1px solid #edf2ee;font-size:9px;color:#829087}
+.sbc-status-dot{width:6px;height:6px;border-radius:50%;background:#d7a23c;flex:none}
+.sbc-gps-privacy{margin-right:auto;color:#a0aaa4}
+.sbc-find-load{display:flex;align-items:center;gap:12px;width:calc(100% - 26px);margin:0 13px 13px;padding:14px;border:1px solid #cce7d7;border-radius:18px;background:linear-gradient(110deg,#e0f6e8,#f8fcf9);color:#164c35;text-align:right;font-family:inherit;cursor:pointer}
+.sbc-find-icon{width:45px;height:45px;border-radius:15px;background:#087f5b;color:white;display:grid;place-items:center;font-size:30px;font-weight:300;flex:none}
+.sbc-find-copy{flex:1;min-width:0}.sbc-find-copy b{display:block;font-size:13px;font-weight:900}.sbc-find-copy small{display:block;color:#718379;font-size:10px;margin-top:5px;line-height:1.6}
+.sbc-find-arrow{font-size:22px;color:#087f5b;flex:none}
+.sbc-essential-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 13px 14px}
+.sbc-essential-grid button{min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:right;gap:7px;padding:12px 10px;border:1px solid #e0ebe4;border-radius:17px;background:#fff;color:#203f30;font-family:inherit;box-shadow:0 4px 12px #163b2a06;cursor:pointer}
+.sbc-essential-icon{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;font-size:21px;font-weight:900}
+.sbc-essential-icon.turn{background:#fff3dc;color:#a66b08}.sbc-essential-icon.free{background:#e2f7eb;color:#087f5b}.sbc-essential-icon.mine{background:#e9f1ff;color:#366ab2}
+.sbc-essential-grid b{font-size:10px;line-height:1.6;font-weight:900}.sbc-essential-grid small{font-size:9px;color:#839087;line-height:1.6}
+.sbc-all-services{display:flex;align-items:center;gap:11px;width:calc(100% - 26px);margin:0 13px;padding:13px;border:1px solid #e0eae4;border-radius:17px;background:#fff;color:#244637;text-align:right;font-family:inherit;cursor:pointer;box-shadow:0 4px 12px #163b2a05}
+.sbc-services-symbol{width:41px;height:41px;display:grid;place-items:center;border-radius:13px;background:#edf7f1;color:#087f5b;font-size:25px;flex:none}
+.sbc-all-services>span:nth-child(2){flex:1;min-width:0}.sbc-all-services b{display:block;font-size:12px;font-weight:900}.sbc-all-services small{display:block;margin-top:4px;color:#829087;font-size:9px;line-height:1.7}
+.sbc-home-foot{display:flex;align-items:center;gap:6px;margin:13px 17px 0;color:#93a098;font-size:9px;line-height:1.8}.sbc-home-foot span{font-size:10px;color:#0b996b}
+@media(min-width:600px){.sbc-clean-home{max-width:800px;margin:auto}.sbc-home-header{padding-right:22px;padding-left:22px}.sbc-gps-card,.sbc-find-load,.sbc-essential-grid,.sbc-all-services{margin-left:20px;margin-right:20px;width:calc(100% - 40px)}}
+@media(max-width:350px){.sbc-home-brand h2{font-size:16px}.sbc-home-brand small{font-size:9px}.sbc-gps-card{margin-left:9px;margin-right:9px;padding:13px 11px}.sbc-find-load,.sbc-all-services{width:calc(100% - 18px);margin-left:9px;margin-right:9px}.sbc-essential-grid{margin-left:9px;margin-right:9px;gap:5px}.sbc-essential-grid button{padding:10px 7px}}
+\n</style>\n</head>
 
 <body>
 
@@ -913,92 +953,37 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 <section id="appPage" class="hidden">
 
     <!-- HOME -->
-    <div id="homePage" class="driver-home">
-        <div class="home-top">
-            <div class="home-title">
-                <h2>داشبورد راننده</h2>
-                <small>بار مناسب مسیرت را سریع پیدا کن</small>
-            </div>
-            <div style="display:flex;gap:7px;align-items:center">
-                <button class="home-alert" onclick="showPage('notificationsPage')">🔔<i></i></button>
-                <div class="home-avatar">🚛</div>
-            </div>
-        </div>
+    <div id="homePage" class="driver-home sbc-clean-home">
+  <header class="sbc-home-header">
+    <div class="sbc-home-brand"><div class="sbc-home-logo">SB</div><div><span>صلایان بار نیمبلوک</span><h2>داشبورد راننده</h2><small>مسیرت را پیدا کن؛ بارت را هوشمند انتخاب کن</small></div></div>
+    <button class="sbc-home-bell" aria-label="اعلان‌ها" onclick="showPage('notificationsPage')">♧<i></i></button>
+  </header>
 
-        <div class="home-search">
-            <span>🔎</span>
-            <input id="homeLoadSearch" placeholder="مبدأ، مقصد یا نوع بار را جستجو کن">
-            <button onclick="showPage('loadsPage');showLoads();setTimeout(()=>{const x=document.getElementById('loadSearch');if(x){x.value=document.getElementById('homeLoadSearch').value;x.dispatchEvent(new Event('input'));}},150)">جستجو</button>
-        </div>
+  <section class="sbc-gps-card">
+    <div class="sbc-gps-orbit"><span>⌖</span><i></i><b></b></div>
+    <div class="sbc-gps-copy"><span class="sbc-overline">موقعیت راننده</span><h3 id="sbcGpsTitle">موقعیتت را فعال کن</h3><p id="sbcGpsText">برای پیدا کردن بارهای نزدیک و بررسی محدوده نوبت، موقعیت مکانی لازم است.</p></div>
+    <button id="sbcGpsButton" onclick="salayanRequestLocation()">فعال‌سازی GPS <span>←</span></button>
+    <div class="sbc-gps-status"><span class="sbc-status-dot"></span><span id="sbcGpsStatus">GPS هنوز فعال نشده</span><span class="sbc-gps-privacy">فقط با اجازه شما</span></div>
+  </section>
 
-        <div class="home-stats">
-            <div class="home-stat"><b id="homeNearbyCount">-</b><span>بار نزدیک</span></div>
-            <div class="home-stat"><b id="homeTurnCount">-</b><span>بار نوبتی</span></div>
-            <div class="home-stat"><b id="homeFreeCount">-</b><span>بار آزاد</span></div>
-        </div>
+  <button class="sbc-find-load" onclick="showPage('loadsPage');showLoads()">
+    <span class="sbc-find-icon">⌕</span><span class="sbc-find-copy"><b>پیدا کردن بار</b><small>جستجو در تالار هوشمند بار</small></span><span class="sbc-find-arrow">←</span>
+  </button>
 
-        <div class="home-actions">
-            <button class="home-action" onclick="showPage('loadsPage');showLoads()"><span>🚛</span>تالار بار</button>
-            <button class="home-action" onclick="salayanHomeFilter('turn')"><span>🔄</span>نوبتی</button>
-            <button class="home-action" onclick="salayanHomeFilter('free')"><span>🟢</span>آزاد</button>
-            <button class="home-action" onclick="showPage('myLoadsPage');showMyLoads()"><span>📦</span>بارهای من</button>
-        </div>
+  <section class="sbc-essential-grid" aria-label="دسترسی‌های اصلی">
+    <button onclick="salayanHomeFilter('turn')"><span class="sbc-essential-icon turn">↻</span><b>بارهای نوبتی</b><small>مشاهده نوبت‌ها</small></button>
+    <button onclick="salayanHomeFilter('free')"><span class="sbc-essential-icon free">⇧</span><b>بارهای آزاد</b><small>بارهای قابل انتخاب</small></button>
+    <button onclick="showPage('myLoadsPage');showMyLoads()"><span class="sbc-essential-icon mine">▤</span><b>بارهای من</b><small>پیگیری انتخاب‌ها</small></button>
+  </section>
 
-        <section id="salayan-rahman-bridge" class="salayan-rahman-card">
-  <div class="sr-topline"><div class="sr-brand-icon">🛣️</div><div class="sr-heading"><span class="sr-eyebrow">اتصال خدمات راهداری</span><h3>راه من | پنل یکپارچه راننده</h3><p>دسترسی سریع به برنامه رسمی و آماده‌سازی نمایش اطلاعات در صلایان بار</p></div><span class="sr-status"><i></i>اتصال API برقرار نیست</span></div>
-  <div class="sr-metrics">
-    <div class="sr-metric"><span>👤</span><small>پروفایل راننده</small><b>در انتظار اتصال</b></div>
-    <div class="sr-metric"><span>📄</span><small>سوابق بارنامه</small><b>در انتظار اتصال</b></div>
-    <div class="sr-metric"><span>🧾</span><small>صورت‌وضعیت‌ها</small><b>در انتظار اتصال</b></div>
-  </div>
-  <div class="sr-actions">
-    <button type="button" class="sr-primary" onclick="salayanOpenRahMan()">نمایش پروفایل و خدمات</button>
-    <button type="button" class="sr-secondary" onclick="salayanOpenRahMan()">نمایش پروفایل و خدمات</button>
-  </div>
-  <div class="sr-note"><b>🔐 اتصال امن و رسمی</b><p>نمایش خودکار اطلاعات داخل این صفحه نیازمند وب‌سرویس یا مجوز اتصال رسمی از سازمان راهداری است. فعلاً این پنل اطلاعات واقعی راه من را دریافت نمی‌کند و هیچ اطلاعاتی را حدس نمی‌زند.</p></div>
-  <div class="sr-foot"><span>آخرین همگام‌سازی</span><b>هنوز انجام نشده</b><button type="button" onclick="salayanRahManInfo()">جزئیات اتصال</button></div>
-</section>
+  <button class="sbc-all-services" onclick="showPage('supportPage')">
+    <span class="sbc-services-symbol">☷</span><span><b>همه خدمات راننده</b><small>پروفایل، کامیون، کیف پول، مدارک، راه من و پشتیبانی</small></span><span class="sbc-find-arrow">←</span>
+  </button>
 
-        <div class="home-section">
-            <div class="home-section-head"><h3>📍 بارهای پیشنهادی</h3><button onclick="showPage('loadsPage');showLoads()">مشاهده همه ←</button></div>
-            <div class="home-load-tabs">
-                <button class="home-load-tab active" onclick="salayanHomeFilter('all')">همه</button>
-                <button class="home-load-tab" onclick="salayanHomeFilter('turn')">نوبتی</button>
-                <button class="home-load-tab" onclick="salayanHomeFilter('free')">آزاد</button>
-                <button class="home-load-tab" onclick="salayanHomeFilter('return')">برگشت</button>
-            </div>
-            <div id="homeSuggestedLoads"><div class="loading">در حال دریافت بارهای پیشنهادی...</div></div>
-        </div>
+  <div class="sbc-home-foot"><span>●</span> برای دیدن امکانات بیشتر، وارد «همه خدمات راننده» شوید.</div>
+</div>
 
-        <div class="home-section">
-            <div class="home-section-head"><h3>📄 وضعیت مدارک</h3><button onclick="openInquiry('all')">مشاهده همه ←</button></div>
-            <div class="doc-row">
-                <div class="doc-item"><div class="doc-icon">🔧</div><div><b>معاینه فنی</b><small>● معتبر</small></div></div>
-                <div class="doc-item"><div class="doc-icon">❤️</div><div><b>کارت سلامت</b><small>● معتبر</small></div></div>
-                <div class="doc-item"><div class="doc-icon">🛡️</div><div><b>بیمه بدنه</b><small style="color:#c92a2a">● نیازمند بررسی</small></div></div>
-                <div class="doc-item"><div class="doc-icon">🪪</div><div><b>کارت هوشمند</b><small>● معتبر</small></div></div>
-            </div>
-        </div>
-
-        <div class="home-section">
-            <div class="home-location">
-                <div><strong>📍 موقعیت راننده</strong><div class="home-note">برای پیشنهاد هوشمند بارهای نزدیک، موقعیت خود را فعال کنید.</div></div>
-                <button onclick="salayanRequestLocation()">فعال‌سازی</button>
-            </div>
-        </div>
-
-        <div class="home-section">
-            <div class="home-section-head"><h3>⚡ دسترسی سریع</h3></div>
-            <div class="home-actions" style="margin:0">
-                <button class="home-action" onclick="showPage('walletPage');showWallet()"><span>💰</span>کیف پول</button>
-                <button class="home-action" onclick="showPage('notificationsPage')"><span>🔔</span>اعلان‌ها</button>
-                <button class="home-action" onclick="showPage('profilePage')"><span>👤</span>پروفایل</button>
-                <button class="home-action" onclick="showPage('supportPage')"><span>☎️</span>پشتیبانی</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- LOADS -->
+<!-- LOADS -->
     <div id="loadsPage" class="hidden">
 
         <div class="card">
@@ -3348,6 +3333,33 @@ function salayanRahManInfo(){salayanOpenRahMan();}
  window.salayanRefreshPremiumDashboard=refreshDashboard;
 })();
 
-</script>\n</body>
+</script>\n<script id="salayan-clean-home-v6-js">\n
+(function(){
+ function setGpsUI(ok,text){
+  const title=document.getElementById("sbcGpsTitle"),detail=document.getElementById("sbcGpsText"),status=document.getElementById("sbcGpsStatus"),button=document.getElementById("sbcGpsButton"),dot=document.querySelector(".sbc-status-dot");
+  if(title)title.textContent=ok?"موقعیت دریافت شد":"موقعیتت را فعال کن";
+  if(detail)detail.textContent=text;
+  if(status)status.textContent=ok?"GPS فعال است":"GPS هنوز فعال نشده";
+  if(dot)dot.style.background=ok?"#0b996b":"#d7a23c";
+  if(button)button.innerHTML=ok?'به‌روزرسانی موقعیت <span>↻</span>':'فعال‌سازی GPS <span>←</span>';
+ }
+ const old=window.salayanRequestLocation;
+ window.salayanRequestLocation=function(){
+  if(!navigator.geolocation){setGpsUI(false,"این مرورگر امکان دریافت موقعیت مکانی را فراهم نکرده است.");return typeof old==="function"?old():undefined;}
+  setGpsUI(false,"در انتظار اجازه موقعیت مکانی از گوشی شما...");
+  navigator.geolocation.getCurrentPosition(function(pos){
+   try{localStorage.setItem("salayan_last_gps",JSON.stringify({lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy,at:Date.now()}));}catch(e){}
+   setGpsUI(true,"موقعیت با دقت تقریبی "+Math.round(pos.coords.accuracy)+" متر دریافت شد. این اطلاعات به‌تنهایی به معنی استعلام رسمی بار نیست.");
+   if(typeof window.salayanRefreshPremiumDashboard==="function")window.salayanRefreshPremiumDashboard();
+  },function(err){
+   const msg=err.code===1?"اجازه موقعیت مکانی داده نشد؛ از تنظیمات گوشی اجازه بده.":err.code===2?"موقعیت فعلاً در دسترس نیست؛ GPS گوشی را روشن کن.":"دریافت موقعیت زمان‌بر شد؛ دوباره امتحان کن.";
+   setGpsUI(false,msg);
+  },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
+ };
+ document.addEventListener("DOMContentLoaded",function(){
+  try{const x=JSON.parse(localStorage.getItem("salayan_last_gps")||"null");if(x&&Date.now()-x.at<86400000)setGpsUI(true,"آخرین موقعیت ذخیره‌شده؛ دقت تقریبی "+Math.round(x.accuracy)+" متر.");}catch(e){}
+ });
+})();
+\n</script>\n</body>
 </html>
 ```
