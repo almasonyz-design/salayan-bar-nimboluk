@@ -4358,6 +4358,48 @@ function sbOpenDriverTool(type){
 })();
 </script>
 
+
+<!-- Final mobile overlap fix: remove the fixed Rah Man shortcut entirely and reserve room for bottom navigation. -->
+<style id="salayan-final-overlap-fix">
+  #salayan-rahman-floating,
+  body > #salayan-rahman-floating {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+  @media (max-width: 760px) {
+    .container { padding-bottom: calc(150px + env(safe-area-inset-bottom, 0px)) !important; }
+    #appPage, #homePage, #supportPage, #loadsPage, #walletPage,
+    #gpsPage, #profilePage, #supportHelpPage {
+      scroll-margin-bottom: 150px !important;
+    }
+    .sb-menu-grid { position: relative !important; z-index: 1 !important; }
+    .sb-menu-tile, .sb-menu-section-head { position: relative; }
+    .bottom-nav { z-index: 200 !important; }
+  }
+</style>
+<script id="salayan-final-overlap-fix-js">
+(function(){
+  function removeFloatingRahMan(){
+    document.querySelectorAll('#salayan-rahman-floating').forEach(function(el){
+      el.remove();
+    });
+  }
+  removeFloatingRahMan();
+  if (window.MutationObserver && document.body) {
+    new MutationObserver(removeFloatingRahMan).observe(document.body,{childList:true,subtree:true});
+  } else {
+    document.addEventListener('DOMContentLoaded',removeFloatingRahMan,{once:true});
+  }
+})();
+</script>
+
 </body>
 </html>
 
