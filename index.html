@@ -2481,6 +2481,98 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
 })();
 </script>
 
+
+<style id="salayan-pro-workspace-style">
+/* Pro freight marketplace layer */
+.sb-pro-board{background:linear-gradient(135deg,#103e2d,#0b7552);color:white;border-radius:20px;padding:16px;margin:0 0 12px;box-shadow:0 10px 24px #0a4f351c}
+.sb-pro-board-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sb-pro-board h3{margin:0;font-size:15px}
+.sb-pro-board p{margin:5px 0 0;font-size:11px;line-height:1.8;color:#d9f2e5}
+.sb-pro-board .sb-pro-live{border:1px solid #ffffff3b;background:#ffffff12;padding:7px 9px;border-radius:10px;font-size:10px;white-space:nowrap}
+.sb-pro-tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;background:white;border:1px solid #dcebe3;border-radius:18px;padding:12px;margin-bottom:12px}
+.sb-pro-tools label{font-size:10px;color:#6b8178;margin:0 0 5px}
+.sb-pro-tools select{margin:0;padding:10px;font-size:12px;border-color:#e0ebe5;background:#f8fbf9}
+.sb-pro-tools .sb-pro-wide{grid-column:1/-1}
+.sb-pro-check{display:flex;align-items:center;gap:8px;padding:10px;border-radius:12px;background:#fff8df;color:#795a18;font-size:11px}
+.sb-pro-check input{width:17px;height:17px;margin:0;accent-color:#087f5b}
+.sb-pro-profit{border:1px solid #dcebe3;background:linear-gradient(130deg,#fff,#f1faf5);border-radius:20px;padding:16px}
+.sb-pro-profit h3{margin:0 0 6px;font-size:14px}
+.sb-pro-profit p{font-size:11px;color:#6b8178;line-height:1.8;margin:0 0 12px}
+.sb-pro-profit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sb-pro-profit-grid label{font-size:10px;color:#6b8178;margin:0}
+.sb-pro-profit-grid input{font-size:12px;padding:11px;margin:5px 0 0;border-color:#dcebe3}
+.sb-pro-calc-btn{width:100%;border:0;background:#087f5b;color:white;border-radius:12px;padding:12px;margin-top:10px;font-weight:bold}
+.sb-pro-result{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.sb-pro-result div{border-radius:13px;background:white;border:1px solid #e0ebe5;padding:10px}
+.sb-pro-result span{display:block;font-size:10px;color:#71847b}
+.sb-pro-result b{display:block;font-size:15px;margin-top:5px;color:#075b40}
+.sb-pro-caveat{font-size:10px;color:#71847b;line-height:1.8;margin-top:9px}
+.sb-load-meta{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}
+.sb-load-meta span{background:#f0f7f3;color:#49695a;border:1px solid #e0eee6;border-radius:8px;padding:5px 7px;font-size:10px}
+.sb-fav-btn{margin:0 0 10px}
+.load-item:after{content:"";display:block;clear:both}
+#loadsPage .feature-strip{border-radius:16px}
+#loadsPage .load-extra{font-size:11px;line-height:1.8}
+.sb-pro-empty{padding:18px;text-align:center;color:#6b8178;font-size:12px;background:white;border:1px dashed #cfe1d6;border-radius:16px;line-height:2}
+@media(max-width:380px){.sb-pro-board{padding:13px}.sb-pro-tools{padding:9px}.sb-pro-profit{padding:12px}.sb-pro-result b{font-size:13px}}
+</style>
+<script id="salayan-pro-workspace-engine">
+(function(){
+ const $=id=>document.getElementById(id);
+ const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+ function getFavs(){try{return JSON.parse(localStorage.getItem('salayan_favorite_loads_v1')||'[]').map(String)}catch(e){return []}}
+ function setupBoard(){
+  const page=$('loadsPage'),list=$('loadsList');if(!page||!list||$('sbProBoard'))return;
+  const panel=document.createElement('section');panel.id='sbProBoard';panel.className='sb-pro-board';
+  panel.innerHTML='<div class="sb-pro-board-top"><div><h3>بازار حرفه‌ای بار</h3><p>بارها را بر اساس اولویت کاری مرتب کن؛ بارهای ذخیره‌شده همیشه در دسترس‌اند.</p></div><span class="sb-pro-live">● تالار بار</span></div>';
+  const tools=document.createElement('section');tools.className='sb-pro-tools';tools.id='sbProTools';
+  tools.innerHTML='<div><label for="sbProSort">مرتب‌سازی بارها</label><select id="sbProSort"><option value="new">جدیدترین بارها</option><option value="fare_desc">بیشترین کرایه</option><option value="fare_asc">کمترین کرایه</option><option value="weight_desc">بیشترین وزن</option></select></div><div><label for="sbProMinFare">حداقل کرایه (تومان)</label><input id="sbProMinFare" type="number" min="0" placeholder="مثلاً ۵۰۰۰۰۰۰" style="margin:0;padding:10px;font-size:12px"></div><label class="sb-pro-check sb-pro-wide"><input type="checkbox" id="sbProSavedOnly"><span>⭐ فقط بارهای ذخیره‌شده من را نمایش بده</span></label><div class="sb-pro-wide" style="font-size:10px;color:#70857a;line-height:1.8">مرتب‌سازی و حداقل کرایه روی نتایج فعلی اعمال می‌شود؛ اطلاعات کرایه فقط در صورت ثبت توسط اعلام‌کننده نمایش داده خواهد شد.</div>';
+  const card=page.querySelector('.load-tools');if(card){card.insertAdjacentElement('afterend',panel);panel.insertAdjacentElement('afterend',tools)}else page.insertBefore(panel,list);
+  ['sbProSort','sbProMinFare','sbProSavedOnly'].forEach(id=>$(id).addEventListener('input',applyBoardTools));
+  const calc=document.createElement('section');calc.className='sb-evo-section';calc.id='sbProProfit';calc.innerHTML='<div class="sb-pro-profit"><h3>🧮 محاسبه‌گر ساده سود سفر</h3><p>پیش از انتخاب بار، یک برآورد اولیه از هزینه مسیر و مانده کرایه بساز. اعداد را خودت وارد کن.</p><div class="sb-pro-profit-grid"><label>کرایه کل (تومان)<input id="sbCalcFare" type="number" min="0" placeholder="مثلاً ۱۸۰۰۰۰۰۰"></label><label>مسافت کل سفر (کیلومتر)<input id="sbCalcKm" type="number" min="0" placeholder="مثلاً ۴۵۰"></label><label>مصرف گازوئیل (لیتر در ۱۰۰ کیلومتر)<input id="sbCalcFuel" type="number" min="0" value="35"></label><label>هزینه هر لیتر سوخت (تومان)<input id="sbCalcFuelPrice" type="number" min="0" placeholder="قیمت سوخت"></label><label>سایر هزینه‌ها (تومان)<input id="sbCalcOther" type="number" min="0" placeholder="لاستیک، دستمزد و…"></label></div><button class="sb-pro-calc-btn" id="sbCalcRun">محاسبه برآورد سفر</button><div id="sbCalcResult" class="sb-pro-result" style="display:none"></div><div class="sb-pro-caveat">این فقط یک محاسبه‌گر تقریبی است؛ هزینه برگشت خالی، عوارض، تعمیرات و شرایط واقعی مسیر را هم در نظر بگیر. نتیجه تضمین سود نیست.</div></div>';
+  const home=$('homePage');if(home&&!$('sbProProfit')){const route=home.querySelector('.sb-evo-section .sb-evo-route');const section=[...home.querySelectorAll('.sb-evo-section')].find(x=>x.querySelector('.sb-evo-route'));if(section)section.insertAdjacentElement('afterend',calc);else home.appendChild(calc)}
+  $('sbCalcRun').onclick=calculateProfit;
+ }
+ function applyBoardTools(){
+  const list=$('loadsList');if(!list)return;
+  const savedOnly=$('sbProSavedOnly')?.checked, min=Number($('sbProMinFare')?.value||0),sort=$('sbProSort')?.value||'new';
+  const cards=[...list.querySelectorAll('.load-item')];
+  cards.forEach(card=>{
+    const id=card.dataset.sbLoadId;
+    const source=(typeof salayanLoadsCache!=='undefined'?salayanLoadsCache:[]).find(x=>String(x.id)===String(id));
+    const fare=Number(source?.fare??source?.price??source?.amount??0);
+    const show=(!savedOnly||(id&&getFavs().includes(String(id))))&&fare>=min;
+    card.style.display=show?'':'none';
+  });
+  const visible=cards.filter(c=>c.style.display!=='none');
+  visible.sort((a,b)=>{
+   const aa=(typeof salayanLoadsCache!=='undefined'?salayanLoadsCache:[]).find(x=>String(x.id)===String(a.dataset.sbLoadId))||{};
+   const bb=(typeof salayanLoadsCache!=='undefined'?salayanLoadsCache:[]).find(x=>String(x.id)===String(b.dataset.sbLoadId))||{};
+   if(sort==='fare_desc')return Number(bb.fare??bb.price??bb.amount??0)-Number(aa.fare??aa.price??aa.amount??0);
+   if(sort==='fare_asc')return Number(aa.fare??aa.price??aa.amount??0)-Number(bb.fare??bb.price??bb.amount??0);
+   if(sort==='weight_desc')return Number(bb.weight||0)-Number(aa.weight||0);
+   return new Date(bb.created_at||0)-new Date(aa.created_at||0);
+  });
+  visible.forEach(x=>list.appendChild(x));
+  let empty=$('sbProFilterEmpty');
+  if(!empty){empty=document.createElement('div');empty.id='sbProFilterEmpty';empty.className='sb-pro-empty';empty.textContent='با این فیلتر باری پیدا نشد. فیلترها را تغییر بده یا بارها را ذخیره کن.'}
+  if(cards.length&&visible.length===0){list.appendChild(empty);empty.style.display='block'}else if(empty)empty.style.display='none';
+ }
+ function calculateProfit(){
+  const fare=Number($('sbCalcFare').value||0),km=Number($('sbCalcKm').value||0),fuel=Number($('sbCalcFuel').value||0),price=Number($('sbCalcFuelPrice').value||0),other=Number($('sbCalcOther').value||0);
+  if(!fare||!km||!fuel||!price){alert('کرایه، مسافت، مصرف سوخت و قیمت سوخت را وارد کن.');return}
+  const liters=km*fuel/100,cost=liters*price+other,net=fare-cost,perKm=net/km;
+  const out=$('sbCalcResult');out.style.display='grid';out.innerHTML='<div><span>هزینه سوخت</span><b>'+Math.round(liters*price).toLocaleString('fa-IR')+' تومان</b></div><div><span>هزینه‌های واردشده</span><b>'+Math.round(cost).toLocaleString('fa-IR')+' تومان</b></div><div><span>مانده پس از هزینه‌ها</span><b style="color:'+(net>=0?'#087f5b':'#c92a2a')+'">'+Math.round(net).toLocaleString('fa-IR')+' تومان</b></div><div><span>مانده به ازای هر کیلومتر</span><b>'+Math.round(perKm).toLocaleString('fa-IR')+' تومان</b></div>';
+ }
+ const originalApply=window.salayanApplyFilters;
+ if(typeof originalApply==='function'&&!originalApply.__sbProWrapped){const wrapped=function(){originalApply.apply(this,arguments);applyBoardTools()};wrapped.__sbProWrapped=true;window.salayanApplyFilters=wrapped}
+ const originalFav=window.salayanToggleFavorite;
+ if(typeof originalFav==='function'&&!originalFav.__sbProWrapped){const wrapped=function(){originalFav.apply(this,arguments);applyBoardTools();const count=$('sbEvoFavCount');if(count)count.textContent=getFavs().length.toLocaleString('fa-IR')};wrapped.__sbProWrapped=true;window.salayanToggleFavorite=wrapped}
+ document.addEventListener('DOMContentLoaded',setupBoard);
+ if(document.readyState!=='loading')setupBoard();
+})();
+</script>
+
 </body>
 </html>
 ```
