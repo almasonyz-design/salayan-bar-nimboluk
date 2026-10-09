@@ -2391,6 +2391,7 @@ async function showLoads(){
             `<div class="error">
                 خطا در دریافت بارها:
                 ${escapeHtml(error.message)}
+                <br><small>اگر خطا به ستون fare یا truck_type اشاره می‌کند، فایل مهاجرت پایگاه داده صلایان بار را در SQL Editor سوپابیس اجرا کن.</small>
             </div>`;
 
     }
@@ -2577,6 +2578,12 @@ async function createLoad(){
 
             weight:
                 Number(weight),
+
+            fare:
+                Number(fare),
+
+            truck_type:
+                truckType || null,
 
             status:
                 loadType === "free"
