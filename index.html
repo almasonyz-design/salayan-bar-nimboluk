@@ -932,6 +932,51 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 @media(max-width:380px){.sb-menu-heading{padding:17px 13px 13px}.sb-menu-heading h2{font-size:22px}.sb-menu-emblem{width:48px;height:48px;font-size:25px}.sb-menu-section{padding:10px}.sb-menu-grid{gap:7px}.sb-menu-tile{padding:10px;min-height:125px}.sb-section-count{font-size:8px;padding:5px}}
 </style>
 
+
+<style id="salayan-top-dropdown-navigation">
+/* Premium top navigation with expandable dropdown */
+body{padding-bottom:18px!important}
+.bottom-nav{display:none!important}
+.header{position:sticky;top:0;z-index:1000;padding:10px 12px!important}
+.header .brand-row{gap:8px;position:relative}
+.header .brand{min-width:0;flex:1}
+.header .brand h1{font-size:clamp(14px,3.8vw,19px)!important;white-space:nowrap}
+.header .brand small{font-size:9px!important}
+.header .brand-logo{width:39px!important;height:39px!important;flex:none}
+.sb-top-actions{display:flex;align-items:center;gap:7px;position:relative;flex:none}
+.sb-top-wallet{padding:10px 9px!important;font-size:10px;white-space:nowrap;border-radius:12px!important}
+.sb-top-menu-trigger{display:flex;align-items:center;gap:7px;padding:10px 11px;border:1px solid #d9f5e5;border-radius:13px;background:linear-gradient(145deg,#d7f68f,#b8ed70);color:#173e2e;font-family:inherit;font-size:11px;font-weight:900;white-space:nowrap;box-shadow:0 5px 14px #001d1425;cursor:pointer}
+.sb-top-menu-trigger[aria-expanded="true"]{background:#fff;color:#087f5b;border-color:#c9e8d5}
+.sb-top-menu-trigger-icon{display:flex;flex-direction:column;gap:3px;width:15px}
+.sb-top-menu-trigger-icon i{display:block;height:2px;width:15px;background:currentColor;border-radius:2px}
+.sb-top-menu-trigger-icon i:nth-child(2){width:11px}
+.sb-top-menu-caret{font-size:15px;line-height:10px;transition:transform .2s}
+.sb-top-menu-trigger[aria-expanded="true"] .sb-top-menu-caret{transform:rotate(180deg)}
+.sb-top-dropdown{position:absolute;top:calc(100% + 12px);left:0;width:min(355px,calc(100vw - 22px));max-height:min(78vh,680px);overflow:auto;padding:11px;background:rgba(255,255,255,.985);border:1px solid #dcebe3;border-radius:21px;box-shadow:0 20px 55px #062e1f36;z-index:1200;color:#173e2d;animation:sbDropdownIn .18s ease-out;overscroll-behavior:contain}
+.sb-top-dropdown.hidden{display:none!important}
+@keyframes sbDropdownIn{from{opacity:0;transform:translateY(-7px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.sb-top-dropdown-head{display:flex;align-items:center;gap:10px;padding:10px 8px 13px;border-bottom:1px solid #eaf1ec;margin-bottom:8px}
+.sb-top-dropdown-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#073f30,#0a9568);color:#d9f7a3;font-size:13px;font-weight:900;box-shadow:0 5px 13px #087f5b24}
+.sb-top-dropdown-head>span:nth-child(2){flex:1}
+.sb-top-dropdown-head b{display:block;font-size:13px;font-weight:900}
+.sb-top-dropdown-head small{display:block;font-size:10px;color:#809087;margin-top:4px}
+.sb-top-dropdown-head>button{width:30px;height:30px;border:0;border-radius:10px;background:#eff7f2;color:#567367;font-size:21px;cursor:pointer}
+.sb-top-dropdown-label{padding:10px 7px 6px;color:#819087;font-size:9px;font-weight:900}
+.sb-top-dropdown-item{width:100%;display:flex;align-items:center;gap:10px;padding:10px 8px;margin:2px 0;border:0;border-radius:13px;background:transparent;color:#244536;text-align:right;font-family:inherit;cursor:pointer}
+.sb-top-dropdown-item:hover,.sb-top-dropdown-item:focus-visible{background:#f0f8f3;outline:0}
+.sb-top-item-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:#e8f6ee;font-size:18px;flex:none}
+.sb-top-dropdown-item>span:nth-child(2){flex:1;min-width:0}
+.sb-top-dropdown-item b{display:block;font-size:11px;font-weight:900}
+.sb-top-dropdown-item small{display:block;font-size:9px;color:#87958d;margin-top:4px;line-height:1.6}
+.sb-top-item-arrow{font-size:19px;color:#0b8a60;flex:none}
+.sb-top-dropdown-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:5px 2px 8px}
+.sb-top-dropdown-shortcuts button{display:flex;align-items:center;gap:7px;min-width:0;padding:10px 8px;border:1px solid #e0ece5;border-radius:12px;background:#fbfdfb;color:#345444;font-family:inherit;font-size:10px;font-weight:800;text-align:right;cursor:pointer}
+.sb-top-dropdown-shortcuts button span{width:27px;height:27px;display:grid;place-items:center;border-radius:9px;background:#e7f6ed;font-size:15px;flex:none}
+.sb-top-dropdown-foot{display:flex;align-items:center;gap:7px;margin-top:7px;padding:11px 8px 4px;border-top:1px solid #edf2ee;color:#8a9890;font-size:9px}
+.sb-top-live-dot{width:7px;height:7px;border-radius:50%;background:#0ba66e;box-shadow:0 0 0 4px #e2f7eb}
+@media(max-width:390px){.header{padding:8px 8px!important}.header .brand{gap:6px}.header .brand-logo{width:33px!important;height:33px!important;font-size:18px!important}.header .brand h1{font-size:13px!important}.header .brand small{font-size:8px!important}.sb-top-actions{gap:5px}.sb-top-wallet{display:none!important}.sb-top-menu-trigger{padding:9px 9px;font-size:10px;gap:6px}.sb-top-dropdown{left:-1px;width:min(340px,calc(100vw - 16px));max-height:78vh}}
+</style>
+
 </head>
 
 <body>
@@ -945,7 +990,32 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
                 <small>سامانه هوشمند بار و حمل‌ونقل</small>
             </div>
         </div>
-        <button class="header-action" type="button" onclick="showPage('walletPage');showWallet();">💰 کیف پول</button>
+        <div class="sb-top-actions">
+          <button class="header-action sb-top-wallet" type="button" onclick="showPage('walletPage');showWallet();">💰 کیف پول</button>
+          <button class="sb-top-menu-trigger" id="sbTopMenuTrigger" type="button" aria-expanded="false" aria-controls="sbTopDropdown" onclick="sbToggleTopMenu(event)">
+            <span class="sb-top-menu-trigger-icon"><i></i><i></i><i></i></span><span>منوی خدمات</span><b class="sb-top-menu-caret">⌄</b>
+          </button>
+          <div class="sb-top-dropdown hidden" id="sbTopDropdown">
+            <div class="sb-top-dropdown-head"><span class="sb-top-dropdown-mark">SB</span><span><b>مرکز دسترسی سریع</b><small>صلایان بار نیمبلوک</small></span><button type="button" aria-label="بستن منو" onclick="sbCloseTopMenu()">×</button></div>
+            <div class="sb-top-dropdown-label">بار و حمل‌ونقل</div>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('homePage')"><span class="sb-top-item-icon">⌂</span><span><b>صفحه اصلی</b><small>داشبورد و موقعیت GPS</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('loadsPage',true)"><span class="sb-top-item-icon">🚛</span><span><b>تالار هوشمند بار</b><small>جستجو و مشاهده بارها</small></span><span class="sb-top-item-arrow">←</span></button>
+            <div class="sb-top-dropdown-shortcuts">
+              <button onclick="sbTopFilter('turn')"><span>🔄</span>بارهای نوبتی</button>
+              <button onclick="sbTopFilter('free')"><span>🟢</span>بارهای آزاد</button>
+              <button onclick="sbTopGo('myLoadsPage',false,true)"><span>📦</span>بارهای من</button>
+              <button onclick="sbTopGo('createLoadPage')"><span>＋</span>اعلام بار</button>
+            </div>
+            <div class="sb-top-dropdown-label">حساب و خدمات راننده</div>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('profilePage')"><span class="sb-top-item-icon">👤</span><span><b>پروفایل راننده</b><small>اطلاعات حساب کاربری</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('truckPage')"><span class="sb-top-item-icon">🚚</span><span><b>اطلاعات کامیون و ناوگان</b><small>مشخصات وسیله نقلیه</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('walletPage',false,true)"><span class="sb-top-item-icon">💰</span><span><b>کیف پول و اعتبار</b><small>موجودی و هزینه خدمات</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('notificationsPage')"><span class="sb-top-item-icon">🔔</span><span><b>اعلان‌ها و اطلاعیه‌ها</b><small>پیام‌های سامانه</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('supportPage')"><span class="sb-top-item-icon">☷</span><span><b>همه خدمات راننده</b><small>مدارک، راه من و خدمات بیشتر</small></span><span class="sb-top-item-arrow">←</span></button>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('supportHelpPage')"><span class="sb-top-item-icon">✦</span><span><b>راهنما و پشتیبانی</b><small>راهنمای استفاده از برنامه</small></span><span class="sb-top-item-arrow">←</span></button>
+            <div class="sb-top-dropdown-foot"><span class="sb-top-live-dot"></span>سامانه اعلام بار هوشمند</div>
+          </div>
+        </div>
     </div>
 </div>
 
@@ -3470,6 +3540,42 @@ function sbFilterMenu(query){
   const feature=root.querySelector('.sb-menu-featured');
   if(feature) feature.style.display=!q||('تالار هوشمند بار جستجو فیلتر بارهای موجود'.includes(q))?'':'none';
 }
+
+
+/* Top dropdown navigation */
+function sbToggleTopMenu(event){
+  if(event) event.stopPropagation();
+  const panel=document.getElementById('sbTopDropdown');
+  const trigger=document.getElementById('sbTopMenuTrigger');
+  if(!panel||!trigger)return;
+  const opening=panel.classList.contains('hidden');
+  panel.classList.toggle('hidden',!opening);
+  trigger.setAttribute('aria-expanded',opening?'true':'false');
+}
+function sbCloseTopMenu(){
+  const panel=document.getElementById('sbTopDropdown');
+  const trigger=document.getElementById('sbTopMenuTrigger');
+  if(panel)panel.classList.add('hidden');
+  if(trigger)trigger.setAttribute('aria-expanded','false');
+}
+function sbTopGo(page,loadList=false,myLoads=false){
+  sbCloseTopMenu();
+  showPage(page);
+  if(loadList&&typeof showLoads==='function')showLoads();
+  if(myLoads&&page==='myLoadsPage'&&typeof showMyLoads==='function')showMyLoads();
+  if(page==='walletPage'&&typeof showWallet==='function')showWallet();
+}
+function sbTopFilter(type){
+  sbCloseTopMenu();
+  if(typeof salayanHomeFilter==='function')salayanHomeFilter(type);
+  else {showPage('loadsPage');if(typeof showLoads==='function')showLoads();setTimeout(()=>{const f=document.getElementById('loadTypeFilter');if(f){f.value=type;f.dispatchEvent(new Event('change',{bubbles:true}));}},100);}
+}
+document.addEventListener('click',function(event){
+  const panel=document.getElementById('sbTopDropdown');
+  const trigger=document.getElementById('sbTopMenuTrigger');
+  if(panel&&!panel.classList.contains('hidden')&&!panel.contains(event.target)&&trigger&&!trigger.contains(event.target))sbCloseTopMenu();
+});
+document.addEventListener('keydown',function(event){if(event.key==='Escape')sbCloseTopMenu();});
 
 </script>\n</body>
 </html>
