@@ -4136,7 +4136,7 @@ function salayanOpenRahMan(){
       }
     });
     modal.querySelector(".sri-banner").appendChild(officialAppButton);
-    var close=function(){modal.style.display="none";document.body.style.overflow="";};
+    var close=function(){modal.setAttribute("aria-hidden","true");modal.style.display="none";document.body.style.overflow="";};
     modal.querySelector(".sri-close").addEventListener("click",close);
     modal.querySelector(".sri-done").addEventListener("click",close);
     modal.querySelector(".sri-backdrop").addEventListener("click",close);
@@ -4152,6 +4152,8 @@ function salayanOpenRahMan(){
       });
     });
   }
+  modal.setAttribute("aria-hidden","false");
+  modal.style.removeProperty("visibility");modal.style.removeProperty("opacity");modal.style.removeProperty("pointer-events");
   modal.style.display="block";
   document.body.style.overflow="hidden";
 }
@@ -5556,19 +5558,19 @@ body.salayan-rahman-modal-open{overflow:hidden!important}
 html,body{max-width:100%;overscroll-behavior-x:none}
 html body #sbGuideOverlay{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 html body #sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-html body #salayan-rahman-inapp-modal{display:none}
-html body #salayan-rahman-inapp-modal[style*="display: block"]{display:block!important;pointer-events:auto!important}
+html body #salayan-rahman-inapp-modal{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+html body #salayan-rahman-inapp-modal[aria-hidden="false"]{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
 html body #sbGuideFab{pointer-events:auto!important;touch-action:manipulation!important;z-index:2147483000!important}
+html body #sbGlobalBack,html body #sbTopMenuTrigger,html body .sb-top-actions{pointer-events:auto!important;touch-action:manipulation!important}
 </style>
 <script id="salayan-touch-emergency-recovery-js">
 (function(){
- function recover(){
-  const overlay=document.getElementById('sbGuideOverlay');
-  const fab=document.getElementById('sbGuideFab');
+ var manualGuide=false;
+ function closeStuckLayers(){
+  var overlay=document.getElementById('sbGuideOverlay');
+  var modal=document.getElementById('salayan-rahman-inapp-modal');
   document.body.classList.remove('sb-guide-is-open','salayan-rahman-modal-open');
-  document.body.style.removeProperty('overflow');
-  document.documentElement.style.removeProperty('overflow');
-  if(overlay){
+  if(!manualGuide && overlay){
    overlay.classList.remove('open');
    overlay.setAttribute('aria-hidden','true');
    overlay.style.setProperty('display','none','important');
@@ -5576,19 +5578,31 @@ html body #sbGuideFab{pointer-events:auto!important;touch-action:manipulation!im
    overlay.style.setProperty('opacity','0','important');
    overlay.style.setProperty('pointer-events','none','important');
   }
-  if(fab)fab.setAttribute('aria-expanded','false');
-  const modal=document.getElementById('salayan-rahman-inapp-modal');
-  if(modal){modal.style.setProperty('display','none','important');modal.setAttribute('aria-hidden','true')}
+  if(modal && modal.getAttribute('aria-hidden')!=='false'){
+   modal.style.setProperty('display','none','important');
+   modal.style.setProperty('visibility','hidden','important');
+   modal.style.setProperty('opacity','0','important');
+   modal.style.setProperty('pointer-events','none','important');
+   document.body.style.removeProperty('overflow');
+  }
+  if(!manualGuide){
+   document.body.style.removeProperty('overflow');
+   document.documentElement.style.removeProperty('overflow');
+  }
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',recover,{once:true});else recover();
- window.addEventListener('pageshow',recover);
- // Use delegated click handling so the guide works even if elements were moved to the body.
+ function start(){
+  closeStuckLayers();
+  [250,800,1800,3500].forEach(function(ms){setTimeout(closeStuckLayers,ms)});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+ window.addEventListener('pageshow',start);
  document.addEventListener('click',function(e){
-  const t=e.target&&e.target.closest?e.target.closest('#sbGuideFab'):null;
+  var t=e.target&&e.target.closest?e.target.closest('#sbGuideFab'):null;
   if(!t)return;
-  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
-  const overlay=document.getElementById('sbGuideOverlay');
+  var overlay=document.getElementById('sbGuideOverlay');
   if(!overlay)return;
+  e.preventDefault();e.stopPropagation();
+  manualGuide=true;
   overlay.classList.add('open');
   overlay.setAttribute('aria-hidden','false');
   overlay.style.setProperty('display','flex','important');
@@ -5598,8 +5612,19 @@ html body #sbGuideFab{pointer-events:auto!important;touch-action:manipulation!im
   document.body.classList.add('sb-guide-is-open');
   document.body.style.overflow='hidden';
   document.documentElement.style.overflow='hidden';
-  t.setAttribute('aria-expanded','true');
  },true);
+ document.addEventListener('click',function(e){
+  var t=e.target&&e.target.closest?e.target.closest('#sbGuideClose,#sbGuideStartLoads'):null;
+  if(!t)return;
+  manualGuide=false;
+  setTimeout(closeStuckLayers,0);
+ },true);
+ // If an old script accidentally reopens a hidden full-screen modal, keep it from blocking taps.
+ var obs=new MutationObserver(function(){
+  var m=document.getElementById('salayan-rahman-inapp-modal');
+  if(m && m.getAttribute('aria-hidden')!=='false' && m.style.display!=='none')closeStuckLayers();
+ });
+ if(document.body)obs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class','aria-hidden']});
 })();
 </script>
 
