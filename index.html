@@ -2343,6 +2343,144 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="salayan-evolution-design">
+:root{--sb-ink:#102f25;--sb-muted:#6b8178;--sb-green:#087f5b;--sb-mint:#e6f7ee;--sb-line:#dcebe3;--sb-gold:#f4c76a}
+body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,sans-serif}
+#appPage{max-width:780px;margin:0 auto}
+#homePage{padding:0 0 14px}
+#salayanShowcase{display:none!important}
+.sb-evo-hero{position:relative;overflow:hidden;padding:24px 20px 18px;border-radius:0 0 28px 28px;background:radial-gradient(circle at 8% 5%,rgba(255,255,255,.2),transparent 28%),linear-gradient(135deg,#064d3a 0%,#087f5b 52%,#18a477 100%);color:#fff;box-shadow:0 12px 28px rgba(5,91,63,.19);margin:0 0 16px}
+.sb-evo-hero:after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-78px;top:-100px;box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 50px rgba(255,255,255,.025)}
+.sb-evo-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:1}
+.sb-evo-kicker{font-size:10px;letter-spacing:1.6px;opacity:.78;font-weight:bold}
+.sb-evo-title{font-size:25px;line-height:1.55;font-weight:900;margin:9px 0 4px}
+.sb-evo-desc{font-size:12px;line-height:1.9;color:#e0f5eb;max-width:310px}
+.sb-evo-truck{flex-shrink:0;display:grid;place-items:center;width:78px;height:78px;border-radius:24px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:42px;box-shadow:inset 0 1px rgba(255,255,255,.18)}
+.sb-evo-status{display:flex;align-items:center;gap:7px;font-size:11px;margin-top:15px;color:#e3fff1}
+.sb-evo-dot{width:7px;height:7px;border-radius:50%;background:#86efac;box-shadow:0 0 0 4px rgba(134,239,172,.15)}
+.sb-evo-search{display:flex;gap:8px;background:white;padding:7px;border-radius:17px;box-shadow:0 8px 22px rgba(12,52,36,.13);margin:-1px 0 0;position:relative;z-index:2}
+.sb-evo-search input{margin:0;border:0;background:#f6faf7;min-width:0;padding:12px;border-radius:12px;font-size:13px}
+.sb-evo-search button{border:0;border-radius:12px;background:#0b805c;color:white;font-weight:bold;padding:0 15px;white-space:nowrap}
+.sb-evo-section{margin:16px 14px 0}
+.sb-evo-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.sb-evo-section-head h3{font-size:15px;margin:0;font-weight:900}
+.sb-evo-section-head small{font-size:10px;color:var(--sb-muted)}
+.sb-evo-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.sb-evo-metric{background:#fff;border:1px solid var(--sb-line);border-radius:18px;padding:13px 11px;box-shadow:0 4px 14px rgba(22,67,48,.04);min-width:0}
+.sb-evo-metric-icon{width:31px;height:31px;border-radius:11px;display:grid;place-items:center;background:#e6f7ee;font-size:16px;margin-bottom:9px}
+.sb-evo-metric b{display:block;font-size:23px;line-height:1.2;color:#075b40}
+.sb-evo-metric span{display:block;font-size:10px;color:var(--sb-muted);margin-top:5px}
+.sb-evo-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.sb-evo-action{border:1px solid var(--sb-line);border-radius:16px;background:white;padding:13px 5px 11px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--sb-ink);font-size:11px;font-weight:bold;box-shadow:0 4px 12px rgba(22,67,48,.035)}
+.sb-evo-action i{font-style:normal;width:38px;height:38px;display:grid;place-items:center;background:#e9f8f0;border-radius:13px;font-size:20px}
+.sb-evo-action:active{transform:scale(.97)}
+.sb-evo-route{background:linear-gradient(120deg,#fff,#f2fbf6);border:1px solid #cfe8da;border-radius:19px;padding:15px;position:relative;overflow:hidden}
+.sb-evo-route:after{content:"↩";position:absolute;left:10px;top:2px;font-size:56px;color:rgba(8,127,91,.08);font-weight:bold}
+.sb-evo-route-title{font-size:13px;font-weight:900;margin-bottom:6px}
+.sb-evo-route-sub{font-size:11px;color:var(--sb-muted);line-height:1.8;margin-bottom:11px}
+.sb-evo-route-row{display:flex;gap:8px;position:relative;z-index:1}
+.sb-evo-route-row input{margin:0;background:white;font-size:12px;min-width:0}
+.sb-evo-route-row button{border:0;border-radius:11px;background:#087f5b;color:white;font-weight:bold;padding:0 12px;white-space:nowrap}
+.sb-evo-saved{border:1px solid #f1dfad;background:#fffaf0;color:#795a18;border-radius:14px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:11px;gap:8px;margin-top:8px}
+#homePage .home-top{margin:0 14px 12px;padding-top:2px}
+#homePage .home-title h2{font-size:17px}
+#homePage .home-title small{font-size:11px;color:var(--sb-muted)}
+#homePage .home-stats,#homePage .home-actions,#homePage .home-search{display:none!important}
+#homePage .home-section{margin:17px 14px;background:transparent}
+#homePage .home-section-head h3{font-size:15px}
+#homePage .home-load-tabs{background:#e5eee9;padding:4px;border-radius:13px;display:flex;gap:4px}
+#homePage .home-load-tab{flex:1;border:0;border-radius:10px;padding:9px 3px;font-size:11px;color:#557267;background:transparent}
+#homePage .home-load-tab.active{background:#fff;color:#087f5b;box-shadow:0 2px 8px #0a51330f}
+#homePage .home-section .load-item,.load-item{border:1px solid #dfebe4!important;border-radius:18px!important;box-shadow:0 5px 18px rgba(12,61,39,.055)!important;padding:16px!important}
+.load-item h3{font-size:16px;line-height:1.6}
+.load-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.load-actions .btn{margin-top:8px;font-size:12px;padding:11px 7px}
+.sb-fav-btn{float:left;border:1px solid #dcebe3;border-radius:10px;background:#f6faf7;padding:7px 9px;color:#61776d;font-size:12px}
+.sb-fav-btn.on{background:#fff3c4;border-color:#f1d36c;color:#8a6500}
+.sb-fav-filter{border:1px solid #f0d98d!important;background:#fff8df!important;color:#805d0b!important}
+#loadsPage .card,#myLoadsPage .card,#walletPage .card,#profilePage .card,#truckPage .card,#notificationsPage .card,#supportPage .card{border-radius:20px!important}
+.bottom-nav{backdrop-filter:blur(18px);background:rgba(255,255,255,.94)!important;border-top:1px solid #dcebe3!important;box-shadow:0 -8px 28px rgba(15,65,43,.08)!important}
+.bottom-nav-inner button{font-size:10px}
+.bottom-nav-inner button.active{color:#087f5b!important}
+#salayanEvoFavModal{position:fixed;inset:0;z-index:99990;background:rgba(4,30,20,.55);display:none;align-items:flex-end;justify-content:center;padding:12px}
+#salayanEvoFavModal .sb-fav-sheet{width:min(100%,650px);max-height:80vh;overflow:auto;background:#f8fbf9;border-radius:24px 24px 18px 18px;padding:18px;box-shadow:0 20px 80px #0003}
+.sb-fav-sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sb-fav-sheet-head h3{margin:0;font-size:17px}
+.sb-fav-sheet-head button{border:0;background:#e7f3ec;border-radius:10px;padding:9px 12px;color:#155b41}
+.sb-evo-mini-note{font-size:10px;line-height:1.8;color:#698177;margin-top:10px}
+@media(min-width:600px){.sb-evo-hero{border-radius:0 0 32px 32px;padding:28px 26px}.sb-evo-section{margin-left:20px;margin-right:20px}.sb-evo-title{font-size:30px}}
+@media(max-width:380px){.sb-evo-title{font-size:22px}.sb-evo-truck{width:60px;height:60px;font-size:32px;border-radius:18px}.sb-evo-metric{padding:11px 8px}.sb-evo-metric b{font-size:20px}.sb-evo-action{font-size:10px}.sb-evo-route-row button{padding:0 8px}}
+</style>
+<script id="salayan-evolution-engine">
+(function(){
+ const $=id=>document.getElementById(id);
+ const key='salayan_favorite_loads_v1';
+ const getFavs=()=>{try{return JSON.parse(localStorage.getItem(key)||'[]').map(String)}catch(e){return []}};
+ const setFavs=a=>localStorage.setItem(key,JSON.stringify([...new Set(a.map(String))]));
+ window.salayanToggleFavorite=function(id){
+   id=String(id);let a=getFavs();a=a.includes(id)?a.filter(x=>x!==id):a.concat(id);setFavs(a);
+   const b=document.querySelector('[data-sb-fav="'+CSS.escape(id)+'"]');if(b){const on=a.includes(id);b.classList.toggle('on',on);b.textContent=on?'⭐ ذخیره شد':'☆ ذخیره بار';}
+   const count=$('sbEvoFavCount');if(count)count.textContent=String(a.length).toLocaleString('fa-IR');
+ };
+ window.salayanShowFavorites=function(){
+   const modal=$('salayanEvoFavModal'),body=$('sbFavModalBody');if(!modal||!body)return;
+   const ids=getFavs(),cache=window.salayanLoadsCache||[];
+   const rows=cache.filter(x=>ids.includes(String(x.id)));
+   body.innerHTML=rows.length?rows.map(x=>'<div class="load-item"><button class="sb-fav-btn on" onclick="salayanToggleFavorite(\''+String(x.id).replace(/'/g,'&#39;')+'\');salayanShowFavorites()">⭐ ذخیره‌شده</button><h3>'+esc(x.origin||'-')+' ← '+esc(x.destination||'-')+'</h3><div class="row"><span>کالا</span><strong>'+esc(x.cargo||'-')+'</strong></div><div class="row"><span>وزن</span><strong>'+esc(x.weight??'-')+' تن</strong></div><button class="btn" onclick="salayanCloseFavorites();showPage(\'loadsPage\');showLoads()">رفتن به تالار بار</button></div>').join(''):'<div class="card"><div style="font-size:32px;text-align:center">⭐</div><h3 style="text-align:center">هنوز باری ذخیره نکرده‌ای</h3><p style="text-align:center;color:#698177;font-size:12px">در تالار بار، کنار هر بار دکمه «ذخیره بار» را بزن تا بعداً سریع پیدایش کنی.</p><button class="btn" onclick="salayanCloseFavorites();showPage(\'loadsPage\');showLoads()">مشاهده تالار بار</button></div>';
+   modal.style.display='flex';
+ };
+ window.salayanCloseFavorites=function(){const m=$('salayanEvoFavModal');if(m)m.style.display='none'};
+ function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+ function build(){
+   const home=$('homePage');if(!home||$('sbEvoHero'))return;
+   const oldHero=$('salayanShowcase');if(oldHero)oldHero.remove();
+   const hero=document.createElement('section');hero.className='sb-evo-hero';hero.id='sbEvoHero';
+   hero.innerHTML='<div class="sb-evo-top"><div><div class="sb-evo-kicker">SALAYAN BAR / NIMBOLUK</div><div class="sb-evo-title">بار هوشمند؛<br>تصمیم بهتر، مسیر پربازده‌تر.</div><div class="sb-evo-desc">بازار بار، مسیر برگشت و بارهای ذخیره‌شده؛ یک پنل یکپارچه برای راننده.</div></div><div class="sb-evo-truck">🚛</div></div><div class="sb-evo-status"><i class="sb-evo-dot"></i><span>پنل راننده</span><span>•</span><span id="sbEvoDate"></span></div>';
+   home.insertBefore(hero,home.firstChild);
+   const search=document.createElement('div');search.className='sb-evo-section';search.innerHTML='<div class="sb-evo-search"><input id="sbEvoSearchInput" placeholder="جستجو: مبدأ، مقصد یا نوع کالا…"><button id="sbEvoSearchBtn">جستجوی بار ←</button></div>';
+   hero.insertAdjacentElement('afterend',search);
+   const metrics=document.createElement('section');metrics.className='sb-evo-section';metrics.innerHTML='<div class="sb-evo-section-head"><h3>نمای کلی بازار</h3><small id="sbEvoUpdated">آماده دریافت اطلاعات</small></div><div class="sb-evo-metrics"><div class="sb-evo-metric"><div class="sb-evo-metric-icon">📍</div><b id="sbEvoAllCount">—</b><span>بارهای فعال</span></div><div class="sb-evo-metric"><div class="sb-evo-metric-icon">🔄</div><b id="sbEvoTurnCount">—</b><span>بار نوبتی</span></div><div class="sb-evo-metric"><div class="sb-evo-metric-icon">⭐</div><b id="sbEvoFavCount">0</b><span>بار ذخیره‌شده</span></div></div>';
+   search.insertAdjacentElement('afterend',metrics);
+   const actions=document.createElement('section');actions.className='sb-evo-section';actions.innerHTML='<div class="sb-evo-section-head"><h3>دسترسی سریع</h3><small>یک لمس تا مقصد</small></div><div class="sb-evo-actions"><button class="sb-evo-action" id="sbEvoGoLoads"><i>🚛</i>تالار بار</button><button class="sb-evo-action" id="sbEvoGoTurn"><i>🔄</i>بار نوبتی</button><button class="sb-evo-action" id="sbEvoGoFav"><i>⭐</i>ذخیره‌شده‌ها</button><button class="sb-evo-action" id="sbEvoGoWallet"><i>💳</i>کیف پول</button></div>';
+   metrics.insertAdjacentElement('afterend',actions);
+   const route=document.createElement('section');route.className='sb-evo-section';route.innerHTML='<div class="sb-evo-route"><div class="sb-evo-route-title">🧭 برنامه‌ریز مسیر برگشت</div><div class="sb-evo-route-sub">مقصد یا شهر موردنظرت را ذخیره کن تا بارهای مرتبط را سریع‌تر فیلتر کنی. این گزینه در همین مرورگر نگهداری می‌شود.</div><div class="sb-evo-route-row"><input id="sbEvoReturnInput" placeholder="مثلاً مشهد یا قائن"><button id="sbEvoSaveReturn">ذخیره مسیر</button></div><div id="sbEvoSavedRoute"></div></div>';
+   actions.insertAdjacentElement('afterend',route);
+   $('sbEvoSearchBtn').onclick=()=>{const q=$('sbEvoSearchInput').value;const x=$('loadSearch');if(x)x.value=q;showPage('loadsPage');showLoads();setTimeout(()=>{if(x)x.dispatchEvent(new Event('input',{bubbles:true}));},300)};
+   $('sbEvoSearchInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('sbEvoSearchBtn').click()});
+   $('sbEvoGoLoads').onclick=()=>{showPage('loadsPage');showLoads()};
+   $('sbEvoGoTurn').onclick=()=>{showPage('loadsPage');showLoads();setTimeout(()=>{if(typeof salayanHomeFilter==='function')salayanHomeFilter('turn');else{const b=document.querySelector('[data-load-chip="turn"]');if(b)b.click()}},300)};
+   $('sbEvoGoFav').onclick=window.salayanShowFavorites;
+   $('sbEvoGoWallet').onclick=()=>{showPage('walletPage');if(typeof showWallet==='function')showWallet()};
+   $('sbEvoSaveReturn').onclick=()=>{const v=$('sbEvoReturnInput').value.trim();if(!v){alert('ابتدا نام شهر یا مقصد را وارد کن.');return}localStorage.setItem('salayan_return_route',v);if(typeof salayanSaveReturnRoute==='function')salayanSaveReturnRoute(v);updateRoute()};
+   $('sbEvoReturnInput').value=localStorage.getItem('salayan_return_route')||'';
+   function updateRoute(){const v=localStorage.getItem('salayan_return_route');$('sbEvoSavedRoute').innerHTML=v?'<div class="sb-evo-saved"><span>📌 مسیر ذخیره‌شده: <b>'+esc(v)+'</b></span><button style="border:0;background:transparent;color:#8a6500" id="sbEvoClearRoute">حذف</button></div>':'';const b=$('sbEvoClearRoute');if(b)b.onclick=()=>{localStorage.removeItem('salayan_return_route');$('sbEvoReturnInput').value='';updateRoute()}}
+   updateRoute();
+   $('sbEvoDate').textContent=new Date().toLocaleDateString('fa-IR',{weekday:'long',day:'numeric',month:'long'});
+   $('sbEvoFavCount').textContent=getFavs().length.toLocaleString('fa-IR');
+   const modal=document.createElement('div');modal.id='salayanEvoFavModal';modal.innerHTML='<div class="sb-fav-sheet"><div class="sb-fav-sheet-head"><h3>⭐ بارهای ذخیره‌شده</h3><button onclick="salayanCloseFavorites()">بستن ✕</button></div><div id="sbFavModalBody"></div><div class="sb-evo-mini-note">نکته: فهرست ذخیره‌شده‌ها روی همین دستگاه و مرورگر نگهداری می‌شود؛ برای استفاده روی دستگاه دیگر هنوز همگام‌سازی حساب لازم است.</div></div>';modal.addEventListener('click',e=>{if(e.target===modal)salayanCloseFavorites()});document.body.appendChild(modal);
+ }
+ const oldRender=window.salayanRenderLoad;
+ if(typeof oldRender==='function'&&!oldRender.__sbWrapped){
+   const wrapped=function(load){let html=oldRender(load);const id=String(load.id??'');const on=getFavs().includes(id);html=html.replace('<div class="load-item">','<div class="load-item" data-sb-load-id="'+esc(id)+'"><button class="sb-fav-btn '+(on?'on':'')+'" data-sb-fav="'+esc(id)+'" onclick="salayanToggleFavorite(\''+id.replace(/'/g,'\\\'')+'\')">'+(on?'⭐ ذخیره شد':'☆ ذخیره بار')+'</button>');
+   return html;};wrapped.__sbWrapped=true;window.salayanRenderLoad=wrapped;
+ }
+ function refreshMetrics(){
+   const cache=window.salayanLoadsCache||[];
+   const a=$('sbEvoAllCount'),t=$('sbEvoTurnCount'),u=$('sbEvoUpdated'),f=$('sbEvoFavCount');
+   if(a)a.textContent=cache.length.toLocaleString('fa-IR');
+   if(t)t.textContent=cache.filter(x=>x.status==='turn').length.toLocaleString('fa-IR');
+   if(f)f.textContent=getFavs().length.toLocaleString('fa-IR');
+   if(u)u.textContent=cache.length?'آخرین دریافت: '+new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}):'برای آمار دقیق، تالار بار را باز کن';
+ }
+ document.addEventListener('click',e=>{if(e.target.closest('[data-sb-fav]')){setTimeout(refreshMetrics,40)}});
+ document.addEventListener('DOMContentLoaded',()=>{build();refreshMetrics();});
+ if(document.readyState!=='loading'){build();refreshMetrics()}
+ const oldShow=window.showLoads;
+ if(typeof oldShow==='function'&&!oldShow.__sbWrapped){const w=async function(){const out=await oldShow.apply(this,arguments);setTimeout(refreshMetrics,100);return out};w.__sbWrapped=true;window.showLoads=w}
+})();
+</script>
+
 </body>
 </html>
 ```
