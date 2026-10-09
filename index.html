@@ -1392,6 +1392,33 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
   </button>
 
   <div class="sbc-home-foot"><span>●</span> برای دیدن امکانات بیشتر، وارد «همه خدمات راننده» شوید.</div>
+  <section class="sbx-command-center" aria-label="پیشخوان حرفه‌ای راننده">
+    <div class="sbx-command-head">
+      <div><span class="sbx-eyebrow">SALAYAN SMART HUB</span><h3>پیشخوان هوشمند</h3><p>همه چیز برای یک سفر بهتر، در یک نگاه</p></div>
+      <div class="sbx-live-mark"><i></i> آماده به کار</div>
+    </div>
+    <div class="sbx-journey-card">
+      <div class="sbx-journey-orb">✦</div>
+      <div class="sbx-journey-copy"><b>قبل از حرکت، برنامه‌ریزی کن</b><span>سود سفر، مدارک، هزینه‌ها و سرویس کامیون را یکجا مدیریت کن.</span></div>
+      <button onclick="showPage('proToolsPage');if(window.sbxInit)sbxInit()" aria-label="باز کردن اتاق فرمان">←</button>
+    </div>
+    <div class="sbx-quick-grid">
+      <button class="sbx-quick-tile" onclick="showPage('gpsPage')"><span class="sbx-qt-icon sbx-map">⌖</span><b>مسیریابی</b><small>موقعیت و مسیر</small><em>باز کردن ←</em></button>
+      <button class="sbx-quick-tile" onclick="showPage('proToolsPage');if(window.sbxInit)sbxInit()"><span class="sbx-qt-icon sbx-profit">↗</span><b>سود سفر</b><small>کرایه تا سود خالص</small><em>محاسبه ←</em></button>
+      <button class="sbx-quick-tile" onclick="showPage('truckPage')"><span class="sbx-qt-icon sbx-truck">▰</span><b>کامیون من</b><small>اطلاعات و نگهداری</small><em>مدیریت ←</em></button>
+      <button class="sbx-quick-tile" onclick="showPage('walletPage')"><span class="sbx-qt-icon sbx-wallet">◈</span><b>کیف پول</b><small>موجودی و گردش حساب</small><em>مشاهده ←</em></button>
+    </div>
+    <div class="sbx-home-section-title"><div><h3>آماده‌سازی سفر</h3><p>چند بررسی کوتاه قبل از حرکت</p></div><span>۰۱ / ۰۳</span></div>
+    <div class="sbx-preflight-row">
+      <span class="sbx-preflight-icon">✓</span><div><b>چک‌لیست پیش از حرکت</b><small>لاستیک، چراغ‌ها، ترمز، بار و مدارک</small></div>
+      <button onclick="showPage('proToolsPage');if(window.sbxInit){sbxInit();setTimeout(()=>sbxShowTab('checklist'),80)}">بررسی ←</button>
+    </div>
+    <div class="sbx-preflight-row">
+      <span class="sbx-preflight-icon amber">▣</span><div><b>یادآوری مدارک و سرویس</b><small>تاریخ اعتبار مدارک و کیلومتر سرویس</small></div>
+      <button onclick="showPage('proToolsPage');if(window.sbxInit){sbxInit();setTimeout(()=>sbxShowTab('documents'),80)}">مدیریت ←</button>
+    </div>
+    <div class="sbx-disclaimer">اطلاعات ابزارهای شخصی این بخش روی همین دستگاه ذخیره می‌شوند؛ برای همگام‌سازی بین گوشی‌ها، اتصال کامل به پایگاه داده لازم است.</div>
+  </section>
 </div>
 
 <!-- LOADS -->
@@ -4608,6 +4635,87 @@ function sbOpenDriverTool(type){
  function render(){const total=data.expenses.reduce((a,x)=>a+(Number(x.amount)||0),0);$('sbxExpenseTotal').textContent=money(total);renderExpenses();renderMaintenance();renderDocuments();renderChecklist();window.sbxCalcProfit();}
  window.sbxInit=function(){load();if($('sbxExpenseDate')&&!$('sbxExpenseDate').value)$('sbxExpenseDate').value=dateToday();render();};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{load();}, {once:true});else load();
+})();
+</script>
+
+ 
+<style id="salayan-premium-command-center-css">
+/* Premium mobile-first refresh: scoped to dashboard to preserve existing app behavior */
+#homePage.sbc-clean-home{padding:12px 12px calc(28px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto;color:#18382d}
+#homePage .sbc-home-header{border-radius:26px;padding:19px 18px;background:linear-gradient(135deg,#063d2e 0%,#087653 52%,#12a878 100%);box-shadow:0 14px 32px rgba(5,91,62,.2);position:relative;overflow:hidden}
+#homePage .sbc-home-header:after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-80px;top:-120px;box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025);pointer-events:none}
+#homePage .sbc-home-brand{position:relative;z-index:1;gap:12px}
+#homePage .sbc-home-logo{width:52px;height:52px;border-radius:17px;background:linear-gradient(145deg,#f4fff9,#c9f7df);color:#07583d;font-size:16px;font-weight:900;box-shadow:0 7px 18px rgba(0,0,0,.13);border:1px solid rgba(255,255,255,.6)}
+#homePage .sbc-home-brand span{font-size:15px;color:#e5fff1;font-weight:700}
+#homePage .sbc-home-brand h2{font-size:21px;letter-spacing:-.5px;margin:5px 0;color:#fff}
+#homePage .sbc-home-brand small{color:#c3f3da;line-height:1.8}
+#homePage .sbc-home-bell{z-index:2;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:14px;width:43px;height:43px}
+#homePage .sbc-find-load{border:1px solid #d5eee2;background:#fff;border-radius:19px;padding:13px 14px;box-shadow:0 8px 22px rgba(18,80,54,.055);margin:13px 0}
+#homePage .sbc-find-icon{background:#e1f8eb;color:#087b53;border-radius:13px;width:43px;height:43px;font-size:25px}
+#homePage .sbc-find-copy b{font-size:15px;color:#143e2e}
+#homePage .sbc-find-copy small{color:#6f887c;line-height:1.7}
+#homePage .sbc-essential-grid{gap:9px;margin:0 0 12px}
+#homePage .sbc-essential-grid button{border:1px solid #e2eee7;border-radius:18px;background:linear-gradient(160deg,#fff,#f7fcf9);box-shadow:0 5px 14px rgba(23,70,49,.035);padding:13px 8px;min-width:0}
+#homePage .sbc-essential-grid button b{font-size:12px;color:#244c3b}
+#homePage .sbc-essential-grid button small{font-size:10px;color:#81958b}
+#homePage .sbc-essential-icon{width:37px;height:37px;border-radius:13px;margin-bottom:9px}
+#homePage .sbc-all-services{border-radius:17px;border:1px solid #d9eee2;background:linear-gradient(100deg,#effbf4,#fff);padding:14px;margin-bottom:13px}
+#homePage .sbc-services-symbol{background:#d9f6e4;color:#087d53;border-radius:12px;width:42px;height:42px}
+#homePage .sbc-home-foot{font-size:11px;color:#789087;margin:8px 3px 17px}
+#homePage .sbx-command-center{border:1px solid #e0eee6;border-radius:25px;background:#fff;padding:16px 13px;margin:0 0 15px;box-shadow:0 12px 32px rgba(19,67,46,.055);overflow:hidden}
+#homePage .sbx-command-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin:2px 2px 14px}
+#homePage .sbx-eyebrow{display:block;font-size:9px;letter-spacing:1.7px;color:#0b9867;font-weight:900;direction:ltr;text-align:right}
+#homePage .sbx-command-head h3{font-size:18px;margin:5px 0;color:#163e2e}
+#homePage .sbx-command-head p{font-size:11px;color:#81938a;margin:0;line-height:1.8}
+#homePage .sbx-live-mark{font-size:10px;white-space:nowrap;color:#16845c;background:#eaf9f0;padding:7px 9px;border-radius:30px;font-weight:700}
+#homePage .sbx-live-mark i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#21b879;margin-left:4px;box-shadow:0 0 0 3px #c8f2db}
+#homePage .sbx-journey-card{display:flex;align-items:center;gap:10px;background:linear-gradient(115deg,#0a513b,#0d8860);border-radius:18px;padding:13px;color:#fff;margin-bottom:12px;position:relative;overflow:hidden}
+#homePage .sbx-journey-card:after{content:"";position:absolute;width:110px;height:110px;border:1px solid #ffffff22;border-radius:50%;left:-30px;top:-45px;box-shadow:0 0 0 16px #ffffff09}
+#homePage .sbx-journey-orb{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;background:#ffffff1f;border:1px solid #ffffff30;border-radius:13px;font-size:22px}
+#homePage .sbx-journey-copy{flex:1;min-width:0}
+#homePage .sbx-journey-copy b{display:block;font-size:12px;margin-bottom:5px}
+#homePage .sbx-journey-copy span{display:block;font-size:10px;line-height:1.9;color:#d2f7e5}
+#homePage .sbx-journey-card>button{width:30px;height:30px;flex:0 0 30px;border:0;border-radius:10px;background:#ffffff20;color:white;font-size:19px;z-index:1}
+#homePage .sbx-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#homePage .sbx-quick-tile{display:grid;grid-template-columns:38px 1fr;grid-template-rows:auto auto auto;align-items:center;column-gap:9px;text-align:right;padding:12px 10px;border-radius:17px;border:1px solid #e7f0ea;background:#fbfdfb;min-width:0}
+#homePage .sbx-qt-icon{grid-row:1/4;width:38px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:21px;font-weight:900}
+#homePage .sbx-map{background:#e3f4ff;color:#1979a9}#homePage .sbx-profit{background:#e2f8e9;color:#0c9360}#homePage .sbx-truck{background:#fff0d9;color:#b77919}#homePage .sbx-wallet{background:#f0e9ff;color:#7754b8}
+#homePage .sbx-quick-tile b{font-size:12px;color:#254837}
+#homePage .sbx-quick-tile small{font-size:10px;color:#85958c;margin-top:4px;white-space:normal;line-height:1.6}
+#homePage .sbx-quick-tile em{font-style:normal;color:#13825a;font-size:10px;margin-top:7px;font-weight:700}
+#homePage .sbx-home-section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 9px}
+#homePage .sbx-home-section-title h3{font-size:14px;color:#214b38;margin:0 0 4px}
+#homePage .sbx-home-section-title p{font-size:10px;color:#899990;margin:0}
+#homePage .sbx-home-section-title>span{font-size:9px;color:#8ba195;background:#f3f8f4;border-radius:8px;padding:6px}
+#homePage .sbx-preflight-row{display:flex;align-items:center;gap:9px;padding:12px 8px;border-top:1px solid #edf3ef}
+#homePage .sbx-preflight-icon{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border-radius:11px;background:#e1f8eb;color:#0a8a5b;font-weight:900}
+#homePage .sbx-preflight-icon.amber{background:#fff1d8;color:#bd811d}
+#homePage .sbx-preflight-row>div{flex:1;min-width:0}
+#homePage .sbx-preflight-row b{display:block;font-size:11px;color:#2a4b3b;margin-bottom:4px}
+#homePage .sbx-preflight-row small{display:block;font-size:9px;line-height:1.7;color:#8b9b92}
+#homePage .sbx-preflight-row button{border:0;background:#eff9f3;color:#087c53;border-radius:10px;padding:8px;font-size:10px;font-weight:700;white-space:nowrap}
+#homePage .sbx-disclaimer{font-size:9px;line-height:1.9;color:#98a79f;padding:9px 5px 0}
+@media(min-width:600px){#homePage .sbx-quick-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#homePage .sbx-quick-tile{grid-template-columns:1fr;text-align:center;justify-items:center;row-gap:5px;padding:15px 7px}#homePage .sbx-qt-icon{grid-row:auto;width:44px;height:44px;margin-bottom:4px}#homePage .sbx-quick-tile em{margin-top:3px}}
+@media(max-width:360px){#homePage .sbc-home-brand h2{font-size:18px}#homePage .sbx-command-center{padding:13px 10px}#homePage .sbx-live-mark{font-size:9px;padding:6px}}
+</style>
+<script id="salayan-premium-command-center-js">
+(function(){
+ function updateDashboard(){
+  var count=document.getElementById('loadCount');
+  var badge=document.querySelector('#homePage .sbc-home-bell i');
+  if(count && badge){
+   var n=parseInt(String(count.textContent||'').replace(/[^0-9]/g,''),10);
+   if(Number.isFinite(n)&&n>0){badge.style.display='block';badge.title=n+' بار در تالار';}
+   else {badge.style.display='none';}
+  }
+ }
+ document.addEventListener('DOMContentLoaded',updateDashboard);
+ var obs=new MutationObserver(updateDashboard);
+ document.addEventListener('DOMContentLoaded',function(){
+  var count=document.getElementById('loadCount');
+  if(count)obs.observe(count,{childList:true,subtree:true,characterData:true});
+ });
+ window.addEventListener('pageshow',updateDashboard);
 })();
 </script>
 
