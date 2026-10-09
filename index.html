@@ -3761,12 +3761,22 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
      maplibreMap.on('load',()=>{
        try{
          const layers=maplibreMap.getStyle().layers||[];
-         const labelLayer=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field']);
-         const building=layers.find(l=>l.type==='fill'&&String(l['source-layer']||'').toLowerCase().includes('building'));
-         if(building&&!maplibreMap.getLayer('salayan-3d-buildings')){
-           maplibreMap.addLayer({id:'salayan-3d-buildings',source:building.source,'source-layer':building['source-layer'],type:'fill-extrusion',minzoom:13,paint:{'fill-extrusion-color':'#b9d9c6','fill-extrusion-height':['coalesce',['get','render_height'],['get','height'],8],'fill-extrusion-base':['coalesce',['get','render_min_height'],['get','min_height'],0],'fill-extrusion-opacity':0.88}},labelLayer?labelLayer.id:undefined)
+       const labelLayer=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field']);
+       const building=layers.find(l=>l.type==='fill'&&String(l['source-layer']||'').toLowerCase().includes('building'));
+       try{
+         if(!maplibreMap.getSource('salayan-satellite')){
+           maplibreMap.addSource('salayan-satellite',{type:'raster',tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],tileSize:256,attribution:'Imagery © Esri'});
+           maplibreMap.addLayer({id:'salayan-satellite-layer',type:'raster',source:'salayan-satellite',paint:{'raster-opacity':1}},layers[0]?.id);
          }
-       }catch(e){console.warn('Building extrusion unavailable',e)}
+         for(const l of layers){
+           if(!l.id||l.id==='salayan-satellite-layer')continue;
+           if(l.type==='background')maplibreMap.setLayoutProperty(l.id,'visibility','none');
+           if(l.type==='fill'&&!String(l['source-layer']||'').toLowerCase().includes('building'))maplibreMap.setLayoutProperty(l.id,'visibility','none');
+         }
+         if(building&&!maplibreMap.getLayer('salayan-3d-buildings')){
+           maplibreMap.addLayer({id:'salayan-3d-buildings',source:building.source,'source-layer':building['source-layer'],type:'fill-extrusion',minzoom:13,paint:{'fill-extrusion-color':'#b9d9c6','fill-extrusion-height':['coalesce',['get','render_height'],['get','height'],8],'fill-extrusion-base':['coalesce',['get','render_min_height'],['get','min_height'],0],'fill-extrusion-opacity':0.72}},labelLayer?labelLayer.id:undefined)
+         }
+       }catch(e){console.warn('3D satellite setup unavailable',e)}
        if(lastPosition)update3DPosition(lastPosition);
      });
      maplibreMap.on('error',e=>console.warn('3D map error',e.error||e));
