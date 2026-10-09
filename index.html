@@ -1145,36 +1145,34 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
 </style>
 
 
-<style id="salayan-gps-map-in-menu-route">
-/* Put the complete GPS / map / access-rules workspace inside the services menu */
-#sbTopDropdown #sbGpsCard{display:block!important;width:100%;margin:8px 0 14px!important;border-radius:18px!important;box-shadow:none!important;max-height:none!important}
-#sbTopDropdown #sbGpsCard .sb-gps-banner{padding:15px 13px 12px}
-#sbTopDropdown #sbGpsCard .sb-gps-head{gap:9px}
-#sbTopDropdown #sbGpsCard .sb-gps-icon{flex-basis:39px;height:39px;border-radius:13px;font-size:21px}
-#sbTopDropdown #sbGpsCard .sb-gps-title{font-size:13px;line-height:1.7}
-#sbTopDropdown #sbGpsCard .sb-gps-sub{font-size:10px;line-height:1.8}
-#sbTopDropdown #sbGpsCard .sb-gps-status{margin-top:10px;padding:9px 10px;font-size:10px}
-#sbTopDropdown #sbGpsCard .sb-gps-body{padding:12px}
-#sbTopDropdown #sbGpsCard .sb-gps-map{height:280px;border-radius:15px}
-#sbTopDropdown #sbGpsCard .sb-gps-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-#sbTopDropdown #sbGpsCard .sb-gps-actions button{padding:10px 5px;font-size:10px;min-height:42px}
-#sbTopDropdown #sbGpsCard .sb-gps-destination{flex-direction:column}
-#sbTopDropdown #sbGpsCard .sb-gps-destination button{min-height:42px}
-#sbTopDropdown #sbGpsCard .sb-gps-metrics{gap:5px}
-#sbTopDropdown #sbGpsCard .sb-gps-metric{padding:8px 6px;border-radius:11px}
-#sbTopDropdown #sbGpsCard .sb-gps-metric small{font-size:9px}
-#sbTopDropdown #sbGpsCard .sb-gps-metric b{font-size:11px}
-#sbTopDropdown #sbGpsCard .sb-gps-rules{font-size:10px!important;line-height:1.9!important;padding:11px!important}
-#sbTopDropdown #sbGpsCard .sb-gps-rules h3{font-size:12px!important}
-#sbTopDropdown #sbGpsCard .sb-gps-calc-grid{grid-template-columns:1fr 1fr}
-#sbTopDropdown #sbGpsCard .sb-gps-privacy{font-size:9px}
-#sbTopDropdown{max-height:calc(100dvh - 75px)!important}
-@media(max-width:480px){
- #sbTopDropdown #sbGpsCard .sb-gps-map{height:250px}
- #sbTopDropdown #sbGpsCard .sb-gps-body{padding:9px}
- #sbTopDropdown #sbGpsCard .sb-gps-banner{padding:13px 11px}
-}
+<style id="salayan-gps-dedicated-page">
+#gpsPage{padding-bottom:20px}
+#gpsPage>.card{padding:14px;border-radius:20px}
+#gpsPage .page-toolbar{margin-bottom:8px}
+#gpsPage #sbGpsCard{display:block!important;width:100%;margin:10px 0 0!important;border-radius:18px!important;box-shadow:none!important;max-height:none!important}
+#gpsPage #sbGpsCard .sb-gps-banner{padding:15px 13px 12px}
+#gpsPage #sbGpsCard .sb-gps-head{gap:9px}
+#gpsPage #sbGpsCard .sb-gps-icon{flex-basis:39px;height:39px;border-radius:13px;font-size:21px}
+#gpsPage #sbGpsCard .sb-gps-title{font-size:13px;line-height:1.7}
+#gpsPage #sbGpsCard .sb-gps-sub{font-size:10px;line-height:1.8}
+#gpsPage #sbGpsCard .sb-gps-body{padding:12px}
+#gpsPage #sbGpsCard .sb-gps-map{height:320px;border-radius:15px}
+#gpsPage #sbGpsCard .sb-gps-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#gpsPage #sbGpsCard .sb-gps-actions button{padding:10px 5px;font-size:11px;min-height:42px}
+#gpsPage #sbGpsCard .sb-gps-destination{flex-direction:column}
+#gpsPage #sbGpsCard .sb-gps-destination button{min-height:42px}
+#gpsPage #sbGpsCard .sb-gps-metrics{gap:5px}
+#gpsPage #sbGpsCard .sb-gps-metric{padding:8px 6px;border-radius:11px}
+#gpsPage #sbGpsCard .sb-gps-metric small{font-size:9px}
+#gpsPage #sbGpsCard .sb-gps-metric b{font-size:11px}
+#gpsPage #sbGpsCard .sb-gps-rules{font-size:11px!important;line-height:1.9!important;padding:12px!important}
+#gpsPage #sbGpsCard .sb-gps-rules h3{font-size:13px!important}
+#gpsPage #sbGpsCard .sb-gps-calc-grid{grid-template-columns:1fr 1fr}
+#gpsPage #sbGpsCard .sb-gps-privacy{font-size:10px}
+@media(max-width:480px){#gpsPage #sbGpsCard .sb-gps-map{height:270px}#gpsPage>.card{padding:10px}#gpsPage #sbGpsCard .sb-gps-body{padding:9px}}
 </style>
+
+
 
 </head>
 
@@ -1196,15 +1194,8 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
           </button>
           <div class="sb-top-dropdown hidden" id="sbTopDropdown">
             <div class="sb-top-dropdown-head"><span class="sb-top-dropdown-mark">SB</span><span><b>مرکز دسترسی سریع</b><small>صلایان بار نیمبلوک</small></span><button type="button" aria-label="بستن منو" onclick="sbCloseTopMenu()">×</button></div>
-            <div class="sb-menu-gps-wrap"><div class="sb-menu-gps-heading"><span class="sb-menu-gps-heading-icon">⌖</span><span><b>موقعیت مکانی راننده</b><small>برای پیدا کردن بارهای نزدیک</small></span></div>
-<section class="sbc-gps-card">
-    <div class="sbc-gps-orbit"><span>⌖</span><i></i><b></b></div>
-    <div class="sbc-gps-copy"><span class="sbc-overline">موقعیت راننده</span><h3 id="sbcGpsTitle">موقعیتت را فعال کن</h3><p id="sbcGpsText">برای پیدا کردن بارهای نزدیک و بررسی محدوده نوبت، موقعیت مکانی لازم است.</p></div>
-    <button id="sbcGpsButton" onclick="salayanRequestLocation()">فعال‌سازی GPS <span>←</span></button>
-    <div class="sbc-gps-status"><span class="sbc-status-dot"></span><span id="sbcGpsStatus">GPS هنوز فعال نشده</span><span class="sbc-gps-privacy">فقط با اجازه شما</span></div>
-  </section>
-<div class="sb-menu-gps-hint">📍 موقعیت شما فقط با اجازه خودتان دریافت می‌شود و به پیدا کردن بارهای نزدیک و بررسی محدوده نوبت کمک می‌کند.</div></div>
-<div class="sb-top-dropdown-label">بار و حمل‌ونقل</div>
+            <button class="sb-top-dropdown-item" onclick="sbTopGo('gpsPage')"><span class="sb-top-item-icon">📍</span><span><b>GPS و نقشه مسیر</b><small>موقعیت، مسیریابی و قوانین بار نوبتی</small></span><span class="sb-top-item-arrow">←</span></button>
+            <div class="sb-top-dropdown-label">بار و حمل‌ونقل</div>
             <button class="sb-top-dropdown-item" onclick="sbTopGo('homePage')"><span class="sb-top-item-icon">⌂</span><span><b>صفحه اصلی</b><small>داشبورد و موقعیت GPS</small></span><span class="sb-top-item-arrow">←</span></button>
             <button class="sb-top-dropdown-item" onclick="sbTopGo('loadsPage',true)"><span class="sb-top-item-icon">🚛</span><span><b>تالار هوشمند بار</b><small>جستجو و مشاهده بارها</small></span><span class="sb-top-item-arrow">←</span></button>
             <div class="sb-top-dropdown-shortcuts">
@@ -1271,6 +1262,10 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
 
 <!-- APP -->
 <section id="appPage" class="hidden">
+    
+    <!-- GPS / MAP WORKSPACE: kept off the main dashboard -->
+    <div id="gpsPage" class="hidden"><div class="card"><div class="page-toolbar"><h2>موقعیت و مسیریابی</h2><button type="button" class="icon-home" onclick="showPage('homePage')" aria-label="بازگشت به خانه">⌂</button></div><p style="margin:0 0 12px;color:#71817a;font-size:12px;line-height:1.9">نقشه، مسیریابی و قوانین دسترسی به بارها در این بخش قرار دارند.</p></div></div>
+
 
     <!-- HOME -->
     <div id="homePage" class="driver-home sbc-clean-home">
@@ -1665,7 +1660,7 @@ let currentInquiryType = null;
 
 function showPage(pageId){
 
-    const pages=["homePage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
+    const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
 
     pages.forEach(id=>{
         const el=document.getElementById(id);
@@ -1675,12 +1670,14 @@ function showPage(pageId){
     const target=document.getElementById(pageId);
     if(target) target.classList.remove("hidden");
 
-    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
+    const navMap={homePage:"navHome",gpsPage:"navMore",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
     document.querySelectorAll(".bottom-nav button").forEach(btn=>btn.classList.remove("active"));
     const nav=document.getElementById(navMap[pageId] || "navMore");
     if(nav) nav.classList.add("active");
 
     window.scrollTo({top:0,behavior:"smooth"});
+    if(typeof sbCloseTopMenu==="function") sbCloseTopMenu();
+    if(pageId==="gpsPage" && typeof window.salayanRefreshMap==="function") setTimeout(()=>window.salayanRefreshMap(),250);
 }
 
 /* =====================================================
@@ -3368,8 +3365,8 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  const dist=(a,b,c,d)=>{const r=x=>x*Math.PI/180,la=r(c-a),lo=r(d-b),q=Math.sin(la/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(lo/2)**2;return 6371*2*Math.atan2(Math.sqrt(q),Math.sqrt(1-q))};
  const mapUrl=(lat,lng)=>'https://www.openstreetmap.org/?mlat='+lat+'&mlon='+lng+'#map=14/'+lat+'/'+lng;
  const directions=(p,d)=>'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(p.latitude+','+p.longitude)+'&destination='+encodeURIComponent(d)+'&travelmode=driving';
- function card(){const home=$('homePage');if(!home||$('sbGpsCard'))return;const el=document.createElement('section');el.id='sbGpsCard';el.className='sb-gps-card';el.innerHTML='<div class="sb-gps-banner"><div class="sb-gps-head"><div class="sb-gps-icon">📡</div><div><div class="sb-gps-title">مرکز هوشمند موقعیت و مسیر</div><div class="sb-gps-sub">نقشه زنده، موقعیت راننده، بارهای دارای مختصات و مسیریابی؛ در یک پنل.</div></div></div><div id="sbGpsStatus" class="sb-gps-status">برای شروع، GPS را فعال کن. دسترسی فقط با اجازه خودت انجام می‌شود.</div></div><div class="sb-gps-body"><div class="sb-gps-metrics"><div class="sb-gps-metric"><small>وضعیت موقعیت</small><b id="sbGpsState">خاموش</b></div><div class="sb-gps-metric"><small>دقت GPS</small><b id="sbGpsAccuracy">—</b></div><div class="sb-gps-metric"><small>بارهای روی نقشه</small><b id="sbGpsLoadCount">۰</b></div></div><section class="sb-gps-rules" style="margin:14px 0;padding:15px;border:1px solid #b8e3cc;border-radius:15px;background:#f0fbf5;color:#174b37;line-height:2"><h3 style="margin:0 0 7px;font-size:15px">📜 قوانین دسترسی به بارها</h3><div>۱) <b>بار نوبتی:</b> فقط وقتی GPS روشن و به‌روز باشد و فاصله مستقیم راننده تا مختصات مبدأ بار <b>۲۰۰ کیلومتر یا کمتر</b> باشد نمایش داده و قابل انتخاب است.</div><div>۲) <b>بیشتر از ۲۰۰ کیلومتر:</b> راننده به بار نوبتی دسترسی ندارد و فقط بارهای وضعیت «آزاد» را می‌تواند انتخاب کند.</div><div>۳) <b>بار آزاد:</b> برای رانندگان واجد شرایط در هر فاصله قابل مشاهده است؛ انتخاب نهایی همچنان تابع رزرو، اعتبار حساب و قوانین سرور است.</div><div>۴) <b>مختصات الزامی:</b> مبدأ بار باید مختصات GPS داشته باشد؛ بدون مختصات، بار نوبتی برای جلوگیری از انتخاب نادرست نمایش داده نمی‌شود.</div><div>۵) <b>موقعیت معتبر:</b> GPS ذخیره‌شده بیش از ۳۰ دقیقه یا با خطای بیشتر از ۱۰۰۰ متر برای دسترسی نوبتی پذیرفته نمی‌شود؛ GPS را تازه‌سازی کن.</div><small style="display:block;margin-top:6px;color:#587766">فاصله بر اساس خط مستقیم GPS محاسبه می‌شود، نه کیلومتر مسیر جاده‌ای.</small></section><div id="sbGpsMapNote" class="sb-gps-map-note">برای نمایش موقعیت روی نقشه، GPS را فعال کن. نقشه از داده‌های OpenStreetMap استفاده می‌کند.</div><div id="sbGpsMapCanvas" class="sb-gps-map" aria-label="نقشه موقعیت راننده"></div><div class="sb-gps-actions"><button class="primary" id="sbGpsStart">📡 فعال‌سازی GPS</button><button id="sbGpsMap">🎯 رفتن به موقعیت من</button><button id="sbGpsNearby">🚚 بارهای اطراف</button><button id="sbGpsStop">⏸ توقف GPS</button><button id="sbGpsShare">📤 اشتراک موقعیت</button><button id="sbGpsCopy">📋 کپی مختصات</button></div><div class="sb-gps-destination"><input id="sbGpsDestination" placeholder="نام شهر، آدرس یا مختصات مقصد"><button id="sbGpsGo">🧭 مسیریابی</button></div><div id="sbGpsNear" class="sb-gps-near"></div><section class="sb-gps-calculator"><div class="sb-gps-calc-head"><h3>🧮 محاسبه‌گر سود سفر</h3><span>محاسبه محلی؛ اعداد را خودت وارد کن</span></div><div class="sb-gps-calc-grid"><div><label for="sbCalcFreight">کرایه رفت (تومان)</label><input id="sbCalcFreight" type="number" min="0" value="0"></div><div><label for="sbCalcReturn">کرایه برگشت (تومان)</label><input id="sbCalcReturn" type="number" min="0" value="0"></div><div><label for="sbCalcKm">مسافت کل (کیلومتر)</label><input id="sbCalcKm" type="number" min="0" value="500"></div><div><label for="sbCalcFuelUse">مصرف سوخت (لیتر/۱۰۰km)</label><input id="sbCalcFuelUse" type="number" min="0" step="0.1" value="35"></div><div><label for="sbCalcFuelPrice">قیمت هر لیتر سوخت (تومان)</label><input id="sbCalcFuelPrice" type="number" min="0" value="600"></div><div><label for="sbCalcOther">هزینه‌های دیگر سفر (تومان)</label><input id="sbCalcOther" type="number" min="0" value="0"></div></div><div class="sb-gps-calc-result"><div><small>سود تقریبی پس از هزینه‌های واردشده</small><b id="sbCalcNet">۰ تومان</b></div><em id="sbCalcBreakdown">سوخت: ۰ تومان<br>هزینه کل: ۰ تومان</em></div></section><div class="sb-gps-privacy">🔐 حریم خصوصی: موقعیت روی همین دستگاه ذخیره می‌شود؛ به سرور ارسال نمی‌شود. نمایش زنده هنگام بازبودن صفحه و فعال‌بودن مجوز مرورگر کار می‌کند. این پنل به‌تنهایی ردیابی پس‌زمینه‌ای هنگام بسته‌بودن سایت را انجام نمی‌دهد.</div></div>';
- const menu=$('sbTopDropdown');const menuLabel=menu&&menu.querySelector('.sb-top-dropdown-label');if(menu){if(menuLabel)menu.insertBefore(el,menuLabel);else menu.appendChild(el)}else{const hero=$('sbUltraHero');if(hero&&hero.parentNode)hero.insertAdjacentElement('afterend',el);else home.prepend(el)}
+ function card(){const home=$('gpsPage');if(!home||$('sbGpsCard'))return;const el=document.createElement('section');el.id='sbGpsCard';el.className='sb-gps-card';el.innerHTML='<div class="sb-gps-banner"><div class="sb-gps-head"><div class="sb-gps-icon">📡</div><div><div class="sb-gps-title">مرکز هوشمند موقعیت و مسیر</div><div class="sb-gps-sub">نقشه زنده، موقعیت راننده، بارهای دارای مختصات و مسیریابی؛ در یک پنل.</div></div></div><div id="sbGpsStatus" class="sb-gps-status">برای شروع، GPS را فعال کن. دسترسی فقط با اجازه خودت انجام می‌شود.</div></div><div class="sb-gps-body"><div class="sb-gps-metrics"><div class="sb-gps-metric"><small>وضعیت موقعیت</small><b id="sbGpsState">خاموش</b></div><div class="sb-gps-metric"><small>دقت GPS</small><b id="sbGpsAccuracy">—</b></div><div class="sb-gps-metric"><small>بارهای روی نقشه</small><b id="sbGpsLoadCount">۰</b></div></div><section class="sb-gps-rules" style="margin:14px 0;padding:15px;border:1px solid #b8e3cc;border-radius:15px;background:#f0fbf5;color:#174b37;line-height:2"><h3 style="margin:0 0 7px;font-size:15px">📜 قوانین دسترسی به بارها</h3><div>۱) <b>بار نوبتی:</b> فقط وقتی GPS روشن و به‌روز باشد و فاصله مستقیم راننده تا مختصات مبدأ بار <b>۲۰۰ کیلومتر یا کمتر</b> باشد نمایش داده و قابل انتخاب است.</div><div>۲) <b>بیشتر از ۲۰۰ کیلومتر:</b> راننده به بار نوبتی دسترسی ندارد و فقط بارهای وضعیت «آزاد» را می‌تواند انتخاب کند.</div><div>۳) <b>بار آزاد:</b> برای رانندگان واجد شرایط در هر فاصله قابل مشاهده است؛ انتخاب نهایی همچنان تابع رزرو، اعتبار حساب و قوانین سرور است.</div><div>۴) <b>مختصات الزامی:</b> مبدأ بار باید مختصات GPS داشته باشد؛ بدون مختصات، بار نوبتی برای جلوگیری از انتخاب نادرست نمایش داده نمی‌شود.</div><div>۵) <b>موقعیت معتبر:</b> GPS ذخیره‌شده بیش از ۳۰ دقیقه یا با خطای بیشتر از ۱۰۰۰ متر برای دسترسی نوبتی پذیرفته نمی‌شود؛ GPS را تازه‌سازی کن.</div><small style="display:block;margin-top:6px;color:#587766">فاصله بر اساس خط مستقیم GPS محاسبه می‌شود، نه کیلومتر مسیر جاده‌ای.</small></section><div id="sbGpsMapNote" class="sb-gps-map-note">برای نمایش موقعیت روی نقشه، GPS را فعال کن. نقشه از داده‌های OpenStreetMap استفاده می‌کند.</div><div id="sbGpsMapCanvas" class="sb-gps-map" aria-label="نقشه موقعیت راننده"></div><div class="sb-gps-actions"><button class="primary" id="sbGpsStart">📡 فعال‌سازی GPS</button><button id="sbGpsMap">🎯 رفتن به موقعیت من</button><button id="sbGpsNearby">🚚 بارهای اطراف</button><button id="sbGpsStop">⏸ توقف GPS</button><button id="sbGpsShare">📤 اشتراک موقعیت</button><button id="sbGpsCopy">📋 کپی مختصات</button></div><div class="sb-gps-destination"><input id="sbGpsDestination" placeholder="نام شهر، آدرس یا مختصات مقصد"><button id="sbGpsGo">🧭 مسیریابی</button></div><div id="sbGpsNear" class="sb-gps-near"></div><section class="sb-gps-calculator"><div class="sb-gps-calc-head"><h3>🧮 محاسبه‌گر سود سفر</h3><span>محاسبه محلی؛ اعداد را خودت وارد کن</span></div><div class="sb-gps-calc-grid"><div><label for="sbCalcFreight">کرایه رفت (تومان)</label><input id="sbCalcFreight" type="number" min="0" value="0"></div><div><label for="sbCalcReturn">کرایه برگشت (تومان)</label><input id="sbCalcReturn" type="number" min="0" value="0"></div><div><label for="sbCalcKm">مسافت کل (کیلومتر)</label><input id="sbCalcKm" type="number" min="0" value="500"></div><div><label for="sbCalcFuelUse">مصرف سوخت (لیتر/۱۰۰km)</label><input id="sbCalcFuelUse" type="number" min="0" step="0.1" value="35"></div><div><label for="sbCalcFuelPrice">قیمت هر لیتر سوخت (تومان)</label><input id="sbCalcFuelPrice" type="number" min="0" value="600"></div><div><label for="sbCalcOther">هزینه‌های دیگر سفر (تومان)</label><input id="sbCalcOther" type="number" min="0" value="0"></div></div><div class="sb-gps-calc-result"><div><small>سود تقریبی پس از هزینه‌های واردشده</small><b id="sbCalcNet">۰ تومان</b></div><em id="sbCalcBreakdown">سوخت: ۰ تومان<br>هزینه کل: ۰ تومان</em></div></section><div class="sb-gps-privacy">🔐 حریم خصوصی: موقعیت روی همین دستگاه ذخیره می‌شود؛ به سرور ارسال نمی‌شود. نمایش زنده هنگام بازبودن صفحه و فعال‌بودن مجوز مرورگر کار می‌کند. این پنل به‌تنهایی ردیابی پس‌زمینه‌ای هنگام بسته‌بودن سایت را انجام نمی‌دهد.</div></div>';
+ home.appendChild(el);
  $('sbGpsStart').onclick=start;$('sbGpsShare').onclick=async()=>{const p=lastPosition||saved();if(!p)return alert('ابتدا GPS را فعال کن.');const url=mapUrl(p.latitude,p.longitude),text='موقعیت راننده: '+p.latitude+','+p.longitude+'\\n'+url;try{if(navigator.share)await navigator.share({title:'موقعیت من',text,url});else{await navigator.clipboard.writeText(text);alert('لینک موقعیت کپی شد.')}}catch(e){}};$('sbGpsCopy').onclick=async()=>{const p=lastPosition||saved();if(!p)return alert('ابتدا GPS را فعال کن.');const t=p.latitude+','+p.longitude;try{await navigator.clipboard.writeText(t);alert('مختصات کپی شد: '+t)}catch(e){prompt('مختصات را کپی کن:',t)}};$('sbGpsMap').onclick=()=>{const p=lastPosition||saved();if(!p)return alert('ابتدا GPS را فعال کن.');if(map){map.setView([p.latitude,p.longitude],15);setTimeout(()=>map.invalidateSize(),100)}else window.open(mapUrl(p.latitude,p.longitude),'_blank','noopener')};$('sbGpsNearby').onclick=nearby;$('sbGpsStop').onclick=stop;
  $('sbGpsGo').onclick=async()=>{const p=lastPosition||saved(),d=$('sbGpsDestination').value.trim();if(!p)return alert('ابتدا GPS را فعال کن.');if(!d)return alert('نام مقصد یا مختصات را وارد کن.');let destination=d;const coords=d.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);if(coords)destination=coords[1]+','+coords[2];else{try{$('sbGpsGo').textContent='در حال یافتن…';const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(d),{headers:{'Accept-Language':'fa'} });const a=await r.json();if(a&&a[0]){destination=a[0].lat+','+a[0].lon;if(map){if(destinationMarker)map.removeLayer(destinationMarker);destinationMarker=L.marker([+a[0].lat,+a[0].lon]).addTo(map).bindPopup('مقصد: '+d).openPopup();map.fitBounds([[p.latitude,p.longitude],[+a[0].lat,+a[0].lon]],{padding:[35,35]})}}}catch(e){}finally{$('sbGpsGo').textContent='🧭 مسیریابی'}}window.open(directions(p,destination),'_blank','noopener')};
  const p=saved();if(p){show(p,'موقعیت قبلی این دستگاه');initMap(p).catch(()=>{})}else initMap(null).catch(()=>{});setupCalculator();
@@ -3396,8 +3393,8 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
   }
   if(!dest){alert('برای این بار مختصات مبدأ ثبت نشده و نشانی مبدأ هم روی نقشه پیدا نشد. برای مسیریابی دقیق، مختصات مبدأ باید هنگام ثبت بار ذخیره شود.');return}
   try{
-    const panel=$('sbTopDropdown'),trigger=$('sbTopMenuTrigger');
-    if(panel&&panel.classList.contains('hidden')&&trigger)trigger.click();
+    if(typeof showPage==='function')showPage('gpsPage');
+    await new Promise(resolve=>setTimeout(resolve,180));
     await initMap(p);if(!map)throw new Error('نقشه در دسترس نیست');
     if(routeLine){map.removeLayer(routeLine);routeLine=null}
     if(destinationMarker)map.removeLayer(destinationMarker);
@@ -3419,7 +3416,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  }
  window.salayanRouteToLoad=routeToLoad;
  window.salayanRefreshMap=function(){if(map)setTimeout(()=>map.invalidateSize(),180)};
- function boot(){card();const observer=new MutationObserver(()=>{if(!$('sbGpsCard'))card()});const home=$('homePage');if(home)observer.observe(home,{childList:true})}
+ function boot(){card();const observer=new MutationObserver(()=>{if(!$('sbGpsCard'))card()});const home=$('gpsPage');if(home)observer.observe(home,{childList:true})}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
@@ -3817,6 +3814,7 @@ document.addEventListener('click',function(event){
   if(panel&&!panel.classList.contains('hidden')&&!panel.contains(event.target)&&trigger&&!trigger.contains(event.target))sbCloseTopMenu();
 });
 document.addEventListener('keydown',function(event){if(event.key==='Escape')sbCloseTopMenu();});
+document.addEventListener('click',function(event){if(event.target.closest('#sbTopDropdown .sb-top-dropdown-item, #sbTopDropdown .sb-top-dropdown-shortcuts button'))sbCloseTopMenu();},true);
 
 </script>\n</body>
 </html>
