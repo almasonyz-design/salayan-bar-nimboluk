@@ -4080,6 +4080,53 @@ function sbOpenDriverTool(type){
     records=sbToolRead("notes",[]);records.push({text:a,date:new Date().toISOString()});sbToolWrite("notes",records);
     out="یادداشت ذخیره شد. تعداد یادداشت‌ها: "+records.length;
   }
+  }else if(type==="compareLoads"){
+    a=sbToolNum("کرایه بار اول (تومان):",60000000);if(a===null)return;
+    b=sbToolNum("هزینه کل بار اول (تومان):",25000000);if(b===null)return;
+    c=sbToolNum("کرایه بار دوم (تومان):",55000000);if(c===null)return;
+    d=sbToolNum("هزینه کل بار دوم (تومان):",18000000);if(d===null)return;
+    out="بار اول — سود: "+sbToolMoney(a-b)+"\nبار دوم — سود: "+sbToolMoney(c-d)+"\nپیشنهاد بهتر بر اساس سود: "+((a-b)>=(c-d)?"بار اول":"بار دوم")+"\nمسافت و زمان سفر را هم در تصمیم نهایی لحاظ کن.";
+  }else if(type==="waitCost"){
+    a=sbToolNum("مدت معطلی (ساعت):",4);if(a===null)return;
+    b=sbToolNum("ارزش هر ساعت وقت/خواب کامیون (تومان):",500000);if(b===null)return;
+    out="هزینه فرصت معطلی: "+sbToolMoney(a*b)+"\nاین برآورد برای مذاکره است و مبلغ قانونی یا قطعی محسوب نمی‌شود.";
+  }else if(type==="dailyTarget"){
+    a=sbToolNum("هدف درآمد خالص ماهانه (تومان):",150000000);if(a===null)return;
+    b=sbToolNum("روزهای کاری ماه:",22);if(b===null)return;if(!b){alert("روزهای کاری باید بیشتر از صفر باشد.");return;}
+    c=sbToolNum("میانگین هزینه روزانه کامیون (تومان):",0);if(c===null)return;
+    out="سود خالص هدف در هر روز کاری: "+sbToolMoney(a/b)+"\nدرآمد روزانه موردنیاز با احتساب هزینه‌ها: "+sbToolMoney(a/b+c);
+  }else if(type==="settlement"){
+    a=sbToolNum("مبلغ کل کرایه (تومان):",60000000);if(a===null)return;
+    b=sbToolNum("مبلغ واریزشده یا پیش‌پرداخت (تومان):",0);if(b===null)return;
+    c=sbToolNum("کسورات مورد توافق (تومان):",0);if(c===null)return;
+    out="کل کرایه: "+sbToolMoney(a)+"\nدریافتی: "+sbToolMoney(b)+"\nکسورات: "+sbToolMoney(c)+"\nمانده قابل پیگیری: "+sbToolMoney(a-b-c);
+  }else if(type==="tireLog"){
+    a=sbToolAsk("محل/محور یا شماره لاستیک:","محور عقب");if(a===null||!a)return;
+    b=sbToolAsk("رویداد (خرید، تعویض، پنچری، جابه‌جایی):","تعویض");if(b===null||!b)return;
+    c=sbToolNum("کیلومتر کامیون هنگام ثبت:",540000);if(c===null)return;
+    d=sbToolNum("هزینه (تومان؛ اگر ندارد صفر):",0);if(d===null)return;
+    records=sbToolRead("tires",[]);records.push({position:a,event:b,km:c,cost:d,date:new Date().toISOString()});sbToolWrite("tires",records);
+    out="رویداد لاستیک ثبت شد.\n"+a+" — "+b+"\nکیلومتر: "+c.toLocaleString("fa-IR")+"\nهزینه: "+sbToolMoney(d)+"\nتعداد ثبت‌ها: "+records.length;
+  }else if(type==="checklist"){
+    const items=["سطح روغن موتور و نشتی","آب و خنک‌کاری","فشار و سلامت لاستیک‌ها","چراغ‌ها و راهنما","ترمز و فشار باد","اتصالات و قفل بار","مدارک و بارنامه","سوخت و مسیر"];
+    out="چک‌لیست قبل از حرکت:\n"+items.map((x,i)=>(i+1)+". ☐ "+x).join("\n")+"\n\nموارد را بررسی کن؛ این فهرست جایگزین بازرسی فنی نیست.";
+    sbToolWrite("lastChecklist",{date:new Date().toISOString(),items:items});
+  }else if(type==="export"){
+    const data={exportedAt:new Date().toISOString(),trips:sbToolRead("trips",[]),expenses:sbToolRead("expenses",[]),maintenance:sbToolRead("maintenance",null),documents:sbToolRead("documents",[]),routes:sbToolRead("routes",[]),notes:sbToolRead("notes",[]),tires:sbToolRead("tires",[]),payments:sbToolRead("payments",[])};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");
+    link.href=url;link.download="salayan-driver-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    out="نسخه پشتیبان دانلود شد. فایل را در جای امن نگه دار؛ شامل اطلاعات واردشده در ابزارهای همین گوشی است.";
+  }else if(type==="paymentsDue"){
+    a=sbToolAsk("نام شرکت یا طرف حساب:","");if(a===null||!a)return;
+    b=sbToolAsk("شرح بار/مسیر:","");if(b===null||!b)return;
+    c=sbToolNum("کرایه توافق‌شده (تومان):",0);if(c===null)return;
+    d=sbToolNum("مبلغ دریافت‌شده (تومان):",0);if(d===null)return;
+    records=sbToolRead("payments",[]);records.push({party:a,route:b,total:c,paid:d,date:new Date().toISOString()});sbToolWrite("payments",records);
+    out="مطالبه ثبت شد.\nطرف حساب: "+a+"\nمانده: "+sbToolMoney(c-d)+"\nتعداد مطالبات ثبت‌شده: "+records.length;
+  }else if(type==="paymentsView"){
+    records=sbToolRead("payments",[]);
+    out=records.length?records.map((x,i)=>(i+1)+". "+x.party+" — "+x.route+"\nکل: "+sbToolMoney(Number(x.total)||0)+" | دریافتی: "+sbToolMoney(Number(x.paid)||0)+" | مانده: "+sbToolMoney((Number(x.total)||0)-(Number(x.paid)||0))).join("\n\n"):"مطالبه‌ای ثبت نشده است.";
+  }
   if(out)alert(out);
 }
 
