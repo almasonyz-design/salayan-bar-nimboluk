@@ -2983,16 +2983,56 @@ input::placeholder,textarea::placeholder{color:#9aa9a0!important}
 #salayan-rahman-floating .srf-arrow{font-size:30px;font-weight:900}
 @media(min-width:700px){#salayan-rahman-floating{left:auto;right:24px;width:390px}}
 @media(max-width:380px){#salayan-rahman-floating{padding:13px 14px;gap:10px;min-height:68px}#salayan-rahman-floating .srf-icon{width:44px;height:44px;flex-basis:44px;font-size:25px}#salayan-rahman-floating .srf-copy strong{font-size:16px}#salayan-rahman-floating .srf-copy small{font-size:10px}}
+#salayan-rahman-inapp-modal{display:none;position:fixed;inset:0;z-index:2147483647;direction:rtl;color:#173b2d;font-family:inherit}
+#salayan-rahman-inapp-modal .sri-backdrop{position:absolute;inset:0;background:rgba(7,25,18,.7);backdrop-filter:blur(5px)}
+#salayan-rahman-inapp-modal .sri-dialog{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,calc(100% - 24px));max-height:calc(100dvh - 30px);overflow:auto;background:#fff;border-radius:24px;padding:18px;box-shadow:0 24px 70px #0005}
+#salayan-rahman-inapp-modal .sri-head{display:flex;align-items:center;gap:12px}
+#salayan-rahman-inapp-modal .sri-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:#e2f8eb;font-size:27px}
+#salayan-rahman-inapp-modal .sri-head>div{flex:1;display:flex;flex-direction:column;gap:4px}
+#salayan-rahman-inapp-modal .sri-head strong{font-size:18px;font-weight:900}
+#salayan-rahman-inapp-modal .sri-head small{font-size:11px;color:#728278}
+#salayan-rahman-inapp-modal .sri-close{border:0;background:#f1f5f2;border-radius:12px;width:38px;height:38px;font-size:26px;color:#365647}
+#salayan-rahman-inapp-modal .sri-banner{margin:17px 0;padding:15px;border-radius:16px;background:linear-gradient(135deg,#075b40,#0b9668);color:#fff}
+#salayan-rahman-inapp-modal .sri-banner p{margin:7px 0 0;font-size:11px;line-height:1.9;color:#e0ffec}
+#salayan-rahman-inapp-modal .sri-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#salayan-rahman-inapp-modal .sri-tabs button{border:1px solid #dce9e0;background:#f7faf8;border-radius:12px;padding:11px 4px;font-family:inherit;font-size:10px;font-weight:800;color:#547164}
+#salayan-rahman-inapp-modal .sri-tabs button.active{background:#e0f6e8;border-color:#79c99b;color:#08764f}
+#salayan-rahman-inapp-modal .sri-content{min-height:175px;margin-top:12px;padding:23px 16px;border:1px solid #e0eee5;border-radius:17px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#salayan-rahman-inapp-modal .sri-empty-icon{font-size:31px;margin-bottom:9px}
+#salayan-rahman-inapp-modal .sri-content strong{font-size:14px;font-weight:900}
+#salayan-rahman-inapp-modal .sri-content p{font-size:11px;line-height:2;color:#687c71;max-width:390px;margin:9px auto 13px}
+#salayan-rahman-inapp-modal .sri-status-pill{border:1px solid #f0dfb6;background:#fff8e8;color:#88651f;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:800}
+#salayan-rahman-inapp-modal .sri-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;font-size:9px;color:#6b7d73}
+#salayan-rahman-inapp-modal .sri-done{border:0;border-radius:12px;padding:11px 18px;background:#087f5b;color:#fff;font-family:inherit;font-size:11px;font-weight:900}
 </style>
 <script id="salayan-rahman-bridge-script">
 function salayanOpenRahMan(){
-  var fallback=setTimeout(function(){if(document.visibilityState==="visible"){window.open("https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry","_blank","noopener");}},1100);
-  window.addEventListener("pagehide",function(){clearTimeout(fallback);},{once:true});
-  window.location.href="intent://launch/#Intent;package=com.PersiaBME.DriversInquiry;end";
+  var modal=document.getElementById("salayan-rahman-inapp-modal");
+  if(!modal){
+    modal=document.createElement("div");
+    modal.id="salayan-rahman-inapp-modal";
+    modal.innerHTML='<div class="sri-backdrop"></div><section class="sri-dialog" role="dialog" aria-modal="true"><header class="sri-head"><span class="sri-icon">🛣️</span><div><strong>خدمات راه من</strong><small>داخل صلایان بار نیمبلوک</small></div><button type="button" class="sri-close">×</button></header><div class="sri-banner"><b>پنل یکپارچه راننده</b><p>اطلاعات در همین صفحه نمایش داده می‌شود. دریافت اطلاعات واقعی نیازمند اتصال رسمی راهداری است.</p></div><div class="sri-tabs"><button class="active" data-sri-tab="profile">پروفایل راننده</button><button data-sri-tab="bills">سوابق بارنامه</button><button data-sri-tab="statements">صورت‌وضعیت</button></div><div class="sri-content"><div class="sri-empty-icon">🔐</div><strong>اتصال رسمی هنوز فعال نیست</strong><p>برای نمایش اطلاعات واقعی باید سرویس رسمی و مجاز سازمان راهداری به صلایان بار متصل شود. اطلاعات ساختگی نمایش داده نمی‌شود.</p><span class="sri-status-pill">در انتظار اتصال مجاز</span></div><footer class="sri-foot"><span>رمز عبور یا کد پیامکی را اینجا وارد نکنید.</span><button type="button" class="sri-done">بستن</button></footer></section>';
+    document.body.appendChild(modal);
+    var close=function(){modal.style.display="none";document.body.style.overflow="";};
+    modal.querySelector(".sri-close").addEventListener("click",close);
+    modal.querySelector(".sri-done").addEventListener("click",close);
+    modal.querySelector(".sri-backdrop").addEventListener("click",close);
+    modal.querySelectorAll("[data-sri-tab]").forEach(function(tab){
+      tab.addEventListener("click",function(){
+        modal.querySelectorAll("[data-sri-tab]").forEach(function(t){t.classList.toggle("active",t===tab);});
+        var data={
+          profile:["👤","پروفایل راننده","برای نمایش نام و وضعیت کارت هوشمند، اتصال رسمی راهداری لازم است."],
+          bills:["📄","سوابق بارنامه","پس از اتصال مجاز، سوابق بارنامه در همین قسمت نمایش داده می‌شود."],
+          statements:["🧾","صورت‌وضعیت‌ها","پس از فراهم‌شدن دسترسی رسمی، صورت‌وضعیت‌ها در همین قسمت نمایش داده می‌شود."]
+        }[tab.getAttribute("data-sri-tab")];
+        modal.querySelector(".sri-content").innerHTML='<div class="sri-empty-icon">'+data[0]+'</div><strong>'+data[1]+'</strong><p>'+data[2]+'</p><span class="sri-status-pill">در انتظار اتصال مجاز</span>';
+      });
+    });
+  }
+  modal.style.display="block";
+  document.body.style.overflow="hidden";
 }
-function salayanRahManInfo(){
-  alert("وضعیت اتصال راه من\n\nدسترسی مستقیم به پروفایل و سوابق بارنامه از داخل صلایان بار هنوز فعال نیست. برای دریافت خودکار داده‌ها، سازمان راهداری باید API یا روش اتصال رسمی و مجاز ارائه کند. ورود به حساب راه من در برنامه اصلی به‌تنهایی دسترسی صلایان بار به داده‌ها را ایجاد نمی‌کند.");
-}
+function salayanRahManInfo(){salayanOpenRahMan();}
 </script>
 <script id="salayan-rahman-floating-entry-script">
 (function(){
