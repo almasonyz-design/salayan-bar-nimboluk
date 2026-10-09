@@ -4525,3 +4525,66 @@ body.sb-guide-is-open #sbGuideFab{visibility:hidden!important;pointer-events:non
   window.addEventListener('pageshow',syncGuideLayer);
 })();
 </script>
+
+
+<!-- salayan-rahman-modal-background-cleanup-2026 -->
+<style id="salayan-rahman-modal-background-cleanup-css">
+html body #salayan-rahman-inapp-modal{
+ position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;
+ z-index:2147483647!important;isolation:isolate!important;overflow:hidden!important;
+}
+html body #salayan-rahman-inapp-modal[style*="display: block"]{display:block!important}
+html body #salayan-rahman-inapp-modal .sri-backdrop{
+ position:absolute!important;inset:0!important;background:rgba(3,15,10,.985)!important;
+ -webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important;
+}
+html body #salayan-rahman-inapp-modal .sri-dialog{
+ position:absolute!important;z-index:2!important;left:50%!important;top:50%!important;
+ transform:translate(-50%,-50%)!important;
+ width:min(540px,calc(100vw - 20px))!important;
+ max-height:calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;
+ overflow-y:auto!important;overscroll-behavior:contain!important;box-sizing:border-box!important;
+}
+body.salayan-rahman-modal-open #appPage,
+body.salayan-rahman-modal-open #bottomNav,
+body.salayan-rahman-modal-open .bottom-nav,
+body.salayan-rahman-modal-open #sbGlobalBack,
+body.salayan-rahman-modal-open #salayan-rahman-floating,
+body.salayan-rahman-modal-open #sbGuideFab,
+body.salayan-rahman-modal-open .header{
+ visibility:hidden!important;pointer-events:none!important;
+}
+body.salayan-rahman-modal-open{overflow:hidden!important}
+</style>
+<script id="salayan-rahman-modal-background-cleanup-js">
+(function(){
+ function syncRahManModal(){
+  var modal=document.getElementById('salayan-rahman-inapp-modal');
+  var open=!!(modal && getComputedStyle(modal).display!=='none');
+  document.body.classList.toggle('salayan-rahman-modal-open',open);
+  if(open){
+   modal.style.setProperty('position','fixed','important');
+   modal.style.setProperty('inset','0','important');
+   modal.style.setProperty('z-index','2147483647','important');
+   var backdrop=modal.querySelector('.sri-backdrop');
+   if(backdrop)backdrop.style.setProperty('background','rgba(3,15,10,.985)','important');
+  }
+ }
+ var observer=new MutationObserver(syncRahManModal);
+ function start(){
+  var modal=document.getElementById('salayan-rahman-inapp-modal');
+  if(modal)observer.observe(modal,{attributes:true,attributeFilter:['style','class']});
+  var bodyObserver=new MutationObserver(function(){
+   var m=document.getElementById('salayan-rahman-inapp-modal');
+   if(m && !m.dataset.cleanupObserved){
+    m.dataset.cleanupObserved='1';
+    observer.observe(m,{attributes:true,attributeFilter:['style','class']});
+   }
+   syncRahManModal();
+  });
+  bodyObserver.observe(document.body,{childList:true});
+  syncRahManModal();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
