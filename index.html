@@ -4352,3 +4352,62 @@ function sbOpenDriverTool(type){
 
 </body>
 </html>
+
+
+<!-- salayan-welcome-click-recovery-2026 -->
+<style id="salayan-welcome-click-recovery-2026-css">
+#sbGuideOverlay{display:none!important}
+#sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#sbGuideOverlay.open #sbGuideDialog{visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#sbGuideFab{pointer-events:auto!important;cursor:pointer!important}
+</style>
+<script id="salayan-welcome-click-recovery-2026-js">
+(function(){
+  function get(id){return document.getElementById(id)}
+  function closeGuide(){
+    const overlay=get('sbGuideOverlay'), fab=get('sbGuideFab');
+    if(!overlay)return;
+    overlay.classList.remove('open');
+    overlay.style.setProperty('display','none','important');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    if(fab)fab.setAttribute('aria-expanded','false');
+  }
+  function openGuide(){
+    const overlay=get('sbGuideOverlay'), fab=get('sbGuideFab'), menu=get('sbTopDropdown'), trigger=get('sbTopMenuTrigger');
+    if(!overlay)return;
+    if(menu)menu.classList.add('hidden');
+    if(trigger)trigger.setAttribute('aria-expanded','false');
+    overlay.classList.add('open');
+    overlay.style.setProperty('display','flex','important');
+    overlay.style.setProperty('visibility','visible','important');
+    overlay.style.setProperty('pointer-events','auto','important');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    if(fab)fab.setAttribute('aria-expanded','true');
+  }
+  // Capture clicks so the guide still opens even if another page script intercepts the button.
+  document.addEventListener('click',function(e){
+    const target=e.target && e.target.closest ? e.target.closest('#sbGuideFab') : null;
+    if(target){e.preventDefault();e.stopPropagation();openGuide();return;}
+    const close=e.target && e.target.closest ? e.target.closest('#sbGuideClose') : null;
+    if(close){e.preventDefault();e.stopPropagation();closeGuide();return;}
+    const start=e.target && e.target.closest ? e.target.closest('#sbGuideStartLoads') : null;
+    if(start){
+      e.preventDefault();e.stopPropagation();closeGuide();
+      if(typeof window.sbNavigateTo==='function')window.sbNavigateTo('loadsPage',true,false);
+      else if(typeof window.showPage==='function'){window.showPage('loadsPage');if(typeof window.showLoads==='function')window.showLoads();}
+      return;
+    }
+    const overlay=get('sbGuideOverlay');
+    if(overlay && e.target===overlay && overlay.classList.contains('open'))closeGuide();
+  },true);
+  document.addEventListener('keydown',function(e){
+    const overlay=get('sbGuideOverlay');
+    if(e.key==='Escape' && overlay && overlay.classList.contains('open')){e.preventDefault();closeGuide();}
+  },true);
+  // Do not force the welcome dialog open here: respect the existing first-visit behavior.
+  const overlay=get('sbGuideOverlay');
+  if(overlay && overlay.classList.contains('open'))openGuide();
+})();
+</script>
