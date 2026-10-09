@@ -3695,8 +3695,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
 <div class="sb-gps-actions"><button class="primary" id="sbGpsStart">📡 فعال‌سازی GPS</button><button id="sbGpsMap">🎯 رفتن به موقعیت من</button><button id="sbGpsNearby">🚚 بارهای اطراف</button><button id="sbGpsStop">⏸ توقف GPS</button><button id="sbGpsShare">📤 اشتراک موقعیت</button><button id="sbGpsCopy">📋 کپی مختصات</button></div><div class="sb-gps-destination"><input id="sbGpsDestination" placeholder="نام شهر، آدرس یا مختصات مقصد"><button id="sbGpsGo">🧭 مسیریابی</button></div><div id="sbGpsNear" class="sb-gps-near"></div><section class="sb-gps-calculator"><div class="sb-gps-calc-head"><h3>🧮 محاسبه‌گر سود سفر</h3><span>محاسبه محلی؛ اعداد را خودت وارد کن</span></div><div class="sb-gps-calc-grid"><div><label for="sbGpsCalcFreight">کرایه رفت (تومان)</label><input id="sbGpsCalcFreight" type="number" min="0" value="0"></div><div><label for="sbGpsCalcReturn">کرایه برگشت (تومان)</label><input id="sbGpsCalcReturn" type="number" min="0" value="0"></div><div><label for="sbGpsCalcKm">مسافت کل (کیلومتر)</label><input id="sbGpsCalcKm" type="number" min="0" value="500"></div><div><label for="sbGpsCalcFuelUse">مصرف سوخت (لیتر/۱۰۰km)</label><input id="sbGpsCalcFuelUse" type="number" min="0" step="0.1" value="35"></div><div><label for="sbGpsCalcFuelPrice">قیمت هر لیتر سوخت (تومان)</label><input id="sbGpsCalcFuelPrice" type="number" min="0" value="600"></div><div><label for="sbGpsCalcOther">هزینه‌های دیگر سفر (تومان)</label><input id="sbGpsCalcOther" type="number" min="0" value="0"></div></div><div class="sb-gps-calc-result"><div><small>سود تقریبی پس از هزینه‌های واردشده</small><b id="sbGpsCalcNet">۰ تومان</b></div><em id="sbGpsCalcBreakdown">سوخت: ۰ تومان<br>هزینه کل: ۰ تومان</em></div></section><div class="sb-gps-privacy">🔐 حریم خصوصی: موقعیت روی همین دستگاه ذخیره می‌شود؛ به سرور ارسال نمی‌شود. نمایش زنده هنگام بازبودن صفحه و فعال‌بودن مجوز مرورگر کار می‌کند. این پنل به‌تنهایی ردیابی پس‌زمینه‌ای هنگام بسته‌بودن سایت را انجام نمی‌دهد.</div></div>`;
  home.appendChild(el);
  $('sbGpsStart').onclick=start;
- // Default to 3D on first opening so the map is immediately in perspective mode.
- setTimeout(()=>{const b=$('sbx3dToggle');if(b&&!perspectiveMode)b.click()},700);
+ // Start in standard interactive map mode. 3D is user-triggered to avoid stealing map gestures on mobile.
  $('sbx3dToggle').onclick=async()=>{const btn=$('sbx3dToggle');if(!perspectiveMode){try{btn.disabled=true;btn.textContent='در حال بارگیری 3D…';await enableReal3D();perspectiveMode=true;btn.classList.add('active');btn.setAttribute('aria-pressed','true');btn.textContent='3D روشن ✓';$('sbxMapModeLabel').textContent='نمای سه‌بعدی واقعی';$('sbxMapZoomLabel').textContent='ساختمان‌های سه‌بعدی';$('sbGpsMapNote').textContent='نمای سه‌بعدی واقعی فعال است؛ نقشه را با دو انگشت بچرخان و زاویه دید را تغییر بده.'}catch(e){console.error('Salayan 3D map failed',e);const three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';if(map){setTimeout(()=>map.invalidateSize(),100)}$('sbGpsMapNote').textContent='نمای سه‌بعدی در دسترس نیست؛ نقشه معمولی و GPS همچنان قابل استفاده‌اند. اتصال اینترنت را بررسی کن.';btn.textContent='3D ↗'}finally{btn.disabled=false}}else{perspectiveMode=false;const stage=document.querySelector('.sbx-map-stage'),three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';btn.classList.remove('active');btn.setAttribute('aria-pressed','false');btn.textContent='3D ↗';$('sbxMapModeLabel').textContent='نمای استاندارد';$('sbxMapZoomLabel').textContent='نقشه زنده';setTimeout(()=>{if(map)map.invalidateSize()},150)}};
  document.querySelectorAll('[data-sbx-layer]').forEach(btn=>btn.addEventListener('click',()=>{const type=btn.dataset.sbxLayer;if(!map||!baseLayers[type])return;Object.values(baseLayers).forEach(layer=>{if(map.hasLayer(layer))map.removeLayer(layer)});baseLayers[type].addTo(map);activeLayer=type;document.querySelectorAll('[data-sbx-layer]').forEach(b=>b.classList.toggle('active',b===btn));const labels={road:'نقشه استاندارد',satellite:'تصاویر ماهواره‌ای',terrain:'ناهمواری و ارتفاع',dark:'نمای شب'};$('sbxMapModeLabel').textContent=labels[type]||'نقشه';$('sbxMapZoomLabel').textContent=labels[type]||'نقشه';setTimeout(()=>map.invalidateSize(),100)}));
  $('sbxMapLocate').onclick=()=>{const p=lastPosition||saved();if(!p){alert('ابتدا GPS را فعال کن.');return}if(google3DMap){google3DMap.center={lat:p.latitude,lng:p.longitude,altitude:0};google3DMap.range=900;update3DPosition(p)}if(maplibreMap){maplibreMap.easeTo({center:[p.longitude,p.latitude],zoom:15,pitch:62,duration:500});update3DPosition(p)}else if(map){map.setView([p.latitude,p.longitude],16,{animate:true});drawPosition(p)}};
@@ -5380,3 +5379,45 @@ body.salayan-rahman-modal-open{overflow:hidden!important}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
+
+
+<style id="salayan-gps-touch-fix-v3">
+/* Mobile-first interaction fixes: keep the real map interactive; never fake 3D with CSS transforms. */
+#gpsPage #sbGpsCard .sbx-map-stage{position:relative;isolation:isolate;overflow:hidden;border-radius:18px;touch-action:pan-x pan-y pinch-zoom}
+#gpsPage #sbGpsCard #sbGpsMapCanvas,
+#gpsPage #sbGpsCard #sbGpsMap3D{position:relative;z-index:1;touch-action:pan-x pan-y pinch-zoom;-webkit-tap-highlight-color:transparent}
+#gpsPage #sbGpsCard .sbx-map-overlay{pointer-events:none!important;z-index:5}
+#gpsPage #sbGpsCard .sbx-map-locate{pointer-events:auto!important;z-index:8;touch-action:manipulation;min-width:44px;min-height:44px;justify-content:center}
+#gpsPage #sbGpsCard .sbx-map-locate small{display:inline!important}
+#gpsPage #sbGpsCard .sbx-map-shortcuts,
+#gpsPage #sbGpsCard .sbx-map-layer-row,
+#gpsPage #sbGpsCard .sb-gps-actions,
+#gpsPage #sbGpsCard .sb-gps-destination{position:relative;z-index:10}
+#gpsPage #sbGpsCard .sbx-map-layer-row{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+#gpsPage #sbGpsCard .sbx-map-layer,
+#gpsPage #sbGpsCard .sbx-map-3d,
+#gpsPage #sbGpsCard .sbx-map-shortcuts button,
+#gpsPage #sbGpsCard .sb-gps-actions button,
+#gpsPage #sbGpsCard #sbGpsGo{min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#gpsPage #sbGpsCard .sbx-map-shortcuts button:active,
+#gpsPage #sbGpsCard .sbx-map-layer:active,
+#gpsPage #sbGpsCard .sb-gps-actions button:active{transform:scale(.98);filter:brightness(.97)}
+/* CSS tilt breaks hit-testing and panning on Leaflet, so 3D must use the real 3D renderer. */
+#gpsPage #sbGpsCard .sbx-perspective-on .leaflet-map-pane{transform:none!important;filter:none!important}
+#gpsPage #sbGpsCard .sbx-perspective-on .leaflet-control-container{opacity:1!important}
+@media(max-width:600px){
+ #gpsPage #sbGpsCard{margin:8px 0!important;border-radius:18px!important}
+ #gpsPage #sbGpsCard .sbx-map-console{padding:12px;border-radius:18px}
+ #gpsPage #sbGpsCard .sbx-map-console-head b{font-size:15px}
+ #gpsPage #sbGpsCard .sbx-map-layer-row{gap:7px;padding-bottom:6px}
+ #gpsPage #sbGpsCard .sbx-map-layer{padding:10px 12px;font-size:11px}
+ #gpsPage #sbGpsCard .sb-gps-map{height:clamp(320px,54vh,460px);border-radius:16px}
+ #gpsPage #sbGpsCard .sbx-map-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ #gpsPage #sbGpsCard .sbx-map-shortcuts button{padding:9px 3px;font-size:10px;line-height:1.4}
+ #gpsPage #sbGpsCard .sb-gps-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #gpsPage #sbGpsCard .sb-gps-actions button{font-size:12px!important;padding:11px 6px!important;line-height:1.45}
+ #gpsPage #sbGpsCard .sb-gps-destination{display:flex;flex-direction:column;gap:8px;padding:9px}
+ #gpsPage #sbGpsCard .sb-gps-destination input{width:100%;min-height:48px;font-size:14px!important;box-sizing:border-box}
+ #gpsPage #sbGpsCard .sb-gps-destination button{width:100%;min-height:48px;font-size:13px}
+}
+</style>
