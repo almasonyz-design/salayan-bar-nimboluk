@@ -803,8 +803,8 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
     <div class="sr-metric"><span>🧾</span><small>صورت‌وضعیت‌ها</small><b>در انتظار اتصال</b></div>
   </div>
   <div class="sr-actions">
-    <button type="button" class="sr-primary" onclick="salayanOpenRahMan()">↗ باز کردن برنامه راه من</button>
-    <a class="sr-secondary" href="https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry" target="_blank" rel="noopener noreferrer">دریافت / به‌روزرسانی برنامه</a>
+    <button type="button" class="sr-primary" onclick="salayanOpenRahMan()">نمایش خدمات راه من در همین سایت</button>
+    <button type="button" class="sr-secondary" onclick="salayanOpenRahMan()">نمایش خدمات در همین سایت</button>
   </div>
   <div class="sr-note"><b>🔐 اتصال امن و رسمی</b><p>نمایش خودکار اطلاعات داخل این صفحه نیازمند وب‌سرویس یا مجوز اتصال رسمی از سازمان راهداری است. فعلاً این پنل اطلاعات واقعی راه من را دریافت نمی‌کند و هیچ اطلاعاتی را حدس نمی‌زند.</p></div>
   <div class="sr-foot"><span>آخرین همگام‌سازی</span><b>هنوز انجام نشده</b><button type="button" onclick="salayanRahManInfo()">جزئیات اتصال</button></div>
@@ -3043,7 +3043,7 @@ function salayanRahManInfo(){salayanOpenRahMan();}
       btn.type="button";btn.id="salayan-rahman-floating";
       btn.setAttribute("aria-label","باز کردن خدمات راه من داخل صلایان بار");
       btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>خدمات راه من</strong><small>نمایش داخل صلایان بار</small></span><span class="srf-arrow">›</span>';
-      btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{window.location.href="https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry";}});
+      btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{var msg=document.getElementById("salayan-rahman-inapp-modal");if(msg){msg.style.display="block";}else{alert("پنل خدمات راه من هنوز بارگذاری نشده است. صفحه را تازه‌سازی کنید.");}}});
       document.body.appendChild(btn);
     }
     function updateVisibility(){
