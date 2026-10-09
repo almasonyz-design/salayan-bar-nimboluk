@@ -4626,7 +4626,7 @@ function sbOpenDriverTool(type){
    if(e.key==='?'||e.key==='/'){const tag=(document.activeElement&&document.activeElement.tagName||'').toLowerCase();if(tag!=='input'&&tag!=='textarea'&&tag!=='select'){e.preventDefault();openGuide();}}
    if(e.key==='Escape'&&typeof sbGoBack==='function')sbGoBack();
  });
- try{if(!localStorage.getItem('salayanGuideSeen2026'))setTimeout(openGuide,700)}catch(e){setTimeout(openGuide,700)}
+ /* The guide opens only when the user taps its guide button; never block the app on startup. */
 })();
 </script>
 
@@ -5257,8 +5257,7 @@ html body #sbGuideOverlay.open ~ #bottomNav{visibility:hidden!important}
 })();
 </script>
 
-</body>
-</html>
+
 
 
 <!-- salayan-welcome-click-recovery-2026 -->
@@ -5407,7 +5406,7 @@ body.sb-guide-is-open #sbGuideFab{visibility:hidden!important;pointer-events:non
     const dialog=document.getElementById('sbGuideDialog');
     if(!overlay)return;
     if(overlay.parentElement!==document.body)document.body.appendChild(overlay);
-    const open=overlay.classList.contains('open') || getComputedStyle(overlay).display!=='none';
+    const open=overlay.classList.contains('open');
     document.body.classList.toggle('sb-guide-is-open',open);
     if(open){
       overlay.style.setProperty('position','fixed','important');
@@ -5551,3 +5550,58 @@ body.salayan-rahman-modal-open{overflow:hidden!important}
  #gpsPage #sbGpsCard .sb-gps-destination button{width:100%;min-height:48px;font-size:13px}
 }
 </style>
+
+
+<style id="salayan-touch-emergency-recovery-css">
+html,body{max-width:100%;overscroll-behavior-x:none}
+html body #sbGuideOverlay{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+html body #sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html body #salayan-rahman-inapp-modal{display:none}
+html body #salayan-rahman-inapp-modal[style*="display: block"]{display:block!important;pointer-events:auto!important}
+html body #sbGuideFab{pointer-events:auto!important;touch-action:manipulation!important;z-index:2147483000!important}
+</style>
+<script id="salayan-touch-emergency-recovery-js">
+(function(){
+ function recover(){
+  const overlay=document.getElementById('sbGuideOverlay');
+  const fab=document.getElementById('sbGuideFab');
+  document.body.classList.remove('sb-guide-is-open','salayan-rahman-modal-open');
+  document.body.style.removeProperty('overflow');
+  document.documentElement.style.removeProperty('overflow');
+  if(overlay){
+   overlay.classList.remove('open');
+   overlay.setAttribute('aria-hidden','true');
+   overlay.style.setProperty('display','none','important');
+   overlay.style.setProperty('visibility','hidden','important');
+   overlay.style.setProperty('opacity','0','important');
+   overlay.style.setProperty('pointer-events','none','important');
+  }
+  if(fab)fab.setAttribute('aria-expanded','false');
+  const modal=document.getElementById('salayan-rahman-inapp-modal');
+  if(modal){modal.style.setProperty('display','none','important');modal.setAttribute('aria-hidden','true')}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',recover,{once:true});else recover();
+ window.addEventListener('pageshow',recover);
+ // Use delegated click handling so the guide works even if elements were moved to the body.
+ document.addEventListener('click',function(e){
+  const t=e.target&&e.target.closest?e.target.closest('#sbGuideFab'):null;
+  if(!t)return;
+  e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+  const overlay=document.getElementById('sbGuideOverlay');
+  if(!overlay)return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  overlay.style.setProperty('display','flex','important');
+  overlay.style.setProperty('visibility','visible','important');
+  overlay.style.setProperty('opacity','1','important');
+  overlay.style.setProperty('pointer-events','auto','important');
+  document.body.classList.add('sb-guide-is-open');
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+  t.setAttribute('aria-expanded','true');
+ },true);
+})();
+</script>
+
+</body>
+</html>
