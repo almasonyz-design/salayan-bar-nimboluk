@@ -700,7 +700,7 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 @media(min-width:761px){.driver-home{max-width:1000px;margin:auto}.sb-ultra-hero{margin-top:8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
-<style id="salayan-rahman-inapp-details">#salayan-rahman-inapp-modal .sri-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:380px;margin:4px 0 12px}#salayan-rahman-inapp-modal .sri-detail-grid>div{display:flex;flex-direction:column;gap:6px;padding:11px;border:1px solid #e1eee6;background:#f7fbf8;border-radius:12px}#salayan-rahman-inapp-modal .sri-detail-grid small{font-size:10px;color:#708378}#salayan-rahman-inapp-modal .sri-detail-grid b{font-size:11px;color:#365d49}#salayan-rahman-inapp-modal .sri-hint{font-size:10px!important;margin-top:2px!important}</style></head>
+<style id="salayan-rahman-inapp-details">#salayan-rahman-inapp-modal .sri-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:380px;margin:4px 0 12px}#salayan-rahman-inapp-modal .sri-detail-grid>div{display:flex;flex-direction:column;gap:6px;padding:11px;border:1px solid #e1eee6;background:#f7fbf8;border-radius:12px}#salayan-rahman-inapp-modal .sri-detail-grid small{font-size:10px;color:#708378}#salayan-rahman-inapp-modal .sri-detail-grid b{font-size:11px;color:#365d49}#salayan-rahman-inapp-modal .sri-hint{font-size:10px!important;margin-top:2px!important}</style><style id="salayan-rahman-handoff-style">#salayan-rahman-inapp-modal .sri-open-app{display:block;width:100%;margin-top:12px;padding:13px 14px;border:0;border-radius:13px;background:linear-gradient(110deg,#065f46,#0a9368);color:#fff;font:800 12px inherit;cursor:pointer;box-shadow:0 5px 14px #087f5b20}#salayan-rahman-inapp-modal .sri-open-app:active{transform:scale(.99)}#salayan-rahman-inapp-modal .sri-banner p{margin-bottom:8px}</style></head>
 
 <body>
 
@@ -3023,6 +3023,19 @@ function salayanOpenRahMan(){
     modal.id="salayan-rahman-inapp-modal";
     modal.innerHTML='<div class="sri-backdrop"></div><section class="sri-dialog" role="dialog" aria-modal="true"><header class="sri-head"><span class="sri-icon">🛣️</span><div><strong>خدمات راه من</strong><small>داخل صلایان بار نیمبلوک</small></div><button type="button" class="sri-close">×</button></header><div class="sri-banner"><b>پنل یکپارچه راننده</b><p>اطلاعات در همین صفحه نمایش داده می‌شود. دریافت اطلاعات واقعی نیازمند اتصال رسمی راهداری است.</p></div><div class="sri-tabs"><button class="active" data-sri-tab="profile">پروفایل راننده</button><button data-sri-tab="bills">سوابق بارنامه</button><button data-sri-tab="statements">صورت‌وضعیت</button></div><div class="sri-content"><div class="sri-empty-icon">🔐</div><strong>اتصال رسمی هنوز فعال نیست</strong><p>برای نمایش اطلاعات واقعی باید سرویس رسمی و مجاز سازمان راهداری به صلایان بار متصل شود. اطلاعات ساختگی نمایش داده نمی‌شود.</p><span class="sri-status-pill">در انتظار اتصال مجاز</span></div><footer class="sri-foot"><span>رمز عبور یا کد پیامکی را اینجا وارد نکنید.</span><button type="button" class="sri-done">بستن</button></footer></section>';
     document.body.appendChild(modal);
+    var officialAppButton=document.createElement("button");
+    officialAppButton.type="button";
+    officialAppButton.className="sri-open-app";
+    officialAppButton.textContent="ورود به حساب در برنامه رسمی راه من";
+    officialAppButton.addEventListener("click",function(){
+      var ua=navigator.userAgent||"";
+      if(/Android/i.test(ua)){
+        salayanLaunchRahManApp();
+      }else{
+        alert("برای ورود به حساب، برنامه رسمی راه من را روی گوشی اندرویدی باز کنید. این صفحه صلایان بار باقی می‌ماند.");
+      }
+    });
+    modal.querySelector(".sri-banner").appendChild(officialAppButton);
     var close=function(){modal.style.display="none";document.body.style.overflow="";};
     modal.querySelector(".sri-close").addEventListener("click",close);
     modal.querySelector(".sri-done").addEventListener("click",close);
