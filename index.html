@@ -4214,5 +4214,78 @@ function sbOpenDriverTool(type){
 })();
 </script>
 
+
+<style id="salayan-menu-fix-layout-2026">
+/* Stabilize the services menu and bring visual hierarchy back to a consistent grid */
+#sbTopDropdown.sb-top-dropdown{position:fixed!important;top:var(--sb-menu-top,70px)!important;left:var(--sb-menu-left,12px)!important;right:auto!important;bottom:auto!important;width:min(390px,calc(100vw - 24px))!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - var(--sb-menu-top,70px) - 16px)!important;overflow-y:auto!important;z-index:2147483000!important;transform:none;animation:sbDropdownIn .16s ease-out;background:#fff!important;border:1px solid #d7e9df!important;box-shadow:0 24px 70px #092e2040!important;border-radius:20px!important}
+#sbTopDropdown.sb-top-dropdown.hidden{display:none!important}
+#sbTopMenuTrigger{position:relative;z-index:2147483001!important;touch-action:manipulation}
+.sb-top-actions{position:relative;z-index:2147483001;overflow:visible!important}
+.header,.brand-row,.sb-top-actions{overflow:visible!important}
+#appPage .container{width:100%;max-width:1000px;margin-inline:auto}
+#homePage,#loadsPage,#myLoadsPage,#createLoadPage,#walletPage,#profilePage,#truckPage,#notificationsPage,#supportPage,#supportHelpPage,#gpsPage{width:100%;max-width:1000px;margin-inline:auto;padding-inline:clamp(12px,3vw,24px)}
+#appPage .card,#appPage .sbc-card,#appPage .load-card,#appPage .sb-menu-section{min-width:0;overflow-wrap:anywhere}
+#appPage h1,#appPage h2,#appPage h3{line-height:1.45}
+#appPage button,#appPage input,#appPage select,#appPage textarea{max-width:100%;min-width:0}
+#appPage button{touch-action:manipulation}
+#bottomNav,.bottom-nav{z-index:9990!important}
+#sbGlobalBack{z-index:9991!important}
+#sbGuideFab{z-index:9992!important}
+#sbGuideOverlay{z-index:2147483002!important}
+@media(max-width:600px){
+ .header{padding:12px 10px!important}
+ .brand-row{gap:8px!important;align-items:center!important}
+ .brand{min-width:0;gap:8px!important}
+ .header h1{font-size:14px!important;line-height:1.5!important}
+ .header small{font-size:9px!important}
+ .brand-logo{width:37px!important;height:37px!important;flex:0 0 37px}
+ .sb-top-actions{gap:6px!important}
+ .sb-top-menu-trigger{padding:9px 8px!important;gap:5px!important;font-size:10px!important}
+ .sb-top-wallet{padding:9px 8px!important;font-size:10px!important}
+ #homePage,#loadsPage,#myLoadsPage,#createLoadPage,#walletPage,#profilePage,#truckPage,#notificationsPage,#supportPage,#supportHelpPage,#gpsPage{padding-inline:11px!important}
+ #appPage .card,#appPage .sbc-card,#appPage .sb-menu-section{border-radius:17px!important}
+ #sbTopDropdown.sb-top-dropdown{width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;left:10px!important;right:auto!important;max-height:calc(100dvh - var(--sb-menu-top,70px) - 10px)!important;padding:10px!important}
+}
+@media(min-width:601px){#sbTopDropdown.sb-top-dropdown{width:min(390px,calc(100vw - 24px))!important}}
+</style>
+<script id="salayan-menu-fix-layout-2026-js">
+(function(){
+ const panel=document.getElementById('sbTopDropdown');
+ const trigger=document.getElementById('sbTopMenuTrigger');
+ if(!panel||!trigger)return;
+ // Place the popup under body so headers/cards cannot clip it.
+ if(panel.parentElement!==document.body)document.body.appendChild(panel);
+ function positionMenu(){
+   const r=trigger.getBoundingClientRect();
+   const width=Math.min(390,window.innerWidth-20);
+   let left=Math.max(10,Math.min(r.right-width,window.innerWidth-width-10));
+   let top=Math.min(r.bottom+8,Math.max(10,window.innerHeight-240));
+   panel.style.setProperty('--sb-menu-top',top+'px');
+   panel.style.setProperty('--sb-menu-left',left+'px');
+ }
+ const oldToggle=window.sbToggleTopMenu;
+ window.sbToggleTopMenu=function(event){
+   if(event){event.preventDefault();event.stopPropagation();}
+   const isOpen=!panel.classList.contains('hidden');
+   if(isOpen){panel.classList.add('hidden');trigger.setAttribute('aria-expanded','false');return;}
+   positionMenu();
+   panel.classList.remove('hidden');
+   trigger.setAttribute('aria-expanded','true');
+ };
+ const oldClose=window.sbCloseTopMenu;
+ window.sbCloseTopMenu=function(){
+   panel.classList.add('hidden');
+   trigger.setAttribute('aria-expanded','false');
+ };
+ // Reposition when the viewport changes; keep the popup stable on mobile rotation.
+ window.addEventListener('resize',()=>{if(!panel.classList.contains('hidden'))positionMenu()});
+ window.addEventListener('scroll',()=>{if(!panel.classList.contains('hidden'))positionMenu()},{passive:true});
+ panel.addEventListener('click',function(e){
+   const button=e.target.closest('button');
+   if(button && button!==trigger) setTimeout(()=>{if(typeof window.sbCloseTopMenu==='function')window.sbCloseTopMenu()},0);
+ });
+})();
+</script>
+
 </body>
 </html>
