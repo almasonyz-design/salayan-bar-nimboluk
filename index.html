@@ -4459,3 +4459,69 @@ html body #sbGuideFab{z-index:2147483000!important}
  window.addEventListener('resize',rootGuide);
 })();
 </script>
+
+
+<!-- salayan-guide-obscure-background-fix-2026 -->
+<style id="salayan-guide-obscure-background-fix-2026-css">
+html body #sbGuideOverlay{
+  position:fixed!important;inset:0!important;
+  width:100vw!important;height:100vh!important;height:100dvh!important;
+  z-index:2147483647!important;
+  background:rgba(4,20,14,.96)!important;
+  -webkit-backdrop-filter:blur(8px)!important;backdrop-filter:blur(8px)!important;
+  align-items:center!important;justify-content:center!important;
+  overflow:hidden!important;isolation:isolate!important;
+}
+html body #sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html body #sbGuideOverlay #sbGuideDialog{
+  position:relative!important;z-index:2147483647!important;
+  box-sizing:border-box!important;width:min(560px,calc(100vw - 20px))!important;
+  max-height:calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain!important;margin:auto!important;
+}
+html body #sbGuideOverlay #sbGuideDialog *{pointer-events:auto}
+html body #sbGuideOverlay #sbGuideDialog .sb-guide-actions{
+  position:sticky!important;bottom:0!important;z-index:20!important;
+  background:#fbfefc!important;padding:12px 0 max(8px,env(safe-area-inset-bottom))!important;
+}
+html body #sbGuideOverlay.open ~ #bottomNav,
+html body #sbGuideOverlay.open ~ .bottom-nav{visibility:hidden!important;pointer-events:none!important}
+body.sb-guide-is-open #bottomNav,
+body.sb-guide-is-open .bottom-nav,
+body.sb-guide-is-open #sbGlobalBack,
+body.sb-guide-is-open #sbTopDropdown,
+body.sb-guide-is-open #sbGuideFab{visibility:hidden!important;pointer-events:none!important}
+</style>
+<script id="salayan-guide-obscure-background-fix-2026-js">
+(function(){
+  function syncGuideLayer(){
+    const overlay=document.getElementById('sbGuideOverlay');
+    const dialog=document.getElementById('sbGuideDialog');
+    if(!overlay)return;
+    if(overlay.parentElement!==document.body)document.body.appendChild(overlay);
+    const open=overlay.classList.contains('open') || getComputedStyle(overlay).display!=='none';
+    document.body.classList.toggle('sb-guide-is-open',open);
+    if(open){
+      overlay.style.setProperty('position','fixed','important');
+      overlay.style.setProperty('inset','0','important');
+      overlay.style.setProperty('z-index','2147483647','important');
+      overlay.style.setProperty('background','rgba(4,20,14,.96)','important');
+      overlay.style.setProperty('display','flex','important');
+      overlay.setAttribute('aria-hidden','false');
+      if(dialog)dialog.style.setProperty('z-index','2147483647','important');
+    }else{
+      document.body.classList.remove('sb-guide-is-open');
+    }
+  }
+  const obs=new MutationObserver(syncGuideLayer);
+  function init(){
+    const overlay=document.getElementById('sbGuideOverlay');
+    if(overlay)obs.observe(overlay,{attributes:true,attributeFilter:['class','style','aria-hidden']});
+    syncGuideLayer();
+  }
+  document.addEventListener('DOMContentLoaded',init,{once:true});
+  if(document.readyState!=='loading')init();
+  window.addEventListener('pageshow',syncGuideLayer);
+})();
+</script>
