@@ -4411,3 +4411,51 @@ function sbOpenDriverTool(type){
   if(overlay && overlay.classList.contains('open'))openGuide();
 })();
 </script>
+
+
+<!-- salayan-guide-root-layer-fix-2026 -->
+<style id="salayan-guide-root-layer-fix-2026-css">
+html body #sbGuideOverlay{
+ position:fixed!important;inset:0!important;
+ z-index:2147483647!important;
+ width:100vw!important;height:100vh!important;height:100dvh!important;
+ display:none!important;align-items:center!important;justify-content:center!important;
+ padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom))!important;
+ background:rgba(5,25,18,.78)!important;backdrop-filter:blur(5px)!important;
+ isolation:isolate!important;transform:none!important;
+}
+html body #sbGuideOverlay.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html body #sbGuideOverlay #sbGuideDialog{
+ position:relative!important;z-index:1!important;
+ width:min(560px,100%)!important;
+ max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;
+ overflow-y:auto!important;overscroll-behavior:contain!important;
+ margin:auto!important;pointer-events:auto!important;
+}
+html body #sbGuideOverlay #sbGuideDialog .sb-guide-actions{
+ position:sticky!important;bottom:0!important;z-index:10!important;
+ padding:12px 2px max(4px,env(safe-area-inset-bottom))!important;
+ background:linear-gradient(180deg,rgba(251,254,252,.88),#fbfefc 24%)!important;
+}
+html body #sbGuideFab{z-index:2147483000!important}
+</style>
+<script id="salayan-guide-root-layer-fix-2026-js">
+(function(){
+ function rootGuide(){
+   const overlay=document.getElementById('sbGuideOverlay');
+   const dialog=document.getElementById('sbGuideDialog');
+   const fab=document.getElementById('sbGuideFab');
+   if(overlay && overlay.parentElement!==document.body)document.body.appendChild(overlay);
+   if(fab && fab.parentElement!==document.body)document.body.appendChild(fab);
+   if(overlay){
+     overlay.style.setProperty('position','fixed','important');
+     overlay.style.setProperty('inset','0','important');
+     overlay.style.setProperty('z-index','2147483647','important');
+     if(overlay.classList.contains('open'))overlay.style.setProperty('display','flex','important');
+   }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',rootGuide,{once:true});else rootGuide();
+ window.addEventListener('pageshow',rootGuide);
+ window.addEventListener('resize',rootGuide);
+})();
+</script>
