@@ -73,8 +73,8 @@ def main():
             )
             checked += 1
             if result.returncode:
-                first_line = (result.stderr or result.stdout).strip().splitlines()
-                detail = first_line[-1] if first_line else "unknown syntax error"
+                error_lines = (result.stderr or result.stdout).strip().splitlines()
+                detail = " | ".join(error_lines[:4]) if error_lines else "unknown syntax error"
                 failures.append(f"JavaScript syntax error in {name}: {detail}")
 
     if failures:
