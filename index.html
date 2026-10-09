@@ -1109,6 +1109,41 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
 
+
+<style id="salayan-driver-friendly-menu-gps">
+/* GPS lives in the service menu; driver-first navigation */
+.sb-menu-gps-wrap{margin:8px 0 13px;padding:12px;border-radius:18px;background:linear-gradient(145deg,#f0faf3,#e7f5eb);border:1px solid #d4e9da}
+.sb-menu-gps-heading{display:flex;align-items:center;gap:10px;margin:0 0 9px}
+.sb-menu-gps-heading-icon{width:36px;height:36px;border-radius:12px;background:#d4f0df;color:#087452;display:grid;place-items:center;font-size:22px;font-weight:900}
+.sb-menu-gps-heading b{display:block;font-size:12px;color:#16452f;font-weight:900}
+.sb-menu-gps-heading small{display:block;font-size:10px;color:#70877a;margin-top:2px}
+.sb-menu-gps-wrap .sbc-gps-card{max-width:none!important;margin:0!important;padding:10px!important;grid-template-columns:39px minmax(0,1fr)!important;gap:8px!important;border-radius:14px!important;box-shadow:none!important;border-color:#e0eee4!important}
+.sb-menu-gps-wrap .sbc-gps-orbit{width:37px!important;height:37px!important;border-radius:12px!important;font-size:21px!important}
+.sb-menu-gps-wrap .sbc-overline{font-size:9px!important}
+.sb-menu-gps-wrap .sbc-gps-copy h3{font-size:12px!important;margin:2px 0!important}
+.sb-menu-gps-wrap .sbc-gps-copy p{font-size:10px!important;line-height:1.7!important;margin:0!important;color:#718278!important}
+.sb-menu-gps-wrap #sbcGpsButton{grid-column:1/-1!important;width:100%!important;min-height:43px!important;margin:2px 0 0!important;border:0!important;border-radius:12px!important;font-size:12px!important}
+.sb-menu-gps-wrap .sbc-gps-status{grid-column:1/-1!important;display:flex!important;align-items:center!important;gap:6px!important;flex-wrap:wrap!important;padding-top:8px!important;font-size:9px!important}
+.sb-menu-gps-wrap .sbc-gps-privacy{margin-right:auto!important}
+.sb-menu-gps-hint{font-size:10px;line-height:1.8;color:#5d7667;padding:8px 2px 0}
+.sb-top-dropdown{width:min(390px,calc(100vw - 18px))!important;padding:12px!important}
+.sb-top-dropdown-label{font-size:10px!important;letter-spacing:.1px;padding:9px 8px 6px!important}
+.sb-top-dropdown-item{min-height:59px!important;padding:10px 11px!important;gap:10px!important;border:1px solid #edf2ee!important;margin-bottom:6px!important;background:#fff!important}
+.sb-top-dropdown-item .sb-top-item-icon{width:39px!important;height:39px!important;display:grid!important;place-items:center!important;flex:none!important;border-radius:13px!important;background:#eaf6ef!important;color:#087452!important;font-size:19px!important}
+.sb-top-dropdown-item b{font-size:12px!important;font-weight:900!important;color:#173e2d!important}
+.sb-top-dropdown-item small{font-size:10px!important;line-height:1.6!important;color:#7b8b81!important}
+.sb-top-dropdown-shortcuts{gap:7px!important;margin:5px 0 10px!important}
+.sb-top-dropdown-shortcuts button{min-height:57px!important;border:1px solid #dfece3!important;border-radius:14px!important;background:#f8fcf9!important;font-size:10px!important;font-weight:900!important;color:#24583f!important;padding:8px 4px!important}
+.sb-top-dropdown-shortcuts button span{display:block;font-size:19px!important;margin-bottom:4px}
+.sb-top-dropdown-foot{position:sticky;bottom:-12px;background:#fff!important;padding:12px 8px 7px!important;font-size:10px!important}
+@media(max-width:480px){
+ .sb-top-dropdown{left:-2px!important;width:calc(100vw - 16px)!important;max-height:calc(100dvh - 82px)!important;border-radius:19px!important}
+ .sb-top-dropdown-item{min-height:62px!important}
+ .sb-top-dropdown-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .sb-menu-gps-wrap{padding:10px!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -1129,7 +1164,15 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
           </button>
           <div class="sb-top-dropdown hidden" id="sbTopDropdown">
             <div class="sb-top-dropdown-head"><span class="sb-top-dropdown-mark">SB</span><span><b>مرکز دسترسی سریع</b><small>صلایان بار نیمبلوک</small></span><button type="button" aria-label="بستن منو" onclick="sbCloseTopMenu()">×</button></div>
-            <div class="sb-top-dropdown-label">بار و حمل‌ونقل</div>
+            <div class="sb-menu-gps-wrap"><div class="sb-menu-gps-heading"><span class="sb-menu-gps-heading-icon">⌖</span><span><b>موقعیت مکانی راننده</b><small>برای پیدا کردن بارهای نزدیک</small></span></div>
+<section class="sbc-gps-card">
+    <div class="sbc-gps-orbit"><span>⌖</span><i></i><b></b></div>
+    <div class="sbc-gps-copy"><span class="sbc-overline">موقعیت راننده</span><h3 id="sbcGpsTitle">موقعیتت را فعال کن</h3><p id="sbcGpsText">برای پیدا کردن بارهای نزدیک و بررسی محدوده نوبت، موقعیت مکانی لازم است.</p></div>
+    <button id="sbcGpsButton" onclick="salayanRequestLocation()">فعال‌سازی GPS <span>←</span></button>
+    <div class="sbc-gps-status"><span class="sbc-status-dot"></span><span id="sbcGpsStatus">GPS هنوز فعال نشده</span><span class="sbc-gps-privacy">فقط با اجازه شما</span></div>
+  </section>
+<div class="sb-menu-gps-hint">📍 موقعیت شما فقط با اجازه خودتان دریافت می‌شود و به پیدا کردن بارهای نزدیک و بررسی محدوده نوبت کمک می‌کند.</div></div>
+<div class="sb-top-dropdown-label">بار و حمل‌ونقل</div>
             <button class="sb-top-dropdown-item" onclick="sbTopGo('homePage')"><span class="sb-top-item-icon">⌂</span><span><b>صفحه اصلی</b><small>داشبورد و موقعیت GPS</small></span><span class="sb-top-item-arrow">←</span></button>
             <button class="sb-top-dropdown-item" onclick="sbTopGo('loadsPage',true)"><span class="sb-top-item-icon">🚛</span><span><b>تالار هوشمند بار</b><small>جستجو و مشاهده بارها</small></span><span class="sb-top-item-arrow">←</span></button>
             <div class="sb-top-dropdown-shortcuts">
@@ -1203,13 +1246,6 @@ label{font-weight:700;color:#465c50!important;font-size:12px!important}
     <div class="sbc-home-brand"><div class="sbc-home-logo">SB</div><div><span>صلایان بار نیمبلوک</span><h2>داشبورد راننده</h2><small>مسیرت را پیدا کن؛ بارت را هوشمند انتخاب کن</small></div></div>
     <button class="sbc-home-bell" aria-label="اعلان‌ها" onclick="showPage('notificationsPage')">♧<i></i></button>
   </header>
-
-  <section class="sbc-gps-card">
-    <div class="sbc-gps-orbit"><span>⌖</span><i></i><b></b></div>
-    <div class="sbc-gps-copy"><span class="sbc-overline">موقعیت راننده</span><h3 id="sbcGpsTitle">موقعیتت را فعال کن</h3><p id="sbcGpsText">برای پیدا کردن بارهای نزدیک و بررسی محدوده نوبت، موقعیت مکانی لازم است.</p></div>
-    <button id="sbcGpsButton" onclick="salayanRequestLocation()">فعال‌سازی GPS <span>←</span></button>
-    <div class="sbc-gps-status"><span class="sbc-status-dot"></span><span id="sbcGpsStatus">GPS هنوز فعال نشده</span><span class="sbc-gps-privacy">فقط با اجازه شما</span></div>
-  </section>
 
   <button class="sbc-find-load" onclick="showPage('loadsPage');showLoads()">
     <span class="sbc-find-icon">⌕</span><span class="sbc-find-copy"><b>پیدا کردن بار</b><small>جستجو در تالار هوشمند بار</small></span><span class="sbc-find-arrow">←</span>
