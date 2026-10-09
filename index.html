@@ -3924,7 +3924,27 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
   }catch(e){$('sbGpsMapNote').textContent='مسیریابی آنلاین فعلاً در دسترس نیست: '+(e.message||'خطای شبکه');alert('مسیر جاده‌ای محاسبه نشد. اتصال اینترنت و سرویس نقشه را بررسی کن.')}
  }
  window.salayanRouteToLoad=routeToLoad;
- window.salayanRefreshMap=function(){if(map)setTimeout(()=>map.invalidateSize(),180)};
+ window.salayanRefreshMap=function(){
+  const attempt=async()=>{
+   const node=$('sbGpsMapCanvas');if(!node)return;
+   const page=$('gpsPage');
+   if(page&&page.classList.contains('hidden'))return;
+   const p=lastPosition||saved();
+   try{await initMap(p)}catch(e){const note=$('sbGpsMapNote');if(note)note.textContent='نقشه در حال بارگیری مجدد است؛ اتصال اینترنت را بررسی کن.';return}
+   [80,250,650,1200].forEach(delay=>setTimeout(()=>{
+    if(!map||!node.isConnected||!node.offsetWidth||!node.offsetHeight)return;
+    try{
+     map.invalidateSize({pan:false});
+     const layer=baseLayers&&baseLayers[activeLayer||'road'];
+     if(layer&&map.hasLayer(layer)&&typeof layer.redraw==='function')layer.redraw();
+    }catch(e){console.warn('Salayan map refresh retry failed',e)}
+   },delay));
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(attempt));
+ };
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&$('gpsPage')&&!$('gpsPage').classList.contains('hidden'))window.salayanRefreshMap()});
+ window.addEventListener('orientationchange',()=>{setTimeout(()=>window.salayanRefreshMap(),350)},{passive:true});
+
  function boot(){card();const observer=new MutationObserver(()=>{if(!$('sbGpsCard'))card()});const home=$('gpsPage');if(home)observer.observe(home,{childList:true})}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
