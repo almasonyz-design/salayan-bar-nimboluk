@@ -4090,7 +4090,7 @@ function sbOpenDriverTool(type){
     records=sbToolRead("notes",[]);records.push({text:a,date:new Date().toISOString()});sbToolWrite("notes",records);
     out="یادداشت ذخیره شد. تعداد یادداشت‌ها: "+records.length;
   }
-  }else if(type==="compareLoads"){
+  else if(type==="compareLoads"){
     a=sbToolNum("کرایه بار اول (تومان):",60000000);if(a===null)return;
     b=sbToolNum("هزینه کل بار اول (تومان):",25000000);if(b===null)return;
     c=sbToolNum("کرایه بار دوم (تومان):",55000000);if(c===null)return;
