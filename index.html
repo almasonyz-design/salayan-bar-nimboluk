@@ -803,8 +803,8 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
     <div class="sr-metric"><span>🧾</span><small>صورت‌وضعیت‌ها</small><b>در انتظار اتصال</b></div>
   </div>
   <div class="sr-actions">
-    <button type="button" class="sr-primary" onclick="salayanOpenRahMan()">نمایش خدمات راه من در همین سایت</button>
-    <button type="button" class="sr-secondary" onclick="salayanOpenRahMan()">نمایش خدمات در همین سایت</button>
+    <button type="button" class="sr-primary" onclick="salayanLaunchRahManApp()">ورود به برنامه راه من</button>
+    <button type="button" class="sr-secondary" onclick="salayanLaunchRahManApp()">ورود به برنامه راه من</button>
   </div>
   <div class="sr-note"><b>🔐 اتصال امن و رسمی</b><p>نمایش خودکار اطلاعات داخل این صفحه نیازمند وب‌سرویس یا مجوز اتصال رسمی از سازمان راهداری است. فعلاً این پنل اطلاعات واقعی راه من را دریافت نمی‌کند و هیچ اطلاعاتی را حدس نمی‌زند.</p></div>
   <div class="sr-foot"><span>آخرین همگام‌سازی</span><b>هنوز انجام نشده</b><button type="button" onclick="salayanRahManInfo()">جزئیات اتصال</button></div>
@@ -3006,6 +3006,16 @@ input::placeholder,textarea::placeholder{color:#9aa9a0!important}
 #salayan-rahman-inapp-modal .sri-done{border:0;border-radius:12px;padding:11px 18px;background:#087f5b;color:#fff;font-family:inherit;font-size:11px;font-weight:900}
 </style>
 <script id="salayan-rahman-bridge-script">
+function salayanLaunchRahManApp(){
+  var pkg="com.PersiaBME.DriversInquiry";
+  var fallback="https%3A%2F%2Falmasonyz-design.github.io%2Fsalayan-bar-nimboluk%2F";
+  var ua=navigator.userAgent||"";
+  if(/Android/i.test(ua)){
+    window.location.href="intent://launch/#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package="+pkg+";S.browser_fallback_url="+fallback+";end";
+  }else{
+    alert("باز کردن مستقیم برنامه راه من فقط روی گوشی اندرویدی که برنامه روی آن نصب است امکان‌پذیر است. سایت صلایان بار باز می‌ماند.");
+  }
+}
 function salayanOpenRahMan(){
   var modal=document.getElementById("salayan-rahman-inapp-modal");
   if(!modal){
@@ -3043,7 +3053,7 @@ function salayanRahManInfo(){salayanOpenRahMan();}
       btn.type="button";btn.id="salayan-rahman-floating";
       btn.setAttribute("aria-label","باز کردن خدمات راه من داخل صلایان بار");
       btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>خدمات راه من</strong><small>نمایش داخل صلایان بار</small></span><span class="srf-arrow">›</span>';
-      btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{var msg=document.getElementById("salayan-rahman-inapp-modal");if(msg){msg.style.display="block";}else{alert("پنل خدمات راه من هنوز بارگذاری نشده است. صفحه را تازه‌سازی کنید.");}}});
+      btn.addEventListener("click",function(){if(typeof window.salayanLaunchRahManApp==="function"){window.salayanLaunchRahManApp();}else{alert("لطفاً صفحه را تازه‌سازی کنید و دوباره تلاش کنید.");}});
       document.body.appendChild(btn);
     }
     function updateVisibility(){
