@@ -700,7 +700,7 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 @media(min-width:761px){.driver-home{max-width:1000px;margin:auto}.sb-ultra-hero{margin-top:8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
-</head>
+<style id="salayan-rahman-inapp-details">#salayan-rahman-inapp-modal .sri-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:380px;margin:4px 0 12px}#salayan-rahman-inapp-modal .sri-detail-grid>div{display:flex;flex-direction:column;gap:6px;padding:11px;border:1px solid #e1eee6;background:#f7fbf8;border-radius:12px}#salayan-rahman-inapp-modal .sri-detail-grid small{font-size:10px;color:#708378}#salayan-rahman-inapp-modal .sri-detail-grid b{font-size:11px;color:#365d49}#salayan-rahman-inapp-modal .sri-hint{font-size:10px!important;margin-top:2px!important}</style></head>
 
 <body>
 
@@ -803,8 +803,8 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
     <div class="sr-metric"><span>🧾</span><small>صورت‌وضعیت‌ها</small><b>در انتظار اتصال</b></div>
   </div>
   <div class="sr-actions">
-    <button type="button" class="sr-primary" onclick="salayanLaunchRahManApp()">ورود به برنامه راه من</button>
-    <button type="button" class="sr-secondary" onclick="salayanLaunchRahManApp()">ورود به برنامه راه من</button>
+    <button type="button" class="sr-primary" onclick="salayanOpenRahMan()">نمایش پروفایل و خدمات</button>
+    <button type="button" class="sr-secondary" onclick="salayanOpenRahMan()">نمایش پروفایل و خدمات</button>
   </div>
   <div class="sr-note"><b>🔐 اتصال امن و رسمی</b><p>نمایش خودکار اطلاعات داخل این صفحه نیازمند وب‌سرویس یا مجوز اتصال رسمی از سازمان راهداری است. فعلاً این پنل اطلاعات واقعی راه من را دریافت نمی‌کند و هیچ اطلاعاتی را حدس نمی‌زند.</p></div>
   <div class="sr-foot"><span>آخرین همگام‌سازی</span><b>هنوز انجام نشده</b><button type="button" onclick="salayanRahManInfo()">جزئیات اتصال</button></div>
@@ -3035,7 +3035,7 @@ function salayanOpenRahMan(){
           bills:["📄","سوابق بارنامه","پس از اتصال مجاز، سوابق بارنامه در همین قسمت نمایش داده می‌شود."],
           statements:["🧾","صورت‌وضعیت‌ها","پس از فراهم‌شدن دسترسی رسمی، صورت‌وضعیت‌ها در همین قسمت نمایش داده می‌شود."]
         }[tab.getAttribute("data-sri-tab")];
-        modal.querySelector(".sri-content").innerHTML='<div class="sri-empty-icon">'+data[0]+'</div><strong>'+data[1]+'</strong><p>'+data[2]+'</p><span class="sri-status-pill">در انتظار اتصال مجاز</span>';
+        modal.querySelector(".sri-content").innerHTML='<div class="sri-empty-icon">'+data[0]+'</div><strong>'+data[1]+'</strong><p>'+data[2]+'</p><div class="sri-detail-grid"><div><small>وضعیت داده</small><b>هنوز دریافت نشده</b></div><div><small>منبع اطلاعات</small><b>سامانه رسمی راه من</b></div></div><span class="sri-status-pill">اتصال اطلاعات واقعی فعال نیست</span><p class="sri-hint">این بخش داخل صلایان بار باز می‌شود؛ برای نمایش اطلاعات شخصی واقعی، اتصال مجاز به سرویس راهداری باید در سرور فعال شود.</p>';
       });
     });
   }
@@ -3053,7 +3053,7 @@ function salayanRahManInfo(){salayanOpenRahMan();}
       btn.type="button";btn.id="salayan-rahman-floating";
       btn.setAttribute("aria-label","باز کردن خدمات راه من داخل صلایان بار");
       btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>خدمات راه من</strong><small>نمایش داخل صلایان بار</small></span><span class="srf-arrow">›</span>';
-      btn.addEventListener("click",function(){if(typeof window.salayanLaunchRahManApp==="function"){window.salayanLaunchRahManApp();}else{alert("لطفاً صفحه را تازه‌سازی کنید و دوباره تلاش کنید.");}});
+      btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{alert("لطفاً صفحه را تازه‌سازی کنید و دوباره تلاش کنید.");}});
       document.body.appendChild(btn);
     }
     function updateVisibility(){
