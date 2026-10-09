@@ -776,12 +776,6 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
             </div>
         </div>
 
-        <button type="button" class="sr-standalone-entry" onclick="salayanOpenRahMan()" aria-label="ورود مستقل به برنامه راه من">
-          <span class="sr-entry-icon">🛣️</span>
-          <span class="sr-entry-copy"><strong>ورود به راه من</strong><small>باز کردن مستقل برنامه رسمی راهداری</small></span>
-          <span class="sr-entry-arrow">↗</span>
-        </button>
-
         <div class="home-search">
             <span>🔎</span>
             <input id="homeLoadSearch" placeholder="مبدأ، مقصد یا نوع بار را جستجو کن">
@@ -2980,11 +2974,15 @@ input::placeholder,textarea::placeholder{color:#9aa9a0!important}
 .sr-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:12px;margin-top:12px;border-top:1px solid #e0ece5;font-size:9px;color:#75867d}.sr-foot b{color:#506d5d;font-size:9px;margin-left:auto}.sr-foot button{border:0;border-radius:9px;background:#e4f6eb;color:#087f5b;padding:7px 9px;font-size:9px;font-weight:800}
 @media(max-width:390px){.salayan-rahman-card{padding:13px}.sr-status{font-size:8px}.sr-metric{padding:9px 6px}.sr-metric b{font-size:8px}.sr-primary,.sr-secondary{font-size:9px}}
 
-.sr-standalone-entry{width:100%;display:flex;align-items:center;gap:12px;text-align:right;margin:13px 0 15px;padding:14px 15px;border:1px solid #bde5ce;border-radius:18px;background:linear-gradient(110deg,#064e3b,#087f5b 65%,#12a06f);color:#fff;box-shadow:0 8px 20px #087f5b24;cursor:pointer;position:relative;isolation:isolate}
-.sr-entry-icon{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;background:#ffffff20;border:1px solid #ffffff40;font-size:25px}
-.sr-entry-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}.sr-entry-copy strong{font-size:14px;font-weight:900}.sr-entry-copy small{font-size:10px;line-height:1.7;color:#d7f8e7}
-.sr-entry-arrow{font-size:25px;font-weight:900;background:#ffffff20;border-radius:11px;width:35px;height:35px;display:grid;place-items:center}
-.sr-standalone-entry:active{transform:scale(.99)}
+.sr-standalone-entry{display:none!important}
+#salayan-rahman-floating{position:fixed;z-index:2147483000;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:auto;max-width:560px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:17px 20px;min-height:78px;border:3px solid #c8f7dc;border-radius:22px;background:linear-gradient(110deg,#064e3b,#07845d 62%,#12a06f);color:#fff;box-shadow:0 10px 32px rgba(0,0,0,.32),0 0 0 4px rgba(8,127,91,.16);text-align:right;cursor:pointer;font-family:inherit}
+#salayan-rahman-floating .srf-icon{flex:0 0 52px;width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#ffffff22;border:1px solid #ffffff55;font-size:30px}
+#salayan-rahman-floating .srf-copy{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+#salayan-rahman-floating .srf-copy strong{font-size:19px;line-height:1.35;font-weight:900;color:#fff}
+#salayan-rahman-floating .srf-copy small{font-size:12px;line-height:1.5;color:#e0ffec}
+#salayan-rahman-floating .srf-arrow{font-size:30px;font-weight:900}
+@media(min-width:700px){#salayan-rahman-floating{left:auto;right:24px;width:390px}}
+@media(max-width:380px){#salayan-rahman-floating{padding:13px 14px;gap:10px;min-height:68px}#salayan-rahman-floating .srf-icon{width:44px;height:44px;flex-basis:44px;font-size:25px}#salayan-rahman-floating .srf-copy strong{font-size:16px}#salayan-rahman-floating .srf-copy small{font-size:10px}}
 </style>
 <script id="salayan-rahman-bridge-script">
 function salayanOpenRahMan(){
@@ -2995,6 +2993,28 @@ function salayanOpenRahMan(){
 function salayanRahManInfo(){
   alert("وضعیت اتصال راه من\n\nدسترسی مستقیم به پروفایل و سوابق بارنامه از داخل صلایان بار هنوز فعال نیست. برای دریافت خودکار داده‌ها، سازمان راهداری باید API یا روش اتصال رسمی و مجاز ارائه کند. ورود به حساب راه من در برنامه اصلی به‌تنهایی دسترسی صلایان بار به داده‌ها را ایجاد نمی‌کند.");
 }
+</script>
+<script id="salayan-rahman-floating-entry-script">
+(function(){
+  function installRahManButton(){
+    if(document.getElementById("salayan-rahman-floating")) return;
+    var btn=document.createElement("button");
+    btn.type="button";btn.id="salayan-rahman-floating";
+    btn.setAttribute("aria-label","ورود به برنامه رسمی راه من");
+    btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>ورود به برنامه راه من</strong><small>باز کردن برنامه رسمی راهداری</small></span><span class="srf-arrow">↗</span>';
+    btn.addEventListener("click",function(){if(typeof salayanOpenRahMan==="function"){salayanOpenRahMan();}else{window.open("https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry","_blank","noopener");}});
+    document.body.appendChild(btn);
+    function updateVisibility(){
+      var app=document.getElementById("appPage");
+      btn.style.display=(!app || !app.classList.contains("hidden"))?"flex":"none";
+    }
+    updateVisibility();
+    var app=document.getElementById("appPage");
+    if(app && window.MutationObserver){new MutationObserver(updateVisibility).observe(app,{attributes:true,attributeFilter:["class"]});}
+    window.setInterval(updateVisibility,1000);
+  }
+  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",installRahManButton);}else{installRahManButton();}
+})();
 </script>
 </body>
 </html>
