@@ -2997,21 +2997,30 @@ function salayanRahManInfo(){
 <script id="salayan-rahman-floating-entry-script">
 (function(){
   function installRahManButton(){
-    if(document.getElementById("salayan-rahman-floating")) return;
-    var btn=document.createElement("button");
-    btn.type="button";btn.id="salayan-rahman-floating";
-    btn.setAttribute("aria-label","ورود به برنامه رسمی راه من");
-    btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>ورود به برنامه راه من</strong><small>باز کردن برنامه رسمی راهداری</small></span><span class="srf-arrow">↗</span>';
-    btn.addEventListener("click",function(){if(typeof salayanOpenRahMan==="function"){salayanOpenRahMan();}else{window.open("https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry","_blank","noopener");}});
-    document.body.appendChild(btn);
+    var btn=document.getElementById("salayan-rahman-floating");
+    if(!btn){
+      btn=document.createElement("button");
+      btn.type="button";btn.id="salayan-rahman-floating";
+      btn.setAttribute("aria-label","ورود به برنامه رسمی راه من");
+      btn.innerHTML='<span class="srf-icon">🛣️</span><span class="srf-copy"><strong>ورود به برنامه راه من</strong><small>باز کردن برنامه رسمی راهداری</small></span><span class="srf-arrow">↗</span>';
+      btn.addEventListener("click",function(){if(typeof window.salayanOpenRahMan==="function"){window.salayanOpenRahMan();}else{window.location.href="https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry";}});
+      document.body.appendChild(btn);
+    }
     function updateVisibility(){
       var app=document.getElementById("appPage");
-      btn.style.display=(!app || !app.classList.contains("hidden"))?"flex":"none";
+      var home=document.getElementById("homePage");
+      var visible=!!(app && !app.classList.contains("hidden") && home && !home.classList.contains("hidden"));
+      btn.style.setProperty("display",visible?"flex":"none","important");
+      btn.style.setProperty("visibility","visible","important");
+      btn.style.setProperty("opacity","1","important");
     }
     updateVisibility();
-    var app=document.getElementById("appPage");
-    if(app && window.MutationObserver){new MutationObserver(updateVisibility).observe(app,{attributes:true,attributeFilter:["class"]});}
-    window.setInterval(updateVisibility,1000);
+    if(window.MutationObserver){
+      var observer=new MutationObserver(updateVisibility);
+      [document.getElementById("appPage"),document.getElementById("homePage")].forEach(function(el){if(el)observer.observe(el,{attributes:true,attributeFilter:["class","style"]});});
+    }
+    window.addEventListener("pageshow",updateVisibility);
+    window.setInterval(updateVisibility,600);
   }
   if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",installRahManButton);}else{installRahManButton();}
 })();
