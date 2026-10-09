@@ -1408,6 +1408,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
       <button class="sbx-quick-tile" onclick="showPage('truckPage')"><span class="sbx-qt-icon sbx-truck">▰</span><b>کامیون من</b><small>اطلاعات و نگهداری</small><em>مدیریت ←</em></button>
       <button class="sbx-quick-tile" onclick="showPage('walletPage')"><span class="sbx-qt-icon sbx-wallet">◈</span><b>کیف پول</b><small>موجودی و گردش حساب</small><em>مشاهده ←</em></button>
     </div>
+    <section class="sbx-live-stats" aria-label="آمار زنده تالار بار">
+      <div class="sbx-live-stats-head"><div><span>LIVE LOAD MARKET</span><b>نبض بازار بار</b></div><button onclick="showPage('loadsPage');showLoads()">مشاهده تالار ←</button></div>
+      <div class="sbx-live-stat-grid">
+        <button onclick="salayanHomeFilter('turn')"><span class="sbx-stat-symbol">↻</span><span><b id="homeTurnCount">—</b><small>بار نوبتی</small></span></button>
+        <button onclick="salayanHomeFilter('free')"><span class="sbx-stat-symbol">⇧</span><span><b id="homeFreeCount">—</b><small>بار آزاد</small></span></button>
+        <button onclick="salayanHomeFilter('near')"><span class="sbx-stat-symbol">⌖</span><span><b id="homeNearbyCount">—</b><small>بار نزدیک</small></span></button>
+      </div>
+      <div class="sbx-suggested-title"><b>بارهای تازه ثبت‌شده</b><span>از تالار سامانه</span></div>
+      <div id="homeSuggestedLoads" class="sbx-suggested-loads"><div class="sbx-suggested-loading"><i></i> در حال بررسی بارهای تازه...</div></div>
+    </section>
     <div class="sbx-home-section-title"><div><h3>آماده‌سازی سفر</h3><p>چند بررسی کوتاه قبل از حرکت</p></div><span>۰۱ / ۰۳</span></div>
     <div class="sbx-preflight-row">
       <span class="sbx-preflight-icon">✓</span><div><b>چک‌لیست پیش از حرکت</b><small>لاستیک، چراغ‌ها، ترمز، بار و مدارک</small></div>
@@ -4779,6 +4789,30 @@ function sbOpenDriverTool(type){
 @media(max-width:350px){#loadsPage .load-actions{grid-template-columns:1fr!important}#loadsPage .sbx-load-route{padding:10px 8px}#loadsPage .sbx-route-point b{font-size:12px}}
 </style>
 
+<style id="salayan-live-market-home-css">
+#homePage .sbx-live-stats{border:1px solid #e0eee6;border-radius:22px;padding:13px 11px;background:linear-gradient(150deg,#fff,#f9fcfa);margin:13px 0 17px;box-shadow:0 8px 23px #1c563b09}
+#homePage .sbx-live-stats-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+#homePage .sbx-live-stats-head>div span{display:block;direction:ltr;text-align:right;letter-spacing:1px;font-size:8px;font-weight:900;color:#14a16d;margin-bottom:5px}
+#homePage .sbx-live-stats-head>div b{font-size:14px;color:#1d4733}
+#homePage .sbx-live-stats-head button{border:0;background:#eaf8ef;color:#087c54;border-radius:10px;padding:9px;font-size:10px;white-space:nowrap}
+#homePage .sbx-live-stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#homePage .sbx-live-stat-grid>button{display:flex;align-items:center;gap:7px;text-align:right;border:1px solid #e8f0ea;border-radius:14px;background:#fff;padding:10px 7px;min-width:0}
+#homePage .sbx-stat-symbol{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:10px;background:#e7f8ee;color:#0a8b5d;font-size:17px}
+#homePage .sbx-live-stat-grid b{display:block;font-size:15px;color:#174c35;margin-bottom:4px}
+#homePage .sbx-live-stat-grid small{display:block;font-size:9px;color:#82958a;white-space:nowrap}
+#homePage .sbx-suggested-title{display:flex;justify-content:space-between;align-items:center;margin:16px 2px 8px}
+#homePage .sbx-suggested-title b{font-size:11px;color:#2a4e3b}
+#homePage .sbx-suggested-title span{font-size:9px;color:#91a197}
+#homePage .sbx-suggested-loads{display:grid;gap:7px}
+#homePage .sbx-suggested-loads .mini-load{border:1px solid #e9f1eb!important;background:#fff!important;border-radius:13px!important;padding:10px!important;margin:0!important}
+#homePage .sbx-suggested-loads .mini-load-route{font-size:12px!important;font-weight:800!important;color:#24513a!important;line-height:1.8}
+#homePage .sbx-suggested-loads .mini-load-meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-top:6px;font-size:10px;color:#82948a}
+#homePage .sbx-suggested-loads .mini-load-fare{color:#0b8a5c;font-weight:800}
+#homePage .sbx-suggested-loading{display:flex;align-items:center;gap:8px;font-size:10px;color:#91a197;padding:10px}
+#homePage .sbx-suggested-loading i{width:13px;height:13px;border:2px solid #ccebd8;border-top-color:#0c9965;border-radius:50%;animation:sbxLoadSpin .8s linear infinite}
+@keyframes sbxLoadSpin{to{transform:rotate(360deg)}}
+@media(max-width:360px){#homePage .sbx-live-stat-grid{gap:5px}#homePage .sbx-live-stat-grid>button{gap:4px;padding:8px 4px}#homePage .sbx-stat-symbol{width:25px;height:25px;flex-basis:25px;font-size:14px}#homePage .sbx-live-stat-grid b{font-size:13px}#homePage .sbx-live-stat-grid small{font-size:8px}}
+</style>
 </body>
 </html>
 
