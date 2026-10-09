@@ -3697,7 +3697,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  $('sbGpsStart').onclick=start;
  // Default to 3D on first opening so the map is immediately in perspective mode.
  setTimeout(()=>{const b=$('sbx3dToggle');if(b&&!perspectiveMode)b.click()},700);
- $('sbx3dToggle').onclick=async()=>{const btn=$('sbx3dToggle');if(!perspectiveMode){try{btn.disabled=true;btn.textContent='در حال بارگیری 3D…';await enableReal3D();perspectiveMode=true;btn.classList.add('active');btn.setAttribute('aria-pressed','true');btn.textContent='3D روشن ✓';$('sbxMapModeLabel').textContent='نمای سه‌بعدی واقعی';$('sbxMapZoomLabel').textContent='ساختمان‌های سه‌بعدی';$('sbGpsMapNote').textContent='نمای سه‌بعدی واقعی فعال است؛ نقشه را با دو انگشت بچرخان و زاویه دید را تغییر بده.'}catch(e){alert('بارگیری نقشه سه‌بعدی ناموفق بود. اینترنت را بررسی و دوباره تلاش کن.');btn.textContent='3D ↗'}finally{btn.disabled=false}}else{perspectiveMode=false;const stage=document.querySelector('.sbx-map-stage'),three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';btn.classList.remove('active');btn.setAttribute('aria-pressed','false');btn.textContent='3D ↗';$('sbxMapModeLabel').textContent='نمای استاندارد';$('sbxMapZoomLabel').textContent='نقشه زنده';setTimeout(()=>{if(map)map.invalidateSize()},150)}};
+ $('sbx3dToggle').onclick=async()=>{const btn=$('sbx3dToggle');if(!perspectiveMode){try{btn.disabled=true;btn.textContent='در حال بارگیری 3D…';await enableReal3D();perspectiveMode=true;btn.classList.add('active');btn.setAttribute('aria-pressed','true');btn.textContent='3D روشن ✓';$('sbxMapModeLabel').textContent='نمای سه‌بعدی واقعی';$('sbxMapZoomLabel').textContent='ساختمان‌های سه‌بعدی';$('sbGpsMapNote').textContent='نمای سه‌بعدی واقعی فعال است؛ نقشه را با دو انگشت بچرخان و زاویه دید را تغییر بده.'}catch(e){console.error('Salayan 3D map failed',e);const three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';if(map){setTimeout(()=>map.invalidateSize(),100)}$('sbGpsMapNote').textContent='نمای سه‌بعدی در دسترس نیست؛ نقشه معمولی و GPS همچنان قابل استفاده‌اند. اتصال اینترنت را بررسی کن.';btn.textContent='3D ↗'}finally{btn.disabled=false}}else{perspectiveMode=false;const stage=document.querySelector('.sbx-map-stage'),three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';btn.classList.remove('active');btn.setAttribute('aria-pressed','false');btn.textContent='3D ↗';$('sbxMapModeLabel').textContent='نمای استاندارد';$('sbxMapZoomLabel').textContent='نقشه زنده';setTimeout(()=>{if(map)map.invalidateSize()},150)}};
  document.querySelectorAll('[data-sbx-layer]').forEach(btn=>btn.addEventListener('click',()=>{const type=btn.dataset.sbxLayer;if(!map||!baseLayers[type])return;Object.values(baseLayers).forEach(layer=>{if(map.hasLayer(layer))map.removeLayer(layer)});baseLayers[type].addTo(map);activeLayer=type;document.querySelectorAll('[data-sbx-layer]').forEach(b=>b.classList.toggle('active',b===btn));const labels={road:'نقشه استاندارد',satellite:'تصاویر ماهواره‌ای',terrain:'ناهمواری و ارتفاع',dark:'نمای شب'};$('sbxMapModeLabel').textContent=labels[type]||'نقشه';$('sbxMapZoomLabel').textContent=labels[type]||'نقشه';setTimeout(()=>map.invalidateSize(),100)}));
  $('sbxMapLocate').onclick=()=>{const p=lastPosition||saved();if(!p){alert('ابتدا GPS را فعال کن.');return}if(google3DMap){google3DMap.center={lat:p.latitude,lng:p.longitude,altitude:0};google3DMap.range=900;update3DPosition(p)}if(maplibreMap){maplibreMap.easeTo({center:[p.longitude,p.latitude],zoom:15,pitch:62,duration:500});update3DPosition(p)}else if(map){map.setView([p.latitude,p.longitude],16,{animate:true});drawPosition(p)}};
  $('sbxMapReset').onclick=()=>{if(!map)return;const p=lastPosition||saved();if(p)map.setView([p.latitude,p.longitude],14,{animate:true});else map.setView([33.72,59.18],7,{animate:true})};
@@ -3742,6 +3742,21 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
    }
    if(p)update3DPosition(p);
    setTimeout(()=>{if(google3DMap)google3DMap.style.width='100%'},250);
+ }
+ function loadMapLibre(){
+   if(window.maplibregl)return Promise.resolve();
+   if(maplibrePromise)return maplibrePromise;
+   maplibrePromise=new Promise((resolve,reject)=>{
+     let css=document.querySelector('link[data-salayan-maplibre-css]');
+     if(!css){css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css';css.dataset.salayanMaplibreCss='1';document.head.appendChild(css)}
+     const sc=document.createElement('script');
+     sc.src='https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js';
+     sc.async=true;
+     sc.onload=()=>window.maplibregl?resolve():reject(new Error('MapLibre loaded without API'));
+     sc.onerror=()=>{maplibrePromise=null;reject(new Error('کتابخانه نمای سه‌بعدی بارگیری نشد'))};
+     document.head.appendChild(sc);
+   });
+   return maplibrePromise;
  }
  async function enableReal3D(){
    const stage=document.querySelector('.sbx-map-stage');if(!stage)throw new Error('Map stage missing');
