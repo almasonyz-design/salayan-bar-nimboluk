@@ -849,7 +849,8 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 @media(min-width:600px){#homePage .home-stats,#homePage .home-actions,#homePage .home-section,#homePage .salayan-rahman-card{max-width:760px;margin-left:auto!important;margin-right:auto!important}#homePage .home-top{padding-right:max(22px,calc((100% - 760px)/2))!important;padding-left:max(22px,calc((100% - 760px)/2))!important}#homePage .home-search{max-width:730px;margin-left:auto!important;margin-right:auto!important}#homePage .home-actions{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(max-width:360px){#homePage .home-stats{gap:5px!important;margin-left:9px!important;margin-right:9px!important}#homePage .home-stat{padding:10px 8px!important}#homePage .home-stat b{font-size:20px!important}#homePage .home-actions{margin-left:9px!important;margin-right:9px!important;gap:5px!important}#homePage .home-action{font-size:9px!important}#homePage .home-section{margin-left:9px!important;margin-right:9px!important;padding:11px!important}}
 
-</style>\n<style id="salayan-clean-home-v6">\n
+</style>\n<style id="salayan-clean-home-v6">
+
 /* Clean focused driver home: GPS + essentials, grouped services live in Menu */
 .sbc-clean-home{padding:0 0 22px!important;background:#f5f8f6;min-height:100%;direction:rtl}
 .sbc-home-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px 16px 25px;background:linear-gradient(135deg,#063b2c,#08734f 65%,#0b9065);border-radius:0 0 25px 25px;color:#fff;position:relative;overflow:hidden}
@@ -3333,7 +3334,8 @@ function salayanRahManInfo(){salayanOpenRahMan();}
  window.salayanRefreshPremiumDashboard=refreshDashboard;
 })();
 
-</script>\n<script id="salayan-clean-home-v6-js">\n
+</script>\n<script id="salayan-clean-home-v6-js">
+
 (function(){
  function setGpsUI(ok,text){
   const title=document.getElementById("sbcGpsTitle"),detail=document.getElementById("sbcGpsText"),status=document.getElementById("sbcGpsStatus"),button=document.getElementById("sbcGpsButton"),dot=document.querySelector(".sbc-status-dot");
@@ -3348,7 +3350,7 @@ function salayanRahManInfo(){salayanOpenRahMan();}
   if(!navigator.geolocation){setGpsUI(false,"این مرورگر امکان دریافت موقعیت مکانی را فراهم نکرده است.");return typeof old==="function"?old():undefined;}
   setGpsUI(false,"در انتظار اجازه موقعیت مکانی از گوشی شما...");
   navigator.geolocation.getCurrentPosition(function(pos){
-   try{localStorage.setItem("salayan_last_gps",JSON.stringify({lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy,at:Date.now()}));}catch(e){}
+   try{localStorage.setItem("salayan_lat",pos.coords.latitude);localStorage.setItem("salayan_lng",pos.coords.longitude);localStorage.setItem("salayan_last_gps",JSON.stringify({lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy,at:Date.now()}));}catch(e){}
    setGpsUI(true,"موقعیت با دقت تقریبی "+Math.round(pos.coords.accuracy)+" متر دریافت شد. این اطلاعات به‌تنهایی به معنی استعلام رسمی بار نیست.");
    if(typeof window.salayanRefreshPremiumDashboard==="function")window.salayanRefreshPremiumDashboard();
   },function(err){
