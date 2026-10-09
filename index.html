@@ -2978,7 +2978,7 @@ input::placeholder,textarea::placeholder{color:#9aa9a0!important}
 function salayanOpenRahMan(){
   var fallback=setTimeout(function(){if(document.visibilityState==="visible"){window.open("https://cafebazaar.ir/app/com.PersiaBME.DriversInquiry","_blank","noopener");}},1100);
   window.addEventListener("pagehide",function(){clearTimeout(fallback);},{once:true});
-  window.location.href="intent://launch/#Intent;package=com.PersiaBME.DriversInquiry;scheme=android-app;end";
+  window.location.href="intent://launch/#Intent;package=com.PersiaBME.DriversInquiry;end";
 }
 function salayanRahManInfo(){
   alert("وضعیت اتصال راه من\n\nدسترسی مستقیم به پروفایل و سوابق بارنامه از داخل صلایان بار هنوز فعال نیست. برای دریافت خودکار داده‌ها، سازمان راهداری باید API یا روش اتصال رسمی و مجاز ارائه کند. ورود به حساب راه من در برنامه اصلی به‌تنهایی دسترسی صلایان بار به داده‌ها را ایجاد نمی‌کند.");
