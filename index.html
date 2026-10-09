@@ -3774,8 +3774,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
      maplibreMap=new maplibregl.Map({container:node,style:'https://tiles.openfreemap.org/styles/liberty',center,zoom:p?15:6,pitch:p?62:48,bearing:-12,antialias:true,attributionControl:true});
      maplibreMap.addControl(new maplibregl.NavigationControl({visualizePitch:true}),'top-left');
      maplibreMap.on('load',()=>{
-       try{
-         const layers=maplibreMap.getStyle().layers||[];
+       const layers=maplibreMap.getStyle().layers||[];
        const labelLayer=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field']);
        const building=layers.find(l=>l.type==='fill'&&String(l['source-layer']||'').toLowerCase().includes('building'));
        try{
