@@ -3697,7 +3697,7 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  $('sbGpsStart').onclick=start;
  $('sbx3dToggle').onclick=async()=>{const btn=$('sbx3dToggle');if(!perspectiveMode){try{btn.disabled=true;btn.textContent='در حال بارگیری 3D…';await enableReal3D();perspectiveMode=true;btn.classList.add('active');btn.setAttribute('aria-pressed','true');btn.textContent='3D روشن ✓';$('sbxMapModeLabel').textContent='نمای سه‌بعدی واقعی';$('sbxMapZoomLabel').textContent='ساختمان‌های سه‌بعدی';$('sbGpsMapNote').textContent='نمای سه‌بعدی واقعی فعال است؛ نقشه را با دو انگشت بچرخان و زاویه دید را تغییر بده.'}catch(e){alert('بارگیری نقشه سه‌بعدی ناموفق بود. اینترنت را بررسی و دوباره تلاش کن.');btn.textContent='3D ↗'}finally{btn.disabled=false}}else{perspectiveMode=false;const stage=document.querySelector('.sbx-map-stage'),three=$('sbGpsMap3D');if(three)three.style.display='none';$('sbGpsMapCanvas').style.visibility='visible';btn.classList.remove('active');btn.setAttribute('aria-pressed','false');btn.textContent='3D ↗';$('sbxMapModeLabel').textContent='نمای استاندارد';$('sbxMapZoomLabel').textContent='نقشه زنده';setTimeout(()=>{if(map)map.invalidateSize()},150)}};
  document.querySelectorAll('[data-sbx-layer]').forEach(btn=>btn.addEventListener('click',()=>{const type=btn.dataset.sbxLayer;if(!map||!baseLayers[type])return;Object.values(baseLayers).forEach(layer=>{if(map.hasLayer(layer))map.removeLayer(layer)});baseLayers[type].addTo(map);activeLayer=type;document.querySelectorAll('[data-sbx-layer]').forEach(b=>b.classList.toggle('active',b===btn));const labels={road:'نقشه استاندارد',satellite:'تصاویر ماهواره‌ای',terrain:'ناهمواری و ارتفاع',dark:'نمای شب'};$('sbxMapModeLabel').textContent=labels[type]||'نقشه';$('sbxMapZoomLabel').textContent=labels[type]||'نقشه';setTimeout(()=>map.invalidateSize(),100)}));
- $('sbxMapLocate').onclick=()=>{const p=lastPosition||saved();if(!p){alert('ابتدا GPS را فعال کن.');return}if(map){if(perspectiveMode){perspectiveMode=false;node.classList.remove('sbx-perspective-on');$('sbx3dToggle').classList.remove('active');$('sbx3dToggle').setAttribute('aria-pressed','false');$('sbxMapModeLabel').textContent='نمای استاندارد';map.dragging.enable();map.touchZoom.enable();map.scrollWheelZoom.enable();map.doubleClickZoom.enable();map.boxZoom.enable();map.keyboard.enable()}map.setView([p.latitude,p.longitude],16,{animate:true});drawPosition(p)}};
+ $('sbxMapLocate').onclick=()=>{const p=lastPosition||saved();if(!p){alert('ابتدا GPS را فعال کن.');return}if(google3DMap){google3DMap.center={lat:p.latitude,lng:p.longitude,altitude:0};google3DMap.range=900;update3DPosition(p)}if(maplibreMap){maplibreMap.easeTo({center:[p.longitude,p.latitude],zoom:15,pitch:62,duration:500});update3DPosition(p)}else if(map){map.setView([p.latitude,p.longitude],16,{animate:true});drawPosition(p)}};
  $('sbxMapReset').onclick=()=>{if(!map)return;const p=lastPosition||saved();if(p)map.setView([p.latitude,p.longitude],14,{animate:true});else map.setView([33.72,59.18],7,{animate:true})};
  $('sbxMapFit').onclick=()=>{if(!map)return;const pts=[];if(userMarker)pts.push(userMarker.getLatLng());if(destinationMarker)pts.push(destinationMarker.getLatLng());loadMarkers.forEach(m=>{if(m.getLatLng)pts.push(m.getLatLng())});if(routeLine&&routeLine.getBounds().isValid()){map.fitBounds(routeLine.getBounds(),{padding:[40,40],maxZoom:15});return}if(pts.length>1)map.fitBounds(pts,{padding:[40,40],maxZoom:14});else $('sbGpsMapNote').textContent='برای نمایش محدوده مسیر، ابتدا GPS یا بارهای اطراف را فعال کن.'};
  $('sbxMapFullscreen').onclick=async()=>{const stage=document.querySelector('.sbx-map-stage');try{if(!document.fullscreenElement&&stage.requestFullscreen)await stage.requestFullscreen();else if(document.exitFullscreen)await document.exitFullscreen();setTimeout(()=>map&&map.invalidateSize(),250)}catch(e){$('sbGpsMapNote').textContent='حالت تمام‌صفحه در این مرورگر پشتیبانی نمی‌شود.'}};
@@ -3708,60 +3708,94 @@ body{background:#f1f6f3!important;color:var(--sb-ink);font-family:Tahoma,Arial,s
  function show(p,label){lastPosition=p;const status=$('sbGpsStatus');if(status)status.innerHTML='<b>🟢 '+label+'</b><br>عرض: '+fmt(p.latitude)+' · طول: '+fmt(p.longitude)+'<br>آخرین بروزرسانی: '+new Date(p.timestamp||Date.now()).toLocaleString('fa-IR');if($('sbGpsState'))$('sbGpsState').textContent='فعال';if($('sbGpsAccuracy'))$('sbGpsAccuracy').textContent=fmt(p.accuracy||0)+' متر';if($('sbGpsMapNote'))$('sbGpsMapNote').textContent='موقعیت روی نقشه نمایش داده می‌شود؛ برای جابه‌جایی و بزرگ‌نمایی نقشه را لمس کن.'}
  function loadLeaflet(){if(window.L)return Promise.resolve();if(leafletPromise)return leafletPromise;leafletPromise=new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';sc.crossOrigin='';sc.onload=resolve;sc.onerror=()=>reject(new Error('کتابخانه نقشه بارگیری نشد'));document.head.appendChild(sc)});return leafletPromise}
  let maplibreMap=null,maplibrePromise=null,maplibreMarker=null;
- let google3DMap=null,google3DMarker=null,googleMaps3DPromise=null;
+ let google3DMap=null,google3DMarker=null,googleMaps3DPromise=null,google3DLib=null;
  function loadGoogle3D(key){
    if(window.google&&window.google.maps&&window.google.maps.importLibrary)return Promise.resolve();
    if(googleMaps3DPromise)return googleMaps3DPromise;
    googleMaps3DPromise=new Promise((resolve,reject)=>{
-     const old=document.querySelector('script[data-salayan-google3d]');
-     if(old){old.addEventListener('load',resolve,{once:true});old.addEventListener('error',()=>reject(new Error('Google Maps بارگیری نشد')),{once:true});return}
      const sc=document.createElement('script');
      sc.dataset.salayanGoogle3d='1';
-     sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(key)+'&v=alpha&libraries=maps3d';
+     sc.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(key)+'&v=alpha&loading=async&libraries=maps3d';
      sc.async=true;sc.defer=true;
-     sc.onload=resolve;sc.onerror=()=>{googleMaps3DPromise=null;reject(new Error('کلید گوگل یا دسترسی API معتبر نیست'))};
+     sc.onload=resolve;sc.onerror=()=>{googleMaps3DPromise=null;reject(new Error('Google Maps API بارگیری نشد؛ کلید API، صورتحساب و دسترسی API را بررسی کن.'))};
      document.head.appendChild(sc);
    });
    return googleMaps3DPromise;
  }
- async function enableReal3D(){
-   const stage=document.querySelector('.sbx-map-stage');if(!stage)throw new Error('Map stage missing');
-   let key='';try{key=localStorage.getItem('salayan_google_maps_api_key')||''}catch(e){}
-   if(!key){
-     key=prompt('برای نمایش سه‌بعدی واقعی Google Maps، کلید API گوگل را وارد کن. اگر هنوز نداری، لغو را بزن تا نقشه فعلی باز بماند.','');
-     if(!key)throw new Error('برای نقشه سه‌بعدی گوگل، API Key لازم است');
-     key=key.trim();if(!key)throw new Error('کلید API خالی است');
-     try{localStorage.setItem('salayan_google_maps_api_key',key)}catch(e){}
-   }
+ async function enableGoogle3D(key){
    await loadGoogle3D(key);
-   const lib=await google.maps.importLibrary('maps3d');
+   google3DLib=await google.maps.importLibrary('maps3d');
+   const stage=document.querySelector('.sbx-map-stage');if(!stage)throw new Error('Map stage missing');
    const p=lastPosition||saved(),lat=p?p.latitude:33.72,lng=p?p.longitude:59.18;
    let node=$('sbGpsMap3D');
    if(!node){node=document.createElement('div');node.id='sbGpsMap3D';node.setAttribute('aria-label','نقشه سه‌بعدی واقعی گوگل صلایان بار');node.style.cssText='position:absolute;inset:0;z-index:4;border-radius:20px;overflow:hidden;background:#eaf2ec;';stage.appendChild(node)}
    node.style.display='block';node.style.visibility='visible';node.style.width='100%';node.style.height='100%';
    $('sbGpsMapCanvas').style.visibility='hidden';
    if(!google3DMap){
-     google3DMap=new lib.Map3DElement({center:{lat,lng,altitude:0},range:p?900:18000,tilt:p?65:55,heading:12,mode:'HYBRID',gestureHandling:'COOPERATIVE'});
+     google3DMap=new google3DLib.Map3DElement({center:{lat,lng,altitude:0},range:p?1000:18000,tilt:p?65:55,heading:12,mode:'HYBRID'});
      google3DMap.style.cssText='display:block;width:100%;height:100%;min-height:340px;';
      node.appendChild(google3DMap);
    }else{
-     google3DMap.center={lat,lng,altitude:0};google3DMap.range=p?900:18000;google3DMap.tilt=p?65:55;google3DMap.heading=12;
+     google3DMap.center={lat,lng,altitude:0};google3DMap.range=p?1000:18000;google3DMap.tilt=p?65:55;google3DMap.heading=12;
    }
-   if(p){
-     if(!google3DMarker){google3DMarker=new lib.Marker3DElement({position:{lat:p.latitude,lng:p.longitude,altitude:10},label:'موقعیت راننده',extruded:true});google3DMap.append(google3DMarker)}
-     else google3DMarker.position={lat:p.latitude,lng:p.longitude,altitude:10};
-   }
+   if(p)update3DPosition(p);
    setTimeout(()=>{if(google3DMap)google3DMap.style.width='100%'},250);
+ }
+ async function enableReal3D(){
+   const stage=document.querySelector('.sbx-map-stage');if(!stage)throw new Error('Map stage missing');
+   let key='';try{key=localStorage.getItem('salayan_google_maps_api_key')||''}catch(e){}
+   if(key){
+     try{await enableGoogle3D(key);$('sbxMapModeLabel').textContent='Google Maps سه‌بعدی';return}catch(e){console.warn('Google 3D unavailable; using 3D fallback',e)}
+   }
+   // Keep 3D available without a Google key. This is a real tilted vector map with extruded buildings where data exists.
+   await loadMapLibre();
+   let node=$('sbGpsMap3D');
+   if(!node){node=document.createElement('div');node.id='sbGpsMap3D';node.setAttribute('aria-label','نقشه سه‌بعدی صلایان بار');node.style.cssText='position:absolute;inset:0;z-index:4;border-radius:20px;overflow:hidden;background:#eaf2ec;';stage.appendChild(node)}
+   node.style.display='block';node.style.visibility='visible';$('sbGpsMapCanvas').style.visibility='hidden';
+   const p=lastPosition||saved(),center=p?[p.longitude,p.latitude]:[59.18,33.72];
+   if(!maplibreMap){
+     maplibreMap=new maplibregl.Map({container:node,style:'https://tiles.openfreemap.org/styles/liberty',center,zoom:p?15:6,pitch:p?62:48,bearing:-12,antialias:true,attributionControl:true});
+     maplibreMap.addControl(new maplibregl.NavigationControl({visualizePitch:true}),'top-left');
+     maplibreMap.on('load',()=>{
+       try{
+         const layers=maplibreMap.getStyle().layers||[];
+         const labelLayer=layers.find(l=>l.type==='symbol'&&l.layout&&l.layout['text-field']);
+         const building=layers.find(l=>l.type==='fill'&&String(l['source-layer']||'').toLowerCase().includes('building'));
+         if(building&&!maplibreMap.getLayer('salayan-3d-buildings')){
+           maplibreMap.addLayer({id:'salayan-3d-buildings',source:building.source,'source-layer':building['source-layer'],type:'fill-extrusion',minzoom:13,paint:{'fill-extrusion-color':'#b9d9c6','fill-extrusion-height':['coalesce',['get','render_height'],['get','height'],8],'fill-extrusion-base':['coalesce',['get','render_min_height'],['get','min_height'],0],'fill-extrusion-opacity':0.88}},labelLayer?labelLayer.id:undefined)
+         }
+       }catch(e){console.warn('Building extrusion unavailable',e)}
+       if(lastPosition)update3DPosition(lastPosition);
+     });
+     maplibreMap.on('error',e=>console.warn('3D map error',e.error||e));
+   }else{
+     if(maplibreMap.getContainer()!==node){try{maplibreMap.remove()}catch(e){}maplibreMap=null;return enableReal3D()}
+     maplibreMap.resize();maplibreMap.jumpTo({center,zoom:p?15:6,pitch:p?62:48,bearing:-12});
+   }
+   setTimeout(()=>maplibreMap&&maplibreMap.resize(),250);
+   if(p)update3DPosition(p);
+   $('sbxMapModeLabel').textContent='نمای سه‌بعدی';
  }
  function update3DPosition(p){
    if(!p)return;
-   if(google3DMap&&google3DMarker){google3DMarker.position={lat:p.latitude,lng:p.longitude,altitude:10};google3DMap.center={lat:p.latitude,lng:p.longitude,altitude:0};google3DMap.range=Math.min(google3DMap.range||900,1000)}
-   if(maplibreMap){const ll=[p.longitude,p.latitude];if(!maplibreMarker){const el=document.createElement('div');el.style.cssText='width:24px;height:24px;border:4px solid white;border-radius:50%;background:#08a66b;box-shadow:0 2px 14px #063b2c99';maplibreMarker=new maplibregl.Marker({element:el}).setLngLat(ll).setPopup(new maplibregl.Popup({offset:18}).setText('موقعیت فعلی راننده')).addTo(maplibreMap)}else maplibreMarker.setLngLat(ll);maplibreMap.easeTo({center:ll,zoom:Math.max(14,maplibreMap.getZoom()),pitch:62,duration:500})}
+   if(google3DMap){
+     if(!google3DMarker&&google3DLib){
+       google3DMarker=new google3DLib.Marker3DElement({position:{lat:p.latitude,lng:p.longitude,altitude:10},label:'موقعیت راننده',extruded:true});
+       google3DMap.append(google3DMarker);
+     }else if(google3DMarker)google3DMarker.position={lat:p.latitude,lng:p.longitude,altitude:10};
+     google3DMap.center={lat:p.latitude,lng:p.longitude,altitude:0};
+   }
+   if(maplibreMap){
+     const ll=[p.longitude,p.latitude];
+     if(!maplibreMarker){const el=document.createElement('div');el.style.cssText='width:24px;height:24px;border:4px solid white;border-radius:50%;background:#08a66b;box-shadow:0 2px 14px #063b2c99';maplibreMarker=new maplibregl.Marker({element:el}).setLngLat(ll).setPopup(new maplibregl.Popup({offset:18}).setText('موقعیت فعلی راننده')).addTo(maplibreMap)}
+     else maplibreMarker.setLngLat(ll);
+     maplibreMap.easeTo({center:ll,zoom:Math.max(14,maplibreMap.getZoom()),pitch:62,duration:500});
+   }
  }
  async function initMap(p){await loadLeaflet();const node=$('sbGpsMapCanvas');if(!node||map)return;const center=p?[p.latitude,p.longitude]:[33.72,59.18];map=L.map(node,{zoomControl:false,preferCanvas:true,fadeAnimation:true,zoomAnimation:true}).setView(center,p?13:6);baseLayers={road:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}),satellite:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles &copy; Esri'}),terrain:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'Map data &copy; OpenStreetMap, SRTM | Map style &copy; OpenTopoMap'}),dark:L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:20,attribution:'&copy; OpenStreetMap &copy; CARTO'})};activeLayer='road';baseLayers.road.addTo(map);L.control.zoom({position:'bottomright'}).addTo(map);if(p)drawPosition(p);setTimeout(()=>map.invalidateSize(),250)}
  function drawPosition(p){if(!map||!window.L)return;if(userMarker)map.removeLayer(userMarker);userMarker=L.marker([p.latitude,p.longitude]).addTo(map).bindPopup('<b>موقعیت شما</b><br>دقت تقریبی: '+fmt(p.accuracy||0)+' متر');if(accuracyCircle)map.removeLayer(accuracyCircle);accuracyCircle=L.circle([p.latitude,p.longitude],{radius:Math.max(15,p.accuracy||30),color:'#087f5b',fillColor:'#23a875',fillOpacity:.12,weight:2}).addTo(map);map.setView([p.latitude,p.longitude],Math.max(map.getZoom(),13))}
  function start(){if(!window.isSecureContext){alert('برای دسترسی GPS باید سایت با HTTPS باز شود.');return}if(!navigator.geolocation){alert('مرورگر از GPS پشتیبانی نمی‌کند.');return}$('sbGpsStatus').textContent='در حال درخواست اجازه موقعیت مکانی…';navigator.geolocation.getCurrentPosition(p=>{save(p);if(watchId===null)watchId=navigator.geolocation.watchPosition(save,fail,{enableHighAccuracy:true,maximumAge:10000,timeout:20000})},fail,{enableHighAccuracy:true,maximumAge:0,timeout:20000})}
- function save(p){const v={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy,timestamp:p.timestamp||Date.now()};lastPosition=v;try{localStorage.setItem('salayan_lat',v.latitude);localStorage.setItem('salayan_lng',v.longitude);localStorage.setItem('salayan_accuracy',v.accuracy);localStorage.setItem('salayan_gps_time',v.timestamp)}catch(e){}show(v,'GPS فعال است');if(map)drawPosition(v);if(maplibreMap)update3DPosition(v);if(!map)initMap(v).catch(e=>{$('sbGpsMapNote').textContent='نقشه بارگیری نشد؛ از دکمه نمایش روی نقشه استفاده کن.'});if($('sbGpsNear')&&$('sbGpsNear').dataset.open==='1')nearby()}
+ function save(p){const v={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy,timestamp:p.timestamp||Date.now()};lastPosition=v;try{localStorage.setItem('salayan_lat',v.latitude);localStorage.setItem('salayan_lng',v.longitude);localStorage.setItem('salayan_accuracy',v.accuracy);localStorage.setItem('salayan_gps_time',v.timestamp)}catch(e){}show(v,'GPS فعال است');if(map)drawPosition(v);if(maplibreMap||google3DMap)update3DPosition(v);if(!map)initMap(v).catch(e=>{$('sbGpsMapNote').textContent='نقشه بارگیری نشد؛ از دکمه نمایش روی نقشه استفاده کن.'});if($('sbGpsNear')&&$('sbGpsNear').dataset.open==='1')nearby()}
  function fail(e){const m={1:'اجازه مکان داده نشد؛ مجوز موقعیت مکانی سایت را در مرورگر بررسی کن.',2:'موقعیت پیدا نشد؛ GPS گوشی را روشن کن و فضای باز را امتحان کن.',3:'مهلت دریافت موقعیت تمام شد؛ دوباره تلاش کن.'};if($('sbGpsStatus'))$('sbGpsStatus').textContent=(m[e.code]||'دریافت موقعیت ناموفق بود.')+' موقعیت قبلی پاک نشده است.';if($('sbGpsState'))$('sbGpsState').textContent='خطا'}
  function stop(){if(watchId!==null&&navigator.geolocation){navigator.geolocation.clearWatch(watchId);watchId=null}$('sbGpsStatus').textContent='دریافت پیوسته موقعیت متوقف شد؛ موقعیت قبلی روی دستگاه باقی می‌ماند.';$('sbGpsState').textContent='متوقف'}
  async function nearby(){const p=lastPosition||saved(),box=$('sbGpsNear');if(!p){alert('ابتدا GPS را فعال کن.');return}box.dataset.open='1';box.innerHTML='<div class="sb-gps-load">در حال بررسی بارهای دارای مختصات…</div>';try{let rows=Array.isArray(window.salayanLoadsCache)?window.salayanLoadsCache:[];if(!rows.length){const r=await supabaseClient.from('loads').select('*').in('status',['waiting','turn','free','reserved']).limit(200);if(r.error)throw r.error;rows=r.data||[]}const list=rows.map(x=>{const lat=Number(x.latitude??x.lat??x.origin_lat??x.originLatitude),lng=Number(x.longitude??x.lng??x.origin_lng??x.originLongitude);if(!Number.isFinite(lat)||!Number.isFinite(lng)||!lat||!lng)return null;return{x,lat,lng,km:dist(p.latitude,p.longitude,lat,lng)}}).filter(Boolean).sort((a,b)=>a.km-b.km).slice(0,20);if($('sbGpsLoadCount'))$('sbGpsLoadCount').textContent=fmt(list.length);loadMarkers.forEach(m=>{if(map)map.removeLayer(m)});loadMarkers=[];if(!list.length){box.innerHTML='<div class="sb-gps-load">برای بارهای فعلی مختصات مبدأ ذخیره نشده است. لازم است فرم ثبت بار و جدول پایگاه داده را برای ذخیره مختصات GPS گسترش دهیم تا این نقشه بارهای اطراف را دقیق نشان دهد.</div>';return}if(map){list.forEach(({x,lat,lng,km})=>{const m=L.marker([lat,lng]).addTo(map).bindPopup('<b>'+esc(x.origin||'مبدأ نامشخص')+' ← '+esc(x.destination||'مقصد نامشخص')+'</b><br>فاصله مستقیم: '+fmt(km)+' کیلومتر');loadMarkers.push(m)});const pts=[[p.latitude,p.longitude],...list.map(v=>[v.lat,v.lng])];map.fitBounds(pts,{padding:[25,25],maxZoom:13})}box.innerHTML=list.slice(0,8).map(({x,lat,lng,km})=>'<div class="sb-gps-load"><span><b>'+esc(x.origin||'مبدأ نامشخص')+' ← '+esc(x.destination||'مقصد نامشخص')+'</b><br>'+fmt(km)+' کیلومتر فاصله مستقیم</span><a target="_blank" rel="noopener" href="'+directions(p,lat+','+lng)+'">مسیریابی ↗</a></div>').join('')}catch(e){box.innerHTML='<div class="sb-gps-load">دریافت بارها ناموفق بود: '+esc(e.message||e)+'</div>'}}
