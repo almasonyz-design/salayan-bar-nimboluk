@@ -5401,38 +5401,7 @@ body.sb-guide-is-open #sbGlobalBack,
 body.sb-guide-is-open #sbTopDropdown,
 body.sb-guide-is-open #sbGuideFab{visibility:hidden!important;pointer-events:none!important}
 </style>
-<script id="salayan-guide-obscure-background-fix-2026-js">
-(function(){
-  function syncGuideLayer(){
-    const overlay=document.getElementById('sbGuideOverlay');
-    const dialog=document.getElementById('sbGuideDialog');
-    if(!overlay)return;
-    if(overlay.parentElement!==document.body)document.body.appendChild(overlay);
-    const open=overlay.classList.contains('open');
-    document.body.classList.toggle('sb-guide-is-open',open);
-    if(open){
-      overlay.style.setProperty('position','fixed','important');
-      overlay.style.setProperty('inset','0','important');
-      overlay.style.setProperty('z-index','2147483647','important');
-      overlay.style.setProperty('background','rgba(4,20,14,.96)','important');
-      overlay.style.setProperty('display','flex','important');
-      overlay.setAttribute('aria-hidden','false');
-      if(dialog)dialog.style.setProperty('z-index','2147483647','important');
-    }else{
-      document.body.classList.remove('sb-guide-is-open');
-    }
-  }
-  const obs=new MutationObserver(syncGuideLayer);
-  function init(){
-    const overlay=document.getElementById('sbGuideOverlay');
-    if(overlay)obs.observe(overlay,{attributes:true,attributeFilter:['class','style','aria-hidden']});
-    syncGuideLayer();
-  }
-  document.addEventListener('DOMContentLoaded',init,{once:true});
-  if(document.readyState!=='loading')init();
-  window.addEventListener('pageshow',syncGuideLayer);
-})();
-</script>
+<!-- Removed: observer wrote to observed styles and could freeze the page. -->
 
 
 <!-- salayan-rahman-modal-background-cleanup-2026 -->
@@ -5464,38 +5433,7 @@ body.salayan-rahman-modal-open .header{
 }
 body.salayan-rahman-modal-open{overflow:hidden!important}
 </style>
-<script id="salayan-rahman-modal-background-cleanup-js">
-(function(){
- function syncRahManModal(){
-  var modal=document.getElementById('salayan-rahman-inapp-modal');
-  var open=!!(modal && getComputedStyle(modal).display!=='none');
-  document.body.classList.toggle('salayan-rahman-modal-open',open);
-  if(open){
-   modal.style.setProperty('position','fixed','important');
-   modal.style.setProperty('inset','0','important');
-   modal.style.setProperty('z-index','2147483647','important');
-   var backdrop=modal.querySelector('.sri-backdrop');
-   if(backdrop)backdrop.style.setProperty('background','rgba(3,15,10,.985)','important');
-  }
- }
- var observer=new MutationObserver(syncRahManModal);
- function start(){
-  var modal=document.getElementById('salayan-rahman-inapp-modal');
-  if(modal)observer.observe(modal,{attributes:true,attributeFilter:['style','class']});
-  var bodyObserver=new MutationObserver(function(){
-   var m=document.getElementById('salayan-rahman-inapp-modal');
-   if(m && !m.dataset.cleanupObserved){
-    m.dataset.cleanupObserved='1';
-    observer.observe(m,{attributes:true,attributeFilter:['style','class']});
-   }
-   syncRahManModal();
-  });
-  bodyObserver.observe(document.body,{childList:true});
-  syncRahManModal();
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
-})();
-</script>
+<!-- Removed: recursive modal MutationObserver could freeze interactions. -->
 
 
 <style id="salayan-gps-touch-fix-v4">
@@ -5565,66 +5503,56 @@ html body #sbGlobalBack,html body #sbTopMenuTrigger,html body .sb-top-actions{po
 </style>
 <script id="salayan-touch-emergency-recovery-js">
 (function(){
- var manualGuide=false;
- function closeStuckLayers(){
-  var overlay=document.getElementById('sbGuideOverlay');
-  var modal=document.getElementById('salayan-rahman-inapp-modal');
-  document.body.classList.remove('sb-guide-is-open','salayan-rahman-modal-open');
-  if(!manualGuide && overlay){
-   overlay.classList.remove('open');
-   overlay.setAttribute('aria-hidden','true');
-   overlay.style.setProperty('display','none','important');
-   overlay.style.setProperty('visibility','hidden','important');
-   overlay.style.setProperty('opacity','0','important');
-   overlay.style.setProperty('pointer-events','none','important');
-  }
-  if(modal && modal.getAttribute('aria-hidden')!=='false'){
-   modal.style.setProperty('display','none','important');
-   modal.style.setProperty('visibility','hidden','important');
-   modal.style.setProperty('opacity','0','important');
-   modal.style.setProperty('pointer-events','none','important');
-   document.body.style.removeProperty('overflow');
-  }
-  if(!manualGuide){
-   document.body.style.removeProperty('overflow');
-   document.documentElement.style.removeProperty('overflow');
-  }
+ var guideOpenedByUser=false;
+ function hideGuide(){
+  var o=document.getElementById('sbGuideOverlay');
+  if(!o||guideOpenedByUser)return;
+  o.classList.remove('open');o.setAttribute('aria-hidden','true');
+  o.style.setProperty('display','none','important');
+  o.style.setProperty('visibility','hidden','important');
+  o.style.setProperty('opacity','0','important');
+  o.style.setProperty('pointer-events','none','important');
+  document.body.classList.remove('sb-guide-is-open');
+  document.body.style.removeProperty('overflow');
+  document.documentElement.style.removeProperty('overflow');
  }
- function start(){
-  closeStuckLayers();
-  [250,800,1800,3500].forEach(function(ms){setTimeout(closeStuckLayers,ms)});
+ function startup(){
+  guideOpenedByUser=false;
+  hideGuide();
+  var m=document.getElementById('salayan-rahman-inapp-modal');
+  if(m&&m.getAttribute('aria-hidden')!=='false'){
+   m.style.setProperty('display','none','important');
+   m.style.setProperty('visibility','hidden','important');
+   m.style.setProperty('opacity','0','important');
+   m.style.setProperty('pointer-events','none','important');
+  }
+  document.body.classList.remove('salayan-rahman-modal-open');
+  document.body.style.removeProperty('overflow');
+  document.documentElement.style.removeProperty('overflow');
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
- window.addEventListener('pageshow',start);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
+ window.addEventListener('pageshow',startup);
  document.addEventListener('click',function(e){
   var t=e.target&&e.target.closest?e.target.closest('#sbGuideFab'):null;
   if(!t)return;
-  var overlay=document.getElementById('sbGuideOverlay');
-  if(!overlay)return;
+  var o=document.getElementById('sbGuideOverlay');if(!o)return;
   e.preventDefault();e.stopPropagation();
-  manualGuide=true;
-  overlay.classList.add('open');
-  overlay.setAttribute('aria-hidden','false');
-  overlay.style.setProperty('display','flex','important');
-  overlay.style.setProperty('visibility','visible','important');
-  overlay.style.setProperty('opacity','1','important');
-  overlay.style.setProperty('pointer-events','auto','important');
+  guideOpenedByUser=true;
+  o.classList.add('open');o.setAttribute('aria-hidden','false');
+  o.style.setProperty('display','flex','important');
+  o.style.setProperty('visibility','visible','important');
+  o.style.setProperty('opacity','1','important');
+  o.style.setProperty('pointer-events','auto','important');
   document.body.classList.add('sb-guide-is-open');
-  document.body.style.overflow='hidden';
-  document.documentElement.style.overflow='hidden';
+  document.body.style.overflow='hidden';document.documentElement.style.overflow='hidden';
+  var fab=document.getElementById('sbGuideFab');if(fab)fab.setAttribute('aria-expanded','true');
  },true);
  document.addEventListener('click',function(e){
-  var t=e.target&&e.target.closest?e.target.closest('#sbGuideClose,#sbGuideStartLoads'):null;
+  var t=e.target&&e.target.closest?e.target.closest('#sbGuideClose,#sbGuideStartLoads,[data-sb-guide-go]'):null;
   if(!t)return;
-  manualGuide=false;
-  setTimeout(closeStuckLayers,0);
+  guideOpenedByUser=false;
+  setTimeout(startup,0);
  },true);
- // If an old script accidentally reopens a hidden full-screen modal, keep it from blocking taps.
- var obs=new MutationObserver(function(){
-  var m=document.getElementById('salayan-rahman-inapp-modal');
-  if(m && m.getAttribute('aria-hidden')!=='false' && m.style.display!=='none')closeStuckLayers();
- });
- if(document.body)obs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['style','class','aria-hidden']});
 })();
 </script>
 
