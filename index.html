@@ -3765,10 +3765,16 @@ function salayanRahManInfo(){salayanOpenRahMan();}
     function updateVisibility(){
       var app=document.getElementById("appPage");
       var home=document.getElementById("homePage");
-      var visible=!!(app && !app.classList.contains("hidden") && home && !home.classList.contains("hidden"));
+      var menu=document.getElementById("sbTopDropdown");
+      var menuOpen=!!(menu && !menu.classList.contains("hidden") && getComputedStyle(menu).display!=="none" && getComputedStyle(menu).visibility!=="hidden");
+      var rahmanModal=document.getElementById("salayan-rahman-inapp-modal");
+      var modalOpen=!!(rahmanModal && getComputedStyle(rahmanModal).display!=="none");
+      /* Floating shortcut must never cover the dropdown menu's lower buttons. */
+      var visible=!!(app && !app.classList.contains("hidden") && home && !home.classList.contains("hidden") && !menuOpen && !modalOpen);
       btn.style.setProperty("display",visible?"flex":"none","important");
-      btn.style.setProperty("visibility","visible","important");
-      btn.style.setProperty("opacity","1","important");
+      btn.style.setProperty("visibility",visible?"visible":"hidden","important");
+      btn.style.setProperty("pointer-events",visible?"auto":"none","important");
+      btn.style.setProperty("opacity",visible?"1":"0","important");
     }
     updateVisibility();
     if(window.MutationObserver){
