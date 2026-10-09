@@ -769,6 +769,83 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
 .sb-menu-support>span:nth-child(2){flex:1}.sb-menu-support b{display:block;font-size:12px}.sb-menu-support small{display:block;color:#849189;font-size:10px;margin-top:4px;line-height:1.7}
 .sb-menu-foot{display:flex;align-items:center;gap:8px;padding:17px 6px 5px;color:#8a9991;font-size:10px}.sb-menu-foot-mark{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#e7f4ec;color:#087f5b;font-weight:900;font-size:9px}.sb-menu-version{margin-right:auto;font-size:9px;color:#a0aaa5}
 @media(max-width:380px){.sb-menu-welcome{padding:16px 13px}.sb-menu-welcome-copy h2{font-size:17px}.sb-menu-live{font-size:8px}.sb-menu-feature-action{font-size:8px}.sb-menu-shortcuts{gap:6px}.sb-menu-shortcut{padding:9px 6px}.sb-menu-shortcut b{font-size:9px}}
+\n</style>\n<style id="salayan-command-center-v5">\n
+/* ===== Salayan Bar Driver Command Center: redesign ===== */
+:root{--sbc-forest:#073f30;--sbc-green:#07845d;--sbc-mint:#dff7e9;--sbc-ink:#18382c;--sbc-muted:#788980;--sbc-line:#e2ece6}
+#homePage{padding:0 0 18px!important;direction:rtl}
+#homePage .home-top{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;padding:21px 17px 23px!important;margin:0 0 0!important;border-radius:0 0 27px 27px;background:linear-gradient(135deg,#073b2d 0%,#07694b 58%,#0b9367 100%);color:white;box-shadow:0 10px 23px rgba(4,75,51,.17)}
+#homePage .home-top:before{content:"";position:absolute;z-index:-1;width:220px;height:220px;border:1px solid #ffffff18;border-radius:50%;left:-85px;top:-120px;box-shadow:0 0 0 24px #ffffff08,0 0 0 48px #ffffff06}
+#homePage .home-title h2{color:#fff!important;font-size:21px!important;letter-spacing:-.4px;margin:0 0 5px!important;font-weight:900}
+#homePage .home-title small{color:#d1eee0!important;font-size:11px!important;line-height:1.8}
+#homePage .home-alert{border:1px solid #ffffff35!important;background:#ffffff18!important;color:white!important;border-radius:14px!important;width:41px;height:41px;font-size:18px}
+#homePage .home-avatar{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:#ffffff20;border:1px solid #ffffff2c;font-size:21px}
+#homePage .home-search{position:relative;z-index:2;margin:-14px 13px 14px!important;padding:7px 9px!important;display:flex;align-items:center;gap:7px;background:#fff!important;border:1px solid #e1ebe5!important;border-radius:16px!important;box-shadow:0 7px 20px #123c2a12!important}
+#homePage .home-search>span{font-size:18px;padding:0 4px}
+#homePage .home-search input{min-width:0;flex:1;border:0!important;outline:0!important;background:transparent!important;box-shadow:none!important;font-size:11px!important;padding:10px 3px!important}
+#homePage .home-search button{border:0!important;border-radius:11px!important;background:var(--sbc-green)!important;color:#fff!important;padding:10px 13px!important;font-size:11px!important;font-weight:800}
+#homePage .home-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 13px 16px!important}
+#homePage .home-stat{position:relative;overflow:hidden;text-align:right!important;padding:13px 12px!important;min-height:79px;border:1px solid var(--sbc-line)!important;border-radius:17px!important;background:linear-gradient(145deg,#fff,#f7fbf8)!important;box-shadow:0 4px 12px #153b2b08!important}
+#homePage .home-stat:after{content:"";position:absolute;width:40px;height:40px;border-radius:50%;background:#e8f7ef;left:-14px;bottom:-20px}
+#homePage .home-stat b{display:block;font-size:23px!important;line-height:1.2;color:var(--sbc-forest)!important;font-weight:900}
+#homePage .home-stat span{display:block;font-size:10px!important;color:#778980!important;margin-top:7px}
+#homePage .home-actions{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px!important;margin:0 13px 18px!important}
+#homePage .home-action{min-width:0;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px!important;padding:12px 4px!important;min-height:82px;border:1px solid #e0ebe4!important;border-radius:17px!important;background:#fff!important;color:#244638!important;font-size:10px!important;font-weight:800!important;box-shadow:0 4px 12px #153b2b07!important;transition:transform .15s,box-shadow .15s}
+#homePage .home-action:active{transform:scale(.96)}
+#homePage .home-action span{display:grid;place-items:center;width:37px;height:37px;border-radius:13px;background:#e7f6ed;font-size:20px}
+#homePage .home-section{margin:0 12px 15px!important;padding:14px!important;border:1px solid #e2ece6!important;border-radius:21px!important;background:#fff!important;box-shadow:0 5px 17px #173c2a07!important}
+#homePage .home-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 11px!important}
+#homePage .home-section-head h3{font-size:14px!important;color:#193e2e!important;font-weight:900!important;margin:0!important}
+#homePage .home-section-head button{border:0!important;background:#e9f7ef!important;color:#087f5b!important;border-radius:10px!important;padding:7px 9px!important;font-size:10px!important;font-weight:800}
+#homePage .home-load-tabs{display:flex;gap:7px;overflow:auto;padding:2px 0 11px;scrollbar-width:none}
+#homePage .home-load-tab{white-space:nowrap;border:1px solid #e2ebe5!important;background:#f8fbf9!important;color:#61746a!important;border-radius:20px!important;padding:7px 12px!important;font-size:10px!important;font-weight:700}
+#homePage .home-load-tab.active{background:#087f5b!important;border-color:#087f5b!important;color:#fff!important}
+#homePage .mini-load{position:relative;border:1px solid #e3ece6!important;border-radius:16px!important;background:linear-gradient(145deg,#fff,#f9fcfa)!important;padding:13px!important;margin:0 0 9px!important;box-shadow:0 3px 10px #163b2a05!important}
+#homePage .mini-load:last-child{margin-bottom:0!important}
+#homePage .sbc-load-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+#homePage .sbc-load-badge{font-size:9px;font-weight:800;border-radius:8px;padding:5px 8px;background:#e5f7ed;color:#087f5b}
+#homePage .sbc-load-route{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:900;color:#173e2e;line-height:1.8}
+#homePage .sbc-route-point{width:8px;height:8px;display:inline-block;border:2px solid #0a9567;border-radius:50%;flex:none}
+#homePage .sbc-route-line{height:18px;border-right:1px dashed #8abda3;margin-right:3px}
+#homePage .sbc-load-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #edf2ee;padding-top:10px;margin-top:10px}
+#homePage .sbc-load-meta{display:flex;flex-wrap:wrap;gap:6px;color:#7a8981;font-size:10px}
+#homePage .sbc-load-fare{font-size:12px;color:#087f5b;font-weight:900;text-align:left;white-space:nowrap}
+#homePage .sbc-load-fare small{display:block;font-size:8px;color:#8a9890;font-weight:500;margin-top:2px}
+#homePage .sbc-load-open{width:100%;margin-top:10px;border:0;border-radius:11px;background:#087f5b;color:#fff;padding:10px;font-family:inherit;font-size:11px;font-weight:800}
+#homePage .salayan-rahman-card{margin:0 12px 15px!important;border:1px solid #dbeae1!important;border-radius:21px!important;overflow:hidden;box-shadow:0 5px 17px #173c2a07!important}
+#homePage .sr-topline{align-items:flex-start!important;gap:10px!important}
+#homePage .sr-brand-icon{border-radius:14px!important}
+#homePage .sr-status{font-size:8px!important;max-width:100px;line-height:1.6}
+#homePage .sr-actions{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
+#homePage .sr-secondary{display:none!important}
+#homePage .sr-primary{border-radius:12px!important;padding:12px!important;font-weight:800!important}
+#homePage .sr-note{border-radius:13px!important}
+#homePage .doc-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#homePage .doc-item{padding:10px!important;border:1px solid #e5eee8!important;border-radius:13px!important;background:#fbfdfb!important;min-width:0}
+#homePage .doc-item b{font-size:10px!important}
+#homePage .doc-item small{display:block;font-size:9px!important;line-height:1.7;margin-top:4px}
+#homePage .home-location{display:flex;align-items:center;gap:12px}
+#homePage .home-location>div{flex:1}
+#homePage .home-location button{white-space:nowrap;border:0!important;border-radius:11px!important;background:#087f5b!important;color:#fff!important;padding:10px 12px!important;font-size:10px!important;font-weight:800}
+#homePage .home-note{font-size:10px!important;line-height:1.8;color:#7a8981;margin-top:5px}
+#homePage .home-section:last-child{margin-bottom:5px!important}
+#profilePage,#truckPage,#walletPage,#myLoadsPage,#notificationsPage,#createLoadPage{padding-bottom:18px}
+#profilePage .card,#truckPage .card,#walletPage .card,#myLoadsPage .card,#notificationsPage .card,#createLoadPage .card{border:1px solid #e0ebe4!important;border-radius:21px!important;box-shadow:0 6px 20px #163b2a0a!important;padding:18px!important}
+.sbc-page-head{display:flex;align-items:center;gap:11px;margin-bottom:17px}
+.sbc-page-head-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;background:#e5f5eb;font-size:22px;flex:none}
+.sbc-page-head h2{font-size:17px!important;color:#183e2d!important;margin:0 0 4px!important}
+.sbc-page-head p{font-size:10px;color:#7d8b83;margin:0;line-height:1.7}
+.sbc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.sbc-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.sbc-field.full{grid-column:1/-1}
+.sbc-field label{font-size:10px;color:#64776c;font-weight:800}
+.sbc-field input,.sbc-field select{width:100%;min-width:0;box-sizing:border-box;border:1px solid #dfe9e3;border-radius:12px;padding:12px 10px;background:#fbfdfb;color:#213d2e;font:inherit;font-size:12px;outline:none}
+.sbc-field input:focus,.sbc-field select:focus{border-color:#54ae85;box-shadow:0 0 0 3px #0b96631a}
+.sbc-save{width:100%;border:0;border-radius:13px;padding:13px;background:linear-gradient(110deg,#087f5b,#0b9b6b);color:white;font:inherit;font-weight:900;font-size:12px;margin-top:14px;box-shadow:0 6px 14px #087f5b24}
+.sbc-local-note{font-size:10px;line-height:1.8;color:#8a9890;background:#f6faf7;border-radius:11px;padding:10px;margin-top:12px}
+.sbc-info-banner{display:flex;align-items:center;gap:9px;background:#f4f9f6;border:1px solid #e0ebe4;border-radius:14px;padding:12px;font-size:10px;line-height:1.8;color:#61746a;margin-bottom:14px}
+.sbc-info-banner b{color:#234936}
+@media(min-width:600px){#homePage .home-stats,#homePage .home-actions,#homePage .home-section,#homePage .salayan-rahman-card{max-width:760px;margin-left:auto!important;margin-right:auto!important}#homePage .home-top{padding-right:max(22px,calc((100% - 760px)/2))!important;padding-left:max(22px,calc((100% - 760px)/2))!important}#homePage .home-search{max-width:730px;margin-left:auto!important;margin-right:auto!important}#homePage .home-actions{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:360px){#homePage .home-stats{gap:5px!important;margin-left:9px!important;margin-right:9px!important}#homePage .home-stat{padding:10px 8px!important}#homePage .home-stat b{font-size:20px!important}#homePage .home-actions{margin-left:9px!important;margin-right:9px!important;gap:5px!important}#homePage .home-action{font-size:9px!important}#homePage .home-section{margin-left:9px!important;margin-right:9px!important;padding:11px!important}}
 \n</style>\n</head>
 
 <body>
@@ -3194,6 +3271,78 @@ function salayanRahManInfo(){salayanOpenRahMan();}
   if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",installRahManButton);}else{installRahManButton();}
 })();
 </script>
-</body>
+<script id="salayan-command-center-v5-js">\n
+/* ===== Premium driver dashboard + useful editable vehicle/profile forms ===== */
+(function(){
+ const $=id=>document.getElementById(id);
+ const safe=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+ const get=(k)=>{try{return JSON.parse(localStorage.getItem("salayan_"+k)||"{}")}catch(_){return {}}};
+ const put=(k,v)=>localStorage.setItem("salayan_"+k,JSON.stringify(v));
+ function pageHead(icon,title,sub){return '<div class="sbc-page-head"><span class="sbc-page-head-icon">'+icon+'</span><div><h2>'+title+'</h2><p>'+sub+'</p></div></div>'}
+ function renderProfile(){
+  const page=$("profilePage");if(!page||page.dataset.sbcEnhanced==="1")return;
+  page.dataset.sbcEnhanced="1";
+  const old=get("driver_profile");
+  page.innerHTML='<div class="card">'+pageHead("👤","پروفایل راننده","اطلاعات تماس و مشخصات راننده را تکمیل کنید")+
+   '<div class="sbc-info-banner">🔐 <span><b>اطلاعات شما</b><br>اطلاعات این فرم فعلاً روی همین دستگاه ذخیره می‌شود و هنوز با پایگاه داده مشترک سامانه همگام نیست.</span></div>'+
+   '<form id="sbcProfileForm"><div class="sbc-form-grid">'+
+   field("نام و نام خانوادگی","fullName","text","مثلاً محمد حسین رافعی",old.fullName,true)+
+   field("شماره موبایل","phone","tel","09xxxxxxxxx",old.phone||($("profilePhone")?.textContent||""),true)+
+   field("شماره پرسنلی / شناسه راننده","driverCode","text","در صورت وجود",old.driverCode,false)+
+   field("شهر محل فعالیت","city","text","مثلاً نیمبلوک",old.city,false)+
+   '</div><button class="sbc-save" type="submit">ذخیره اطلاعات راننده ✓</button></form><div id="sbcProfileMessage" aria-live="polite"></div><div class="sbc-local-note">توجه: ذخیره این فرم به معنی تأیید هویت، اعتبار کارت هوشمند یا اتصال به راهداری نیست.</div><button class="btn secondary" style="margin-top:12px;width:100%" onclick="showPage(\'homePage\')">بازگشت به داشبورد</button></div>';
+  $("sbcProfileForm").addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(e.currentTarget),data={fullName:fd.get("fullName").trim(),phone:fd.get("phone").trim(),driverCode:fd.get("driverCode").trim(),city:fd.get("city").trim()};put("driver_profile",data);$("sbcProfileMessage").innerHTML='<div class="sbc-info-banner" style="margin-top:12px;margin-bottom:0">✅ اطلاعات روی همین دستگاه ذخیره شد.</div>';});
+ }
+ function field(label,id,type,placeholder,value,full){return '<div class="sbc-field '+(full?'full':'')+'"><label for="sbc-'+id+'">'+label+'</label><input id="sbc-'+id+'" name="'+id+'" type="'+type+'" placeholder="'+placeholder+'" value="'+safe(value||"")+'" '+(id==="phone"?'inputmode="tel"':'')+'></div>'}
+ function renderTruck(){
+  const page=$("truckPage");if(!page||page.dataset.sbcEnhanced==="1")return;
+  page.dataset.sbcEnhanced="1";
+  const old=get("truck_info");
+  page.innerHTML='<div class="card">'+pageHead("🚚","پروفایل ناوگان","مشخصات کامیون را برای پیشنهاد بار مناسب ثبت کنید")+
+   '<div class="sbc-info-banner">🚛 <span><b>مشخصات کامیون</b><br>تکمیل این بخش به‌تنهایی مجوز حمل یا تأیید رسمی مدارک محسوب نمی‌شود.</span></div>'+
+   '<form id="sbcTruckForm"><div class="sbc-form-grid">'+
+   selectField("نوع خودرو","truckType",["تریلی","کمپرسی","جفت","تک","کشنده","کامیونت"],old.truckType)+
+   field("برند خودرو","brand","text","مثلاً ولوو",old.brand,false)+
+   field("مدل خودرو","model","text","مثلاً FH 500",old.model,false)+
+   field("سال ساخت","year","number","مثلاً ۱۴۰۰",old.year,false)+
+   field("شماره پلاک","plate","text","ایران —",old.plate,false)+
+   field("ظرفیت بار (تن)","capacity","number","مثلاً ۲۶",old.capacity,false)+
+   field("شماره شاسی (اختیاری)","chassis","text","در صورت نیاز",old.chassis,true)+
+   '</div><button class="sbc-save" type="submit">ذخیره مشخصات کامیون ✓</button></form><div id="sbcTruckMessage" aria-live="polite"></div><div class="sbc-local-note">این مشخصات محلی هستند؛ برای اشتراک بین گوشی‌ها باید ذخیره امن در سرور و اتصال به حساب راننده پیاده‌سازی شود.</div><button class="btn secondary" style="margin-top:12px;width:100%" onclick="showPage(\'homePage\')">بازگشت به داشبورد</button></div>';
+  $("sbcTruckForm").addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(e.currentTarget),data={};for(const [k,v] of fd.entries())data[k]=String(v).trim();put("truck_info",data);$("sbcTruckMessage").innerHTML='<div class="sbc-info-banner" style="margin-top:12px;margin-bottom:0">✅ مشخصات کامیون روی همین دستگاه ذخیره شد.</div>';});
+ }
+ function selectField(label,id,options,value){return '<div class="sbc-field full"><label for="sbc-'+id+'">'+label+'</label><select id="sbc-'+id+'" name="'+id+'"><option value="">انتخاب کنید</option>'+options.map(x=>'<option '+(x===value?'selected':'')+'>'+x+'</option>').join("")+'</select></div>'}
+ async function refreshDashboard(){
+  const box=$("homeSuggestedLoads");if(!box)return;
+  try{
+   if(typeof supabaseClient==="undefined")return;
+   const {data,error}=await supabaseClient.from("loads").select("*").in("status",["waiting","turn","free","reserved"]).order("created_at",{ascending:false}).limit(6);
+   if(error)throw error;const rows=data||[];
+   const turn=rows.filter(x=>x.status==="turn").length,free=rows.filter(x=>x.status==="free").length;
+   const near=rows.filter(x=>{const d=Number(x.distance_km??x.distance??x.distanceKm);return Number.isFinite(d)&&d<=200}).length;
+   const set=(id,v)=>{const el=$(id);if(el)el.textContent=Number(v).toLocaleString("fa-IR")};
+   set("homeNearbyCount",near);set("homeTurnCount",turn);set("homeFreeCount",free);
+   box.innerHTML=rows.length?rows.slice(0,4).map(x=>{
+    const status=x.status==="turn"?"نوبتی":x.status==="free"?"آزاد":x.status==="reserved"?"رزرو شده":"در انتظار";
+    const fare=x.fare!=null?Number(x.fare).toLocaleString("fa-IR")+" تومان":"اعلام نشده";
+    return '<article class="mini-load"><div class="sbc-load-head"><span class="sbc-load-badge">'+status+'</span><span style="font-size:9px;color:#8a9890">صلایان بار</span></div><div class="sbc-load-route"><span class="sbc-route-point"></span>'+safe(x.origin||"مبدأ نامشخص")+'</div><div class="sbc-route-line"></div><div class="sbc-load-route"><span class="sbc-route-point"></span>'+safe(x.destination||"مقصد نامشخص")+'</div><div class="sbc-load-bottom"><div class="sbc-load-meta"><span>📦 '+safe(x.cargo||"نوع بار نامشخص")+'</span><span>⚖️ '+safe(x.weight??"—")+' تن</span></div><div class="sbc-load-fare">'+fare+'<small>کرایه اعلامی</small></div></div><button class="sbc-load-open" onclick="showPage(\'loadsPage\');showLoads()">مشاهده جزئیات و انتخاب بار ←</button></article>'
+   }).join(""):'<div class="sbc-info-banner">📭 <span><b>فعلاً باری ثبت نشده است</b><br>بعداً دوباره بررسی کنید یا از تالار بار استفاده کنید.</span></div>';
+  }catch(e){console.warn("dashboard refresh:",e)}
+ }
+ function correctDocumentLabels(){
+  document.querySelectorAll("#homePage .doc-item").forEach(item=>{
+   const small=item.querySelector("small");if(!small)return;
+   small.textContent="● نیازمند استعلام";
+   small.style.color="#9a6b19";
+  });
+  const docs=document.querySelector("#homePage .home-section .doc-row");
+  if(docs&&!docs.dataset.sbcNote){docs.dataset.sbcNote="1";const note=document.createElement("div");note.className="sbc-local-note";note.textContent="وضعیت مدارک هنوز از سامانه رسمی استعلام نشده است؛ رنگ یا متن این بخش تأیید اعتبار مدرک نیست.";docs.insertAdjacentElement("afterend",note);}
+ }
+ function boot(){renderProfile();renderTruck();correctDocumentLabels();refreshDashboard();}
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
+ window.addEventListener("focus",refreshDashboard);
+ window.salayanRefreshPremiumDashboard=refreshDashboard;
+})();
+\n</script>\n</body>
 </html>
 ```
