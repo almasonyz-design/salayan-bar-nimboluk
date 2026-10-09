@@ -4140,5 +4140,79 @@ function sbOpenDriverTool(type){
 }
 
 </script>
+
+<style id="salayan-first-visit-guide-2026">
+#sbGuideFab{position:fixed;left:14px;bottom:88px;z-index:9997;border:0;border-radius:999px;padding:12px 16px;background:#064e3b;color:#fff;box-shadow:0 8px 26px #064e3b44;font-weight:800;cursor:pointer;font-family:inherit}
+#sbGuideOverlay{position:fixed;inset:0;z-index:10020;background:#09251ed9;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}
+#sbGuideOverlay.open{display:flex}
+#sbGuideDialog{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:24px;padding:22px;box-shadow:0 24px 80px #0005;color:#16352b}
+.sb-guide-brand{background:linear-gradient(135deg,#065f46,#10b981);color:white;border-radius:18px;padding:20px;margin-bottom:16px}
+.sb-guide-brand h2{margin:0 0 8px;font-size:22px}.sb-guide-brand p{margin:0;line-height:1.9;font-size:14px}
+.sb-guide-steps{display:grid;gap:10px;margin:14px 0}
+.sb-guide-step{display:flex;gap:12px;align-items:flex-start;padding:13px;border:1px solid #e0eee7;background:#f7fbf8;border-radius:15px}
+.sb-guide-num{width:32px;height:32px;flex:0 0 32px;border-radius:11px;display:grid;place-items:center;background:#d1fae5;color:#065f46;font-weight:900}
+.sb-guide-step strong{display:block;margin-bottom:4px}.sb-guide-step span{font-size:13px;line-height:1.8;color:#476258}
+.sb-guide-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.sb-guide-shortcuts button,.sb-guide-actions button{border:1px solid #d5e7dd;background:#f5faf7;color:#14533e;border-radius:12px;padding:12px 10px;font-family:inherit;font-weight:700;cursor:pointer}
+.sb-guide-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.sb-guide-actions .primary{background:#087f5b;color:#fff;border-color:#087f5b;flex:1}
+.sb-guide-note{font-size:12px;color:#667d73;line-height:1.8;margin:8px 0}
+.sb-guide-help-title{font-weight:900;margin:16px 0 8px}
+@media(max-width:480px){#sbGuideFab{bottom:82px;left:9px;padding:10px 12px;font-size:12px}#sbGuideDialog{padding:15px;border-radius:19px}.sb-guide-brand{padding:16px}.sb-guide-brand h2{font-size:19px}.sb-guide-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<button id="sbGuideFab" type="button" aria-label="راهنما و میانبرها">❔ راهنما</button>
+<div id="sbGuideOverlay" role="dialog" aria-modal="true" aria-labelledby="sbGuideTitle">
+ <div id="sbGuideDialog">
+  <div class="sb-guide-brand">
+   <h2 id="sbGuideTitle">به صلایان بار نیمبلوک خوش آمدید 👋</h2>
+   <p>این راهنمای کوتاه کمک می‌کند از همان بار اول بدانید هر قسمت کجاست و برای پیدا کردن بار، ثبت بار، مسیریابی و حساب‌وکتاب از کجا شروع کنید.</p>
+  </div>
+  <div class="sb-guide-steps">
+   <div class="sb-guide-step"><div class="sb-guide-num">۱</div><div><strong>اول بار مناسب را پیدا کنید</strong><span>از «بارها» فهرست بارها را ببینید؛ مبدأ، مقصد و نوع بار را جست‌وجو یا فیلتر کنید. برای بارهای نوبتی، شرایط و محدوده نمایش را بررسی کنید.</span></div></div>
+   <div class="sb-guide-step"><div class="sb-guide-num">۲</div><div><strong>قبل از قبول بار، هزینه را حساب کنید</strong><span>کرایه، مسافت، سوخت و هزینه‌های جانبی را بررسی کنید. سود تخمینی با سود قطعی یکی نیست؛ قیمت‌ها و شرایط بار را پیش از تصمیم نهایی تأیید کنید.</span></div></div>
+   <div class="sb-guide-step"><div class="sb-guide-num">۳</div><div><strong>برای مسیر و موقعیت از GPS استفاده کنید</strong><span>وارد «GPS و نقشه» شوید و در صورت نیاز موقعیت را فعال کنید. اجازه مکان‌یابی گوشی لازم است؛ مسافت مستقیم با مسافت جاده‌ای فرق دارد.</span></div></div>
+   <div class="sb-guide-step"><div class="sb-guide-num">۴</div><div><strong>کارهای روزمره را از منوی پایین انجام دهید</strong><span>خانه برای خلاصه و دسترسی سریع، بارها برای جست‌وجو، بارهای من برای پیگیری، کیف پول برای موجودی و «بیشتر» برای ابزارها، مدارک و پشتیبانی است.</span></div></div>
+  </div>
+  <div class="sb-guide-help-title">میانبرهای سریع</div>
+  <div class="sb-guide-shortcuts">
+   <button type="button" data-sb-guide-go="homePage">🏠 خانه</button>
+   <button type="button" data-sb-guide-go="loadsPage" data-sb-guide-loads="1">🚚 جست‌وجوی بار</button>
+   <button type="button" data-sb-guide-go="myLoadsPage" data-sb-guide-mine="1">📋 بارهای من</button>
+   <button type="button" data-sb-guide-go="gpsPage">📍 GPS و نقشه</button>
+   <button type="button" data-sb-guide-go="walletPage">👛 کیف پول</button>
+   <button type="button" data-sb-guide-go="supportPage">🧰 ابزارها و پشتیبانی</button>
+  </div>
+  <p class="sb-guide-note">میانبرهای صفحه‌کلید در رایانه: Alt+1 خانه، Alt+2 بارها، Alt+3 بارهای من، Alt+4 GPS، Alt+5 کیف پول، Alt+6 ابزارها، ? راهنما و Esc بازگشت. در گوشی از همین دکمه راهنما و منوی پایین استفاده کنید.</p>
+  <p class="sb-guide-note">نکته: بعضی ابزارها اطلاعات را فقط روی همین دستگاه ذخیره می‌کنند؛ این اطلاعات لزوماً با راننده‌های دیگر همگام نمی‌شود.</p>
+  <div class="sb-guide-actions">
+   <button type="button" id="sbGuideClose">متوجه شدم، شروع کنیم</button>
+   <button type="button" class="primary" id="sbGuideStartLoads">رفتن به فهرست بارها ←</button>
+  </div>
+ </div>
+</div>
+<script id="salayan-first-visit-guide-2026-js">
+(function(){
+ const overlay=document.getElementById('sbGuideOverlay');
+ const openBtn=document.getElementById('sbGuideFab');
+ if(!overlay||!openBtn)return;
+ function openGuide(){overlay.classList.add('open');document.body.style.overflow='hidden';}
+ function closeGuide(){overlay.classList.remove('open');document.body.style.overflow='';try{localStorage.setItem('salayanGuideSeen2026','1')}catch(e){}}
+ function go(page,loads,mine){closeGuide();if(typeof sbNavigateTo==='function')sbNavigateTo(page,!!loads,!!mine);else if(typeof showPage==='function'){showPage(page);if(loads&&typeof showLoads==='function')showLoads();if(mine&&typeof showMyLoads==='function')showMyLoads();}}
+ openBtn.addEventListener('click',openGuide);
+ document.getElementById('sbGuideClose').addEventListener('click',closeGuide);
+ document.getElementById('sbGuideStartLoads').addEventListener('click',()=>go('loadsPage',true,false));
+ overlay.addEventListener('click',e=>{if(e.target===overlay)closeGuide()});
+ overlay.querySelectorAll('[data-sb-guide-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.sbGuideGo,b.dataset.sbGuideLoads==='1',b.dataset.sbGuideMine==='1')));
+ document.addEventListener('keydown',function(e){
+   if(overlay.classList.contains('open')){if(e.key==='Escape')closeGuide();return;}
+   if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey&& !/^Digit[1-6]$/.test(e.code))return;
+   if(e.altKey&&/^Digit[1-6]$/.test(e.code)){e.preventDefault();const map={'Digit1':'homePage','Digit2':'loadsPage','Digit3':'myLoadsPage','Digit4':'gpsPage','Digit5':'walletPage','Digit6':'supportPage'};go(map[e.code],e.code==='Digit2',e.code==='Digit3');return;}
+   if(e.key==='?'||e.key==='/'){const tag=(document.activeElement&&document.activeElement.tagName||'').toLowerCase();if(tag!=='input'&&tag!=='textarea'&&tag!=='select'){e.preventDefault();openGuide();}}
+   if(e.key==='Escape'&&typeof sbGoBack==='function')sbGoBack();
+ });
+ try{if(!localStorage.getItem('salayanGuideSeen2026'))setTimeout(openGuide,700)}catch(e){setTimeout(openGuide,700)}
+})();
+</script>
+
 </body>
 </html>
