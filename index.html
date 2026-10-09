@@ -5,137 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صلایان بار نیمبلوک</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-/* Universal in-app back navigation */
-window.salayanPageStack = window.salayanPageStack || [];
-window.salayanIsGoingBack = false;
-function sbCurrentPage(){
-  const ids=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
-  return ids.find(id=>{const el=document.getElementById(id);return el&&!el.classList.contains("hidden")})||"homePage";
-}
-function sbUpdateBackButton(){
-  const b=document.getElementById("sbGlobalBack");
-  if(!b)return;
-  const inApp=!document.getElementById("appPage")?.classList.contains("hidden");
-  const page=sbCurrentPage();
-  b.style.display=inApp&&page!=="homePage"?"inline-flex":"none";
-  b.innerHTML=page==="homePage"?"→ بازگشت":"→ بازگشت";
-}
-function sbGoBack(){
-  const current=sbCurrentPage();
-  let previous="";
-  while(window.salayanPageStack.length&&(!previous||previous===current)){
-    previous=window.salayanPageStack.pop()||"";
-    if(previous===current)previous="";
-  }
-  if(!previous||!document.getElementById(previous)){previous="homePage";}
-  window.salayanIsGoingBack=true;
-  showPage(previous);
-  window.salayanIsGoingBack=false;
-}
-(function(){
-  const originalShowPage=window.showPage;
-  if(typeof originalShowPage!=="function")return;
-  window.showPage=function(pageId){
-    const current=sbCurrentPage();
-    if(!window.salayanIsGoingBack&&current!==pageId&&document.getElementById(current)&&document.getElementById("appPage")&&!document.getElementById("appPage").classList.contains("hidden")){
-      window.salayanPageStack.push(current);
-      if(window.salayanPageStack.length>60)window.salayanPageStack.shift();
-    }
-    const result=originalShowPage.apply(this,arguments);
-    setTimeout(sbUpdateBackButton,30);
-    return result;
-  };
-  document.addEventListener("click",e=>{if(e.target.closest(".bottom-nav button"))setTimeout(sbUpdateBackButton,60);});
-  window.addEventListener("popstate",()=>sbGoBack());
-  document.addEventListener("keydown",e=>{if(e.altKey&&e.key==="ArrowLeft")sbGoBack();});
-  document.addEventListener("DOMContentLoaded",sbUpdateBackButton);
-  setInterval(sbUpdateBackButton,1200);
-})();
-
-/* Practical driver tools: calculations and device-local records */
-function sbToolRead(key, fallback){try{return JSON.parse(localStorage.getItem("salayan_tool_"+key)||JSON.stringify(fallback));}catch(e){return fallback;}}
-function sbToolWrite(key,value){localStorage.setItem("salayan_tool_"+key,JSON.stringify(value));}
-function sbToolAsk(label,def){const v=prompt(label,def===undefined?"":String(def));if(v===null)return null;return v.trim();}
-function sbToolNum(label,def){const v=sbToolAsk(label,def);if(v===null)return null;const n=Number(v.replace(/[,٬\s]/g,""));if(!Number.isFinite(n)||n<0){alert("لطفاً عدد معتبر و غیرمنفی وارد کن.");return null;}return n;}
-function sbToolMoney(n){return Math.round(n).toLocaleString("fa-IR")+" تومان";}
-function sbOpenDriverTool(type){
-  let out="",a,b,c,d,records;
-  if(type==="fuel"){
-    a=sbToolNum("مسافت سفر (کیلومتر):",500);if(a===null)return;
-    b=sbToolNum("مصرف سوخت در هر ۱۰۰ کیلومتر (لیتر):",35);if(b===null)return;
-    c=sbToolNum("قیمت هر لیتر سوخت (تومان):",600);if(c===null)return;
-    out="سوخت موردنیاز: "+(a*b/100).toLocaleString("fa-IR")+" لیتر\nهزینه تقریبی سوخت: "+sbToolMoney(a*b/100*c);
-  }else if(type==="profit"){
-    a=sbToolNum("کرایه دریافتی (تومان):",60000000);if(a===null)return;
-    b=sbToolNum("هزینه سوخت (تومان):",0);if(b===null)return;
-    c=sbToolNum("عوارض و بارگیری (تومان):",0);if(c===null)return;
-    d=sbToolNum("دستمزد راننده و سایر هزینه‌ها (تومان):",0);if(d===null)return;
-    out="کرایه: "+sbToolMoney(a)+"\nمجموع هزینه‌ها: "+sbToolMoney(b+c+d)+"\nسود/زیان تقریبی: "+sbToolMoney(a-b-c-d);
-  }else if(type==="perkm"){
-    a=sbToolNum("کل درآمد سفر (تومان):",60000000);if(a===null)return;
-    b=sbToolNum("کل هزینه سفر (تومان):",20000000);if(b===null)return;
-    c=sbToolNum("مسافت کل رفت‌وبرگشت (کیلومتر):",1000);if(c===null)return;if(!c){alert("مسافت باید بیشتر از صفر باشد.");return;}
-    out="درآمد هر کیلومتر: "+sbToolMoney(a/c)+"\nهزینه هر کیلومتر: "+sbToolMoney(b/c)+"\nسود خالص هر کیلومتر: "+sbToolMoney((a-b)/c)+"\nسود کل: "+sbToolMoney(a-b);
-  }else if(type==="tires"){
-    a=sbToolNum("هزینه یک دست لاستیک (تومان):",100000000);if(a===null)return;
-    b=sbToolNum("عمر تخمینی لاستیک (کیلومتر):",100000);if(b===null)return;if(!b){alert("عمر لاستیک باید بیشتر از صفر باشد.");return;}
-    out="هزینه استهلاک لاستیک در هر کیلومتر: "+sbToolMoney(a/b)+"\nهزینه برآوردی در ۱۰۰۰ کیلومتر: "+sbToolMoney(a/b*1000);
-  }else if(type==="loan"){
-    a=sbToolNum("مبلغ وام (تومان):",1000000000);if(a===null)return;
-    b=sbToolNum("نرخ سود سالانه (درصد):",23);if(b===null)return;
-    c=sbToolNum("تعداد اقساط ماهانه:",36);if(c===null)return;if(!c){alert("تعداد اقساط باید بیشتر از صفر باشد.");return;}
-    const r=b/1200,monthly=r===0?a/c:a*r/(1-Math.pow(1+r,-c));
-    out="قسط ماهانه تقریبی: "+sbToolMoney(monthly)+"\nمجموع پرداخت: "+sbToolMoney(monthly*c)+"\nسود کل تقریبی: "+sbToolMoney(monthly*c-a)+"\nاین محاسبه برآورد ساده است و کارمزد یا شرایط خاص قرارداد را لحاظ نمی‌کند.";
-  }else if(type==="expense"){
-    a=sbToolAsk("عنوان هزینه (مثلاً سوخت، تعمیر، عوارض):","سوخت");if(a===null||!a)return;
-    b=sbToolNum("مبلغ هزینه (تومان):",0);if(b===null)return;
-    c=sbToolAsk("توضیح یا مسیر (اختیاری):","");if(c===null)return;
-    records=sbToolRead("expenses",[]);records.push({title:a,amount:b,note:c,date:new Date().toISOString()});sbToolWrite("expenses",records);
-    out="هزینه ثبت شد.\n"+a+" — "+sbToolMoney(b)+"\nتعداد هزینه‌های ثبت‌شده: "+records.length;
-  }else if(type==="trip"){
-    a=sbToolAsk("مسیر سفر (مبدأ ← مقصد):","نیمبلوک ← ");if(a===null||!a)return;
-    b=sbToolNum("کرایه دریافتی (تومان):",0);if(b===null)return;
-    c=sbToolNum("هزینه‌های این سفر (تومان):",0);if(c===null)return;
-    records=sbToolRead("trips",[]);records.push({route:a,freight:b,cost:c,date:new Date().toISOString()});sbToolWrite("trips",records);
-    out="سفر ثبت شد.\nسود ثبت‌شده: "+sbToolMoney(b-c)+"\nتعداد سفرهای ثبت‌شده: "+records.length;
-  }else if(type==="report"){
-    const trips=sbToolRead("trips",[]),expenses=sbToolRead("expenses",[]);
-    const income=trips.reduce((n,x)=>n+(Number(x.freight)||0),0),tripCost=trips.reduce((n,x)=>n+(Number(x.cost)||0),0),extra=expenses.reduce((n,x)=>n+(Number(x.amount)||0),0);
-    out="گزارش دفتر همین گوشی\nتعداد سفر: "+trips.length+"\nمجموع کرایه‌ها: "+sbToolMoney(income)+"\nهزینه‌های ثبت‌شده داخل سفرها: "+sbToolMoney(tripCost)+"\nهزینه‌های روزانه جداگانه: "+sbToolMoney(extra)+"\nمانده تقریبی: "+sbToolMoney(income-tripCost-extra)+"\nتوجه: اگر هزینه‌ای هم در سفر و هم در هزینه روزانه وارد شده باشد، دوبار محاسبه می‌شود.";
-  }else if(type==="clear"){
-    const trips=sbToolRead("trips",[]),expenses=sbToolRead("expenses",[]);
-    if(!confirm("دفتر شامل "+trips.length+" سفر و "+expenses.length+" هزینه است. فقط با تأیید تو همه این ثبت‌ها پاک شوند؟"))return;
-    sbToolWrite("trips",[]);sbToolWrite("expenses",[]);out="دفتر سفر و هزینه‌های ثبت‌شده پاک شد.";
-  }else if(type==="maintenance"){
-    a=sbToolNum("کیلومتر فعلی کامیون:",540000);if(a===null)return;
-    b=sbToolNum("کیلومتر سرویس بعدی:",550000);if(b===null)return;
-    c=sbToolAsk("عنوان سرویس (مثلاً روغن و فیلتر):","روغن و فیلتر");if(c===null)return;
-    sbToolWrite("maintenance",{current:a,next:b,title:c,saved:new Date().toISOString()});
-    out="یادآور سرویس ذخیره شد: "+c+"\n"+(b<=a?"⚠️ موعد سرویس گذشته یا همین حالا رسیده است.":"باقی‌مانده تا سرویس: "+(b-a).toLocaleString("fa-IR")+" کیلومتر");
-  }else if(type==="maintenanceView"){
-    const m=sbToolRead("maintenance",null);out=m?"سرویس: "+m.title+"\nکیلومتر ثبت‌شده: "+Number(m.current).toLocaleString("fa-IR")+"\nموعد سرویس بعدی: "+Number(m.next).toLocaleString("fa-IR")+"\n"+(Number(m.next)<=Number(m.current)?"⚠️ سرویس سررسید شده است.":"باقی‌مانده: "+(Number(m.next)-Number(m.current)).toLocaleString("fa-IR")+" کیلومتر"):"هنوز یادآور سرویس ثبت نکرده‌ای.";
-  }else if(type==="document"){
-    a=sbToolAsk("نام مدرک (بیمه، معاینه فنی، کارت هوشمند و...):","بیمه");if(a===null||!a)return;
-    b=sbToolAsk("تاریخ انقضا (مثلاً ۱۴۰۵/۱۲/۲۹):","");if(b===null||!b)return;
-    records=sbToolRead("documents",[]);records.push({title:a,expiry:b,saved:new Date().toISOString()});sbToolWrite("documents",records);
-    out="تاریخ مدرک ذخیره شد: "+a+"\nانقضا: "+b+"\nیادآوری: این نسخه فعلاً تاریخ شمسی را خودکار بررسی یا اعلان نمی‌کند.";
-  }else if(type==="documentView"){
-    records=sbToolRead("documents",[]);out=records.length?records.map((x,i)=>(i+1)+". "+x.title+" — انقضا: "+x.expiry).join("\n"):"هنوز تاریخ مدرکی ثبت نکرده‌ای.";
-  }else if(type==="route"){
-    a=sbToolAsk("نام مسیر دلخواه (مثلاً نیمبلوک به مشهد):","نیمبلوک به مشهد");if(a===null||!a)return;
-    b=sbToolAsk("یادداشت مسیر (اختیاری):","");if(b===null)return;
-    records=sbToolRead("routes",[]);records.push({route:a,note:b,date:new Date().toISOString()});sbToolWrite("routes",records);out="مسیر ذخیره شد: "+a;
-  }else if(type==="routeView"){
-    records=sbToolRead("routes",[]);out=records.length?records.map((x,i)=>(i+1)+". "+x.route+(x.note?" — "+x.note:"")).join("\n"):"هنوز مسیری ذخیره نکرده‌ای.";
-  }else if(type==="notes"){
-    a=sbToolAsk("یادداشت راننده:","");if(a===null||!a)return;
-    records=sbToolRead("notes",[]);records.push({text:a,date:new Date().toISOString()});sbToolWrite("notes",records);
-    out="یادداشت ذخیره شد. تعداد یادداشت‌ها: "+records.length;
-  }
-  if(out)alert(out);
-}
-\n</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -4031,6 +3901,136 @@ document.addEventListener('click',function(event){
 document.addEventListener('keydown',function(event){if(event.key==='Escape')sbCloseTopMenu();});
 document.addEventListener('click',function(event){if(event.target.closest('#sbTopDropdown .sb-top-dropdown-item, #sbTopDropdown .sb-top-dropdown-shortcuts button'))sbCloseTopMenu();},true);
 
+/* Universal in-app back navigation */
+window.salayanPageStack = window.salayanPageStack || [];
+window.salayanIsGoingBack = false;
+function sbCurrentPage(){
+  const ids=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
+  return ids.find(id=>{const el=document.getElementById(id);return el&&!el.classList.contains("hidden")})||"homePage";
+}
+function sbUpdateBackButton(){
+  const b=document.getElementById("sbGlobalBack");
+  if(!b)return;
+  const inApp=!document.getElementById("appPage")?.classList.contains("hidden");
+  const page=sbCurrentPage();
+  b.style.display=inApp&&page!=="homePage"?"inline-flex":"none";
+  b.innerHTML=page==="homePage"?"→ بازگشت":"→ بازگشت";
+}
+function sbGoBack(){
+  const current=sbCurrentPage();
+  let previous="";
+  while(window.salayanPageStack.length&&(!previous||previous===current)){
+    previous=window.salayanPageStack.pop()||"";
+    if(previous===current)previous="";
+  }
+  if(!previous||!document.getElementById(previous)){previous="homePage";}
+  window.salayanIsGoingBack=true;
+  showPage(previous);
+  window.salayanIsGoingBack=false;
+}
+(function(){
+  const originalShowPage=window.showPage;
+  if(typeof originalShowPage!=="function")return;
+  window.showPage=function(pageId){
+    const current=sbCurrentPage();
+    if(!window.salayanIsGoingBack&&current!==pageId&&document.getElementById(current)&&document.getElementById("appPage")&&!document.getElementById("appPage").classList.contains("hidden")){
+      window.salayanPageStack.push(current);
+      if(window.salayanPageStack.length>60)window.salayanPageStack.shift();
+    }
+    const result=originalShowPage.apply(this,arguments);
+    setTimeout(sbUpdateBackButton,30);
+    return result;
+  };
+  document.addEventListener("click",e=>{if(e.target.closest(".bottom-nav button"))setTimeout(sbUpdateBackButton,60);});
+  window.addEventListener("popstate",()=>sbGoBack());
+  document.addEventListener("keydown",e=>{if(e.altKey&&e.key==="ArrowLeft")sbGoBack();});
+  document.addEventListener("DOMContentLoaded",sbUpdateBackButton);
+  setInterval(sbUpdateBackButton,1200);
+})();
+
+/* Practical driver tools: calculations and device-local records */
+function sbToolRead(key, fallback){try{return JSON.parse(localStorage.getItem("salayan_tool_"+key)||JSON.stringify(fallback));}catch(e){return fallback;}}
+function sbToolWrite(key,value){localStorage.setItem("salayan_tool_"+key,JSON.stringify(value));}
+function sbToolAsk(label,def){const v=prompt(label,def===undefined?"":String(def));if(v===null)return null;return v.trim();}
+function sbToolNum(label,def){const v=sbToolAsk(label,def);if(v===null)return null;const n=Number(v.replace(/[,٬\s]/g,""));if(!Number.isFinite(n)||n<0){alert("لطفاً عدد معتبر و غیرمنفی وارد کن.");return null;}return n;}
+function sbToolMoney(n){return Math.round(n).toLocaleString("fa-IR")+" تومان";}
+function sbOpenDriverTool(type){
+  let out="",a,b,c,d,records;
+  if(type==="fuel"){
+    a=sbToolNum("مسافت سفر (کیلومتر):",500);if(a===null)return;
+    b=sbToolNum("مصرف سوخت در هر ۱۰۰ کیلومتر (لیتر):",35);if(b===null)return;
+    c=sbToolNum("قیمت هر لیتر سوخت (تومان):",600);if(c===null)return;
+    out="سوخت موردنیاز: "+(a*b/100).toLocaleString("fa-IR")+" لیتر\nهزینه تقریبی سوخت: "+sbToolMoney(a*b/100*c);
+  }else if(type==="profit"){
+    a=sbToolNum("کرایه دریافتی (تومان):",60000000);if(a===null)return;
+    b=sbToolNum("هزینه سوخت (تومان):",0);if(b===null)return;
+    c=sbToolNum("عوارض و بارگیری (تومان):",0);if(c===null)return;
+    d=sbToolNum("دستمزد راننده و سایر هزینه‌ها (تومان):",0);if(d===null)return;
+    out="کرایه: "+sbToolMoney(a)+"\nمجموع هزینه‌ها: "+sbToolMoney(b+c+d)+"\nسود/زیان تقریبی: "+sbToolMoney(a-b-c-d);
+  }else if(type==="perkm"){
+    a=sbToolNum("کل درآمد سفر (تومان):",60000000);if(a===null)return;
+    b=sbToolNum("کل هزینه سفر (تومان):",20000000);if(b===null)return;
+    c=sbToolNum("مسافت کل رفت‌وبرگشت (کیلومتر):",1000);if(c===null)return;if(!c){alert("مسافت باید بیشتر از صفر باشد.");return;}
+    out="درآمد هر کیلومتر: "+sbToolMoney(a/c)+"\nهزینه هر کیلومتر: "+sbToolMoney(b/c)+"\nسود خالص هر کیلومتر: "+sbToolMoney((a-b)/c)+"\nسود کل: "+sbToolMoney(a-b);
+  }else if(type==="tires"){
+    a=sbToolNum("هزینه یک دست لاستیک (تومان):",100000000);if(a===null)return;
+    b=sbToolNum("عمر تخمینی لاستیک (کیلومتر):",100000);if(b===null)return;if(!b){alert("عمر لاستیک باید بیشتر از صفر باشد.");return;}
+    out="هزینه استهلاک لاستیک در هر کیلومتر: "+sbToolMoney(a/b)+"\nهزینه برآوردی در ۱۰۰۰ کیلومتر: "+sbToolMoney(a/b*1000);
+  }else if(type==="loan"){
+    a=sbToolNum("مبلغ وام (تومان):",1000000000);if(a===null)return;
+    b=sbToolNum("نرخ سود سالانه (درصد):",23);if(b===null)return;
+    c=sbToolNum("تعداد اقساط ماهانه:",36);if(c===null)return;if(!c){alert("تعداد اقساط باید بیشتر از صفر باشد.");return;}
+    const r=b/1200,monthly=r===0?a/c:a*r/(1-Math.pow(1+r,-c));
+    out="قسط ماهانه تقریبی: "+sbToolMoney(monthly)+"\nمجموع پرداخت: "+sbToolMoney(monthly*c)+"\nسود کل تقریبی: "+sbToolMoney(monthly*c-a)+"\nاین محاسبه برآورد ساده است و کارمزد یا شرایط خاص قرارداد را لحاظ نمی‌کند.";
+  }else if(type==="expense"){
+    a=sbToolAsk("عنوان هزینه (مثلاً سوخت، تعمیر، عوارض):","سوخت");if(a===null||!a)return;
+    b=sbToolNum("مبلغ هزینه (تومان):",0);if(b===null)return;
+    c=sbToolAsk("توضیح یا مسیر (اختیاری):","");if(c===null)return;
+    records=sbToolRead("expenses",[]);records.push({title:a,amount:b,note:c,date:new Date().toISOString()});sbToolWrite("expenses",records);
+    out="هزینه ثبت شد.\n"+a+" — "+sbToolMoney(b)+"\nتعداد هزینه‌های ثبت‌شده: "+records.length;
+  }else if(type==="trip"){
+    a=sbToolAsk("مسیر سفر (مبدأ ← مقصد):","نیمبلوک ← ");if(a===null||!a)return;
+    b=sbToolNum("کرایه دریافتی (تومان):",0);if(b===null)return;
+    c=sbToolNum("هزینه‌های این سفر (تومان):",0);if(c===null)return;
+    records=sbToolRead("trips",[]);records.push({route:a,freight:b,cost:c,date:new Date().toISOString()});sbToolWrite("trips",records);
+    out="سفر ثبت شد.\nسود ثبت‌شده: "+sbToolMoney(b-c)+"\nتعداد سفرهای ثبت‌شده: "+records.length;
+  }else if(type==="report"){
+    const trips=sbToolRead("trips",[]),expenses=sbToolRead("expenses",[]);
+    const income=trips.reduce((n,x)=>n+(Number(x.freight)||0),0),tripCost=trips.reduce((n,x)=>n+(Number(x.cost)||0),0),extra=expenses.reduce((n,x)=>n+(Number(x.amount)||0),0);
+    out="گزارش دفتر همین گوشی\nتعداد سفر: "+trips.length+"\nمجموع کرایه‌ها: "+sbToolMoney(income)+"\nهزینه‌های ثبت‌شده داخل سفرها: "+sbToolMoney(tripCost)+"\nهزینه‌های روزانه جداگانه: "+sbToolMoney(extra)+"\nمانده تقریبی: "+sbToolMoney(income-tripCost-extra)+"\nتوجه: اگر هزینه‌ای هم در سفر و هم در هزینه روزانه وارد شده باشد، دوبار محاسبه می‌شود.";
+  }else if(type==="clear"){
+    const trips=sbToolRead("trips",[]),expenses=sbToolRead("expenses",[]);
+    if(!confirm("دفتر شامل "+trips.length+" سفر و "+expenses.length+" هزینه است. فقط با تأیید تو همه این ثبت‌ها پاک شوند؟"))return;
+    sbToolWrite("trips",[]);sbToolWrite("expenses",[]);out="دفتر سفر و هزینه‌های ثبت‌شده پاک شد.";
+  }else if(type==="maintenance"){
+    a=sbToolNum("کیلومتر فعلی کامیون:",540000);if(a===null)return;
+    b=sbToolNum("کیلومتر سرویس بعدی:",550000);if(b===null)return;
+    c=sbToolAsk("عنوان سرویس (مثلاً روغن و فیلتر):","روغن و فیلتر");if(c===null)return;
+    sbToolWrite("maintenance",{current:a,next:b,title:c,saved:new Date().toISOString()});
+    out="یادآور سرویس ذخیره شد: "+c+"\n"+(b<=a?"⚠️ موعد سرویس گذشته یا همین حالا رسیده است.":"باقی‌مانده تا سرویس: "+(b-a).toLocaleString("fa-IR")+" کیلومتر");
+  }else if(type==="maintenanceView"){
+    const m=sbToolRead("maintenance",null);out=m?"سرویس: "+m.title+"\nکیلومتر ثبت‌شده: "+Number(m.current).toLocaleString("fa-IR")+"\nموعد سرویس بعدی: "+Number(m.next).toLocaleString("fa-IR")+"\n"+(Number(m.next)<=Number(m.current)?"⚠️ سرویس سررسید شده است.":"باقی‌مانده: "+(Number(m.next)-Number(m.current)).toLocaleString("fa-IR")+" کیلومتر"):"هنوز یادآور سرویس ثبت نکرده‌ای.";
+  }else if(type==="document"){
+    a=sbToolAsk("نام مدرک (بیمه، معاینه فنی، کارت هوشمند و...):","بیمه");if(a===null||!a)return;
+    b=sbToolAsk("تاریخ انقضا (مثلاً ۱۴۰۵/۱۲/۲۹):","");if(b===null||!b)return;
+    records=sbToolRead("documents",[]);records.push({title:a,expiry:b,saved:new Date().toISOString()});sbToolWrite("documents",records);
+    out="تاریخ مدرک ذخیره شد: "+a+"\nانقضا: "+b+"\nیادآوری: این نسخه فعلاً تاریخ شمسی را خودکار بررسی یا اعلان نمی‌کند.";
+  }else if(type==="documentView"){
+    records=sbToolRead("documents",[]);out=records.length?records.map((x,i)=>(i+1)+". "+x.title+" — انقضا: "+x.expiry).join("\n"):"هنوز تاریخ مدرکی ثبت نکرده‌ای.";
+  }else if(type==="route"){
+    a=sbToolAsk("نام مسیر دلخواه (مثلاً نیمبلوک به مشهد):","نیمبلوک به مشهد");if(a===null||!a)return;
+    b=sbToolAsk("یادداشت مسیر (اختیاری):","");if(b===null)return;
+    records=sbToolRead("routes",[]);records.push({route:a,note:b,date:new Date().toISOString()});sbToolWrite("routes",records);out="مسیر ذخیره شد: "+a;
+  }else if(type==="routeView"){
+    records=sbToolRead("routes",[]);out=records.length?records.map((x,i)=>(i+1)+". "+x.route+(x.note?" — "+x.note:"")).join("\n"):"هنوز مسیری ذخیره نکرده‌ای.";
+  }else if(type==="notes"){
+    a=sbToolAsk("یادداشت راننده:","");if(a===null||!a)return;
+    records=sbToolRead("notes",[]);records.push({text:a,date:new Date().toISOString()});sbToolWrite("notes",records);
+    out="یادداشت ذخیره شد. تعداد یادداشت‌ها: "+records.length;
+  }
+  if(out)alert(out);
+}
+\n
 </script>\n</body>
 </html>
 ```
