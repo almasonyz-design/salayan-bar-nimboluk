@@ -1593,6 +1593,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
 
     <!-- PREMIUM SERVICE CENTER -->
     <div id="supportPage" class="hidden sb-pro-menu">
+      <button class="sbx-entry-card" onclick="showPage('proToolsPage');sbxInit()"><span class="sbx-entry-icon">🚛</span><span><b>اتاق فرمان هوشمند راننده</b><small>سود سفر، دفتر هزینه‌ها، سرویس کامیون، مدارک و چک‌لیست ایمنی</small></span><strong>ورود ←</strong></button>
+
       <div class="sb-menu-heading">
         <div class="sb-menu-heading-top">
           <div><span class="sb-menu-eyebrow">SALAYAN BAR · NIMBOLUK</span><h2>مرکز خدمات</h2><p>همه ابزارهای موردنیاز راننده، منظم و یک‌جا</p></div>
@@ -1709,6 +1711,105 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
         </div>
     </div>
 
+
+    <!-- SMART DRIVER COMMAND CENTER -->
+    <div id="proToolsPage" class="hidden">
+      <div class="card sbx-hero">
+        <div class="sbx-kicker">SALAYAN BAR • DRIVER PRO</div>
+        <div class="sbx-hero-row"><div><h2>اتاق فرمان راننده</h2><p>سود سفر، هزینه‌ها، سرویس کامیون، مدارک و چک‌لیست ایمنی؛ همه یک‌جا.</p></div><span class="sbx-hero-icon">🚛</span></div>
+        <div class="sbx-stats">
+          <div><small>هزینه ثبت‌شده</small><b id="sbxExpenseTotal">۰ تومان</b></div>
+          <div><small>سرویس نزدیک</small><b id="sbxMaintenanceStatus">ثبت نشده</b></div>
+          <div><small>مدارک نیازمند توجه</small><b id="sbxDocumentStatus">۰ مورد</b></div>
+        </div>
+        <div class="sbx-local-note">🔒 اطلاعات این ابزارها فعلاً روی همین گوشی ذخیره می‌شود؛ تا اتصال پایگاه داده مشترک، بین گوشی‌ها همگام نیست.</div>
+      </div>
+
+      <div class="sbx-tabs" role="tablist">
+        <button class="active" onclick="sbxShowTab('profit',this)">💰 سود سفر</button>
+        <button onclick="sbxShowTab('expenses',this)">📒 هزینه‌ها</button>
+        <button onclick="sbxShowTab('maintenance',this)">🔧 سرویس</button>
+        <button onclick="sbxShowTab('documents',this)">📄 مدارک</button>
+        <button onclick="sbxShowTab('checklist',this)">✅ چک‌لیست</button>
+      </div>
+
+      <section class="sbx-panel" id="sbxTab-profit">
+        <div class="sbx-section-title"><div><h3>محاسبه‌گر واقعی سود سفر</h3><p>هزینه رفت، برگشت خالی، سوخت و استهلاک را هم حساب کن.</p></div><span>🧮</span></div>
+        <div class="sbx-form-grid">
+          <label>کرایه دریافتی (تومان)<input id="sbxFare" inputmode="numeric" value="60000000" oninput="sbxCalcProfit()"></label>
+          <label>مسافت بارگیری تا تخلیه (کیلومتر)<input id="sbxLoadedKm" type="number" min="0" value="350" oninput="sbxCalcProfit()"></label>
+          <label>برگشت خالی (کیلومتر)<input id="sbxEmptyKm" type="number" min="0" value="200" oninput="sbxCalcProfit()"></label>
+          <label>مصرف سوخت (لیتر در ۱۰۰ کیلومتر)<input id="sbxFuelUse" type="number" min="0" step="0.1" value="35" oninput="sbxCalcProfit()"></label>
+          <label>قیمت هر لیتر سوخت (تومان)<input id="sbxFuelPrice" inputmode="numeric" value="600" oninput="sbxCalcProfit()"></label>
+          <label>هزینه جانبی سفر (تومان)<input id="sbxOtherCost" inputmode="numeric" value="1500000" oninput="sbxCalcProfit()"></label>
+          <label>استهلاک و تعمیرات هر کیلومتر (تومان)<input id="sbxWearKm" inputmode="numeric" value="8000" oninput="sbxCalcProfit()"></label>
+          <label>عوارض، بارگیری و تخلیه (تومان)<input id="sbxTolls" inputmode="numeric" value="500000" oninput="sbxCalcProfit()"></label>
+        </div>
+        <div class="sbx-result-grid">
+          <div class="sbx-result"><small>سود/زیان برآوردی</small><b id="sbxProfitResult">—</b></div>
+          <div class="sbx-result"><small>سود به ازای هر کیلومتر</small><b id="sbxPerKmResult">—</b></div>
+          <div class="sbx-result"><small>هزینه کل سفر</small><b id="sbxCostResult">—</b></div>
+          <div class="sbx-result"><small>حاشیه سود</small><b id="sbxMarginResult">—</b></div>
+        </div>
+        <p class="sbx-footnote">نتیجه تخمینی است؛ قیمت سوخت، مصرف واقعی، هزینه‌های برگشت و همه مخارج را مطابق سفر خودت وارد کن.</p>
+        <button class="sbx-primary" onclick="sbxSaveTrip()">＋ ذخیره این برآورد در دفتر سفر</button>
+      </section>
+
+      <section class="sbx-panel hidden" id="sbxTab-expenses">
+        <div class="sbx-section-title"><div><h3>دفتر دخل‌وخرج کامیون</h3><p>سوخت، لاستیک، تعمیرگاه، عوارض و مخارج روزانه.</p></div><span>📒</span></div>
+        <div class="sbx-form-grid">
+          <label>نوع هزینه<select id="sbxExpenseType"><option>گازوئیل</option><option>تعمیرات</option><option>لاستیک</option><option>روغن و فیلتر</option><option>عوارض و باسکول</option><option>حقوق راننده</option><option>بیمه و مدارک</option><option>سایر</option></select></label>
+          <label>مبلغ (تومان)<input id="sbxExpenseAmount" inputmode="numeric" placeholder="مثلاً ۱۲۰۰۰۰۰"></label>
+          <label>تاریخ<input id="sbxExpenseDate" type="date"></label>
+          <label>توضیحات<input id="sbxExpenseNote" placeholder="مثلاً تعویض روغن موتور"></label>
+        </div>
+        <button class="sbx-primary" onclick="sbxAddExpense()">ثبت هزینه</button>
+        <div class="sbx-list-head"><b>هزینه‌های ثبت‌شده</b><button class="sbx-secondary" onclick="sbxExportExpenses()">خروجی CSV</button></div>
+        <div id="sbxExpenseList" class="sbx-record-list"></div>
+      </section>
+
+      <section class="sbx-panel hidden" id="sbxTab-maintenance">
+        <div class="sbx-section-title"><div><h3>دفتر سرویس و نگهداری</h3><p>یادآور سرویس بر اساس کیلومتر و تاریخ.</p></div><span>🔧</span></div>
+        <div class="sbx-form-grid">
+          <label>عنوان سرویس<input id="sbxMaintName" placeholder="مثلاً روغن موتور و فیلترها"></label>
+          <label>کیلومتر فعلی کامیون<input id="sbxOdometer" type="number" min="0" placeholder="مثلاً ۵۴۰۰۰۰"></label>
+          <label>کیلومتر سرویس بعدی<input id="sbxNextOdo" type="number" min="0" placeholder="مثلاً ۵۵۰۰۰۰"></label>
+          <label>تاریخ یادآوری (اختیاری)<input id="sbxMaintDate" type="date"></label>
+          <label>هزینه سرویس (تومان)<input id="sbxMaintCost" inputmode="numeric" placeholder="مبلغ"></label>
+          <label>یادداشت<input id="sbxMaintNote" placeholder="قطعه، روغن یا نکته"></label>
+        </div>
+        <button class="sbx-primary" onclick="sbxAddMaintenance()">ثبت سرویس / یادآور</button>
+        <div id="sbxMaintenanceList" class="sbx-record-list"></div>
+      </section>
+
+      <section class="sbx-panel hidden" id="sbxTab-documents">
+        <div class="sbx-section-title"><div><h3>تقویم مدارک و انقضا</h3><p>برای یادآوری تاریخ اعتبار مدارک کامیون و راننده.</p></div><span>📄</span></div>
+        <div class="sbx-form-grid">
+          <label>نوع مدرک<select id="sbxDocType"><option>بیمه شخص ثالث</option><option>بیمه بدنه</option><option>معاینه فنی</option><option>کارت هوشمند راننده</option><option>کارت هوشمند کامیون</option><option>کارت سلامت</option><option>گواهینامه</option><option>مجوز / سایر</option></select></label>
+          <label>تاریخ انقضا<input id="sbxDocDate" type="date"></label>
+          <label>توضیحات<input id="sbxDocNote" placeholder="شماره یا یادداشت اختیاری"></label>
+        </div>
+        <button class="sbx-primary" onclick="sbxAddDocument()">ثبت تاریخ مدرک</button>
+        <div id="sbxDocumentList" class="sbx-record-list"></div>
+        <p class="sbx-footnote">این بخش یادآور شخصی است و اعتبار مدرک را از سامانه راهداری استعلام نمی‌کند.</p>
+      </section>
+
+      <section class="sbx-panel hidden" id="sbxTab-checklist">
+        <div class="sbx-section-title"><div><h3>چک‌لیست پیش از حرکت</h3><p>قبل از هر سفر موارد ایمنی را بررسی کن.</p></div><span>🛡️</span></div>
+        <div class="sbx-check-date">چک‌لیست امروز · <span id="sbxTodayLabel"></span></div>
+        <div id="sbxChecklist" class="sbx-checklist"></div>
+        <div class="sbx-check-progress"><div><span id="sbxCheckProgressText">۰ از ۱۰ مورد</span><b id="sbxCheckProgressPercent">۰٪</b></div><div class="sbx-progress-track"><i id="sbxCheckProgressBar"></i></div></div>
+        <button class="sbx-secondary" onclick="sbxResetChecklist()">شروع دوباره چک‌لیست</button>
+      </section>
+
+      <div class="sbx-bottom-actions">
+        <button onclick="showPage('loadsPage');showLoads()">🚛 جستجوی بار</button>
+        <button onclick="showPage('truckPage')">🚚 مشخصات کامیون</button>
+        <button onclick="showPage('profilePage')">👤 پروفایل راننده</button>
+        <button onclick="showPage('supportPage')">☷ همه خدمات</button>
+      </div>
+    </div>
+
 </section>
 
 </div>
@@ -1795,13 +1896,13 @@ let currentInquiryType = null;
 ===================================================== */
 
 function showPage(pageId){
-    const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
+    const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage","proToolsPage"];
     const target=document.getElementById(pageId);
     if(!target){console.warn("Salayan Bar: page not found",pageId);return false;}
     pages.forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add("hidden");});
     target.classList.remove("hidden");
     target.style.removeProperty("display");
-    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",gpsPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
+    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",gpsPage:"navMore",supportHelpPage:"navMore",proToolsPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
     document.querySelectorAll(".bottom-nav button").forEach(btn=>btn.classList.remove("active"));
     const nav=document.getElementById(navMap[pageId]||"navMore");if(nav)nav.classList.add("active");
     if(typeof sbCloseTopMenu==="function")sbCloseTopMenu();
@@ -4397,6 +4498,116 @@ function sbOpenDriverTool(type){
   } else {
     document.addEventListener('DOMContentLoaded',removeFloatingRahMan,{once:true});
   }
+})();
+</script>
+
+
+<style id="salayan-driver-pro-suite-css">
+#proToolsPage{padding-bottom:18px}
+.sbx-hero{background:linear-gradient(135deg,#073b2c,#087f5b 65%,#16a36e)!important;color:#fff!important;border:0!important;border-radius:24px!important;padding:20px!important;overflow:hidden}
+.sbx-kicker{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#b9f4d3}
+.sbx-hero-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sbx-hero h2{margin:7px 0 5px!important;color:#fff!important;font-size:23px}
+.sbx-hero p{margin:0;color:#e0f8ea;font-size:12px;line-height:1.9}
+.sbx-hero-icon{font-size:44px;filter:drop-shadow(0 6px 8px #002b1b55)}
+.sbx-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:18px}
+.sbx-stats>div{background:#ffffff16;border:1px solid #ffffff22;border-radius:14px;padding:10px 8px;min-width:0}
+.sbx-stats small{display:block;color:#d6f5e3;font-size:10px;line-height:1.6}
+.sbx-stats b{display:block;color:#fff;font-size:12px;margin-top:5px;overflow-wrap:anywhere}
+.sbx-local-note{font-size:10px;line-height:1.8;color:#e5fff0;background:#001f1638;padding:9px 11px;border-radius:12px;margin-top:12px}
+.sbx-tabs{display:flex;gap:7px;overflow-x:auto;padding:8px 0 12px;margin:0 -2px;scrollbar-width:thin}
+.sbx-tabs button{flex:0 0 auto;border:1px solid #dbe9e1;border-radius:13px;background:#fff;color:#45675a;padding:10px 12px;font-family:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.sbx-tabs button.active{background:#087f5b;color:#fff;border-color:#087f5b}
+.sbx-panel{background:#fff;border:1px solid #e0ebe5;border-radius:20px;padding:16px;margin-bottom:13px;box-shadow:0 5px 20px #153e2b08}
+.sbx-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.sbx-section-title h3{font-size:16px;margin:0 0 4px;color:#173f30}
+.sbx-section-title p{font-size:11px;line-height:1.8;margin:0;color:#74847b}
+.sbx-section-title>span{font-size:27px}
+.sbx-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.sbx-form-grid label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:800;color:#4a6257;min-width:0}
+.sbx-form-grid input,.sbx-form-grid select{width:100%;min-width:0;box-sizing:border-box;border:1px solid #dce8e1;border-radius:11px;background:#fbfdfc;padding:11px 10px;font-family:inherit;font-size:12px;color:#183d2e;outline:none}
+.sbx-form-grid input:focus,.sbx-form-grid select:focus{border-color:#15966b;box-shadow:0 0 0 3px #0c9b6a16}
+.sbx-primary,.sbx-secondary{width:100%;border:0;border-radius:12px;padding:12px 14px;margin-top:12px;font-family:inherit;font-weight:900;font-size:12px;cursor:pointer}
+.sbx-primary{background:#087f5b;color:#fff}
+.sbx-secondary{background:#edf7f1;color:#176344;border:1px solid #d5eade}
+.sbx-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.sbx-result{background:#f4faf6;border:1px solid #dceee3;border-radius:13px;padding:12px;min-width:0}
+.sbx-result small{display:block;color:#6b7d73;font-size:10px}
+.sbx-result b{display:block;color:#087f5b;font-size:15px;line-height:1.6;margin-top:5px;overflow-wrap:anywhere}
+.sbx-result.loss b{color:#c0392b}
+.sbx-footnote{font-size:10px;line-height:1.9;color:#74847b;margin:11px 0 0}
+.sbx-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 0 8px;font-size:12px;color:#284b3b}
+.sbx-list-head .sbx-secondary{width:auto;margin:0;padding:8px 10px;font-size:10px}
+.sbx-record-list{display:grid;gap:8px;margin-top:12px}
+.sbx-record{border:1px solid #e3ece7;border-radius:13px;padding:11px;display:flex;align-items:flex-start;justify-content:space-between;gap:9px;background:#fcfefd}
+.sbx-record-main{min-width:0;flex:1}
+.sbx-record-main b{font-size:12px;color:#244b39;display:block;overflow-wrap:anywhere}
+.sbx-record-main small{font-size:10px;line-height:1.8;color:#708077;display:block;margin-top:3px;overflow-wrap:anywhere}
+.sbx-record-status{display:inline-block;margin-top:5px;padding:3px 7px;border-radius:7px;font-size:9px;font-weight:900;background:#e7f8ed;color:#147447}
+.sbx-record-status.warn{background:#fff0df;color:#a85a0a}
+.sbx-record-status.danger{background:#ffe8e7;color:#b52b25}
+.sbx-delete{flex:none;border:1px solid #f2d7d4;background:#fff6f5;color:#b33a31;border-radius:9px;padding:7px 9px;font-family:inherit;font-size:10px}
+.sbx-empty{padding:18px 10px;text-align:center;color:#84928a;font-size:11px;border:1px dashed #dce8e1;border-radius:12px}
+.sbx-check-date{font-size:11px;color:#64796d;margin-bottom:10px}
+.sbx-checklist{display:grid;gap:7px}
+.sbx-check-item{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #e2ece6;border-radius:12px;font-size:12px;color:#315343;background:#fcfefd}
+.sbx-check-item input{width:19px;height:19px;accent-color:#087f5b;flex:none}
+.sbx-check-progress{background:#f4faf6;border-radius:13px;padding:12px;margin-top:13px}
+.sbx-check-progress>div:first-child{display:flex;justify-content:space-between;font-size:10px;color:#5c7366;margin-bottom:8px}
+.sbx-progress-track{height:8px;background:#dce9e1;border-radius:99px;overflow:hidden}
+.sbx-progress-track i{display:block;height:100%;width:0;background:#0b9865;border-radius:99px;transition:width .2s}
+.sbx-bottom-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.sbx-bottom-actions button{border:1px solid #dcebe2;background:#fff;border-radius:13px;padding:12px 8px;color:#23543e;font-family:inherit;font-weight:800;font-size:11px}
+.sbx-entry-card{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);margin:12px auto 16px;padding:14px;border:1px solid #cbe7d7;border-radius:18px;background:linear-gradient(110deg,#effaf3,#fff);text-align:right;font-family:inherit;cursor:pointer;color:#184d37;box-shadow:0 5px 18px #0a513b0a}
+.sbx-entry-icon{width:48px;height:48px;display:grid;place-items:center;flex:none;border-radius:15px;background:#087f5b;color:#fff;font-size:26px}
+.sbx-entry-card>span:nth-child(2){flex:1;min-width:0}
+.sbx-entry-card b{display:block;font-size:13px}
+.sbx-entry-card small{display:block;font-size:10px;line-height:1.8;color:#708177;margin-top:4px}
+.sbx-entry-card strong{font-size:11px;white-space:nowrap;color:#087f5b}
+@media(max-width:390px){.sbx-hero{padding:15px!important}.sbx-hero h2{font-size:20px}.sbx-form-grid{grid-template-columns:1fr}.sbx-stats{gap:5px}.sbx-stats>div{padding:8px 6px}.sbx-stats b{font-size:10px}.sbx-panel{padding:12px}.sbx-tabs button{padding:9px 10px}}
+</style>
+<script id="salayan-driver-pro-suite-js">
+(function(){
+ const KEY='salayan_driver_pro_v1';
+ const $=id=>document.getElementById(id);
+ const faDigits='۰۱۲۳۴۵۶۷۸۹';
+ const checklistItems=['لاستیک‌ها، آج و فشار باد بررسی شد','ترمزها و ترمز پارک بررسی شد','چراغ‌ها، راهنما و چراغ خطر سالم است','سطح روغن موتور و نشتی بررسی شد','آب رادیاتور و سیستم خنک‌کاری بررسی شد','فشار باد مخازن و نشتی باد بررسی شد','اتصالات تریلر و قفل پنجم بررسی شد','بار، مهار بار و توزیع وزن ایمن است','مدارک راننده و کامیون همراه است','مسیر، آب‌وهوا و سوخت کافی بررسی شد'];
+ let data={expenses:[],maintenance:[],documents:[],trips:[],checks:{}};
+ function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');data={...data,...x};if(!Array.isArray(data.expenses))data.expenses=[];if(!Array.isArray(data.maintenance))data.maintenance=[];if(!Array.isArray(data.documents))data.documents=[];if(!Array.isArray(data.trips))data.trips=[];if(!data.checks||typeof data.checks!=='object')data.checks={};}catch(e){}}
+ function save(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){alert('حافظه گوشی پر است؛ بخشی از اطلاعات ذخیره نشد.');}}
+ function digits(v){return String(v??'').replace(/[۰-۹]/g,d=>String(faDigits.indexOf(d))).replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d))).replace(/[٬،,\s]/g,'').trim();}
+ function num(id){const n=Number(digits($(id)?.value));return Number.isFinite(n)?n:0;}
+ function money(n){return Math.round(n||0).toLocaleString('fa-IR')+' تومان';}
+ function km(n){return Math.round(n||0).toLocaleString('fa-IR')+' کیلومتر';}
+ function dateToday(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+ function dateFa(s){if(!s)return 'تاریخ ثبت نشده';const d=new Date(s+'T12:00:00');return isNaN(d)?s:d.toLocaleDateString('fa-IR');}
+ function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+ window.sbxShowTab=function(tab,button){document.querySelectorAll('.sbx-tabs button').forEach(b=>b.classList.toggle('active',b===button));document.querySelectorAll('#proToolsPage .sbx-panel').forEach(p=>p.classList.add('hidden'));$('sbxTab-'+tab)?.classList.remove('hidden');};
+ window.sbxCalcProfit=function(){
+  const fare=num('sbxFare'),loaded=Math.max(0,num('sbxLoadedKm')),empty=Math.max(0,num('sbxEmptyKm')),distance=loaded+empty;
+  const use=Math.max(0,num('sbxFuelUse')),fuelPrice=Math.max(0,num('sbxFuelPrice')),other=Math.max(0,num('sbxOtherCost')),wear=Math.max(0,num('sbxWearKm')),tolls=Math.max(0,num('sbxTolls'));
+  const fuel=distance*use/100*fuelPrice,wearCost=distance*wear,total=fuel+wearCost+other+tolls,profit=fare-total,margin=fare?profit/fare*100:0;
+  $('sbxProfitResult').textContent=money(profit);$('sbxProfitResult').parentElement.classList.toggle('loss',profit<0);
+  $('sbxPerKmResult').textContent=distance?money(profit/distance):'—';$('sbxCostResult').textContent=money(total);$('sbxMarginResult').textContent=fare?margin.toLocaleString('fa-IR',{maximumFractionDigits:1})+'٪':'—';
+  return {fare,loaded,empty,distance,fuel,wearCost,other,tolls,total,profit,margin};
+ };
+ window.sbxSaveTrip=function(){const r=window.sbxCalcProfit();if(!r.fare||!r.distance){alert('کرایه و مسافت را وارد کن.');return;}data.trips.unshift({id:id(),date:dateToday(),fare:r.fare,distance:r.distance,profit:r.profit,cost:r.total});save();alert('برآورد سفر در همین گوشی ذخیره شد.');};
+ window.sbxAddExpense=function(){const amount=num('sbxExpenseAmount'),type=$('sbxExpenseType').value,date=$('sbxExpenseDate').value||dateToday(),note=$('sbxExpenseNote').value.trim();if(amount<=0){alert('مبلغ هزینه را درست وارد کن.');return;}data.expenses.unshift({id:id(),amount,type,date,note});save();$('sbxExpenseAmount').value='';$('sbxExpenseNote').value='';render();};
+ window.sbxAddMaintenance=function(){const name=$('sbxMaintName').value.trim(),odo=num('sbxOdometer'),next=num('sbxNextOdo'),date=$('sbxMaintDate').value,cost=num('sbxMaintCost'),note=$('sbxMaintNote').value.trim();if(!name){alert('عنوان سرویس را وارد کن.');return;}if(next&&odo&&next<odo){alert('کیلومتر سرویس بعدی نمی‌تواند کمتر از کیلومتر فعلی باشد.');return;}data.maintenance.unshift({id:id(),name,odo,next,date,cost,note,created:dateToday()});save();['sbxMaintName','sbxOdometer','sbxNextOdo','sbxMaintDate','sbxMaintCost','sbxMaintNote'].forEach(k=>$(k).value='');render();};
+ window.sbxAddDocument=function(){const type=$('sbxDocType').value,date=$('sbxDocDate').value,note=$('sbxDocNote').value.trim();if(!date){alert('تاریخ انقضا را انتخاب کن.');return;}data.documents.unshift({id:id(),type,date,note});save();$('sbxDocNote').value='';render();};
+ window.sbxDeleteRecord=function(type,key){if(!confirm('این مورد حذف شود؟'))return;data[type]=data[type].filter(x=>x.id!==key);save();render();};
+ window.sbxResetChecklist=function(){if(!confirm('تیک‌های چک‌لیست امروز پاک شود؟'))return;data.checks[dateToday()]=[];save();renderChecklist();};
+ window.sbxToggleCheck=function(i,checked){const d=dateToday();if(!Array.isArray(data.checks[d]))data.checks[d]=[];data.checks[d]=checked?[...new Set([...data.checks[d],i])]:data.checks[d].filter(n=>n!==i);save();renderChecklist();};
+ window.sbxExportExpenses=function(){if(!data.expenses.length){alert('هنوز هزینه‌ای ثبت نشده است.');return;}const rows=[['تاریخ','نوع هزینه','مبلغ تومان','توضیحات'],...data.expenses.map(x=>[x.date,x.type,x.amount,x.note])];const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='salayan-expenses.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+ function record(title,lines,status,kind,type,key){return '<div class="sbx-record"><div class="sbx-record-main"><b>'+esc(title)+'</b><small>'+lines.map(esc).join('<br>')+'</small>'+(status?'<span class="sbx-record-status '+(kind||'')+'">'+esc(status)+'</span>':'')+'</div><button class="sbx-delete" onclick="sbxDeleteRecord(\''+type+'\',\''+key+'\')">حذف</button></div>';}
+ function renderExpenses(){$('sbxExpenseList').innerHTML=data.expenses.length?data.expenses.map(x=>record(x.type,[dateFa(x.date),money(x.amount),x.note||'بدون توضیح'],'','', 'expenses',x.id)).join(''):'<div class="sbx-empty">هنوز هزینه‌ای ثبت نشده است.</div>';}
+ function renderMaintenance(){const current=data.maintenance[0];$('sbxMaintenanceStatus').textContent=current&&current.next?km(current.next):'ثبت نشده';$('sbxMaintenanceList').innerHTML=data.maintenance.length?data.maintenance.map(x=>{let remaining=x.next&&x.odo?x.next-x.odo:null;let st=remaining===null?'یادآور ثبت شد':remaining<=0?'موعد سرویس رسیده':remaining<=1500?'نزدیک سرویس':'برنامه‌ریزی‌شده';let kind=remaining!==null&&remaining<=0?'danger':remaining!==null&&remaining<=1500?'warn':'';return record(x.name,['کیلومتر ثبت‌شده: '+(x.odo?km(x.odo):'—'),'سرویس بعدی: '+(x.next?km(x.next):'—'),x.date?'یادآوری: '+dateFa(x.date):'',x.cost?'هزینه: '+money(x.cost):'',x.note||''],st,kind,'maintenance',x.id);}).join(''):'<div class="sbx-empty">هنوز سرویس یا یادآوری ثبت نشده است.</div>';}
+ function renderDocuments(){const now=dateToday();let urgent=0;$('sbxDocumentList').innerHTML=data.documents.length?data.documents.map(x=>{let days=Math.ceil((new Date(x.date+'T12:00:00')-new Date(now+'T12:00:00'))/86400000),st=days<0?'منقضی شده':days<=30?'کمتر از ۳۰ روز':'دارای زمان';if(days<=30)urgent++;return record(x.type,['تاریخ انقضا: '+dateFa(x.date),x.note||''],st,days<0?'danger':days<=30?'warn':'','documents',x.id);}).join(''):'<div class="sbx-empty">تاریخ انقضای مدرکی ثبت نشده است.</div>';$('sbxDocumentStatus').textContent=urgent.toLocaleString('fa-IR')+' مورد';}
+ function renderChecklist(){const d=dateToday(),checked=Array.isArray(data.checks[d])?data.checks[d]:[];$('sbxTodayLabel').textContent=new Date().toLocaleDateString('fa-IR');$('sbxChecklist').innerHTML=checklistItems.map((t,i)=>'<label class="sbx-check-item"><input type="checkbox" '+(checked.includes(i)?'checked':'')+' onchange="sbxToggleCheck('+i+',this.checked)"><span>'+esc(t)+'</span></label>').join('');const pct=Math.round(checked.length/checklistItems.length*100);$('sbxCheckProgressText').textContent=checked.length.toLocaleString('fa-IR')+' از '+checklistItems.length.toLocaleString('fa-IR')+' مورد';$('sbxCheckProgressPercent').textContent=pct.toLocaleString('fa-IR')+'٪';$('sbxCheckProgressBar').style.width=pct+'%';}
+ function render(){const total=data.expenses.reduce((a,x)=>a+(Number(x.amount)||0),0);$('sbxExpenseTotal').textContent=money(total);renderExpenses();renderMaintenance();renderDocuments();renderChecklist();window.sbxCalcProfit();}
+ window.sbxInit=function(){load();if($('sbxExpenseDate')&&!$('sbxExpenseDate').value)$('sbxExpenseDate').value=dateToday();render();};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{load();}, {once:true});else load();
 })();
 </script>
 
