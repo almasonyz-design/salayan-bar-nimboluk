@@ -776,6 +776,12 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
             </div>
         </div>
 
+        <button type="button" class="sr-standalone-entry" onclick="salayanOpenRahMan()" aria-label="ورود مستقل به برنامه راه من">
+          <span class="sr-entry-icon">🛣️</span>
+          <span class="sr-entry-copy"><strong>ورود به راه من</strong><small>باز کردن مستقل برنامه رسمی راهداری</small></span>
+          <span class="sr-entry-arrow">↗</span>
+        </button>
+
         <div class="home-search">
             <span>🔎</span>
             <input id="homeLoadSearch" placeholder="مبدأ، مقصد یا نوع بار را جستجو کن">
@@ -2973,6 +2979,12 @@ input::placeholder,textarea::placeholder{color:#9aa9a0!important}
 .sr-note{margin-top:13px;padding:11px 12px;border:1px solid #dceee3;border-radius:14px;background:#f4fbf6;position:relative;z-index:1}.sr-note>b{font-size:10px;color:#256647}.sr-note p{font-size:10px;color:#6f8277;line-height:2;margin:5px 0 0}
 .sr-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:12px;margin-top:12px;border-top:1px solid #e0ece5;font-size:9px;color:#75867d}.sr-foot b{color:#506d5d;font-size:9px;margin-left:auto}.sr-foot button{border:0;border-radius:9px;background:#e4f6eb;color:#087f5b;padding:7px 9px;font-size:9px;font-weight:800}
 @media(max-width:390px){.salayan-rahman-card{padding:13px}.sr-status{font-size:8px}.sr-metric{padding:9px 6px}.sr-metric b{font-size:8px}.sr-primary,.sr-secondary{font-size:9px}}
+
+.sr-standalone-entry{width:100%;display:flex;align-items:center;gap:12px;text-align:right;margin:13px 0 15px;padding:14px 15px;border:1px solid #bde5ce;border-radius:18px;background:linear-gradient(110deg,#064e3b,#087f5b 65%,#12a06f);color:#fff;box-shadow:0 8px 20px #087f5b24;cursor:pointer;position:relative;isolation:isolate}
+.sr-entry-icon{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;background:#ffffff20;border:1px solid #ffffff40;font-size:25px}
+.sr-entry-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}.sr-entry-copy strong{font-size:14px;font-weight:900}.sr-entry-copy small{font-size:10px;line-height:1.7;color:#d7f8e7}
+.sr-entry-arrow{font-size:25px;font-weight:900;background:#ffffff20;border-radius:11px;width:35px;height:35px;display:grid;place-items:center}
+.sr-standalone-entry:active{transform:scale(.99)}
 </style>
 <script id="salayan-rahman-bridge-script">
 function salayanOpenRahMan(){
