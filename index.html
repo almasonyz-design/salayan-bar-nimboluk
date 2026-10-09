@@ -573,6 +573,17 @@ input:focus,select:focus{outline:0!important;border-color:#0b9a69!important;box-
 @media(min-width:620px){.driver-home{gap:15px}#salayanShowcase{padding:25px 26px 19px}.sb-show-title{font-size:27px}.sb-show-icon{flex-basis:78px;height:78px;font-size:42px}.home-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:420px){.container{padding:11px 9px 28px}.home-title h2{font-size:20px!important}#salayanShowcase{padding:18px 15px 15px}.sb-show-title{font-size:20px}.sb-show-icon{flex-basis:57px;height:57px;font-size:30px;border-radius:18px}.home-stat b{font-size:20px!important}.home-action{min-height:76px!important;font-size:10px!important}.home-section{padding:13px!important}}
 
+
+/* ===== Organized menu inspired by driver/load-board apps ===== */
+.salayan-menu-hero{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,#e7f7ef,#fff);}
+.salayan-menu-hero h2{margin:0 0 5px;font-size:20px}.salayan-menu-hero p{margin:0;color:#728078;font-size:12px;line-height:1.8}
+.salayan-menu-hero-icon{width:48px;height:48px;display:grid;place-items:center;flex:none;border-radius:15px;background:#087f5b;color:#fff;font-size:24px}
+.salayan-menu-group{background:#fff;border:1px solid #deebe5;border-radius:17px;padding:10px 12px;margin:0 0 13px;box-shadow:0 3px 12px rgba(15,55,42,.04)}
+.salayan-menu-heading{font-size:13px;font-weight:800;color:#087f5b;padding:7px 4px 9px;border-bottom:1px solid #edf2ef;margin-bottom:3px}
+.salayan-menu-item{width:100%;display:flex;align-items:center;gap:11px;text-align:right;padding:12px 3px;border:0;border-bottom:1px solid #f0f4f2;background:transparent;font-family:inherit;cursor:pointer;color:#263a31}
+.salayan-menu-item:last-child{border-bottom:0}.salayan-menu-icon{width:39px;height:39px;border-radius:12px;background:#eef8f3;display:grid;place-items:center;flex:none;font-size:20px}
+.salayan-menu-item>span:nth-child(2){flex:1;min-width:0}.salayan-menu-item b{display:block;font-size:13px}.salayan-menu-item small{display:block;color:#7a8781;font-size:11px;line-height:1.7;margin-top:3px}.salayan-menu-arrow{font-size:24px;color:#8a9991}
+
 </style>
 
 <style id="salayan-ultra-premium-v3">
@@ -1046,24 +1057,47 @@ input:focus,select:focus{border-color:#25a575!important;box-shadow:0 0 0 4px #12
     </div>
 
 
-    <!-- SUPPORT -->
+    <!-- MORE MENU: دسته‌بندی خدمات -->
     <div id="supportPage" class="hidden">
-
-        <div class="card">
-
-            <h2>پشتیبانی</h2>
-
-            <p>
-                برای پشتیبانی صلایان بار با مدیریت سامانه تماس بگیرید.
-            </p>
-
-            <button class="btn secondary"
-                    onclick="showPage('homePage');">
-                ← بازگشت
-            </button>
-
+        <div class="card salayan-menu-hero">
+            <div class="salayan-menu-hero-icon">☰</div>
+            <div><h2>منو و خدمات</h2><p>همه امکانات صلایان بار، مرتب‌شده در بخش‌های مرتبط</p></div>
         </div>
 
+        <div class="salayan-menu-group">
+            <div class="salayan-menu-heading">🚛 حمل‌ونقل و بار</div>
+            <button class="salayan-menu-item" onclick="showPage('loadsPage');showLoads()"><span class="salayan-menu-icon">🧭</span><span><b>تالار هوشمند بار</b><small>جستجو و فیلتر بارهای نوبتی، آزاد و برگشت</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="showPage('myLoadsPage');showMyLoads()"><span class="salayan-menu-icon">📦</span><span><b>بارهای من</b><small>بارهای انتخاب‌شده و وضعیت آن‌ها</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="showPage('createLoadPage')"><span class="salayan-menu-icon">➕</span><span><b>اعلام بار</b><small>ثبت بار جدید در سامانه</small></span><span class="salayan-menu-arrow">‹</span></button>
+        </div>
+
+        <div class="salayan-menu-group">
+            <div class="salayan-menu-heading">👤 حساب راننده و ناوگان</div>
+            <button class="salayan-menu-item" onclick="showPage('profilePage')"><span class="salayan-menu-icon">👤</span><span><b>پروفایل راننده</b><small>اطلاعات حساب و شماره همراه</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="showPage('truckPage')"><span class="salayan-menu-icon">🚚</span><span><b>اطلاعات کامیون</b><small>مشخصات وسیله نقلیه</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="showPage('homePage');setTimeout(()=>{document.getElementById('salayan-rahman-bridge')?.scrollIntoView({behavior:'smooth',block:'start'});},120)"><span class="salayan-menu-icon">🪪</span><span><b>وضعیت مدارک</b><small>مدارک راننده و کامیون</small></span><span class="salayan-menu-arrow">‹</span></button>
+        </div>
+
+        <div class="salayan-menu-group">
+            <div class="salayan-menu-heading">💳 مالی و خدمات رسمی</div>
+            <button class="salayan-menu-item" onclick="showPage('walletPage');showWallet()"><span class="salayan-menu-icon">💰</span><span><b>کیف پول</b><small>موجودی و هزینه انتخاب بار</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="salayanOpenRahMan()"><span class="salayan-menu-icon">🛣️</span><span><b>خدمات راه من</b><small>پروفایل، سوابق بارنامه و صورت‌وضعیت؛ اتصال رسمی در انتظار API</small></span><span class="salayan-menu-arrow">‹</span></button>
+            <button class="salayan-menu-item" onclick="showPage('notificationsPage')"><span class="salayan-menu-icon">🔔</span><span><b>اعلان‌ها</b><small>پیام‌ها و اطلاع‌رسانی‌ها</small></span><span class="salayan-menu-arrow">‹</span></button>
+        </div>
+
+        <div class="salayan-menu-group">
+            <div class="salayan-menu-heading">⚙️ راهنما و پشتیبانی</div>
+            <button class="salayan-menu-item" onclick="showPage('supportHelpPage')"><span class="salayan-menu-icon">💬</span><span><b>پشتیبانی و راهنما</b><small>راه‌های ارتباط و دریافت راهنمایی</small></span><span class="salayan-menu-arrow">‹</span></button>
+        </div>
+    </div>
+
+    <div id="supportHelpPage" class="hidden">
+        <div class="card">
+            <div class="page-toolbar"><h2>پشتیبانی و راهنما</h2><button class="icon-home" onclick="showPage('supportPage')">‹</button></div>
+            <p>برای پیگیری مشکل یا دریافت راهنمایی درباره صلایان بار، از طریق مدیریت سامانه اقدام کنید.</p>
+            <div class="notice">در این نسخه، شماره تماس پشتیبانی هنوز در سامانه ثبت نشده است.</div>
+            <button class="btn secondary" onclick="showPage('supportPage')">بازگشت به منو</button>
+        </div>
     </div>
 
 </section>
@@ -1153,7 +1187,7 @@ let currentInquiryType = null;
 
 function showPage(pageId){
 
-    const pages=["homePage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage"];
+    const pages=["homePage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage","supportHelpPage"];
 
     pages.forEach(id=>{
         const el=document.getElementById(id);
@@ -1163,7 +1197,7 @@ function showPage(pageId){
     const target=document.getElementById(pageId);
     if(target) target.classList.remove("hidden");
 
-    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};
+    const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet",supportPage:"navMore",supportHelpPage:"navMore",profilePage:"navMore",truckPage:"navMore",notificationsPage:"navMore",createLoadPage:"navMore"};
     document.querySelectorAll(".bottom-nav button").forEach(btn=>btn.classList.remove("active"));
     const nav=document.getElementById(navMap[pageId] || "navMore");
     if(nav) nav.classList.add("active");
