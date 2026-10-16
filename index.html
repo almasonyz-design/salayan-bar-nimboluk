@@ -1968,7 +1968,7 @@ function showPage(pageId){
     const nav=document.getElementById(navMap[pageId]||"navMore");if(nav)nav.classList.add("active");
     if(typeof sbCloseTopMenu==="function")sbCloseTopMenu();
     window.scrollTo({top:0,behavior:"smooth"});
-    if(pageId==="gpsPage"&&typeof window.salayanRefreshMap==="function")setTimeout(()=>window.salayanRefreshMap(),280);
+    if(pageId==="gpsPage"){if(typeof window.salayanRefreshMap==="function")setTimeout(()=>window.salayanRefreshMap(),0);if(typeof window.salayanOpenMap3D==="function")window.salayanOpenMap3D();}
     return true;
 }
 
@@ -5470,8 +5470,8 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
 .sbl-nav3d-launch b{display:block;font-size:13px;font-weight:1000}
 .sbl-nav3d-launch small{display:block;color:#c8f7df;font-size:10px;line-height:1.8;margin-top:3px}
 .sbl-nav3d-launch .sbl-launch-arrow{margin-right:auto;font-size:24px;color:#b9ffdf}
-#salayanMap3DOverlay{display:none;position:fixed;inset:0;z-index:2147483600;background:#06140f}
-#salayanMap3DOverlay.open{display:block}
+#salayanMap3DOverlay{display:block;visibility:hidden;pointer-events:none;position:fixed;inset:0;z-index:2147483600;background:#06140f}
+#salayanMap3DOverlay.open{visibility:visible;pointer-events:auto}
 #salayanMap3DOverlay iframe{position:absolute;inset:0;width:100%;height:100%;height:100dvh;border:0;background:#071812}
 #salayanMap3DClose{position:absolute;z-index:2147483601;top:calc(10px + env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:15px;border:1px solid #ffffff40;background:#071b15e8;color:#fff;font-size:25px;box-shadow:0 5px 20px #0005;touch-action:manipulation}
 @media(min-width:700px){#homePage .sbl-command-hero{padding:24px 24px 20px}#homePage .sbl-hero-title{font-size:26px}#homePage .sbc-essential-grid button{min-height:135px!important}#gpsPage{padding-left:16px!important;padding-right:16px!important}}
@@ -5509,15 +5509,20 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
  function openMap3D(){
   var overlay=ensureOverlay(),frame=overlay.querySelector('iframe');
   overlay.classList.add('open');document.body.style.overflow='hidden';
-  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-locationfast3');
+  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-instantgps4');
+  try{frame.contentWindow.postMessage('salayan-start-gps',location.origin)}catch(e){}
  }
+ window.salayanOpenMap3D=openMap3D;
  function closeMap3D(){
   var overlay=document.getElementById('salayanMap3DOverlay');if(!overlay)return;
-  overlay.classList.remove('open');var frame=overlay.querySelector('iframe');if(frame)frame.setAttribute('src','about:blank');
+  overlay.classList.remove('open');
   document.body.style.removeProperty('overflow');
  }
  function install(){
   addHero();addMap3DLaunch();
+  /* Preload the map invisibly so tapping GPS opens an already-rendered map. */
+  var preloadOverlay=ensureOverlay(),preloadFrame=preloadOverlay.querySelector('iframe');
+  if(!preloadFrame.getAttribute('src'))preloadFrame.setAttribute('src','map3d.html?embed=1&v=20261016-instantgps4');
   var gps=document.getElementById('gpsPage');
   if(gps&&'MutationObserver'in window){var ob=new MutationObserver(function(){addMap3DLaunch()});ob.observe(gps,{childList:true,subtree:true});}
   var home=document.getElementById('homePage');
