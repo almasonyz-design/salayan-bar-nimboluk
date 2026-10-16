@@ -238,15 +238,26 @@ img,iframe,video,canvas{max-width:100%!important}
 </style>
 
 <style id="drawer-accordion-menu-styles">
-.drawer-accordion-trigger{display:flex!important;align-items:center;gap:10px;text-align:right}
-.drawer-accordion-trigger .drawer-item-label{flex:1}
-.drawer-chevron{margin-right:auto;font-size:18px;transition:transform .18s ease;color:#71847c}
+.drawer-accordion-trigger{display:flex!important;align-items:center;gap:8px;text-align:right}
+.drawer-accordion-trigger .drawer-item-label{flex:1;min-width:0}
+.drawer-chevron{margin-right:auto;font-size:16px;transition:transform .18s ease;color:#71847c}
 .drawer-accordion-trigger[aria-expanded="true"] .drawer-chevron{transform:rotate(180deg)}
-.drawer-submenu{margin:2px 8px 10px 0;padding:5px 10px 5px 5px;border-right:2px solid #10a878;border-radius:0 10px 10px 0;background:#f1f8f4}
+.drawer-submenu{position:static!important;display:block;margin:0 8px 8px 0;padding:3px 8px 3px 3px;border-right:2px solid #10a878;border-radius:0 8px 8px 0;background:#f1f8f4;clear:both}
 .drawer-submenu[hidden]{display:none!important}
-.drawer-subitem{display:flex;align-items:center;gap:9px;width:100%;border:0;border-radius:9px;background:transparent;color:#23483b;padding:11px 12px;text-align:right;font:inherit;font-size:13px;cursor:pointer}
+.drawer-subitem{display:flex;align-items:center;gap:7px;width:100%;border:0;border-radius:8px;background:transparent;color:#23483b;padding:8px 10px;text-align:right;font:inherit;font-size:11px;line-height:1.5;cursor:pointer}
 .drawer-subitem:active,.drawer-subitem:hover{background:#dff1e8}
-.drawer-subitem span{width:20px;text-align:center;color:#087f5b}
+#questionBankPage .support-intro{font-size:11px!important;line-height:1.65!important;margin:0 0 7px!important}
+#questionBankPage .salayan-support-question-catalog{padding:10px!important}
+#questionBankPage .salayan-question-search{font-size:12px!important;padding:9px 10px!important;margin-bottom:7px!important}
+#questionBankPage .salayan-question-count{font-size:10px!important;line-height:1.6!important;margin:2px 0 7px!important}
+#questionBankPage .salayan-category-chip{min-height:38px!important;padding:8px 10px!important;font-size:11px!important;line-height:1.5!important}
+#questionBankPage .support-category-meta{font-size:9px!important}
+#questionBankPage .salayan-question-list{gap:5px!important;margin-top:7px!important}
+#questionBankPage .salayan-question-item{min-height:38px!important;padding:8px 9px!important;gap:7px!important;font-size:11px!important;line-height:1.55!important}
+#questionBankPage .support-question-arrow{flex-basis:21px!important;width:21px!important;height:21px!important;font-size:12px!important}
+#questionBankPage .salayan-question-answer{padding:8px 10px!important;font-size:10px!important;line-height:1.7!important;overflow-wrap:anywhere!important}
+#questionBankPage .salayan-no-questions{font-size:10px!important}
+
 </style>
 </head>
 <body>
@@ -500,7 +511,7 @@ const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","wa
 function showPage(id){if(!pages.includes(id))return;pages.forEach(p=>$(p).classList.toggle("active",p===id));const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};document.querySelectorAll(".nav-btn").forEach(b=>{b.classList.remove("active");b.removeAttribute("aria-current")});if(navMap[id]){$(navMap[id]).classList.add("active");$(navMap[id]).setAttribute("aria-current","page")};$("topSubtitle").textContent=({homePage:"مرکز هوشمند راننده",gpsPage:"موقعیت و مسیریابی",questionBankPage:"سؤال از پشتیبانی",loadsPage:"جستجو و انتخاب بار",myLoadsPage:"پیگیری بارهای انتخاب‌شده",createLoadPage:"ثبت اطلاعات بار",walletPage:"مدیریت موجودی",profilePage:"اطلاعات حساب",truckPage:"خودرو و مدارک",notificationsPage:"پیام‌ها و اطلاعیه‌ها",tripCostPage:"برآورد هزینه و سود سفر",supportPage:"راهنما و خدمات",maintenanceGuidePage:"سرویس دوره‌ای کامیون",preTripPage:"چک‌لیست قبل از حرکت",tireGuidePage:"بررسی لاستیک",fuelLogPage:"دفتر سوخت",documentsGuidePage:"مدارک راننده و کامیون",safetyGuidePage:"ایمنی رانندگی",emergencyGuidePage:"شرایط اضطراری",routeNotesPage:"یادداشت‌های سفر"})[id]||"صلایان بار";closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(id==="gpsPage")refreshMap();if(id==="walletPage")showWallet()}
 function openMenu(){$("menuOverlay").classList.add("open");$("drawer").classList.add("open");document.body.style.overflow="hidden"}
 function closeMenu(){$("menuOverlay").classList.remove("open");$("drawer").classList.remove("open");document.body.style.overflow=""}
-function toggleDrawerSubmenu(submenuId,triggerId){const panel=$(submenuId),trigger=$(triggerId);if(!panel||!trigger)return;const opening=panel.hidden;panel.hidden=!opening;trigger.setAttribute("aria-expanded",String(opening));if(opening)panel.scrollIntoView({block:"nearest",behavior:"smooth"})}
+function toggleDrawerSubmenu(submenuId,triggerId){const panel=$(submenuId),trigger=$(triggerId);if(!panel||!trigger)return;const opening=panel.hidden;panel.hidden=!opening;trigger.setAttribute("aria-expanded",String(opening))}
 function drawerGo(id){closeMenu();showPage(id)}
 const FUEL_LOG_KEY="salayanFuelLogV1",ROUTE_NOTES_KEY="salayanRouteNotesV1";
 function readLocalList(key){try{const a=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
@@ -715,21 +726,23 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
    if(!page||page.querySelector('.salayan-support-question-catalog'))return;
    const section=document.createElement('div');
    section.className='salayan-support-question-catalog card';
-   section.innerHTML='<p class="muted" style="margin:0 0 10px">موضوع موردنظرت را انتخاب کن تا سؤال‌های همان بخش باز شوند؛ یا مستقیم جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجو در سؤال‌ها و پاسخ‌ها..." aria-label="جست‌وجوی سؤال‌ها و پاسخ‌های پشتیبانی"><div class="salayan-question-count" aria-live="polite"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">نتیجه‌ای پیدا نشد؛ عبارت دیگری را امتحان کن.</p>';
-   const questions=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنمای برنامه","چطور از صلایان بار استفاده کنم؟","🧭","از منوی برنامه بخش موردنظر را باز کن."]];
+   section.innerHTML='<p class="muted support-intro">موضوع را انتخاب کن تا سؤال‌های همان بخش باز شوند؛ یا مستقیم جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجو در سؤال‌ها و پاسخ‌ها..." aria-label="جست‌وجوی سؤال‌ها و پاسخ‌های پشتیبانی"><div class="salayan-question-count" aria-live="polite"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">نتیجه‌ای پیدا نشد؛ عبارت دیگری را امتحان کن.</p>';
+   // بانک سؤال‌ها با قالب ثابت [دسته‌بندی، متن سؤال، آیکون، پاسخ] خوانده می‌شود تا سؤال و پاسخ جابه‌جا نشوند.
+   const raw=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنمای برنامه","چطور از صلایان بار استفاده کنم؟","🧭","از منوی برنامه بخش موردنظر را باز کن."]];
+   const questions=raw.map(row=>({category:String(row[0]||'راهنمای برنامه'),question:String(row[1]||''),icon:String(row[2]||'❔'),answer:String(row[3]||'برای این مورد، بخش مرتبط برنامه را بررسی کن.')})).filter(row=>row.question.trim());
    const search=section.querySelector('.salayan-question-search');
    const filters=section.querySelector('.salayan-category-filters');
    const list=section.querySelector('.salayan-question-list');
    const count=section.querySelector('.salayan-question-count');
    const none=section.querySelector('.salayan-no-questions');
-   const categories=[...new Set(questions.map(x=>x[0]))];
+   const categories=[...new Set(questions.map(x=>x.category))];
    let activeCategory='';
    function draw(){
     const query=search.value.trim().toLocaleLowerCase('fa');
-    const matches=questions.filter(x=>(!activeCategory||x[0]===activeCategory)&&x.join(' ').toLocaleLowerCase('fa').includes(query));
+    const matches=questions.filter(x=>(!activeCategory||x.category===activeCategory)&&(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query));
     filters.innerHTML='';
-    categories.filter(cat=>!query||questions.some(x=>x[0]===cat&&x.join(' ').toLocaleLowerCase('fa').includes(query))).forEach(cat=>{
-     const amount=questions.filter(x=>x[0]===cat&&(!query||x.join(' ').toLocaleLowerCase('fa').includes(query))).length;
+    categories.filter(cat=>!query||questions.some(x=>x.category===cat&&(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query))).forEach(cat=>{
+     const amount=questions.filter(x=>x.category===cat&&(!query||(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query))).length;
      const btn=document.createElement('button');btn.type='button';btn.className='salayan-category-chip'+(activeCategory===cat?' active':'');
      btn.setAttribute('aria-expanded',String(activeCategory===cat));
      const label=document.createElement('span');label.textContent=cat;
@@ -742,11 +755,11 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
     visible.slice(0,100).forEach(x=>{
      const wrap=document.createElement('div');wrap.className='salayan-question-wrap';
      const question=document.createElement('button');question.type='button';question.className='salayan-question-item';question.setAttribute('aria-expanded','false');
-     const icon=document.createElement('span');icon.className='support-question-icon';icon.textContent=x[2]||'❔';
-     const label=document.createElement('span');label.className='support-question-label';label.textContent=x[1];
+     const icon=document.createElement('span');icon.className='support-question-icon';icon.textContent=x.icon;
+     const label=document.createElement('span');label.className='support-question-label';label.textContent=x.question;
      const arrow=document.createElement('span');arrow.className='support-question-arrow';arrow.textContent='＋';
      question.append(icon,label,arrow);
-     const answer=document.createElement('div');answer.className='salayan-question-answer';answer.hidden=true;answer.textContent=x[3]||'برای این مورد، بخش مرتبط برنامه را بررسی کن.';
+     const answer=document.createElement('div');answer.className='salayan-question-answer';answer.hidden=true;answer.textContent=x.answer;
      question.addEventListener('click',()=>{const open=question.getAttribute('aria-expanded')!=='true';question.setAttribute('aria-expanded',String(open));answer.hidden=!open;arrow.textContent=open?'−':'＋';wrap.classList.toggle('is-open',open)});
      wrap.append(question,answer);list.appendChild(wrap);
     });
