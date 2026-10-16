@@ -331,7 +331,7 @@ img,iframe,video,canvas{max-width:100%!important}
   </section>
   <section id="gpsPage" class="page">
    <div class="page-title"><div><span class="eyebrow">NAVIGATION</span><h2>GPS و نقشه مسیر</h2></div><button class="button light small" type="button" onclick="refreshMap()">تازه‌سازی نقشه</button></div>
-   <div class="card" style="padding:8px"><div class="map-frame-wrap"><iframe id="mapFrame" title="نقشه و مسیریابی صلایان بار" loading="eager" allow="geolocation; fullscreen" src="map3d.html?embed=1&v=20261016-livearrow23"></iframe></div><p class="map-note">برای تعیین موقعیت دقیق، دسترسی مکان‌یابی مرورگر را فعال کنید. دقت موقعیت به GPS و مجوزهای دستگاه بستگی دارد.</p></div>
+   <div class="card" style="padding:8px"><div class="map-frame-wrap"><iframe id="mapFrame" title="نقشه و مسیریابی صلایان بار" loading="eager" allow="geolocation *; fullscreen *" referrerpolicy="strict-origin-when-cross-origin" src="map3d.html?embed=1&v=20261016-gps-arrow-fix1"></iframe></div><button id="gpsLocateMeButton" type="button" class="button" style="width:100%;margin:10px 0 4px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;background:#087f5b;color:white;border:0;border-radius:14px;font-weight:900" onclick="salayanLocateMe()">⌖ نمایش موقعیت من روی نقشه</button><p class="map-note">برای تعیین موقعیت دقیق، دسترسی مکان‌یابی مرورگر را فعال کنید. دقت موقعیت به GPS و مجوزهای دستگاه بستگی دارد.</p></div>
   </section>
   <section id="loadsPage" class="page">
    <div class="page-title"><div><span class="eyebrow">LOAD MARKET</span><h2>تالار هوشمند بار</h2></div><button class="button light small" type="button" onclick="showLoads()">↻ به‌روزرسانی</button></div>
@@ -1064,3 +1064,4 @@ input,select,textarea{font-weight:400!important}
 </script>
 </body>
 </html>
+<script id="salayan-gps-locate-button-fix1">(function(){window.salayanLocateMe=function(){var f=document.getElementById("mapFrame");if(!f)return;try{f.contentWindow.postMessage("salayan-start-gps",location.origin);f.contentWindow.postMessage("salayan-center-on-me",location.origin)}catch(e){}var b=document.getElementById("gpsLocateMeButton");if(b){b.textContent="⌖ در حال دریافت موقعیت GPS…";setTimeout(function(){if(b.isConnected)b.textContent="⌖ نمایش موقعیت من روی نقشه"},3500)}};var f=document.getElementById("mapFrame");if(f)f.addEventListener("load",function(){setTimeout(function(){try{f.contentWindow.postMessage("salayan-start-gps",location.origin)}catch(e){}},250)});})();</script>
