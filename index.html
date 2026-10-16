@@ -191,6 +191,20 @@ img,iframe,video,canvas{max-width:100%!important}
  .map-frame-wrap iframe{max-width:100%!important}
 }
 </style>
+<style id="salayan-organized-question-bank-css">
+.salayan-question-count{font-size:12px;font-weight:800;color:#087f5b;background:#e9f8f0;border:1px solid #ccebd9;border-radius:12px;padding:10px 12px;margin:10px 0}
+.salayan-category-filters{display:flex;gap:7px;overflow-x:auto;padding:5px 1px 12px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.salayan-category-chip{flex:0 0 auto;border:1px solid #cfe4d8;background:#fff;color:#176348;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;box-shadow:0 2px 8px #123a2508}
+.salayan-category-chip.active,.salayan-category-chip:focus{background:linear-gradient(135deg,#087f5b,#10a878);border-color:#087f5b;color:#fff;box-shadow:0 5px 14px #087f5b2b}
+.salayan-question-category-title{font-weight:900;color:#126447;padding:10px 12px;background:#eaf7ef;border-right:4px solid #10a878;border-radius:10px;margin:10px 0 6px}
+.salayan-question-row{display:flex;align-items:stretch;gap:7px;margin:0 0 7px}
+.salayan-question-item{flex:1;min-width:0;display:flex;align-items:center;gap:9px;text-align:right;background:#fff;border:1px solid #dcebe3;border-radius:13px;padding:11px;color:#17352c;font-size:12px;line-height:1.7;box-shadow:0 3px 10px #17352c08}
+.salayan-question-item span{font-size:19px;flex:0 0 auto}.salayan-question-item div{overflow-wrap:anywhere}
+.salayan-question-send{flex:0 0 auto;align-self:stretch;border:0;border-radius:12px;padding:8px 11px;background:linear-gradient(145deg,#087f5b,#10a878);color:#fff;font-size:11px;font-weight:900;box-shadow:0 5px 12px #087f5b25}
+.salayan-question-send:active{transform:scale(.97)}.salayan-question-send:focus-visible{outline:3px solid #10a87855;outline-offset:2px}
+.salayan-question-more{padding:12px;border-radius:12px;background:#f1f8f4;color:#326653;font-size:12px;text-align:center}
+@media(max-width:390px){.salayan-question-row{gap:5px}.salayan-question-send{padding:7px 8px;font-size:10px}.salayan-question-item{padding:9px 8px}}
+</style>
 </head>
 <body>
 <section id="loginPage" class="login-screen">
@@ -376,6 +390,8 @@ img,iframe,video,canvas{max-width:100%!important}
 <button class="drawer-item" onclick="drawerGo('walletPage');showWallet()"><span>▣</span> کیف پول و موجودی</button>
 <button class="drawer-item" onclick="drawerGo('tripCostPage');calculateTripCost()"><span>💰</span> محاسبه سود خالص سفر</button>
 <button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>⏰</span> یادآور سرویس و سررسیدها</button>
+<p class="drawer-group">🤖 هوش مصنوعی و بانک سؤال</p>
+<button class="drawer-item" onclick="drawerGo('salayanAiPage');setTimeout(()=>document.querySelector('.salayan-question-search')?.focus(),180)"><span>🟢</span> بانک سؤال و جواب راننده‌ها</button>
 <p class="drawer-group">🆘 راهنما و ارتباط</p>
 <button class="drawer-item" onclick="drawerGo('notificationsPage')"><span>♧</span> اعلان‌ها و پیام‌ها</button>
 <button class="drawer-item" onclick="drawerGo('supportPage')"><span>؟</span> راهنما و پشتیبانی</button>
@@ -766,12 +782,33 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
  function addAIQuestions(){
   const ai=document.getElementById('salayanAiPage');if(!ai||ai.querySelector('.salayan-ai-photo-catalog'))return;
   const section=document.createElement('div');section.className='salayan-ai-photo-catalog card';
-  section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📸 سؤال‌ها براساس موضوع و شهر</h3></div><p class="muted">روی عکس هر موضوع بزن یا سؤال موردنظرت را جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="جست‌وجو: مشهد، بار برگشتی، GPS، کیف پول..." aria-label="جستجوی سؤال‌های آماده"><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های پیشنهادی</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ سؤال خودت را در کادر گفت‌وگو بنویس.</p>';
+  section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📚 بانک منظم سؤال و جواب</h3></div><p class="muted">موضوع را انتخاب کن یا در همه سؤال‌ها جست‌وجو کن؛ با دکمه سبز هر سؤال مستقیماً به راهنمای برنامه ارسال می‌شود.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجوی سؤال: مشهد، بار برگشتی، GPS، کیف پول..." aria-label="جستجوی همه سؤال‌های آماده"><div class="salayan-question-count"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های آماده</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ عبارت دیگری جست‌وجو کن.</p>';
   const questions=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنما","چطور از صلایان بار استفاده کنم؟","🧭","از بخش‌های برنامه استفاده کن و برای اطلاعات زنده، موجود بودن بار را تأیید کن."]];
   const grid=section.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
-  const list=section.querySelector('.salayan-question-list'),search=section.querySelector('.salayan-question-search'),none=section.querySelector('.salayan-no-questions');
-  const count=document.createElement('div');count.className='muted salayan-question-count';count.style.cssText='font-size:11px;margin:4px 0 10px';search.after(count);
-  function draw(){const q=search.value.trim().toLocaleLowerCase('fa');const filtered=questions.filter(x=>x.join(' ').toLocaleLowerCase('fa').includes(q));const shown=filtered.slice(0,60);list.innerHTML='';count.textContent='تعداد سؤال‌های آماده: '+questions.length.toLocaleString('fa-IR')+' | نتیجه جست‌وجو: '+filtered.length.toLocaleString('fa-IR')+' | نمایش '+shown.length.toLocaleString('fa-IR');shown.forEach(x=>{const wrap=document.createElement('div');wrap.className='salayan-question-wrap';const b=document.createElement('button');b.type='button';b.className='salayan-question-item';b.innerHTML='<span>'+x[2]+'</span><div>'+x[1]+'</div>';const answer=document.createElement('div');answer.className='salayan-question-answer';answer.style.cssText='display:none;padding:12px 14px;margin:-3px 4px 8px;border:1px solid #dcebe2;border-radius:0 0 13px 13px;background:#f7fbf8;font-size:12px;line-height:1.9;color:var(--ink)';answer.textContent=x[3]||'این سؤال درباره امکانات صلایان بار است. جزئیات را در بخش مربوط به برنامه بررسی کن.';const ask=document.createElement('button');ask.type='button';ask.className='salayan-ask-answer';ask.textContent='پرسیدن این سؤال از راهنمای برنامه';ask.style.cssText='display:block;margin-top:8px;border:0;border-radius:10px;padding:9px 12px;background:#087f5b;color:white;font:inherit;font-weight:700';ask.addEventListener('click',()=>goQuestion(x[1]));answer.appendChild(document.createTextNode(''));answer.appendChild(document.createElement('br'));answer.appendChild(ask);b.addEventListener('click',()=>{answer.style.display=answer.style.display==='none'?'block':'none'});wrap.appendChild(b);wrap.appendChild(answer);list.appendChild(wrap)});if(filtered.length>60){const more=document.createElement('button');more.type='button';more.className='salayan-question-item';more.style.justifyContent='center';more.textContent='برای دیدن نتیجه‌های بیشتر، عبارت جست‌وجو را دقیق‌تر کن ('+(filtered.length-60).toLocaleString('fa-IR')+' مورد دیگر)';list.appendChild(more)}none.style.display=filtered.length?'none':'block'}
+  const list=section.querySelector('.salayan-question-list'),search=section.querySelector('.salayan-question-search'),none=section.querySelector('.salayan-no-questions'),count=section.querySelector('.salayan-question-count'),filters=section.querySelector('.salayan-category-filters');
+  let activeCategory='همه';
+  const categories=['همه',...new Set(questions.map(x=>x[0]))];
+  filters.innerHTML='';
+  categories.forEach(cat=>{const chip=document.createElement('button');chip.type='button';chip.className='salayan-category-chip'+(cat==='همه'?' active':'');chip.textContent=(cat==='همه'?'📚 همه موضوعات':cat);chip.addEventListener('click',()=>{activeCategory=cat;filters.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===chip));draw()});filters.appendChild(chip)});
+  function draw(){
+   const q=search.value.trim().toLocaleLowerCase('fa');
+   const filtered=questions.filter(x=>(activeCategory==='همه'||x[0]===activeCategory)&&x.join(' ').toLocaleLowerCase('fa').includes(q));
+   const shown=filtered.slice(0,80);list.innerHTML='';
+   count.textContent='🟢 '+questions.length.toLocaleString('fa-IR')+' سؤال و جواب آماده در '+(categories.length-1).toLocaleString('fa-IR')+' دسته | '+filtered.length.toLocaleString('fa-IR')+' نتیجه';
+   let lastCat='';
+   shown.forEach(x=>{
+    if(activeCategory==='همه'&&!q&&x[0]!==lastCat){lastCat=x[0];const heading=document.createElement('div');heading.className='salayan-question-category-title';heading.textContent='📂 '+lastCat;list.appendChild(heading)}
+    const wrap=document.createElement('div');wrap.className='salayan-question-wrap';
+    const row=document.createElement('div');row.className='salayan-question-row';
+    const question=document.createElement('button');question.type='button';question.className='salayan-question-item';question.innerHTML='<span>'+x[2]+'</span><div>'+x[1]+'</div>';
+    const send=document.createElement('button');send.type='button';send.className='salayan-question-send';send.textContent='ارسال سؤال ↗';send.setAttribute('aria-label','ارسال سؤال: '+x[1]);send.addEventListener('click',()=>goQuestion(x[1]));
+    const answer=document.createElement('div');answer.className='salayan-question-answer';answer.style.cssText='display:none;padding:11px 13px;margin:0 4px 8px;border:1px solid #dcebe2;border-radius:0 0 13px 13px;background:#f7fbf8;font-size:12px;line-height:1.9;color:var(--ink)';answer.textContent=x[3]||'این سؤال درباره امکانات صلایان بار است. جزئیات را در بخش مربوط بررسی کن.';
+    question.addEventListener('click',()=>{answer.style.display=answer.style.display==='none'?'block':'none'});
+    row.appendChild(question);row.appendChild(send);wrap.appendChild(row);wrap.appendChild(answer);list.appendChild(wrap);
+   });
+   if(filtered.length>80){const more=document.createElement('div');more.className='salayan-question-more';more.textContent='۸۰ نتیجه اول نمایش داده شده؛ برای محدود کردن نتیجه‌ها، نام موضوع یا بخشی از سؤال را جست‌وجو کن. ('+(filtered.length-80).toLocaleString('fa-IR')+' مورد دیگر)';list.appendChild(more)}
+   none.style.display=filtered.length?'none':'block';
+  }
   search.addEventListener('input',draw);draw();
   const intro=ai.querySelector('.salayan-ai-intro');if(intro)intro.after(section);else ai.prepend(section);
  }
