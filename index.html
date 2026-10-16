@@ -212,7 +212,7 @@ body{font-family:Vazirmatn,Tahoma,Arial,sans-serif;background:var(--bg);color:va
 const SUPABASE_URL="https://ntirixjflgqihobpnmya.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_eqsmcIqZz_YAMEbmvMEXVw_VBd6YZJ2";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-let currentUser=null,loadMode="all",loadCache=[],toastTimer;
+let currentUser=null,loadMode="all",loadCache=[],toastTimer,lastRouteDistanceKm=0,lastRouteDestination="";
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 const money=v=>Number(v||0).toLocaleString("fa-IR");
@@ -232,6 +232,7 @@ function openMenu(){$("menuOverlay").classList.add("open");$("drawer").classList
 function closeMenu(){$("menuOverlay").classList.remove("open");$("drawer").classList.remove("open");document.body.style.overflow=""}
 function drawerGo(id){closeMenu();showPage(id)}
 function calculateTripCost(){
+ if(lastRouteDistanceKm>0&&$("tripDistance")&&Number($("tripDistance").value)===300)$("tripDistance").value=Math.round(lastRouteDistanceKm);
  const num=id=>{const raw=String($(id)?.value??"0").replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));const n=Number(raw);return Number.isFinite(n)&&n>0?n:0};
  const distance=num("tripDistance"),consumption=num("tripConsumption"),price=num("tripFuelPrice"),tolls=num("tripTolls"),other=num("tripOther"),fare=num("tripFare");
  if(!distance||!consumption){$("tripCostMessage").className="alert error";$("tripCostMessage").textContent="مسافت و مصرف سوخت باید بیشتر از صفر باشند.";return}
@@ -242,6 +243,7 @@ function calculateTripCost(){
  $("tripCostMessage").className="alert "+(fare&&net<0?"error":"success");
  $("tripCostMessage").textContent="سوخت تقریبی: "+litres.toLocaleString("fa-IR",{maximumFractionDigits:1})+" لیتر؛ هزینه سوخت: "+Math.round(fuelCost).toLocaleString("fa-IR")+" تومان؛ هزینه ثبت‌شده کل: "+Math.round(total).toLocaleString("fa-IR")+" تومان."+(fare?" مانده از کرایه پیش از استهلاک و هزینه‌های واردنشده: "+Math.round(net).toLocaleString("fa-IR")+" تومان.":" برای محاسبه مانده، کرایه دریافتی را وارد کن.");
 }
+window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||e.data.type!=='salayan-route-calculated')return;const d=Number(e.data.distanceKm);if(Number.isFinite(d)&&d>0){lastRouteDistanceKm=d;lastRouteDestination=String(e.data.destination||'');if($('tripDistance'))$('tripDistance').value=Math.round(d);if($('tripCostMessage'))$('tripCostMessage').textContent='مسافت مسیر از GPS دریافت شد: '+Math.round(d).toLocaleString('fa-IR')+' کیلومتر'+(lastRouteDestination?' تا '+lastRouteDestination:'')+'. هزینه سفر را محاسبه کن.';}});
 function refreshMap(){const f=$("mapFrame");try{f.contentWindow.postMessage("salayan-start-gps",location.origin)}catch(e){}if(!f.dataset.ready){f.src="map3d.html?embed=1&v=20261016-driver-tools15";f.dataset.ready="1"}}
 async function fetchLoads(){const {data,error}=await supabaseClient.from("loads").select("*").in("status",["waiting","turn","free","reserved"]).order("created_at",{ascending:false});if(error)throw error;loadCache=data||[];return loadCache}
 function badge(status){const s=status==="turn"?"turn":status==="free"?"free":status==="reserved"?"reserved":"";return '<span class="badge '+s+'">'+(status==="turn"?"نوبتی":status==="free"?"آزاد":status==="reserved"?"رزرو شده":"در انتظار")+'</span>'}
