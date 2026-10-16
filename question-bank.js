@@ -58,6 +58,6 @@ const suffixes=['؟',' لطفاً.',' رو توضیح بده.',' برای ران
 const typo=[s=>s.replace(/چطور/g,'چجوری'),s=>s.replace(/چطور/g,'چه جوری'),s=>s.replace(/می‌شود/g,'میشه'),s=>s.replace(/برنامه/g,'برنامع'),s=>s.replace(/بار/g,'بارر'),s=>s.replace(/مسیر/g,'مسییر'),s=>s.replace(/سؤال/g,'سوال'),s=>s.replace(/راهنمایی/g,'راهنمای'),s=>s.replace(/کیف پول/g,'کیفپول'),s=>s.replace(/کامیون/g,'کاميون'),s=>s.replace(/موقعیت/g,'موقیعت'),s=>s.replace(/هزینه/g,'هزینع'),s=>s.replace(/جست‌وجو/g,'جستجو'),s=>s.replace(/بررسی/g,'برسی'),s=>s.replace(/راننده/g,'روننده'),s=>s.replace(/نقشه/g,'نقشع'),s=>s.replace(/مشهد/g,'مشهذ'),s=>s.replace(/بیرجند/g,'بیرجنذ')];
 const out=[],seen=new Set();
 function add(cat,q,a,icon){q=q.replace(/\s+/g,' ').trim();if(q.length<4||seen.has(q))return;seen.add(q);out.push([cat,q,icon,a])}
-base.forEach((b,i)=>{const [cat,a,icon,core]=b;add(cat,core,a,icon);prefixes.forEach((p,j)=>{if((i+j)%4!==0)add(cat,p+core,a,icon)});suffixes.forEach((s,j)=>{if((i+j)%3===0)add(cat,core+s,a,icon)});typo.forEach((fn,j)=>{if((i+j)%2===0)add(cat,fn(core),a,icon)});add(cat,'سؤال دربارهٔ '+cat+': '+core,a,icon);add(cat,'راهنمای '+cat+': '+core,a,icon);});
+base.forEach((b,i)=>{const [cat,a,icon,core]=b;add(cat,core,a,icon);prefixes.forEach((p,j)=>add(cat,p+core,a,icon));suffixes.forEach((s,j)=>add(cat,core+s,a,icon));typo.forEach((fn,j)=>add(cat,fn(core),a,icon));add(cat,'سؤال دربارهٔ '+cat+': '+core,a,icon);add(cat,'راهنمای '+cat+': '+core,a,icon);});
 window.SALAYAN_QA_BANK=out;
 })();
