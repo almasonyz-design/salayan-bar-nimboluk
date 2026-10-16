@@ -400,6 +400,18 @@ img,iframe,video,canvas{max-width:100%!important}
 <button class="drawer-item" onclick="drawerGo('truckPage')"><span>🔢</span> اطلاعات فنی و مشخصات کشنده</button>
 <button class="drawer-item" onclick="drawerGo('supportPage')"><span>☎️</span> راهنمای استفاده از سامانه</button>
 <button class="drawer-item" onclick="drawerGo('supportPage')"><span>💬</span> ارتباط و پشتیبانی</button>
+
+<p class="drawer-group">📊 ابزارهای واقعی و دفترهای ثبت</p>
+<button class="drawer-item" onclick="drawerGo('expenseLogPage');renderRecords('salayan_expenses','expenseList')"><span>💵</span> دفتر دخل‌وخرج سفر</button>
+<button class="drawer-item" onclick="drawerGo('expenseLogPage');renderRecords('salayan_expenses','expenseList')"><span>📒</span> ثبت درآمد و هزینه‌های کامیون</button>
+<button class="drawer-item" onclick="drawerGo('serviceLogPage');renderRecords('salayan_services','serviceList')"><span>🔧</span> دفتر سوابق سرویس و تعمیرات</button>
+<button class="drawer-item" onclick="drawerGo('serviceLogPage');renderRecords('salayan_services','serviceList')"><span>🛢️</span> ثبت تعویض روغن و فیلتر</button>
+<button class="drawer-item" onclick="drawerGo('tireLogPage');renderRecords('salayan_tires','tireList')"><span>🛞</span> ثبت بازدید و فشار لاستیک</button>
+<button class="drawer-item" onclick="drawerGo('documentExpiryPage');renderRecords('salayan_doc_expiry','docExpiryList')"><span>📅</span> پیگیری انقضای مدارک</button>
+<button class="drawer-item" onclick="drawerGo('fuelEconomyPage')"><span>⛽</span> محاسبه مصرف واقعی سوخت</button>
+<button class="drawer-item" onclick="drawerGo('driverHoursPage');renderRecords('salayan_hours','hoursList')"><span>🕒</span> دفتر ساعت رانندگی و استراحت</button>
+<button class="drawer-item" onclick="drawerGo('loanCalcPage')"><span>🧮</span> محاسبه اقساط خرید کامیون</button>
+<button class="drawer-item" onclick="drawerGo('cargoChecklistPage');renderCargoChecks()"><span>📦</span> چک‌لیست مهار و تحویل بار</button>
 <hr class="drawer-divider"><button class="drawer-item logout-item" onclick="logout()"><span>↪</span> خروج از حساب</button></aside>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
