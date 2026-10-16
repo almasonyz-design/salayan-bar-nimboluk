@@ -612,7 +612,50 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
  const form=document.getElementById('salayanAiForm'),input=document.getElementById('salayanAiInput'),chat=document.getElementById('salayanAiChat');
  if(!form||!input||!chat)return;
  const addMessage=(text,who,warning=false)=>{const item=document.createElement('div');item.className='salayan-ai-message '+who+(warning?' warning':'');if(who==='bot'){const b=document.createElement('b');b.textContent=warning?'تنبیه محدوده پاسخ‌گویی':'دستیار صلایان';item.appendChild(b)}const p=document.createElement('p');p.textContent=text;item.appendChild(p);chat.appendChild(item);chat.scrollTop=chat.scrollHeight};
- const norm=s=>String(s||'').toLowerCase().replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[؟?!.،,:؛]/g,' ').replace(/\s+/g,' ').trim();
+ const norm=s=>String(s||'').toLowerCase()
+ .normalize('NFKC').replace(/[\u064B-\u065F\u0670\u0640]/g,'')
+ .replace(/[يىئ]/g,'ی').replace(/ك/g,'ک').replace(/[ۀة]/g,'ه')
+ .replace(/[\u200c\u200d\u200e\u200f\ufeff]/g,' ')
+ .replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+ .replace(/\bمی\s+/g,'می').replace(/\bنمی\s+/g,'نمی')
+ .replace(/\bرو\b/g,' را ').replace(/\bواسه\b/g,' برای ').replace(/\bواسهٔ\b/g,' برای ')
+ .replace(/\bچجوری\b|\bچجور\b|\bچطوری\b/g,'چطور').replace(/\bچیکار\b|\bچی کار\b/g,'چه کار')
+ .replace(/\bمیشه\b|\bمیشع\b/g,'می شود').replace(/\bنمیشه\b|\bنمی شه\b|\bنمی‌شه\b/g,'نمی شود')
+ .replace(/\bمیخوام\b|\bمیخام\b|\bمیخاستم\b/g,'می خواهم').replace(/\bمیخواد\b|\bمیخاد\b/g,'می خواهد')
+ .replace(/\bنمیخوام\b|\bنمیخام\b/g,'نمی خواهم').replace(/\bمیاد\b|\bمیادش\b/g,'می آید')
+ .replace(/\bنیس\b|\bنیستش\b/g,'نیست').replace(/\bهس\b|\bهستش\b/g,'هست')
+ .replace(/\bکجاس\b|\bکجاستش\b/g,'کجا است').replace(/\bنمیاد\b/g,'نمی آید')
+ .replace(/\bواسه\b/g,'برای').replace(/\bیه\b/g,'یک').replace(/\bیعنی چی\b/g,'یعنی چه')
+ .replace(/[؟?!.،,:؛؛؛!،؛…؛؛؛()\[\]{}"'«»ـ_+=\\/|<>@#$%^&*~،؛]/g,' ')
+ .replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
+const compact=s=>norm(s).replace(/\s/g,'');
+const editDistance=(a,b)=>{if(a===b)return 0;if(Math.abs(a.length-b.length)>1)return 2;let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const cur=[i];let rowMin=i;for(let j=1;j<=b.length;j++){const v=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));cur[j]=v;if(v<rowMin)rowMin=v;}if(rowMin>1)return 2;prev=cur;}return prev[b.length];};
+const dialectAliases={
+ 'نقشه سفید':['نقشه سفیده','نقشه سفیده بالا نمیاد','مپ سفیده','نقشه سفيد','نقشه سفیده اصلا نمیاد','نقشه خالیه','نقشه هیچی نشون نمیده','نقشه هیچی نشون نمیده ها'],
+ 'gps کار نمی کند':['جی پی اس کار نمیکنه','جی پی اس کار نمیکنه ها','جی پی اس خرابه','جی پی اس قاطی کرده','جی پی اس نمیخونه','جی پی اس راه نمیفته','جی پی اس بالا نمیاد','جی پی اس لوکیشن نمیده','جی پی اسه کار نمیکنه'],
+ 'موقعیت اشتباه':['جای منو اشتباه زده','لوکیشنمو غلط میاره','موقعیتمو غلط نشون میده','جای منو درست نمیاره','مکانمو کج نشون میده','نقطه آبی جای دیگه است'],
+ 'نقشه حرکت نمی کند':['نقشه تکون نمیخوره','نقشه جم نمیخوره','نقشه رو نمیشه کشید','نقشه قفل کرده','نقشه گیر کرده','نقشه وایساده','نقشه حرکت نداره'],
+ 'مسیر نمی دهد':['مسیر نمیده','راه نمیاره','راه رو نشون نمیده','مسیر یابی نمیکنه','مسیر نمیسازه','مسیرو نمیاره','راه رو نمیاره'],
+ 'بار نمایش داده نمی شود':['بارا نمیاد','بارا نمیان','بار نیس','باری نیس','هیچ باری نمیاره','بار خالیه','اعلام بار نمیاد','بار رو نمیبینم'],
+ 'ثبت نام نمی شود':['ثبت نام نمیشه','ثبتنام نمیشه','نمیذاره ثبت نام کنم','ثبت نام نمیکنه','ثبت نام گیر کرده'],
+ 'ورود نمی شود':['نمیتونم بیام تو برنامه','نمیذاره وارد شم','ورودم نمیشه','وارد برنامه نمیشه','نمیتونم لاگین کنم'],
+ 'پرداخت ناموفق':['پول کم کرد ولی شارژ نشد','پولو برداشت کیف پول شارژ نشد','پول از حسابم رفت','درگاه برگشت زد','پرداخت گیر کرد'],
+ 'کند':['برنامه لاکپشتیه','خیلی کند بالا میاد','دیر لود میشه','برنامه هنگه','برنامه قفل میکنه','صلایان بار سنگینه'],
+ 'موقعیت فعلی':['جای الانمو بیار','الان کجام','مکان الانم کجاست','لوکیشن فعلیم','جای خودمو نشون بده'],
+ 'مصرف سوخت':['گازوئیل سوزی','گازوییل','گازوئیل چقدر میسوزونه','مصرف گازوییل','مصرف مازوت'],
+ 'کیف پول':['کیف پوله','موجودی کیف پولم','پول تو کیفم','کیفم شارژ نمیشه','کیف پول شارژ نمیشه'],
+ 'لاستیک':['لاستیکا','لاستیکام','باد لاستیک','باد چرخ','آج لاستیک'],
+ 'تعمیرات':['ماشین خرابه','کشنده خراب شده','سرویس کشنده','روغن عوض کردن','دفتر تعمیرات'],
+ 'بار نوبتی':['بار نوبتی چیه','نوبتی یعنی چی','بار نوبت دار','بار نوبتی کجاست'],
+ 'بار آزاد':['بار آزاد چیه','آزاد یعنی چی','بار آزاد کجاست'],
+ 'مسیریابی':['راه‌یابی','راه یابی','راه نشون دادن','مسیر رفتن','راه بلد'],
+ 'ثبت بار':['بار بزنم','اعلام بار بذارم','بار ثبت کنم','بار جدید بزارم','بار جدید بذارم'],
+ 'چک لیست بار':['چک لیست بارگیری','مهار کردن بار','بستن بار','بارو چجوری چک کنم']
+};
+const aliasEntries=Object.entries(dialectAliases);
+const expandPhrases=phrases=>{const out=new Set();for(const p of phrases){const n=norm(p);if(!n)continue;out.add(n);out.add(n.replace(/\s+/g,''));out.add(n.replace(/ی/g,'ي'));out.add(n.replace(/ک/g,'ك'));out.add(n.replace(/ /g,'‌'));out.add(n.replace(/می /g,'می').replace(/نمی /g,'نمی'));out.add(n.replace(/می/g,'می ' ).replace(/نمی /g,'نمی'));for(const [base,aliases] of aliasEntries){if(n.includes(norm(base))||norm(base).includes(n)){for(const a of aliases)out.add(norm(a));}}}return [...out];};
+const matchesKey=(question,key)=>{const q=norm(question),k=norm(key);if(!k)return false;if(q.includes(k)||compact(q).includes(compact(k)))return true;const qt=q.split(' '),kt=k.split(' ').filter(t=>t.length>2);if(kt.length>1&&kt.every(t=>qt.some(w=>w===t||(w.length>=5&&editDistance(w,t)===1))))return true;if(k.length>=5&&k.split(' ').length===1&&qt.some(w=>w.length>=5&&editDistance(w,k)===1))return true;return false;};
+
  const outOfScope=['آب و هوا','هواشناسی','قیمت دلار','قیمت بیت کوین','ترید','فارکس','بورس','فوتبال','انتخابات','سیاست','خبر امروز','درمان','دارو','بیماری','رابطه عاطفی','تعبیر خواب','شعر','ترجمه','ریاضی','تکلیف مدرسه','اخبار جهان'];
  const intents=[
  {keys:['سلام','درود','خسته نباشی','وقت بخیر'],answer:'سلام راننده عزیز! من دستیار مخصوص صلایان بار هستم. درباره بخش‌های برنامه، بارها، GPS، کیف پول و ابزارهای راننده بپرس.'},
@@ -661,8 +704,8 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
  const outside=outOfScope.some(k=>q.includes(norm(k)));
  const hasAppWords=['صلایان','برنامه','سامانه','بار','راننده','کامیون','gps','جی پی اس','نقشه','مسیریابی','کیف پول','حساب','سرویس','لاستیک','سوخت','مدرک','ورود','قسط','وام','چک لیست','چک‌لیست','دخل','هزینه','موقعیت','ثبت','بار نوبتی','بار آزاد'].some(k=>q.includes(norm(k)));
  if(outside&&!hasAppWords)return 'این سؤال خارج از محدوده من است. من فقط برای راهنمایی درباره خود برنامه صلایان بار طراحی شده‌ام؛ می‌توانم درباره بارها، GPS، کیف پول، حساب کاربری و ابزارهای راننده کمک کنم.';
- for(const item of advancedRules){if(item.keys.some(k=>q.includes(norm(k))))return item.answer}
- for(const item of intents){if(item.keys.some(k=>q.includes(norm(k))))return item.answer}
+ for(const item of advancedRules){if(item.keys.some(k=>matchesKey(q,k)))return item.answer}
+ for(const item of intents){if(item.keys.some(k=>matchesKey(q,k)))return item.answer}
  if(!hasAppWords)return 'این سؤال خارج از موضوع برنامه به نظر می‌رسد. من فقط درباره امکانات و کار با صلایان بار پاسخ می‌دهم. درباره کدام بخش برنامه سؤال داری؟';
  return 'متوجه شدم که سؤالت درباره صلایان بار است، اما برای این مورد هنوز پاسخ مشخصی در راهنمای من ثبت نشده. از بخش «ارتباط و پشتیبانی» کمک بگیر یا سؤال را با نام دقیق بخش برنامه دوباره بنویس.'}
  window.askSalayanAI=function(raw){const q=String(raw||'').trim();if(!q)return;addMessage(q,'user');input.value='';const send=form.querySelector('button[type="submit"]');if(send){send.disabled=true;send.textContent='در حال بررسی…'}const pending=document.createElement('div');pending.className='salayan-ai-message bot pending';pending.innerHTML='<b>دستیار صلایان</b><p>در حال بررسی قوانین راهنما…</p>';chat.appendChild(pending);chat.scrollTop=chat.scrollHeight;setTimeout(()=>{try{const answer=respond(q);pending.remove();addMessage(answer,'bot',answer.startsWith('این سؤال خارج')||answer.startsWith('این سؤال خارج از موضوع'));}catch(err){pending.remove();addMessage('در بررسی سؤال خطایی رخ داد. سؤال را کوتاه‌تر و با نام دقیق بخش برنامه بنویس.','bot')}finally{if(send){send.disabled=false;send.textContent='ارسال سؤال ↑'}}},30)};
