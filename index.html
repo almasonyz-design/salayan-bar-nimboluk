@@ -761,15 +761,15 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
 (function(){
  const photo=(id,w=800)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=82';
  const cities=[
-  {title:'مشهد',sub:'مسیر، بار رفت و برگشت',img:'photo-1563013544-824ae1b704d3',q:'چطور درباره مسیر و بار رفت و برگشت مشهد در صلایان بار جستجو کنم؟',icon:'🏙️'},
-  {title:'بیرجند و قاین',sub:'مسیرهای خراسان جنوبی',img:'photo-1519501025264-65ba15a82390',q:'چطور بارهای مسیر قاین و بیرجند را در صلایان بار جستجو کنم؟',icon:'📍'},
-  {title:'جاده و GPS',sub:'موقعیت و راه‌یابی',img:'photo-1500530855697-b586d89ba3ee',q:'چطور GPS و مسیریابی صلایان بار را استفاده کنم؟',icon:'🧭'},
-  {title:'بار و کامیون',sub:'اعلام بار و جست‌وجو',img:'photo-1519003722824-194d4455a60c',q:'چطور بار پیدا کنم و بارهای آزاد و نوبتی را ببینم؟',icon:'🚛'},
-  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',img:'photo- fuel-not-real',q:'چطور هزینه سفر و سود بار را محاسبه کنم؟',icon:'💰'},
-  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',img:'photo-1486262715619-67b85e0b08d3',q:'راهنمای سرویس و نگهداری کامیون در صلایان بار کجاست؟',icon:'🔧'}
+  {title:'جست‌وجوی بار',sub:'پیدا کردن بار متناسب',img:'photo-1519003722824-194d4455a60c',q:'چطور در بخش جست‌وجوی بار، بار مناسب پیدا کنم؟',icon:'📦'},
+  {title:'اعلام بار',sub:'ثبت بار جدید',img:'photo-1586528116311-ad8dd3c8310d',q:'چطور از دکمه اعلام بار برای ثبت بار جدید استفاده کنم؟',icon:'📝'},
+  {title:'GPS و مسیریابی',sub:'مکان فعلی و مسیر',img:'photo-1500530855697-b586d89ba3ee',q:'چطور GPS، مکان فعلی و مسیریابی را در صلایان بار استفاده کنم؟',icon:'🧭'},
+  {title:'بارهای من',sub:'پیگیری بارها',img:'photo-1494412519320-aa613dfb7738',q:'بارهای ثبت‌شده یا انتخاب‌شده‌ام را از کدام بخش ببینم؟',icon:'🗂️'},
+  {title:'کیف پول',sub:'موجودی و تراکنش‌ها',img:'photo-1556742049-0cfed4f6a45d',q:'چطور موجودی و تراکنش‌های کیف پول را بررسی کنم؟',icon:'💳'},
+  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',img:'photo-1492144534655-ae79c964c9d7',q:'چطور هزینه سفر و سود خالص بار را محاسبه کنم؟',icon:'💰'},
+  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',img:'photo-1486262715619-67b85e0b08d3',q:'چطور از راهنمای سرویس و چک‌لیست کامیون استفاده کنم؟',icon:'🔧'},
+  {title:'پشتیبانی',sub:'رفع مشکل برنامه',img:'photo-1552664730-d307ca884978',q:'چطور مشکل برنامه را به پشتیبانی گزارش کنم؟',icon:'💬'}
  ];
- // Remove any invalid photo source from fallback to keep every tile useful.
- cities[4].img='photo-1492144534655-ae79c964c9d7';
  function goQuestion(q){if(typeof window.askSalayanAI==='function'){if(typeof window.showPage==='function')window.showPage('salayanAiPage');setTimeout(()=>window.askSalayanAI(q),80)}}
  function makeTile(x){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';b.innerHTML='<img loading="lazy" alt="" src="'+photo(x.img)+'"><b>'+x.icon+' '+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
  function addHome(){
@@ -782,7 +782,7 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
  function addAIQuestions(){
   const ai=document.getElementById('salayanAiPage');if(!ai||ai.querySelector('.salayan-ai-photo-catalog'))return;
   const section=document.createElement('div');section.className='salayan-ai-photo-catalog card';
-  section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📚 بانک منظم سؤال و جواب</h3></div><p class="muted">موضوع را انتخاب کن یا در همه سؤال‌ها جست‌وجو کن؛ با دکمه سبز هر سؤال مستقیماً به راهنمای برنامه ارسال می‌شود.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجوی سؤال: مشهد، بار برگشتی، GPS، کیف پول..." aria-label="جستجوی همه سؤال‌های آماده"><div class="salayan-question-count"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های آماده</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ عبارت دیگری جست‌وجو کن.</p>';
+  section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📚 بانک منظم سؤال و جواب</h3></div><p class="muted">موضوع را انتخاب کن یا در همه سؤال‌ها جست‌وجو کن؛ با دکمه سبز هر سؤال مستقیماً به راهنمای برنامه ارسال می‌شود.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجوی سؤال: جست‌وجوی بار، اعلام بار، GPS، کیف پول..." aria-label="جستجوی همه سؤال‌های آماده"><div class="salayan-question-count"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های آماده</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ عبارت دیگری جست‌وجو کن.</p>';
   const questions=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنما","چطور از صلایان بار استفاده کنم؟","🧭","از بخش‌های برنامه استفاده کن و برای اطلاعات زنده، موجود بودن بار را تأیید کن."]];
   const grid=section.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
   const list=section.querySelector('.salayan-question-list'),search=section.querySelector('.salayan-question-search'),none=section.querySelector('.salayan-no-questions'),count=section.querySelector('.salayan-question-count'),filters=section.querySelector('.salayan-category-filters');
