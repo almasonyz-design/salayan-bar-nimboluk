@@ -126,17 +126,33 @@ html.sbl-embed-mode .sbl-location-pulse{position:absolute!important;width:28px!i
  html.sbl-embed-mode #sblBelowMapControls .tool .sbl-tool-label{font-size:12px!important}
 }
 </style>
-<script id="salayan-friendly-tool-labels-v11">
+<script id="salayan-icon-only-controls-v12">
 (function(){
- const labels={locBtn:'موقعیت من',followBtn:'دنبال‌کردن مسیر',tiltBtn:'نمای سه‌بعدی',zoomIn:'بزرگ‌نمایی',zoomOut:'کوچک‌نمایی',northBtn:'جهت شمال',voiceBtn:'راهنمای صوتی'};
- function apply(){
+ function compact(){
   if(!document.documentElement.classList.contains('sbl-embed-mode'))return;
-  Object.keys(labels).forEach(id=>{const b=document.getElementById(id);if(b&&!b.querySelector('.sbl-tool-label')){const span=document.createElement('span');span.className='sbl-tool-label';span.textContent=labels[id];b.appendChild(span);b.removeAttribute('title')}});
+  const labels={locBtn:'موقعیت من',followBtn:'دنبال‌کردن مسیر',tiltBtn:'نمای سه‌بعدی',zoomIn:'بزرگ‌نمایی',zoomOut:'کوچک‌نمایی',northBtn:'جهت شمال',voiceBtn:'راهنمای صوتی'};
+  Object.keys(labels).forEach(id=>{const b=document.getElementById(id);if(b){b.querySelectorAll('.sbl-tool-label').forEach(x=>x.remove());b.title=labels[id];b.setAttribute('aria-label',labels[id]);}});
+  const route=document.getElementById('routeBtn');if(route){route.textContent='➜';route.title='مسیریابی';route.setAttribute('aria-label','مسیریابی');}
+  const actions=[['startBtn','📍','موقعیت من'],['stepsBtn','☷','جزئیات مسیر'],['clearBtn','↺','پاک کردن']];
+  actions.forEach(([id,icon,label])=>{const b=document.getElementById(id);if(b){b.innerHTML='<b aria-hidden="true">'+icon+'</b>';b.title=label;b.setAttribute('aria-label',label);}});
+  document.querySelectorAll('.quick button[data-dest]').forEach(b=>{const m=b.textContent.match(/[📍🛣]/u);if(m){b.textContent=m[0];b.title=b.dataset.dest;b.setAttribute('aria-label','مسیریابی به '+b.dataset.dest);}});
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',compact);else compact();
+ window.addEventListener('load',compact);setTimeout(compact,300);
 })();
 </script>
 
+<style id="salayan-icon-controls-and-world-terrain-v12">
+html.sbl-embed-mode #sblBelowMapControls .tools{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:center!important;gap:10px!important;padding:12px 10px!important}
+html.sbl-embed-mode #sblBelowMapControls .tool{display:grid!important;place-items:center!important;flex:0 0 48px!important;width:48px!important;min-width:48px!important;height:48px!important;min-height:48px!important;padding:0!important;font-size:23px!important;overflow:visible!important;border-radius:15px!important}
+html.sbl-embed-mode #sblBelowMapControls .tool .sbl-tool-label{display:none!important}
+html.sbl-embed-mode #sblBelowMapControls .go{width:44px!important;min-width:44px!important;padding:0!important;font-size:23px!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions .action{flex:0 0 48px!important;width:48px!important;min-width:48px!important;min-height:48px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:22px!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions .action b{margin:0!important;font-size:22px!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions{justify-content:flex-start!important}
+html.sbl-embed-mode #sblBelowMapControls .quick button{min-height:42px!important;font-size:22px!important}
+@media(max-width:520px){html.sbl-embed-mode #sblBelowMapControls .tool{flex-basis:44px!important;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}}
+</style>
 </head>
 <body><div class="app">
 <header><div class="brand"><div class="logo">🚛</div><div><h1>صلایان بار <em>PRO</em></h1><p>همراه هوشمند راننده • نسخه پیشرفته</p></div></div><div class="headright"><div class="statuspill"><i class="led"></i><span id="liveStatus">آماده اتصال GPS</span></div><button class="square" id="menuBtn" aria-label="تنظیمات">☰</button></div></header>
@@ -290,4 +306,18 @@ document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.t
 })();
 </script>
 
+<script id="salayan-worldwide-terrain-v12">
+(function(){
+ function enableTerrain(){
+  try{
+   if(!window.map||!map.isStyleLoaded()||map.getSource('salayan-world-dem'))return;
+   map.addSource('salayan-world-dem',{type:'raster-dem',tiles:['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],tileSize:256,encoding:'terrarium',maxzoom:15,attribution:'Terrain data © AWS Terrain Tiles'});
+   map.setTerrain({source:'salayan-world-dem',exaggeration:1.25});
+   if(map.getPitch()<45)map.setPitch(58);
+   map.triggerRepaint();
+  }catch(e){try{console.warn('Terrain layer unavailable',e)}catch(_){}}
+ }
+ window.addEventListener('load',function(){[100,600,1600].forEach(t=>setTimeout(enableTerrain,t))});
+})();
+</script>
 </body></html>
