@@ -3720,7 +3720,7 @@ $('sbGpsStart').addEventListener('click',startGPS);$('sbGpsMap').addEventListene
   let lastError=null,loaded=false;
   status('در حال بارگیری نقشه '+names[type]+'…');
   for(const provider of providers[type]||providers.road){
-   candidate=L.tileLayer(provider.url,{maxZoom:provider.max,attribution:provider.attr,crossOrigin:true,...(provider.subs?{subdomains:provider.subs}:{})});
+   candidate=L.tileLayer(provider.url,{maxZoom:provider.max,attribution:provider.attr,crossOrigin:true,subdomains:provider.subs||'abc'});
    try{
     await new Promise((resolve,reject)=>{
      let settled=false;
