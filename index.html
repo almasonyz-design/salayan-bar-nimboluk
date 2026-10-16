@@ -780,7 +780,7 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
      btn.addEventListener('click',()=>{activeCategory=activeCategory===cat?'':cat;draw()});
      if(isOpen){
       const search=document.createElement('input');search.type='search';search.className='salayan-question-search support-category-search';search.placeholder='🔎 جست‌وجو در سؤال‌های «'+cat+'»...';search.setAttribute('aria-label','جست‌وجو در سؤال‌های دسته '+cat);search.value=searchValues[cat]||'';
-      search.addEventListener('input',()=>{searchValues[cat]=search.value;const pos=search.selectionStart;draw();const next=filters.querySelector('.support-category-search');if(next){next.focus({preventScroll:true});try{next.setSelectionRange(pos,pos)}catch(e){}}});
+      search.addEventListener('input',()=>{searchValues[cat]=search.value;const pos=search.selectionStart;clearTimeout(search._salayanSearchTimer);search._salayanSearchTimer=setTimeout(()=>{draw();const next=filters.querySelector('.support-category-search');if(next){next.focus({preventScroll:true});try{next.setSelectionRange(pos,pos)}catch(e){}}},120)});
       nested.appendChild(search);
       if(categoryMatches.length){
        categoryMatches.forEach(x=>{
@@ -812,9 +812,10 @@ function addLoadPhoto(){
   const banner=document.createElement('div');banner.className='salayan-photo-banner salayan-load-photo-banner';banner.innerHTML='<img loading="lazy" alt="" src="'+photo('photo-1519003722824-194d4455a60c',1000)+'"><div><b>تالار هوشمند بار صلایان</b><small>مبدأ، مقصد و نوع بار را جست‌وجو کن</small></div>';
   const title=loads.querySelector('.page-title');if(title)title.after(banner);
  }
- function init(){addHome();addSupportQuestions();addLoadPhoto()}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
- const observer=new MutationObserver(()=>{addHome();addSupportQuestions();addLoadPhoto()});observer.observe(document.body,{childList:true,subtree:true});
+ let initialized=false;
+ function init(){if(initialized)return;initialized=true;addHome();addSupportQuestions();addLoadPhoto()}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+ // تمام بخش‌های این صفحه ثابت‌اند؛ ناظر سراسری DOM حذف شد تا هر تغییر کوچک، کل بررسی‌ها را تکرار نکند.
 })();
 </script>
 
