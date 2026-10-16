@@ -563,6 +563,13 @@ html.sbl-embed-mode,html.sbl-embed-mode body{height:auto!important;min-height:10
 html.sbl-embed-mode #map{touch-action:pan-y!important}
 html.sbl-embed-mode #sblBelowMapControls{padding-bottom:calc(28px + env(safe-area-inset-bottom))!important;touch-action:pan-y!important}
 html.sbl-embed-mode #sblBelowMapControls button,html.sbl-embed-mode #sblBelowMapControls input{touch-action:manipulation!important}
+
+/* Persistent live-location arrow: visible in embedded and standalone GPS */
+.pin.salayan-arrow-pin{width:58px!important;height:66px!important;position:relative!important;display:block!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;pointer-events:none!important;z-index:2!important}
+.pin.salayan-arrow-pin .salayan-nav-arrow{display:block!important;width:58px!important;height:66px!important;overflow:visible!important;transform-origin:50% 50%;filter:drop-shadow(0 3px 4px #001a3d99)}
+.pin.salayan-arrow-pin .sbl-location-pulse{position:absolute!important;width:24px!important;height:24px!important;left:17px!important;top:20px!important;border-radius:50%!important;background:#1685ff30!important;border:2px solid #1685ff70!important;animation:sblLocationPulse 1.8s infinite!important;pointer-events:none!important}
+.maplibregl-marker:has(.salayan-arrow-pin){z-index:2!important;pointer-events:none!important}
+@media(prefers-reduced-motion:reduce){.pin.salayan-arrow-pin .sbl-location-pulse{animation:none!important;opacity:.65!important}}
 </style>
 <script id="salayan-gps-iframe-height-child-v19">
 (function(){
