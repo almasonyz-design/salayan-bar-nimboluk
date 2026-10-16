@@ -214,6 +214,11 @@ img,iframe,video,canvas{max-width:100%!important}
   <section id="homePage" class="page active">
    <div class="card hero"><span class="eyebrow">SALAYAN BAR · NIMBOLUK</span><h2>سلام راننده،<br>بار بعدی‌ات را پیدا کن.</h2><p>بارها را بررسی کن، مسیرت را ببین و انتخابت را مدیریت کن.</p><button class="button" type="button" onclick="showPage('loadsPage');showLoads()">جستجوی بار <span>←</span></button></div>
    <div class="stats"><div class="stat"><b id="homeTurnCount">—</b><span>بار نوبتی</span></div><div class="stat"><b id="homeFreeCount">—</b><span>بار آزاد</span></div><div class="stat"><b id="homeNearbyCount">—</b><span>بار نزدیک</span></div></div>
+   <button class="salayan-ai-home-card" type="button" onclick="showPage('salayanAiPage');document.getElementById('salayanAiInput')?.focus()" aria-label="باز کردن هوش مصنوعی صلایان بار">
+    <span class="salayan-ai-home-icon" aria-hidden="true">🤖</span>
+    <span class="salayan-ai-home-copy"><strong>هوش مصنوعی صلایان</strong><small>هر سؤالی درباره برنامه داری، همین‌جا بپرس</small></span>
+    <span class="salayan-ai-home-arrow" aria-hidden="true">←</span>
+   </button>
    <div class="section-head"><h3>دسترسی سریع</h3><span class="eyebrow">خدمات راننده</span></div>
    <div class="quick-grid">
     <button class="quick-card" type="button" onclick="showPage('gpsPage')"><span class="qicon">⌖</span><b>نقشه و مسیریابی</b><small>موقعیت و مسیر جاده‌ای</small><span class="quick-arrow" aria-hidden="true">↗</span></button>
@@ -588,6 +593,11 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
 
 <style id="salayan-ai-ui-v1">
 .salayan-ai-intro{display:flex;align-items:flex-start;gap:13px;background:linear-gradient(135deg,#075b42,#0c9369);color:#fff;border:0}.salayan-ai-intro p{margin:6px 0 0;color:#e0fff0}.salayan-ai-avatar{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:16px;background:#ffffff24;font-size:27px}.salayan-ai-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.salayan-ai-chips button{border:1px solid #cde8d8;background:#f0faf4;color:#087452;border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800}.salayan-ai-chat{display:flex;flex-direction:column;gap:10px;min-height:180px;max-height:48dvh;overflow:auto;padding:12px;background:#f4f8f5;border:1px solid #e1ebe4;border-radius:17px;scroll-behavior:smooth}.salayan-ai-message{max-width:94%;padding:11px 13px;border-radius:15px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}.salayan-ai-message p{margin:4px 0 0;font-size:12px;line-height:1.9}.salayan-ai-message.bot{align-self:flex-start;background:#fff;border:1px solid #dcebe1;border-bottom-right-radius:5px}.salayan-ai-message.user{align-self:flex-end;background:#087f5b;color:#fff;border-bottom-left-radius:5px}.salayan-ai-message.user p{color:#fff}.salayan-ai-message.warning{background:#fff8e8;border-color:#f0d9a6;color:#76521b}.salayan-ai-form{display:flex;gap:8px;align-items:stretch;margin-top:12px}.salayan-ai-form textarea{flex:1;min-width:0;resize:vertical;min-height:48px;max-height:130px}.salayan-ai-form .button{align-self:stretch;min-width:92px}.salayan-ai-foot{font-size:10px!important;margin:10px 2px 0}.salayan-ai-menu{background:#eaf8f0!important;border-color:#ccebd8!important;color:#087452!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:390px){.salayan-ai-form{gap:6px}.salayan-ai-form .button{min-width:76px;padding:8px}.salayan-ai-message{max-width:100%}}
+/* HOME PAGE AI ASSISTANT SHORTCUT */
+.salayan-ai-home-card{width:100%;display:flex;align-items:center;gap:13px;text-align:right;padding:15px;margin:0 0 20px;border:1px solid #b8e7d0;border-radius:20px;background:linear-gradient(120deg,#e5f8ed,#fff 75%);box-shadow:0 9px 24px #087f5b12;color:var(--ink);min-height:88px;touch-action:manipulation}
+.salayan-ai-home-icon{width:49px;height:49px;flex:0 0 49px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#18b980,#08734f);font-size:26px;box-shadow:0 6px 15px #087f5b24}
+.salayan-ai-home-copy{flex:1;min-width:0}.salayan-ai-home-copy strong{display:block;font-size:15px;font-weight:900;color:#08734f}.salayan-ai-home-copy small{display:block;margin-top:3px;font-size:11px;line-height:1.7;color:#577466}.salayan-ai-home-arrow{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:12px;background:#d4f1e1;color:#08734f;font-size:21px;font-weight:bold}
+@media(min-width:700px){.salayan-ai-home-card{max-width:100%;padding:18px 20px}.salayan-ai-home-copy strong{font-size:16px}}
 </style>
 <script id="salayan-ai-logic-v1">
 (function(){
