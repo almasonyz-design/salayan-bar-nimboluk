@@ -5560,7 +5560,10 @@ html body #sbGlobalBack,html body #sbTopMenuTrigger,html body .sb-top-actions{po
 
 <!-- Salayan Bar GPS hotfix: Arabic/Persian RTL labels and reliable touch map -->
 <style id="salayan-gps-global-fix-20261016">
-#gpsPage #salayan-map3d-embedded{display:none!important}
+/* Restore the primary embedded GPS map; it is the main map users see. */
+#gpsPage #salayan-map3d-embedded{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;pointer-events:auto!important;z-index:2!important}
+#gpsPage #salayan-map3d-embedded iframe{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:78vh!important;height:78dvh!important;min-height:560px!important;max-height:900px!important;pointer-events:auto!important;position:relative!important;z-index:20!important}
+@media(max-width:520px){#gpsPage #salayan-map3d-embedded iframe{height:80vh!important;height:80dvh!important;min-height:560px!important;max-height:none!important}}
 #gpsPage #sbGpsCard #sbGpsMapCanvas{touch-action:pan-x pan-y pinch-zoom!important;pointer-events:auto!important}
 #gpsPage #sbGpsCard .sbx-map-stage{touch-action:pan-x pan-y pinch-zoom!important}
 #gpsPage #sbGpsCard .sbx-map-overlay{pointer-events:none!important}
