@@ -87,7 +87,49 @@ function setStatus(s){$('liveStatus').textContent=s}
 function setFollow(v){follow=v;$('followToggle').checked=v;$('followBtn').classList.toggle('active',v);if(v&&current&&map)map.easeTo({center:current,duration:400})}
 function setTilt(v){tilted=v;$('tiltToggle').checked=v;$('tiltBtn').classList.toggle('active',v);if(map)map.easeTo({pitch:v?52:0,bearing:v?-12:0,duration:180});}
 function truckElement(){const d=document.createElement('div');d.className='pin salayan-arrow-pin';d.innerHTML='<svg class="salayan-nav-arrow" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg" aria-label="موقعیت من"><path d="M20 2 37 44 20 35 3 44Z" fill="#4285F4" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M20 8 31 36 20 30 9 36Z" fill="#4285F4"/></svg>';return d}
-try{let cached=null;try{const la=localStorage.getItem('salayan_lat'),lo=localStorage.getItem('salayan_lng');if(la!==null&&lo!==null&&Number.isFinite(+la)&&Number.isFinite(+lo)&&Math.abs(+la)<=90&&Math.abs(+lo)<=180)cached=[+lo,+la]}catch(e){}map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/positron',center:cached||[59.184,33.726],zoom:cached?14:12,pitch:0,bearing:0,antialias:false,fadeDuration:0,attributionControl:false,cooperativeGestures:false,dragPan:true,scrollZoom:true,doubleClickZoom:true,touchZoomRotate:true,boxZoom:false,keyboard:true});map.addControl(new maplibregl.AttributionControl({compact:true}),'bottom-left');map.on('load',()=>{initSatelliteLayer();setStatus('نقشه آماده است');if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{updatePosition(p);map.jumpTo({center:[p.coords.longitude,p.coords.latitude],zoom:15})},()=>{}, {enableHighAccuracy:false,maximumAge:120000,timeout:6000})});map.on('error',()=>{if(!map.isStyleLoaded())setStatus('در حال بارگیری نقشه')});}catch(e){toast('نقشه بارگذاری نشد؛ اتصال اینترنت را بررسی کن')}
+try{
+ let cached=null;
+ try{
+  const la=localStorage.getItem('salayan_lat'),lo=localStorage.getItem('salayan_lng');
+  if(la!==null&&lo!==null&&Number.isFinite(+la)&&Number.isFinite(+lo)&&Math.abs(+la)<=90&&Math.abs(+lo)<=180)cached=[+lo,+la];
+ }catch(e){}
+ const initialCenter=cached||[59.184,33.726];
+ map=new maplibregl.Map({
+  container:'map',
+  style:'https://tiles.openfreemap.org/styles/liberty',
+  center:initialCenter,zoom:cached?14:12,pitch:0,bearing:0,
+  antialias:false,fadeDuration:0,attributionControl:false,
+  cooperativeGestures:false,dragPan:true,scrollZoom:true,doubleClickZoom:true,
+  touchZoomRotate:true,boxZoom:false,keyboard:true
+ });
+ map.addControl(new maplibregl.AttributionControl({compact:true}),'bottom-left');
+ map.on('load',()=>{
+  setStatus('نقشه آماده است');
+  try{
+   if(cached&&!marker){
+    updatePosition({coords:{longitude:cached[0],latitude:cached[1],speed:null,accuracy:Number(localStorage.getItem('salayan_accuracy'))||100,heading:0},timestamp:Number(localStorage.getItem('salayan_gps_time'))||Date.now()});
+   }
+  }catch(e){}
+  initSatelliteLayer();
+  startGPS();
+ });
+ map.on('error',e=>{
+  console.warn('Salayan map error',e&&e.error||e);
+  if(!map.isStyleLoaded())setStatus('در حال تلاش برای بارگذاری نقشه…');
+ });
+ setTimeout(()=>{
+  try{
+   if(map&&!map.loaded()&&!map.isStyleLoaded()){
+    setStatus('تلاش دوباره برای بارگذاری نقشه…');
+    map.setStyle('https://demotiles.maplibre.org/style.json');
+   }
+  }catch(e){}
+ },9000);
+}catch(e){
+ console.error('Salayan map init failed',e);
+ $('liveStatus').textContent='نقشه بارگذاری نشد؛ اینترنت را بررسی کن';
+ toast('نقشه بارگذاری نشد؛ اتصال اینترنت را بررسی کن');
+}
 
 function initSatelliteLayer(){
  try{
