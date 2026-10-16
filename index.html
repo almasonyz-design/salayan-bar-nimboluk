@@ -299,7 +299,7 @@ img,iframe,video,canvas{max-width:100%!important}
 <body>
 <section id="loginPage" class="login-screen">
  <div class="login-box">
-  <div class="login-brand"><div class="brandmark">🚛</div><div><h1>صلایان بار نیمبلوک</h1><p>سامانه هوشمند بار و حمل‌ونقل</p></div></div>
+  <div class="login-brand"><div class="brandmark">🚛</div><div class="login-brand-copy"><h1>صلایان بار نیمبلوک</h1><div class="brand-slogan-row"><p>از مبدأ تا مقصد، همراهِ هر مسیر</p><span class="brand-slogan-badge" aria-label="هوشمند، مطمئن، همراه شما"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.2c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3.2Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 15.8 10 8.5m4 0 1.8 7.3M10 12h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>بارِ مطمئن</span></span></div></div></div>
   <div class="role-tabs"><button id="driverRoleBtn" class="role-tab active" type="button" onclick="selectRole('driver')">ورود راننده</button><button id="adminRoleBtn" class="role-tab" type="button" onclick="selectRole('admin')">ورود مدیر</button></div>
   <div id="driverLoginBox">
    <div class="field"><label for="phone">شماره موبایل راننده</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="مثلاً 09123456789"></div>
@@ -880,5 +880,30 @@ function addLoadPhoto(){
  #questionBankPage .salayan-support-question-catalog .salayan-question-item .support-question-label{font-size:8.5px!important}
  #questionBankPage .salayan-support-question-catalog .salayan-question-item{padding:7px!important;gap:5px!important}
 }
+</style>
+<style id="salayan-global-type-and-brand-v1">
+/* یکپارچه‌سازی فونت فارسی و هویت بصری برند */
+:root{--font-fa:"Vazirmatn",IRANSans,Tahoma,Arial,sans-serif}
+html,body,body button,body input,body select,body textarea{font-family:var(--font-fa)!important;font-synthesis:none;font-kerning:normal}
+body{font-size:14px;line-height:1.8;font-weight:400;letter-spacing:0}
+h1,h2,h3,h4,strong,b,label,.button,.role-tab,.drawer-item,.nav-item{font-family:var(--font-fa)!important}
+h1,h2,h3,h4{letter-spacing:-.35px;text-wrap:pretty}
+button,input,select,textarea{font-weight:500}
+.login-brand{align-items:center;gap:13px}
+.login-brand-copy{flex:1;min-width:0}
+.login-brand h1{font-size:clamp(17px,4.5vw,20px)!important;font-weight:900;line-height:1.55;letter-spacing:-.5px;color:#123d2d}
+.brand-slogan-row{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:7px;margin-top:5px}
+.login-brand .brand-slogan-row p{font-size:11px!important;line-height:1.8;font-weight:500;color:#657c70;margin:0}
+.brand-slogan-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border:1px solid #cbe9d7;border-radius:999px;background:linear-gradient(135deg,#f0fbf4,#e4f6eb);color:#08794f;font-size:9px;font-weight:800;white-space:nowrap;box-shadow:0 2px 5px rgba(8,127,91,.06)}
+.brand-slogan-badge svg{width:14px;height:14px;flex:0 0 14px}
+.login-box{border-radius:26px}
+.login-brand .brandmark{flex:0 0 48px;width:48px;height:48px;border-radius:16px;font-size:24px}
+.topbar .brandtext strong{font-weight:800;letter-spacing:-.3px}
+.topbar .brandtext small{font-weight:500}
+.page-title h2,.hero h2{font-weight:800;letter-spacing:-.45px}
+.card h3,.section-head h3{font-weight:800;letter-spacing:-.25px}
+.field label{font-weight:700}
+.button,.role-tab{font-weight:700}
+@media(max-width:380px){.login-brand{gap:10px}.login-brand .brandmark{flex-basis:43px;width:43px;height:43px}.login-brand h1{font-size:17px!important}.login-brand .brand-slogan-row p{font-size:10px!important}.brand-slogan-badge{font-size:8px;padding:3px 6px}}
 </style>
 </body></html>
