@@ -760,6 +760,20 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
 .salayan-photo-banner div{position:relative;z-index:2}.salayan-photo-banner b{display:block;font-size:17px}.salayan-photo-banner small{font-size:11px;color:#e4f7ed}
 @media(min-width:600px){.salayan-photo-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.salayan-photo-tile{min-height:165px}}
 @media(max-width:350px){.salayan-photo-strip{gap:7px}.salayan-photo-tile{min-height:125px}.salayan-photo-tile b{font-size:12px}}
+
+/* Vertical, full-width controls for easy one-hand use on mobile */
+.salayan-category-filters{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;overflow:visible!important;width:100%!important;padding:8px 0 14px!important}
+.salayan-category-chip{display:flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;width:100%!important;min-height:46px!important;text-align:right!important;white-space:normal!important;border-radius:12px!important;padding:11px 14px!important;font-size:13px!important;box-sizing:border-box!important}
+.salayan-question-list{display:flex!important;flex-direction:column!important;gap:10px!important;width:100%!important}
+.salayan-question-category-title{width:100%!important;box-sizing:border-box!important;margin:12px 0 2px!important;padding:10px 12px!important;border-radius:10px!important;background:#eaf7f0!important;color:#087f5b!important;font-size:13px!important;font-weight:900!important}
+.salayan-question-wrap{display:flex!important;flex-direction:column!important;gap:7px!important;width:100%!important;box-sizing:border-box!important;padding:10px!important;border:1px solid #e1eee6!important;border-radius:14px!important;background:#fff!important}
+.salayan-question-row{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;width:100%!important;margin:0!important}
+.salayan-question-item{width:100%!important;min-height:46px!important;box-sizing:border-box!important;text-align:right!important;border-radius:10px!important;padding:12px!important;line-height:1.8!important}
+.salayan-question-send{width:100%!important;min-height:42px!important;box-sizing:border-box!important;border-radius:10px!important;font-size:13px!important}
+.salayan-question-answer{width:100%!important;box-sizing:border-box!important;margin:0!important;border-radius:10px!important}
+.salayan-photo-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+.salayan-photo-tile{width:100%!important;box-sizing:border-box!important;min-height:88px!important;border:1px solid #e1eee6!important;border-radius:12px!important;background:#fff!important;padding:10px 6px!important}
+@media(min-width:600px){.salayan-photo-strip{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 </style>
 <script src="./question-bank.js"></script>
 <script id="salayan-photo-rich-ui-v1-script">
