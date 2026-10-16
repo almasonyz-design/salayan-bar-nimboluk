@@ -272,7 +272,7 @@ async function makeRoute(chosen){
  const btn=$('routeBtn'),oldLabel=btn.textContent;btn.disabled=true;btn.textContent='در حال محاسبه…';setStatus('در حال پیدا کردن مقصد و مسیر…');
  try{
   if(!map)throw Error('نقشه هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');
-  if(!map.loaded())await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(Error('بارگذاری نقشه طول کشید؛ دوباره تلاش کن')),12000);map.once('load',()=>{clearTimeout(t);resolve()})});
+  if(!map.isStyleLoaded())await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(Error('بارگذاری نقشه طول کشید؛ دوباره تلاش کن')),12000);const done=()=>{clearTimeout(t);resolve()};map.once('load',done);map.once('idle',done)});
   const origin=await freshPosition();current=origin;
   const dest=await resolveDestination(query,chosen);
   setStatus('مقصد پیدا شد؛ در حال محاسبه مسیر جاده‌ای…');
