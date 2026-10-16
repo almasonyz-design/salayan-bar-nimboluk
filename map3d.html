@@ -423,4 +423,56 @@ html.sbl-embed-mode #sblGuideBackBar{position:relative!important}
 @media(max-width:520px){html.sbl-embed-mode #map{height:360px!important;min-height:360px!important;max-height:360px!important}html.sbl-embed-mode #sblBelowMapControls .sidecards{grid-template-columns:1fr!important}}
 </style>
 
+<style id="salayan-premium-responsive-map-v14">
+
+/* SALAYAN BAR — map-first, low-clutter responsive controls */
+:root{--green:#50e5aa;--green2:#16ad79}
+button{transition:background .12s,border-color .12s,transform .12s}
+button:active{transform:scale(.975)}
+header{background:rgba(7,24,18,.94);backdrop-filter:blur(18px)}
+.search{border-radius:16px;box-shadow:0 10px 30px #0003}
+.tool,.pill,.square,.action{border-radius:13px}
+.card{box-shadow:0 8px 24px #0002}
+.trip{border-radius:18px}
+.drawer{border-radius:20px 0 0 20px}
+@media(max-width:700px){
+ html:not(.sbl-embed-mode) .sidecards{top:74px;right:10px;width:min(166px,42vw)}
+ html:not(.sbl-embed-mode) .tools{left:10px;top:75px}
+ html:not(.sbl-embed-mode) .topcontrols{top:9px;right:9px;left:9px;gap:6px}
+ html:not(.sbl-embed-mode) .search{min-width:0}
+ html:not(.sbl-embed-mode) .pills{gap:4px}
+ html:not(.sbl-embed-mode) .pill{padding:0 8px;font-size:10px}
+ html:not(.sbl-embed-mode) .bottom{right:9px;left:9px;bottom:9px;gap:7px}
+ html:not(.sbl-embed-mode) .trip{width:calc(100% - 94px);padding:11px;border-radius:16px}
+ html:not(.sbl-embed-mode) .bottomactions{width:87px}
+ html:not(.sbl-embed-mode) .action{padding:10px 3px;font-size:10px}
+ html:not(.sbl-embed-mode) .hint{bottom:164px;max-width:82vw;overflow:hidden;text-overflow:ellipsis}
+}
+html.sbl-embed-mode #map{height:min(58dvh,500px)!important;min-height:340px!important;max-height:500px!important;border-radius:16px;overflow:hidden}
+html.sbl-embed-mode .app{background:var(--bg)}
+html.sbl-embed-mode header{border-radius:16px 16px 0 0}
+html.sbl-embed-mode #sblBelowMapControls{gap:10px;padding:10px 10px 16px;background:#071812}
+html.sbl-embed-mode #sblBelowMapControls .topcontrols{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+html.sbl-embed-mode #sblBelowMapControls .searchwrap{flex:1 1 100%;max-width:none}
+html.sbl-embed-mode #sblBelowMapControls .search{min-height:48px}
+html.sbl-embed-mode #sblBelowMapControls .pills{display:flex;flex-wrap:wrap;gap:6px}
+html.sbl-embed-mode #sblBelowMapControls .pill{height:38px}
+html.sbl-embed-mode #sblBelowMapControls .tools{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:7px!important}
+html.sbl-embed-mode #sblBelowMapControls .tool{width:40px;height:40px}
+html.sbl-embed-mode #sblBelowMapControls .sidecards{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;width:100%!important}
+html.sbl-embed-mode #sblBelowMapControls .sidecards .card{min-width:0}
+html.sbl-embed-mode #sblBelowMapControls .bottom{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important}
+html.sbl-embed-mode #sblBelowMapControls .trip{width:100%!important;max-width:none!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions{width:100%!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+html.sbl-embed-mode #sblBelowMapControls .action{min-height:42px}
+html.sbl-embed-mode #sblBelowMapControls .hint{display:none!important}
+html.sbl-embed-mode #sblBelowMapControls .steps{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:430px){
+ html.sbl-embed-mode #map{height:52dvh!important;min-height:320px!important;max-height:410px!important}
+ html.sbl-embed-mode #sblBelowMapControls .sidecards{grid-template-columns:minmax(0,1fr)!important}
+ html.sbl-embed-mode #sblBelowMapControls .bottomactions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(prefers-reduced-motion:reduce){button{transition:none!important}}
+
+</style>
 </body></html>
