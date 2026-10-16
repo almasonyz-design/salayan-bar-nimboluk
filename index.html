@@ -144,6 +144,53 @@ img,iframe,video,canvas{max-width:100%}
 #gpsPage{padding-bottom:calc(100px + env(safe-area-inset-bottom))}
 html,body{overscroll-behavior-y:auto}
 </style>
+
+<style id="salayan-mobile-font-overflow-fix-v1">
+html{font-size:14px!important}
+body{font-size:13px!important;line-height:1.65!important;overflow-x:hidden!important}
+h1{font-size:clamp(18px,4.5vw,22px)!important;line-height:1.45!important}
+h2,.page-title h2{font-size:clamp(17px,4vw,20px)!important;line-height:1.5!important}
+h3,.section-head h3{font-size:14px!important;line-height:1.5!important}
+p,li,label,.muted,.helper,.alert,.map-note{font-size:12px!important;line-height:1.65!important}
+button,.button,.drawer-item,.nav-btn{font-size:12px!important;line-height:1.45!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important}
+.drawer-item{min-height:44px!important;padding:10px 11px!important;gap:8px!important}
+.drawer-item span{flex:0 0 24px!important;width:24px!important;font-size:16px!important}
+.drawer-group{font-size:11px!important;padding:7px 9px!important;margin:13px 6px 6px!important}
+.brandtext strong{font-size:14px!important;line-height:1.4!important}
+.brandtext small,.drawer-head small{font-size:10px!important}
+.hero h2{font-size:clamp(19px,4.5vw,24px)!important;line-height:1.55!important}
+.hero p{font-size:12px!important}
+.stat b{font-size:19px!important}
+.stat span,.quick-card small,.meta-box small{font-size:10px!important}
+.quick-card b,.meta-box b{font-size:12px!important;line-height:1.55!important}
+.route{font-size:15px!important;line-height:1.7!important;overflow-wrap:anywhere!important}
+.button{min-height:40px!important;padding:9px 11px!important}
+input,select,textarea,.field input,.field select,.field textarea{font-size:16px!important;max-width:100%!important;min-width:0!important}
+.content,.card,.load-card,.quick-card,.field,.page,.page-title{min-width:0!important;max-width:100%!important}
+img,iframe,video,canvas{max-width:100%!important}
+.page-title{flex-wrap:wrap!important}
+.page-title .button{white-space:normal!important}
+.load-actions{flex-wrap:wrap!important}
+.load-actions .button{min-width:0!important;overflow-wrap:anywhere!important}
+.drawer{width:min(340px,90vw)!important;padding:14px 12px calc(18px + env(safe-area-inset-bottom))!important}
+.drawer-head{padding:9px 3px 14px!important}
+.bottom-nav{gap:2px!important}
+.nav-btn{padding:5px 1px!important;font-size:10px!important}
+.nav-btn span{font-size:18px!important}
+@media(max-width:420px){
+ .content{padding:12px 10px calc(100px + env(safe-area-inset-bottom))!important}
+ .card{padding:13px!important;border-radius:16px!important}
+ .hero{padding:18px 15px!important}
+ .stats{gap:5px!important}
+ .stat{padding:10px 3px!important}
+ .stat b{font-size:17px!important}
+ .quick-grid{gap:8px!important}
+ .quick-card{padding:11px 9px!important;min-height:95px!important}
+ .page-title{gap:7px!important}
+ .load-card{padding:12px!important}
+ .map-frame-wrap iframe{max-width:100%!important}
+}
+</style>
 </head>
 <body>
 <section id="loginPage" class="login-screen">
@@ -275,6 +322,39 @@ html,body{overscroll-behavior-y:auto}
 <button class="drawer-item" onclick="drawerGo('supportPage')"><span>؟</span> راهنما و پشتیبانی</button>
 <button class="drawer-item" onclick="drawerGo('emergencyGuidePage')"><span>🆘</span> راهنمای شرایط اضطراری</button>
 <button class="drawer-item" onclick="drawerGo('routeNotesPage')"><span>📝</span> یادداشت‌های سفر</button>
+
+<p class="drawer-group">🧰 ابزارهای بیشتر راننده</p>
+<button class="drawer-item" onclick="drawerGo('maintenanceGuidePage')"><span>🛢️</span> راهنمای روغن موتور و فیلترها</button>
+<button class="drawer-item" onclick="drawerGo('maintenanceGuidePage')"><span>⚙️</span> بررسی گیربکس و دیفرانسیل</button>
+<button class="drawer-item" onclick="drawerGo('maintenanceGuidePage')"><span>🌡️</span> کنترل دمای موتور</button>
+<button class="drawer-item" onclick="drawerGo('maintenanceGuidePage')"><span>🔋</span> باتری و برق کامیون</button>
+<button class="drawer-item" onclick="drawerGo('maintenanceGuidePage')"><span>💨</span> سیستم باد و ترمز بادی</button>
+<button class="drawer-item" onclick="drawerGo('preTripPage')"><span>🔦</span> کنترل چراغ‌ها و علائم</button>
+<button class="drawer-item" onclick="drawerGo('preTripPage')"><span>🪞</span> بررسی آینه‌ها و دید راننده</button>
+<button class="drawer-item" onclick="drawerGo('preTripPage')"><span>🧯</span> کنترل کپسول آتش‌نشانی</button>
+<button class="drawer-item" onclick="drawerGo('preTripPage')"><span>🔗</span> بررسی اتصالات و قفل بار</button>
+<button class="drawer-item" onclick="drawerGo('tireGuidePage')"><span>📏</span> فشار باد و آج لاستیک</button>
+<button class="drawer-item" onclick="drawerGo('tireGuidePage')"><span>♻️</span> زمان جابه‌جایی و تعویض لاستیک</button>
+<button class="drawer-item" onclick="drawerGo('fuelLogPage')"><span>📊</span> بررسی میانگین مصرف سوخت</button>
+<button class="drawer-item" onclick="drawerGo('fuelLogPage')"><span>⛽</span> سابقه سوخت‌گیری‌ها</button>
+<button class="drawer-item" onclick="drawerGo('tripCostPage');calculateTripCost()"><span>🧮</span> محاسبه هزینه هر کیلومتر</button>
+<button class="drawer-item" onclick="drawerGo('tripCostPage');calculateTripCost()"><span>📈</span> برآورد سود و زیان بار</button>
+<button class="drawer-item" onclick="drawerGo('tripCostPage');calculateTripCost()"><span>🛣️</span> هزینه عوارض و مخارج مسیر</button>
+<button class="drawer-item" onclick="drawerGo('routeNotesPage')"><span>📍</span> ثبت نکات مسیر و توقف‌ها</button>
+<button class="drawer-item" onclick="drawerGo('routeNotesPage')"><span>🅿️</span> یادداشت محل پارک و استراحت</button>
+<button class="drawer-item" onclick="drawerGo('emergencyGuidePage')"><span>🚨</span> اقدام هنگام خرابی در جاده</button>
+<button class="drawer-item" onclick="drawerGo('emergencyGuidePage')"><span>🛑</span> ایمنی هنگام توقف اضطراری</button>
+<button class="drawer-item" onclick="drawerGo('safetyGuidePage')"><span>🌧️</span> رانندگی در باران و لغزندگی</button>
+<button class="drawer-item" onclick="drawerGo('safetyGuidePage')"><span>⛰️</span> رانندگی در سرازیری و سربالایی</button>
+<button class="drawer-item" onclick="drawerGo('safetyGuidePage')"><span>🌙</span> نکات رانندگی شبانه</button>
+<button class="drawer-item" onclick="drawerGo('documentsGuidePage')"><span>🪪</span> کنترل اعتبار کارت‌ها و گواهینامه</button>
+<button class="drawer-item" onclick="drawerGo('documentsGuidePage')"><span>📑</span> مدارک لازم برای حمل بار</button>
+<button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>🗓️</span> سررسید بیمه و معاینه فنی</button>
+<button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>🔧</span> یادآور سرویس بعدی</button>
+<button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>🛞</span> یادآور بررسی لاستیک‌ها</button>
+<button class="drawer-item" onclick="drawerGo('truckPage')"><span>🔢</span> اطلاعات فنی و مشخصات کشنده</button>
+<button class="drawer-item" onclick="drawerGo('supportPage')"><span>☎️</span> راهنمای استفاده از سامانه</button>
+<button class="drawer-item" onclick="drawerGo('supportPage')"><span>💬</span> ارتباط و پشتیبانی</button>
 <hr class="drawer-divider"><button class="drawer-item logout-item" onclick="logout()"><span>↪</span> خروج از حساب</button></aside>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
