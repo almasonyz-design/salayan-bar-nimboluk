@@ -640,8 +640,8 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
  for(const item of intents){if(item.keys.some(k=>q.includes(norm(k))))return item.answer}
  if(!hasAppWords)return 'این سؤال خارج از موضوع برنامه به نظر می‌رسد. من فقط درباره امکانات و کار با صلایان بار پاسخ می‌دهم. درباره کدام بخش برنامه سؤال داری؟';
  return 'متوجه شدم که سؤالت درباره صلایان بار است، اما برای این مورد هنوز پاسخ مشخصی در راهنمای من ثبت نشده. از بخش «ارتباط و پشتیبانی» کمک بگیر یا سؤال را با نام دقیق بخش برنامه دوباره بنویس.'}
- window.askSalayanAI=function(q){input.value=q;form.requestSubmit()};
- form.addEventListener('submit',function(e){e.preventDefault();const q=input.value.trim();if(!q)return;addMessage(q,'user');input.value='';const answer=respond(q);addMessage(answer,'bot',answer.startsWith('این سؤال خارج'));});
+ window.askSalayanAI=function(raw){const q=String(raw||'').trim();if(!q)return;addMessage(q,'user');input.value='';const answer=respond(q);addMessage(answer,'bot',answer.startsWith('این سؤال خارج'));};
+ form.addEventListener('submit',function(e){e.preventDefault();window.askSalayanAI(input.value)});
 })();
 document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e){e.preventDefault();const field=document.getElementById('homeAiQuickInput');const question=field?.value.trim();if(!question)return;showPage('salayanAiPage');if(typeof window.askSalayanAI==='function'){window.askSalayanAI(question)}else{const target=document.getElementById('salayanAiInput');const form=document.getElementById('salayanAiForm');if(target&&form){target.value=question;form.requestSubmit()}}});
 </script>
