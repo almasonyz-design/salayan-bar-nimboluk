@@ -290,6 +290,51 @@ img,iframe,video,canvas{max-width:100%!important}
 <section id="safetyGuidePage" class="page"><div class="page-title"><h2>ایمنی رانندگی سنگین</h2></div><div class="card"><p>• فاصله طولی را با توجه به وزن، سرعت، شیب و وضعیت جاده بیشتر کن.</p><p>• در سرازیری از دنده مناسب و سیستم کمکی ترمز طبق دستورالعمل سازنده استفاده کن.</p><p>• در باد جانبی یا جاده لغزنده سرعت را کاهش بده.</p><p>• هنگام خستگی در محل امن توقف کن و با تلفن همراه رانندگی نکن.</p><p>• با نقص ترمز یا هشدار خطرناک، در محل امن توقف و کمک تخصصی بگیر.</p></div></section>
 <section id="emergencyGuidePage" class="page"><div class="page-title"><h2>راهنمای شرایط اضطراری</h2></div><div class="card"><p>۱. در خرابی، تا حد امکان به محل امن خارج از مسیر تردد برو و چراغ هشدار را روشن کن.</p><p>۲. در صورت امکان امن، علائم هشدار را طبق مقررات نصب کن.</p><p>۳. موقعیت دقیق، جهت حرکت و نوع خرابی را برای امداد آماده داشته باش.</p><p>۴. کنار ترافیک یا زیر کامیون تعمیر انجام نده؛ برای نقص ترمز از متخصص کمک بگیر.</p><div class="alert info">این بخش شماره امداد خودکار ندارد؛ شماره معتبر منطقه را از منابع رسمی بررسی کن.</div></div></section>
 <section id="routeNotesPage" class="page"><div class="page-title"><h2>یادداشت‌های سفر</h2></div><div class="card"><form id="routeNoteForm" onsubmit="addRouteNote(event)"><div class="field"><label>عنوان</label><input id="routeNoteTitle" maxlength="80" required placeholder="مثلاً وضعیت بار یا توقف"></div><div class="field"><label>یادداشت</label><textarea id="routeNoteBody" maxlength="600" required placeholder="جزئیات مسیر، هزینه یا نکته مهم"></textarea></div><button class="button full">＋ ذخیره یادداشت</button></form><p class="helper">یادداشت‌ها روی همین گوشی ذخیره می‌شوند.</p></div><div id="routeNotesList"></div></section>
+
+  <section id="expenseLogPage" class="page">
+   <div class="page-title"><h2>دفتر دخل‌وخرج سفر</h2></div>
+   <div class="card"><form id="expenseForm" onsubmit="addRecord(event,'salayan_expenses','expenseList',['expenseTitle','expenseAmount','expenseDate','expenseKind'])">
+    <div class="field"><label>شرح هزینه یا درآمد</label><input id="expenseTitle" maxlength="80" required placeholder="مثلاً بارگیری، تعمیر، کرایه"></div>
+    <div class="field-grid"><div class="field"><label>مبلغ (تومان)</label><input id="expenseAmount" type="number" min="1" required></div><div class="field"><label>تاریخ</label><input id="expenseDate" type="date" required></div></div>
+    <div class="field"><label>نوع</label><select id="expenseKind"><option value="out">هزینه</option><option value="in">درآمد</option></select></div><button class="button full">ثبت در دفتر مالی</button>
+   </form></div><div id="expenseSummary" class="stats"></div><div id="expenseList"></div>
+  </section>
+  <section id="serviceLogPage" class="page">
+   <div class="page-title"><h2>دفتر سرویس و تعمیرات</h2></div>
+   <div class="card"><form id="serviceForm" onsubmit="addRecord(event,'salayan_services','serviceList',['serviceTitle','serviceOdo','serviceCost','serviceDate','serviceNext'])">
+    <div class="field"><label>نوع سرویس یا تعمیر</label><input id="serviceTitle" required maxlength="100" placeholder="مثلاً روغن موتور، فیلتر گازوئیل"></div>
+    <div class="field-grid"><div class="field"><label>کیلومتر فعلی</label><input id="serviceOdo" type="number" min="0" required></div><div class="field"><label>هزینه (تومان)</label><input id="serviceCost" type="number" min="0" value="0" required></div><div class="field"><label>تاریخ</label><input id="serviceDate" type="date" required></div><div class="field"><label>موعد بعدی (کیلومتر)</label><input id="serviceNext" type="number" min="0" placeholder="اختیاری"></div></div><button class="button full">ذخیره سابقه سرویس</button>
+   </form></div><div id="serviceList"></div>
+  </section>
+  <section id="tireLogPage" class="page">
+   <div class="page-title"><h2>دفتر کنترل لاستیک‌ها</h2></div>
+   <div class="card"><form id="tireForm" onsubmit="addRecord(event,'salayan_tires','tireList',['tirePosition','tirePressure','tireTread','tireCondition','tireDate'])">
+    <div class="field-grid"><div class="field"><label>محل لاستیک</label><select id="tirePosition"><option>محور جلو چپ</option><option>محور جلو راست</option><option>محور عقب چپ</option><option>محور عقب راست</option><option>یدکی</option></select></div><div class="field"><label>فشار باد (واحد دستگاه)</label><input id="tirePressure" type="number" min="0" step="0.1" required></div><div class="field"><label>عمق آج (میلی‌متر)</label><input id="tireTread" type="number" min="0" step="0.1" required></div><div class="field"><label>وضعیت ظاهری</label><select id="tireCondition"><option>سالم</option><option>نیازمند بررسی</option><option>آسیب‌دیده</option></select></div></div><div class="field"><label>تاریخ بررسی</label><input id="tireDate" type="date" required></div><button class="button full">ثبت بررسی لاستیک</button>
+   </form><p class="helper">فشار مناسب را از جدول سازنده با توجه به محور و بار بردار؛ عدد ثابت برای همه کامیون‌ها مناسب نیست.</p></div><div id="tireList"></div>
+  </section>
+  <section id="documentExpiryPage" class="page">
+   <div class="page-title"><h2>پیگیری تاریخ انقضای مدارک</h2></div>
+   <div class="card"><form id="docExpiryForm" onsubmit="addRecord(event,'salayan_doc_expiry','docExpiryList',['docName','docExpiryDate','docExpiryNote'])">
+    <div class="field"><label>نام مدرک</label><input id="docName" required maxlength="80" placeholder="بیمه، معاینه فنی، کارت هوشمند..."></div><div class="field-grid"><div class="field"><label>تاریخ انقضا</label><input id="docExpiryDate" type="date" required></div><div class="field"><label>یادداشت</label><input id="docExpiryNote" maxlength="100" placeholder="اختیاری"></div></div><button class="button full">ثبت تاریخ مدرک</button>
+   </form></div><div id="docExpiryList"></div>
+  </section>
+  <section id="fuelEconomyPage" class="page">
+   <div class="page-title"><h2>محاسبه‌گر مصرف واقعی سوخت</h2></div>
+   <div class="card"><p class="muted">برای محاسبه مصرف بین دو سوخت‌گیری، کیلومتر شروع و پایان و لیتر مصرف‌شده را وارد کن.</p><div class="field-grid"><div class="field"><label>کیلومتر شروع</label><input id="ecoStart" type="number" min="0" value="0"></div><div class="field"><label>کیلومتر پایان</label><input id="ecoEnd" type="number" min="0" value="500"></div><div class="field"><label>سوخت مصرفی (لیتر)</label><input id="ecoLitres" type="number" min="0.1" step="0.1" value="175"></div><div class="field"><label>قیمت هر لیتر (تومان)</label><input id="ecoPrice" type="number" min="0" value="600"></div></div><button class="button full" onclick="calculateEconomy()">محاسبه مصرف و هزینه</button><div id="ecoResult" class="alert info" aria-live="polite">نتیجه محاسبه اینجا نمایش داده می‌شود.</div></div>
+  </section>
+  <section id="driverHoursPage" class="page">
+   <div class="page-title"><h2>دفتر ساعت رانندگی و استراحت</h2></div>
+   <div class="card"><form onsubmit="addRecord(event,'salayan_hours','hoursList',['hoursDate','hoursDrive','hoursRest','hoursNote'])">
+    <div class="field-grid"><div class="field"><label>تاریخ</label><input id="hoursDate" type="date" required></div><div class="field"><label>ساعت رانندگی</label><input id="hoursDrive" type="number" min="0" max="24" step="0.25" required></div><div class="field"><label>ساعت استراحت</label><input id="hoursRest" type="number" min="0" max="24" step="0.25" required></div></div><div class="field"><label>یادداشت</label><input id="hoursNote" maxlength="100" placeholder="مسیر یا توضیح"></div><button class="button full">ثبت کارکرد روزانه</button></form><p class="helper">این دفتر فقط برای ثبت شخصی است و جایگزین قوانین رسمی ساعات کار و استراحت نیست.</p></div><div id="hoursList"></div>
+  </section>
+  <section id="loanCalcPage" class="page">
+   <div class="page-title"><h2>محاسبه‌گر اقساط کامیون</h2></div>
+   <div class="card"><div class="field-grid"><div class="field"><label>مبلغ وام (تومان)</label><input id="loanAmount" type="number" min="0" value="4000000000"></div><div class="field"><label>نرخ سالانه (درصد)</label><input id="loanRate" type="number" min="0" max="100" step="0.1" value="23"></div><div class="field"><label>مدت (ماه)</label><input id="loanMonths" type="number" min="1" max="360" value="36"></div></div><button class="button full" onclick="calculateLoan()">محاسبه قسط تقریبی</button><div id="loanResult" class="alert info">قسط و مجموع پرداخت اینجا نمایش داده می‌شود.</div><p class="helper">محاسبه برآوردی با اقساط مساوی است؛ کارمزد، بیمه، پیش‌پرداخت و شرایط قرارداد ممکن است مبلغ واقعی را تغییر دهد.</p></div>
+  </section>
+  <section id="cargoChecklistPage" class="page">
+   <div class="page-title"><h2>چک‌لیست مهار و تحویل بار</h2></div>
+   <div class="card"><p class="muted">موارد انجام‌شده را علامت بزن؛ وضعیت در همین گوشی ذخیره می‌شود.</p><div id="cargoChecks"></div><button class="button full" onclick="resetCargoChecks()">شروع چک‌لیست جدید</button><div id="cargoProgress" class="alert info">۰ مورد از ۱۰ مورد انجام شده</div></div>
+  </section>
   <section id="supportPage" class="page"><div class="page-title"><div><span class="eyebrow">HELP CENTER</span><h2>راهنما و خدمات</h2></div></div><div class="card"><button class="drawer-item" onclick="showPage('gpsPage')"><span>⌖</span> GPS و مسیریابی</button><button class="drawer-item" onclick="showPage('loadsPage');showLoads()"><span>⇄</span> جستجوی بار</button><button class="drawer-item" onclick="showPage('createLoadPage')"><span>＋</span> اعلام بار</button><button class="drawer-item" onclick="showPage('walletPage');showWallet()"><span>▣</span> کیف پول</button><button class="drawer-item" onclick="showPage('truckPage')"><span>🚛</span> کامیون و مدارک</button><button class="drawer-item" onclick="showPage('profilePage')"><span>♙</span> پروفایل و خروج</button></div><div class="card"><h3 style="margin-top:0">راهنمای استفاده</h3><p class="muted">۱. از تالار بار، مبدأ و مقصد یا نوع کالا را جستجو کنید.</p><p class="muted">۲. پیش از انتخاب بار، کرایه، وزن و نوع بار را بررسی کنید.</p><p class="muted">۳. برای مسیریابی، GPS را باز کنید و مجوز موقعیت مکانی را بدهید.</p></div></section>
  </main>
  <nav class="bottom-nav" aria-label="ناوبری اصلی"><button id="navHome" class="nav-btn active" onclick="showPage('homePage')" type="button"><span>⌂</span>خانه</button><button id="navLoads" class="nav-btn" onclick="showPage('loadsPage');showLoads()" type="button"><span>⇄</span>تالار بار</button><button id="navMine" class="nav-btn" onclick="showPage('myLoadsPage');showMyLoads()" type="button"><span>▤</span>بارهای من</button><button id="navWallet" class="nav-btn" onclick="showPage('walletPage');showWallet()" type="button"><span>▣</span>کیف پول</button><button id="navMore" class="nav-btn" onclick="openMenu()" type="button"><span>☰</span>بیشتر</button></nav>
@@ -375,7 +420,7 @@ function enterDemoMode(){currentUser={id:"00000000-0000-0000-0000-000000000001",
 function enterApp(phone){$("loginPage").classList.add("hide");$("appPage").classList.remove("hide");$("profilePhone").value=phone||"—";showPage("homePage");refreshHome();showWallet()}
 async function checkSession(){try{const {data}=await supabaseClient.auth.getSession();if(data.session?.user){currentUser=data.session.user;const phone=localStorage.getItem("salayan_phone")||currentUser.phone||"";enterApp(phone)}}catch(e){console.warn(e)}}
 async function logout(){closeMenu();try{if(!currentUser?.user_metadata?.demo)await supabaseClient.auth.signOut()}catch(e){}currentUser=null;localStorage.removeItem("salayan_demo_login");localStorage.removeItem("salayan_phone");$("appPage").classList.add("hide");$("loginPage").classList.remove("hide");$("otpArea").classList.add("hide");$("otpCode").value="";$("loginMessage").innerHTML="";notify("از حساب خارج شدید")}
-const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","tripCostPage","remindersPage","supportPage","maintenanceGuidePage","preTripPage","tireGuidePage","fuelLogPage","documentsGuidePage","safetyGuidePage","emergencyGuidePage","routeNotesPage"];
+const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","tripCostPage","remindersPage","supportPage","maintenanceGuidePage","preTripPage","tireGuidePage","fuelLogPage","documentsGuidePage","safetyGuidePage","emergencyGuidePage","routeNotesPage","expenseLogPage","serviceLogPage","tireLogPage","documentExpiryPage","fuelEconomyPage","driverHoursPage","loanCalcPage","cargoChecklistPage"];
 function showPage(id){if(!pages.includes(id))return;pages.forEach(p=>$(p).classList.toggle("active",p===id));const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};document.querySelectorAll(".nav-btn").forEach(b=>{b.classList.remove("active");b.removeAttribute("aria-current")});if(navMap[id]){$(navMap[id]).classList.add("active");$(navMap[id]).setAttribute("aria-current","page")};$("topSubtitle").textContent=({homePage:"مرکز هوشمند راننده",gpsPage:"موقعیت و مسیریابی",loadsPage:"جستجو و انتخاب بار",myLoadsPage:"پیگیری بارهای انتخاب‌شده",createLoadPage:"ثبت اطلاعات بار",walletPage:"مدیریت موجودی",profilePage:"اطلاعات حساب",truckPage:"خودرو و مدارک",notificationsPage:"پیام‌ها و اطلاعیه‌ها",tripCostPage:"برآورد هزینه و سود سفر",supportPage:"راهنما و خدمات",maintenanceGuidePage:"سرویس دوره‌ای کامیون",preTripPage:"چک‌لیست قبل از حرکت",tireGuidePage:"بررسی لاستیک",fuelLogPage:"دفتر سوخت",documentsGuidePage:"مدارک راننده و کامیون",safetyGuidePage:"ایمنی رانندگی",emergencyGuidePage:"شرایط اضطراری",routeNotesPage:"یادداشت‌های سفر"})[id]||"صلایان بار";closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(id==="gpsPage")refreshMap();if(id==="walletPage")showWallet()}
 function openMenu(){$("menuOverlay").classList.add("open");$("drawer").classList.add("open");document.body.style.overflow="hidden"}
 function closeMenu(){$("menuOverlay").classList.remove("open");$("drawer").classList.remove("open");document.body.style.overflow=""}
@@ -447,4 +492,50 @@ enterDemoMode();
  });
  frame.style.height='900px';
 })();
-</script></body></html>
+</script>
+<script id="salayan-practical-tools-v1">
+const toolStore={
+ get(key){try{return JSON.parse(localStorage.getItem(key)||"[]")}catch(e){return[]}},
+ set(key,value){localStorage.setItem(key,JSON.stringify(value))}
+};
+function toolVal(id){const e=document.getElementById(id);return e?e.value.trim():""}
+function addRecord(event,key,listId,ids){
+ event.preventDefault();const row={id:Date.now()+"_"+Math.random().toString(36).slice(2),savedAt:new Date().toISOString()};
+ ids.forEach(id=>row[id]=toolVal(id));
+ const rows=toolStore.get(key);rows.unshift(row);toolStore.set(key,rows);event.target.reset();
+ renderRecords(key,listId);notify("اطلاعات ذخیره شد");
+}
+function renderRecords(key,listId){
+ const el=document.getElementById(listId);if(!el)return;const rows=toolStore.get(key);
+ if(!rows.length){el.innerHTML='<div class="empty">هنوز موردی ثبت نشده است.</div>';return}
+ const labels={expenseTitle:"شرح",expenseAmount:"مبلغ",expenseDate:"تاریخ",expenseKind:"نوع",serviceTitle:"سرویس",serviceOdo:"کیلومتر",serviceCost:"هزینه",serviceDate:"تاریخ",serviceNext:"موعد بعدی",tirePosition:"محل",tirePressure:"فشار باد",tireTread:"عمق آج",tireCondition:"وضعیت",tireDate:"تاریخ",docName:"مدرک",docExpiryDate:"انقضا",docExpiryNote:"یادداشت",hoursDate:"تاریخ",hoursDrive:"ساعت رانندگی",hoursRest:"ساعت استراحت",hoursNote:"یادداشت"};
+ el.innerHTML=rows.map(row=>'<div class="card tool-record"><div class="section-head"><b>'+esc(labels[Object.keys(row).find(k=>labels[k])]||"ثبت")+'</b><button class="button light small" onclick="deleteRecord(\''+key+'\',\''+row.id+'\',\''+listId+'\')">حذف</button></div>'+Object.keys(row).filter(k=>labels[k]&&row[k]).map(k=>'<p><b>'+esc(labels[k])+':</b> '+esc(k==="expenseAmount"||k==="serviceCost"?Number(row[k]).toLocaleString("fa-IR")+" تومان":row[k])+'</p>').join("")+'</div>').join("");
+ if(key==="salayan_expenses"){
+ const income=rows.filter(x=>x.expenseKind==="in").reduce((a,x)=>a+Number(x.expenseAmount||0),0);
+ const out=rows.filter(x=>x.expenseKind==="out").reduce((a,x)=>a+Number(x.expenseAmount||0),0);
+ const s=document.getElementById("expenseSummary");if(s)s.innerHTML='<div class="stat"><b>'+income.toLocaleString("fa-IR")+'</b><span>درآمد</span></div><div class="stat"><b>'+out.toLocaleString("fa-IR")+'</b><span>هزینه</span></div><div class="stat"><b>'+(income-out).toLocaleString("fa-IR")+'</b><span>مانده</span></div>';
+ }
+}
+function deleteRecord(key,id,listId){toolStore.set(key,toolStore.get(key).filter(x=>x.id!==id));renderRecords(key,listId);notify("مورد حذف شد")}
+function calculateEconomy(){
+ const a=Number(toolVal("ecoStart")),b=Number(toolVal("ecoEnd")),l=Number(toolVal("ecoLitres")),p=Number(toolVal("ecoPrice")),el=document.getElementById("ecoResult");
+ if(b<=a||l<=0||p<0){el.textContent="کیلومتر پایان باید بیشتر از شروع باشد و لیتر سوخت مثبت باشد.";return}
+ const km=b-a,cons=l/km*100,cost=l*p;el.innerHTML='<b>مسافت:</b> '+km.toLocaleString("fa-IR")+' کیلومتر<br><b>مصرف متوسط:</b> '+cons.toLocaleString("fa-IR",{maximumFractionDigits:2})+' لیتر در ۱۰۰ کیلومتر<br><b>هزینه سوخت:</b> '+cost.toLocaleString("fa-IR")+' تومان<br><b>هزینه سوخت هر کیلومتر:</b> '+(cost/km).toLocaleString("fa-IR",{maximumFractionDigits:0})+' تومان';
+}
+function calculateLoan(){
+ const a=Number(toolVal("loanAmount")),annual=Number(toolVal("loanRate"))/100/12,n=Math.floor(Number(toolVal("loanMonths"))),el=document.getElementById("loanResult");
+ if(a<=0||n<1||annual<0){el.textContent="مبلغ، نرخ و مدت را بررسی کن.";return}
+ const payment=annual===0?a/n:a*annual*Math.pow(1+annual,n)/(Math.pow(1+annual,n)-1);
+ el.innerHTML='<b>قسط ماهانه تقریبی:</b> '+Math.round(payment).toLocaleString("fa-IR")+' تومان<br><b>مجموع اقساط:</b> '+Math.round(payment*n).toLocaleString("fa-IR")+' تومان<br><b>هزینه مالی تقریبی:</b> '+Math.round(payment*n-a).toLocaleString("fa-IR")+' تومان';
+}
+const cargoItems=["تطبیق نوع و وزن بار با مشخصات کامیون","بررسی سلامت کف اتاق یا کمپرسی","توزیع بار تا حد امکان متعادل","بررسی تسمه، زنجیر یا مهار مناسب","اطمینان از بسته بودن قفل‌ها و درها","پوشاندن بار در صورت نیاز","بررسی ارتفاع و عرض بار","تطبیق تعداد بسته‌ها با اسناد","ثبت عکس از بار و وضعیت مهار","بازبینی نهایی پیش از حرکت"];
+function renderCargoChecks(){
+ const el=document.getElementById("cargoChecks");if(!el)return;let state={};try{state=JSON.parse(localStorage.getItem("salayan_cargo_checks")||"{}")}catch(e){}
+ el.innerHTML=cargoItems.map((x,i)=>'<label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><input type="checkbox" '+(state[i]?"checked":"")+' onchange="setCargoCheck('+i+',this.checked)" style="width:20px;height:20px"><span>'+x+'</span></label>').join("");updateCargoProgress();
+}
+function setCargoCheck(i,v){let s={};try{s=JSON.parse(localStorage.getItem("salayan_cargo_checks")||"{}")}catch(e){}s[i]=v;localStorage.setItem("salayan_cargo_checks",JSON.stringify(s));updateCargoProgress()}
+function updateCargoProgress(){let s={};try{s=JSON.parse(localStorage.getItem("salayan_cargo_checks")||"{}")}catch(e){}const n=cargoItems.filter((_,i)=>s[i]).length,el=document.getElementById("cargoProgress");if(el)el.textContent=n+" مورد از "+cargoItems.length+" مورد انجام شده"}
+function resetCargoChecks(){if(!confirm("چک‌لیست برای بار جدید پاک شود؟"))return;localStorage.removeItem("salayan_cargo_checks");renderCargoChecks()}
+document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_expenses","salayan_services","salayan_tires","salayan_doc_expiry","salayan_hours"].forEach((k,i)=>renderRecords(k,["expenseList","serviceList","tireList","docExpiryList","hoursList"][i]));});
+</script>
+</body></html>
