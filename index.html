@@ -206,7 +206,7 @@ img,iframe,video,canvas{max-width:100%!important}
 @media(max-width:390px){.salayan-question-row{gap:5px}.salayan-question-send{padding:7px 8px;font-size:10px}.salayan-question-item{padding:9px 8px}}
 </style>
 <style id="support-question-bank-vertical-layout">
-#questionBankPage .salayan-ai-photo-catalog{margin-top:12px}
+#questionBankPage .salayan-support-question-catalog{margin-top:12px}
 #questionBankPage .salayan-category-filters{display:flex!important;flex-direction:column!important;overflow:visible!important;gap:7px!important;padding:5px 0 12px!important}
 #questionBankPage .salayan-category-chip{display:block!important;flex:0 0 auto!important;width:100%!important;min-height:43px!important;border-radius:12px!important;text-align:right!important;white-space:normal!important}
 #questionBankPage .salayan-question-list{display:flex!important;flex-direction:column!important;gap:8px!important}
@@ -610,130 +610,8 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
 })();
 </script>
 
-<style id="salayan-ai-ui-v1">
-.salayan-ai-intro{display:flex;align-items:flex-start;gap:13px;background:linear-gradient(135deg,#075b42,#0c9369);color:#fff;border:0}.salayan-ai-intro p{margin:6px 0 0;color:#e0fff0}.salayan-ai-avatar{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:16px;background:#ffffff24;font-size:27px}.salayan-ai-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.salayan-ai-chips button{border:1px solid #cde8d8;background:#f0faf4;color:#087452;border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800}.salayan-ai-chat{display:flex;flex-direction:column;gap:10px;min-height:180px;max-height:48dvh;overflow:auto;padding:12px;background:#f4f8f5;border:1px solid #e1ebe4;border-radius:17px;scroll-behavior:smooth}.salayan-ai-message{max-width:94%;padding:11px 13px;border-radius:15px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}.salayan-ai-message p{margin:4px 0 0;font-size:12px;line-height:1.9}.salayan-ai-message.bot{align-self:flex-start;background:#fff;border:1px solid #dcebe1;border-bottom-right-radius:5px}.salayan-ai-message.user{align-self:flex-end;background:#087f5b;color:#fff;border-bottom-left-radius:5px}.salayan-ai-message.user p{color:#fff}.salayan-ai-message.warning{background:#fff8e8;border-color:#f0d9a6;color:#76521b}.salayan-ai-form{display:flex;gap:8px;align-items:stretch;margin-top:12px}.salayan-ai-form textarea{flex:1;min-width:0;resize:vertical;min-height:48px;max-height:130px}.salayan-ai-form .button{align-self:stretch;min-width:92px}.salayan-ai-foot{font-size:10px!important;margin:10px 2px 0}.salayan-ai-menu{background:#eaf8f0!important;border-color:#ccebd8!important;color:#087452!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:390px){.salayan-ai-form{gap:6px}.salayan-ai-form .button{min-width:76px;padding:8px}.salayan-ai-message{max-width:100%}}
-/* HOME PAGE AI ASSISTANT SHORTCUT */
-.salayan-ai-home-card{width:100%;display:flex;align-items:center;gap:13px;text-align:right;padding:15px;margin:0 0 20px;border:1px solid #b8e7d0;border-radius:20px;background:linear-gradient(120deg,#e5f8ed,#fff 75%);box-shadow:0 9px 24px #087f5b12;color:var(--ink);min-height:88px;touch-action:manipulation}
-.salayan-ai-home-icon{width:49px;height:49px;flex:0 0 49px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#18b980,#08734f);font-size:26px;box-shadow:0 6px 15px #087f5b24}
-.salayan-ai-home-copy{flex:1;min-width:0}.salayan-ai-home-copy strong{display:block;font-size:15px;font-weight:900;color:#08734f}.salayan-ai-home-copy small{display:block;margin-top:3px;font-size:11px;line-height:1.7;color:#577466}.salayan-ai-home-arrow{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:12px;background:#d4f1e1;color:#08734f;font-size:21px;font-weight:bold}
-@media(min-width:700px){.salayan-ai-home-card{max-width:100%;padding:18px 20px}.salayan-ai-home-copy strong{font-size:16px}}
-/* DIRECT QUESTION INPUT ON HOME SCREEN */
-.salayan-ai-home-card{display:block;width:100%;padding:16px;margin:0 0 20px;border:1px solid #b8e7d0;border-radius:20px;background:linear-gradient(135deg,#e5f8ed,#fff 78%);box-shadow:0 9px 24px #087f5b12;color:var(--ink)}
-.salayan-ai-home-heading{display:flex;align-items:center;gap:12px;margin-bottom:13px}.salayan-ai-home-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#18b980,#08734f);font-size:25px;box-shadow:0 6px 15px #087f5b24}.salayan-ai-home-copy{flex:1;min-width:0}.salayan-ai-home-copy strong{display:block;font-size:15px;font-weight:900;color:#08734f}.salayan-ai-home-copy small{display:block;margin-top:3px;font-size:11px;line-height:1.7;color:#577466}
-.salayan-ai-home-form{display:flex;gap:8px;align-items:stretch;width:100%}.salayan-ai-home-form input{min-width:0;flex:1;width:100%;border:1px solid #cde5d7;border-radius:13px;background:#fff;padding:12px;font-size:13px;color:var(--ink)}.salayan-ai-home-form input:focus{outline:3px solid #10a87830;border-color:#12a879}.salayan-ai-home-form .button{flex:0 0 auto;min-height:46px;white-space:nowrap;padding:10px 13px}.salayan-ai-home-open{display:block;border:0;background:transparent;color:#087f5b;font-size:11px;font-weight:800;padding:10px 0 0;margin-right:auto}
-@media(max-width:370px){.salayan-ai-home-form{flex-direction:column}.salayan-ai-home-form .button{width:100%}}
-</style>
-<script id="salayan-ai-logic-v1">
-(function(){
- const form=document.getElementById('salayanAiForm'),input=document.getElementById('salayanAiInput'),chat=document.getElementById('salayanAiChat');
- if(!form||!input||!chat)return;
- const addMessage=(text,who,warning=false)=>{const item=document.createElement('div');item.className='salayan-ai-message '+who+(warning?' warning':'');if(who==='bot'){const b=document.createElement('b');b.textContent=warning?'تنبیه محدوده پاسخ‌گویی':'دستیار صلایان';item.appendChild(b)}const p=document.createElement('p');p.textContent=text;item.appendChild(p);chat.appendChild(item);chat.scrollTop=chat.scrollHeight};
- const norm=s=>String(s||'').toLowerCase()
- .normalize('NFKC').replace(/[\u064B-\u065F\u0670\u0640]/g,'')
- .replace(/[يىئ]/g,'ی').replace(/ك/g,'ک').replace(/[ۀة]/g,'ه')
- .replace(/[\u200c\u200d\u200e\u200f\ufeff]/g,' ')
- .replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
- .replace(/\bمی\s+/g,'می').replace(/\bنمی\s+/g,'نمی')
- .replace(/\bرو\b/g,' را ').replace(/\bواسه\b/g,' برای ').replace(/\bواسهٔ\b/g,' برای ')
- .replace(/\bچجوری\b|\bچجور\b|\bچطوری\b/g,'چطور').replace(/\bچیکار\b|\bچی کار\b/g,'چه کار')
- .replace(/\bمیشه\b|\bمیشع\b/g,'می شود').replace(/\bنمیشه\b|\bنمی شه\b|\bنمی‌شه\b/g,'نمی شود')
- .replace(/\bمیخوام\b|\bمیخام\b|\bمیخاستم\b/g,'می خواهم').replace(/\bمیخواد\b|\bمیخاد\b/g,'می خواهد')
- .replace(/\bنمیخوام\b|\bنمیخام\b/g,'نمی خواهم').replace(/\bمیاد\b|\bمیادش\b/g,'می آید')
- .replace(/\bنیس\b|\bنیستش\b/g,'نیست').replace(/\bهس\b|\bهستش\b/g,'هست')
- .replace(/\bکجاس\b|\bکجاستش\b/g,'کجا است').replace(/\bنمیاد\b/g,'نمی آید')
- .replace(/\bواسه\b/g,'برای').replace(/\bیه\b/g,'یک').replace(/\bیعنی چی\b/g,'یعنی چه')
- .replace(/[؟?!.،,:؛؛؛!،؛…؛؛؛()\[\]{}"'«»ـ_+=\\/|<>@#$%^&*~،؛]/g,' ')
- .replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
-const compact=s=>norm(s).replace(/\s/g,'');
-const editDistance=(a,b)=>{if(a===b)return 0;if(Math.abs(a.length-b.length)>1)return 2;let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const cur=[i];let rowMin=i;for(let j=1;j<=b.length;j++){const v=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));cur[j]=v;if(v<rowMin)rowMin=v;}if(rowMin>1)return 2;prev=cur;}return prev[b.length];};
-const dialectAliases={
- 'نقشه سفید':['نقشه سفیده','نقشه سفیده بالا نمیاد','مپ سفیده','نقشه سفيد','نقشه سفیده اصلا نمیاد','نقشه خالیه','نقشه هیچی نشون نمیده','نقشه هیچی نشون نمیده ها'],
- 'gps کار نمی کند':['جی پی اس کار نمیکنه','جی پی اس کار نمیکنه ها','جی پی اس خرابه','جی پی اس قاطی کرده','جی پی اس نمیخونه','جی پی اس راه نمیفته','جی پی اس بالا نمیاد','جی پی اس لوکیشن نمیده','جی پی اسه کار نمیکنه'],
- 'موقعیت اشتباه':['جای منو اشتباه زده','لوکیشنمو غلط میاره','لوکیشنم غلطه','لوکیشنو اشتباه میاره','موقعیتمو غلط نشون میده','جای منو درست نمیاره','مکانمو کج نشون میده','نقطه آبی جای دیگه است','جای من اشتباهه','مکان منو غلط میزنه'],
- 'نقشه حرکت نمی کند':['نقشه تکون نمیخوره','نقشه جم نمیخوره','نقشه رو نمیشه کشید','نقشه قفل کرده','نقشه گیر کرده','نقشه وایساده','نقشه حرکت نداره'],
- 'مسیر نمی دهد':['مسیر نمیده','راه نمیاره','راه رو نشون نمیده','مسیر یابی نمیکنه','مسیر نمیسازه','مسیرو نمیاره','راه رو نمیاره'],
- 'بار نمایش داده نمی شود':['بارا نمیاد','بارا نمیان','بار نیس','باری نیس','هیچ باری نمیاره','بار خالیه','اعلام بار نمیاد','بار رو نمیبینم'],
- 'ثبت نام نمی شود':['ثبت نام نمیشه','ثبتنام نمیشه','نمیذاره ثبت نام کنم','ثبت نام نمیکنه','ثبت نام گیر کرده'],
- 'ورود نمی شود':['نمیتونم بیام تو برنامه','نمیذاره وارد شم','ورودم نمیشه','وارد برنامه نمیشه','نمیتونم لاگین کنم'],
- 'پرداخت ناموفق':['پول کم کرد ولی شارژ نشد','پولو برداشت کیف پول شارژ نشد','پول از حسابم رفت','درگاه برگشت زد','پرداخت گیر کرد'],
- 'کند':['برنامه لاکپشتیه','خیلی کند بالا میاد','دیر لود میشه','برنامه هنگه','برنامه قفل میکنه','صلایان بار سنگینه'],
- 'موقعیت فعلی':['جای الانمو بیار','الان کجام','مکان الانم کجاست','لوکیشن فعلیم','جای خودمو نشون بده'],
- 'مصرف سوخت':['گازوئیل سوزی','گازوییل','گازوئیل چقدر میسوزونه','مصرف گازوییل','مصرف مازوت'],
- 'کیف پول':['کیف پوله','موجودی کیف پولم','پول تو کیفم','کیفم شارژ نمیشه','کیف پول شارژ نمیشه'],
- 'لاستیک':['لاستیکا','لاستیکام','باد لاستیک','باد چرخ','آج لاستیک'],
- 'تعمیرات':['ماشین خرابه','کشنده خراب شده','سرویس کشنده','روغن عوض کردن','دفتر تعمیرات'],
- 'بار نوبتی':['بار نوبتی چیه','نوبتی یعنی چی','بار نوبت دار','بار نوبتی کجاست','بارا نمیان چیکار کنم','بارا نمیان','بارا نمیاد','بارا نمیبینم','بارا نیس','بار نیس','هیچ باری نمیاره','لیست بار خالیه'],
- 'بار آزاد':['بار آزاد چیه','آزاد یعنی چی','بار آزاد کجاست'],
- 'مسیریابی':['راه‌یابی','راه یابی','راه نشون دادن','مسیر رفتن','راه بلد'],
- 'ثبت بار':['بار بزنم','اعلام بار بذارم','بار ثبت کنم','بار جدید بزارم','بار جدید بذارم'],
- 'چک لیست بار':['چک لیست بارگیری','مهار کردن بار','بستن بار','بارو چجوری چک کنم']
-};
-const aliasEntries=Object.entries(dialectAliases);
-const expandPhrases=phrases=>{const out=new Set();for(const p of phrases){const n=norm(p);if(!n)continue;out.add(n);out.add(n.replace(/\s+/g,''));out.add(n.replace(/ی/g,'ي'));out.add(n.replace(/ک/g,'ك'));out.add(n.replace(/ /g,'‌'));out.add(n.replace(/می /g,'می').replace(/نمی /g,'نمی'));out.add(n.replace(/می/g,'می ' ).replace(/نمی /g,'نمی'));for(const [base,aliases] of aliasEntries){if(n.includes(norm(base))||norm(base).includes(n)){for(const a of aliases)out.add(norm(a));}}}return [...out];};
-const matchesKey=(question,key)=>{const q=norm(question),k=norm(key);if(!k)return false;const direct=x=>q.includes(norm(x))||compact(q).includes(compact(x));if(direct(k))return true;for(const [base,aliases] of aliasEntries){const b=norm(base);if(k===b||k.includes(b)||b.includes(k)){if(aliases.some(a=>direct(a)))return true;}}const qt=q.split(' '),kt=k.split(' ').filter(t=>t.length>2);if(kt.length>1&&kt.every(t=>qt.some(w=>w===t||(w.length>=5&&editDistance(w,t)===1))))return true;if(k.length>=5&&k.split(' ').length===1&&qt.some(w=>w.length>=5&&editDistance(w,k)===1))return true;return false;};
 
- const outOfScope=['آب و هوا','هواشناسی','قیمت دلار','قیمت بیت کوین','ترید','فارکس','بورس','فوتبال','انتخابات','سیاست','خبر امروز','درمان','دارو','بیماری','رابطه عاطفی','تعبیر خواب','شعر','ترجمه','ریاضی','تکلیف مدرسه','اخبار جهان'];
- const intents=[
- {keys:['سلام','درود','خسته نباشی','وقت بخیر'],answer:'سلام راننده عزیز! من دستیار مخصوص صلایان بار هستم. درباره بخش‌های برنامه، بارها، GPS، کیف پول و ابزارهای راننده بپرس.'},
- {keys:['پیدا کردن بار','جستجوی بار','جستجو بار','انتخاب بار','تالار بار','بار نوبتی','بار آزاد','بارها کجا','نوبتی','آزاد'],answer:'از منوی «بیشتر» وارد «تالار هوشمند بار» شو. می‌توانی مبدأ، مقصد یا نوع کالا را جست‌وجو کنی و با فیلترهای «نوبتی» و «آزاد» بارها را جدا ببینی. قبل از انتخاب، مسیر، وزن و کرایه را بررسی کن.'},
- {keys:['ثبت بار','اعلام بار','بار جدید','ثبت اعلام بار'],answer:'از منوی «بیشتر» گزینه «اعلام بار جدید» را باز کن، اطلاعات مبدأ، مقصد، نوع و وزن بار و کرایه را تکمیل کن و فرم را ثبت کن. ثبت نهایی به وضعیت حساب و اتصال سامانه بستگی دارد.'},
- {keys:['gps','جی پی اس','موقعیت','مسیریابی','نقشه','مکان من','فلش'],answer:'از منوی «بیشتر» وارد «نقشه و مسیریابی GPS» شو. مجوز مکان‌یابی مرورگر و GPS گوشی را روشن کن، سپس دکمه 📍 موقعیت من را بزن. اگر مکان نمایش داده نشد، اینترنت و مجوز Location مرورگر را بررسی کن و صفحه را دوباره باز کن.'},
- {keys:['کیف پول','موجودی','شارژ','هزینه انتخاب بار','هزینه انتخاب'],answer:'کیف پول از نوار پایین برنامه قابل دسترسی است. در نسخه فعلی، اتصال شارژ واقعی به درگاه پرداخت ممکن است هنوز فعال نباشد؛ قبل از پرداخت، پیام‌های همان صفحه را بخوان.'},
- {keys:['دخل و خرج','دخل‌وخرج','درآمد','هزینه کامیون','ثبت هزینه','دفتر هزینه','سود سفر'],answer:'از منوی «بیشتر» بخش «دفتر دخل‌وخرج سفر» را باز کن. درآمد یا هزینه، شرح، مبلغ و تاریخ را ثبت کن؛ جمع درآمد، هزینه و مانده در همان صفحه نمایش داده می‌شود.'},
- {keys:['سرویس','تعمیرات','تعویض روغن','فیلتر'],answer:'در منوی «بیشتر» بخش «دفتر سوابق سرویس و تعمیرات» را باز کن. شرح کار، کیلومترشمار، هزینه و موعد بعدی را ثبت کن. اطلاعات این دفتر فعلاً در حافظه مرورگر همین دستگاه ذخیره می‌شود.'},
- {keys:['لاستیک','فشار باد','عمق آج'],answer:'برای ثبت وضعیت هر لاستیک، از منوی «بیشتر» وارد «ثبت وضعیت لاستیک‌ها» شو و محل لاستیک، فشار باد، عمق آج و وضعیت آن را وارد کن.'},
- {keys:['مدرک','بیمه','معاینه فنی','گواهینامه','سررسید'],answer:'برای ثبت تاریخ اعتبار مدرک، از منوی «بیشتر» بخش «سررسید مدارک» را باز کن. تاریخ را وارد کن و یادداشت بگذار. ثبت تاریخ به‌تنهایی به معنی ارسال اعلان خودکار نیست.'},
- {keys:['مصرف سوخت','مصرف گازوئیل','لیتر','کیلومتر بر لیتر','سوخت'],answer:'برای محاسبه مصرف، در منوی «بیشتر» بخش «محاسبه مصرف سوخت» را باز کن و کیلومتر شروع و پایان، لیتر مصرف‌شده و قیمت هر لیتر را وارد کن.'},
- {keys:['ساعت رانندگی','ساعت استراحت','زمان رانندگی'],answer:'از منوی «بیشتر» وارد «ثبت ساعت رانندگی و استراحت» شو. تاریخ، ساعات رانندگی و استراحت و یادداشت دلخواه را ثبت کن.'},
- {keys:['وام','قسط','تسهیلات','بهره'],answer:'در منوی «بیشتر» بخش «محاسبه‌گر اقساط» را باز کن. مبلغ وام، نرخ سالانه و تعداد ماه را وارد کن. نتیجه تقریبی است و جایگزین شرایط قرارداد بانک نیست.'},
- {keys:['چک لیست بار','مهار بار','تحویل بار','چک‌لیست'],answer:'در منوی «بیشتر» گزینه «چک‌لیست مهار و تحویل بار» را باز کن و موارد بررسی بار را تیک بزن. وضعیت چک‌لیست روی همین دستگاه ذخیره می‌شود.'},
- {keys:['ذخیره اطلاعات','اطلاعات کجا','پاک شدن اطلاعات','همگام سازی','همگام‌سازی','حافظه گوشی'],answer:'بعضی ابزارهای شخصی مثل دفتر دخل‌وخرج، سوابق سرویس، لاستیک و چک‌لیست فعلاً در حافظه محلی مرورگر همین گوشی ذخیره می‌شوند و لزوماً بین دستگاه‌ها همگام نیستند. اطلاعات بارها و حساب کاربری از بخش‌های متصل به سامانه دریافت می‌شوند.'},
- {keys:['ورود','رمز','حساب کاربری','شماره موبایل','ثبت نام','ثبت‌نام'],answer:'برای مشکلات ورود، ابتدا شماره و اطلاعاتی را که هنگام ثبت‌نام استفاده کرده‌ای بررسی کن. اگر خطا ادامه داشت، از بخش «ارتباط و پشتیبانی» کمک بگیر؛ رمز یا کد ورودت را برای کسی نفرست.'},
- {keys:['خراب','خطا','باز نمی','کار نمی','هنگ','مشکل برنامه','پشتیبانی','تماس'],answer:'برای عیب‌یابی، اتصال اینترنت را بررسی کن، صفحه را یک‌بار تازه‌سازی کن و دوباره همان بخش را باز کن. اگر مشکل باقی ماند، از منوی «بیشتر» بخش «ارتباط و پشتیبانی» را باز کن و نام بخش و متن خطا را یادداشت کن.'},
- {keys:['کامیون','مشخصات کشنده','خودرو'],answer:'از منوی «بیشتر» وارد «مشخصات کامیون من» شو. ابزارهای ثبت سرویس، لاستیک، مصرف سوخت و مدارک هم در همان منو در دسترس‌اند.'}
- ];
- const advancedRules=[
- {keys:['بارا نمیان','بارا نمیاد','بارا نمیاد چیکار کنم','بارا نمیبینم','بارا نمیبینم تو برنامه','بار نمیاد','بار نمیاد تو برنامه','باری نمیاد','هیچ باری نمیاره','بار خالیه','بارها خالیه','اعلام بار نمیاد','بارا بالا نمیاد','بارها نمایش داده نمیشه','لیست بار خالیه','بارا نیس','بار نیس'],answer:'اگر بارها نمی‌آیند: ۱) در تالار هوشمند بار، فیلترهای مبدأ و مقصد و نوع بار را پاک کن. ۲) جست‌وجو را دوباره بزن. ۳) اینترنت را بررسی کن و صفحه را تازه‌سازی کن. ۴) اگر باز هم فهرست خالی است، ممکن است در حال حاضر باری در سامانه ثبت نشده باشد یا دریافت اطلاعات سرور مشکل داشته باشد. من وجود بار واقعی را بدون داده زنده تأیید نمی‌کنم.'},
- {keys:['پول کم کرد ولی شارژ نشد','پول کم شد شارژ نشد','پول از حسابم رفت','پول برداشت شد ولی نیومد','کیف پولم شارژ نشد','شارژ کردم نیومد','پول کم کرد','پرداخت کردم موجودی نیومد','پول کم شده','درگاه پول گرفت','پول کم شد ولی کیف پول صفره','پولو برداشت ولی شارژ نکرد'],answer:'اگر پول از حسابت کم شده ولی کیف پول شارژ نشده: ۱) دوباره پرداخت نکن تا وضعیت تراکنش روشن شود. ۲) رسید بانک و شماره پیگیری را نگه دار. ۳) یک‌بار از حساب خارج و وارد نشو و داده‌های مرورگر را هم پاک نکن؛ ابتدا موجودی و تاریخچه تراکنش را بررسی کن. ۴) از بخش «ارتباط و پشتیبانی» با مبلغ، زمان و شماره پیگیری موضوع را پیگیری کن. من به تراکنش بانکی دسترسی ندارم و نمی‌توانم برگشت پول را تأیید کنم.'},
- {keys:['بار سفید','نقشه سفیده بالا نمیاد','مپ سفیده','نقشه هیچی نشون نمیده','نقشه هیچی نشون نمیده ها','نقشه سفیده اصلا نمیاد'],answer:'برای نقشه سفید: اینترنت را بررسی کن، صفحه GPS را دوباره باز کن و صفحه را تازه‌سازی کن. اگر VPN روشن است با اتصال دیگری هم آزمایش کن. اگر بقیه صفحه کار می‌کند ولی نقشه سفید است، احتمال مشکل در بارگذاری تصاویر یا کاشی‌های نقشه وجود دارد.'},
- {keys:['لوکیشنمو غلط میاره','لوکیشنم غلطه','جای منو اشتباه زده','موقعیتمو غلط نشون میده','مکانمو کج نشون میده','جی پی اس اشتباه می زنه','جی پی اس غلطه'],answer:'برای مکان اشتباه، مجوز مکان‌یابی دقیق را برای مرورگر فعال کن، GPS گوشی را روشن کن و در فضای باز چند لحظه صبر کن. اینترنت ضعیف یا مجوز تقریبی ممکن است دقت را پایین بیاورد. نقطه آبی را با موقعیت واقعی مقایسه کن؛ دستیار به مکان زنده گوشی دسترسی مستقیم ندارد.'},
 
- {keys:['نقشه حرکت نمی کند','نقشه تکان نمی خورد','نقشه تکون نمی خوره','لمس نقشه','نقشه قفل','نقشه هنگ','نقشه از بین','نقشه ناپدید'],answer:'برای رفع مشکل نقشه: ۱) صفحه GPS را کامل ببند و دوباره باز کن. ۲) اینترنت را بررسی کن. ۳) اگر نقشه دیده می‌شود ولی حرکت نمی‌کند، انگشتت را روی خود نقشه بگذار و بکش؛ برای زوم دو انگشت را باز و بسته کن. ۴) اگر همچنان قفل است، صفحه را تازه‌سازی کن. اگر فقط دکمه‌ها کار نمی‌کنند، نام دکمه را بگو تا همان مورد را جدا بررسی کنیم.'},
- {keys:['موقعیت اشتباه','مکان اشتباه','جای اشتباه','مکان دقیق نیست','موقعیت دقیق نیست','لوکیشن اشتباه'],answer:'اگر مکان اشتباه است: مجوز Location را برای مرورگر روی Allow بگذار، GPS گوشی را روشن کن، حالت مکان‌یابی دقیق (Precise location) را فعال کن و کنار فضای باز چند لحظه صبر کن. VPN یا شبکه ضعیف هم ممکن است دقت را کم کند. نقطه آبی روی نقشه را با موقعیت واقعی مقایسه کن؛ دستیار خودش به GPS زنده گوشی دسترسی ندارد.'},
- {keys:['مجوز مکان','اجازه مکان','location','مکان یابی','مکان‌یابی','gps گوشی','موقعیت فعلی'],answer:'در اندروید: تنظیمات گوشی ← برنامه‌ها ← مرورگری که صلایان بار را باز کرده‌ای ← مجوزها ← موقعیت مکانی ← هنگام استفاده از برنامه و در صورت وجود «مکان دقیق» را فعال کن. سپس Location گوشی را روشن و صفحه GPS را دوباره باز کن.'},
- {keys:['نقشه سفید','صفحه سفید','نقشه سیاه','نقشه بالا نمیاد','نقشه لود','نقشه بارگذاری'],answer:'برای نقشه سفید یا بارگذاری‌نشدن نقشه، اتصال اینترنت را بررسی کن، صفحه GPS را دوباره باز کن و یک‌بار صفحه را تازه‌سازی کن. اگر VPN یا فیلترشکن روشن است، وضعیت را با اتصال دیگری هم آزمایش کن. اگر بقیه صفحه کار می‌کند اما نقشه نه، احتمالاً بارگذاری کاشی‌های نقشه یا سرویس نقشه مشکل دارد.'},
- {keys:['مسیر نمی دهد','مسیر نمیاره','مسیر نمی آورد','مسیریابی کار نمی کند','راهنمای مسیر','مسیر یابی','مسیر‌یابی','مقصد'],answer:'برای مسیریابی، ابتدا GPS را باز کن، موقعیت فعلی را مشخص کن، مقصد را جست‌وجو و انتخاب کن و سپس دکمه مسیریابی را بزن. اگر مسیر ساخته نمی‌شود، نام مبدأ و مقصد و پیام خطا را بررسی کن؛ نمایش نقشه به‌تنهایی به معنی فعال بودن مسیریابی زنده نیست.'},
- {keys:['ماهواره','تصویر ماهواره','سه بعدی','3d','نمای ماهواره'],answer:'در صفحه GPS، کنترل‌های لایه نقشه و نمای سه‌بعدی را بررسی کن. اگر گزینه موجود است آن را فعال کن؛ برای نمایش تصاویر ماهواره‌ای به اینترنت و بارگذاری موفق سرویس نقشه نیاز است. ممکن است همه مناطق تصاویر سه‌بعدی دقیق نداشته باشند.'},
- {keys:['سرعت نشان','سرعت صفر','سرعت ماشین','سرعت کامیون'],answer:'نمایش سرعت به مجوز موقعیت مکانی و دریافت داده GPS وابسته است. در فضای باز GPS را روشن کن و مجوز مکان دقیق را بده. وقتی وسیله ساکن است سرعت صفر طبیعی است؛ سرعت نمایش‌داده‌شده را جایگزین کیلومترشمار خودرو نکن.'},
- {keys:['بار نمایش داده نمی شود','بارها نمایش داده نمی شود','بار خالی','هیچ باری نیست','بار پیدا نمی کنم','بار پیدا نمیشه'],answer:'اگر فهرست بار خالی است، فیلتر مبدأ، مقصد و نوع بار را پاک کن و دوباره جست‌وجو کن؛ اتصال اینترنت را هم بررسی کن. ممکن است در حال حاضر باری در سامانه ثبت نشده باشد. من نمی‌توانم وجود بار واقعی یا کرایه زنده را بدون دریافت داده از سرور تأیید کنم.'},
- {keys:['انتخاب بار کار نمی کند','انتخاب بار نمی شود','بار انتخاب نمیشه','هزینه انتخاب بار','هزینه انتخاب'],answer:'اگر انتخاب بار انجام نمی‌شود، ابتدا وارد حساب شو، جزئیات بار را باز کن و موجودی کیف پول و پیام صفحه را بررسی کن. هزینه و شرایط انتخاب باید از نسخه فعال سامانه تأیید شود؛ تا زمانی که پرداخت و ثبت سروری تأیید نشده، انتخاب را قطعی فرض نکن.'},
- {keys:['رمز را فراموش','رمز عبور','کد پیامک','پیامک ورود','کد ورود نمیاد','کد تایید','کد تأیید'],answer:'برای ورود، شماره موبایل را با ارقام درست وارد کن، آنتن و پیامک‌های مسدودشده را بررسی کن و کمی بعد دوباره درخواست کد بده. کد یک‌بارمصرف یا رمز را در اختیار کسی قرار نده. ارسال واقعی پیامک فقط وقتی کار می‌کند که سرویس پیامکی سامانه پیکربندی شده باشد.'},
- {keys:['ثبت نام نمی شود','ثبت‌نام نمی شود','ورود نمی شود','نمی توانم وارد','نمی‌تونم وارد','حسابم باز نمی شود'],answer:'شماره موبایل و روش ورود را بررسی کن و مطمئن شو صفحه کاملاً بارگذاری شده است. اگر پیام خطا می‌بینی، متن دقیق آن را یادداشت کن. پاک‌کردن داده‌های مرورگر ممکن است اطلاعات محلی ابزارها را حذف کند، پس قبل از آن از اطلاعات مهم نسخه پشتیبان بگیر.'},
- {keys:['کند','سرعت برنامه','برنامه سنگین','دیر باز','هنگ می کند','هنگ میکنه'],answer:'برای کندی برنامه، اینترنت پایدار را امتحان کن، تب‌های اضافی مرورگر را ببند و صفحه را یک‌بار تازه‌سازی کن. اگر مشکل فقط در GPS است، احتمالاً بارگذاری نقشه سنگین است؛ اگر همه بخش‌ها کندند، اتصال یا منابع گوشی را هم بررسی کن.'},
- {keys:['اطلاعاتم پاک','اطلاعات پاک شد','داده ها کجا','داده‌ها کجا','حافظه مرورگر','عوض کردن گوشی'],answer:'بعضی دفترها و چک‌لیست‌ها ممکن است فقط در حافظه محلی مرورگر همین دستگاه ذخیره شوند و با پاک‌کردن داده‌های مرورگر یا تعویض گوشی از دست بروند. تا وقتی همگام‌سازی سروری تأیید نشده، اطلاعات مهم را جداگانه نگه دار.'},
- {keys:['شارژ کیف پول','پرداخت ناموفق','درگاه پرداخت','پول کم شد','رسید پرداخت'],answer:'اگر پرداخت ناموفق است، وضعیت تراکنش را در رسید بانک بررسی کن و از پرداخت مکرر برای یک درخواست خودداری کن. اگر پول کسر شده ولی کیف پول تغییر نکرده، زمان، مبلغ و شماره پیگیری را نگه دار و از پشتیبانی سامانه پیگیری کن. این دستیار به تراکنش بانکی تو دسترسی ندارد.'},
- {keys:['پشتیبانی','گزارش باگ','گزارش خطا','تماس با پشتیبانی'],answer:'برای گزارش دقیق، نام صفحه، کاری که انجام دادی، متن خطا و مدل گوشی/مرورگر را یادداشت کن. رمز، کد پیامک یا اطلاعات بانکی را ارسال نکن. در منوی «بیشتر» بخش «ارتباط و پشتیبانی» را بررسی کن.'},
- {keys:['خروج از حساب','خروج بزنم','حذف حساب','حذف اطلاعات شخصی'],answer:'برای خروج از حساب، گزینه خروج را در بخش حساب یا پروفایل پیدا کن. حذف حساب با خروج فرق دارد و ممکن است برگشت‌پذیر نباشد؛ قبل از حذف، شرایط و پیام تأیید خود برنامه را با دقت بخوان.'},
- {keys:['معاینه فنی','بیمه بدنه','کارت سلامت','هوشمند راننده','مدارک کامیون'],answer:'برای پیگیری مدارک، از منوی «بیشتر» بخش سررسید مدارک یا مشخصات راننده و کامیون را باز کن. ثبت تاریخ در برنامه به معنی استعلام رسمی از سامانه‌های دولتی نیست؛ اعتبار رسمی مدرک باید از مرجع مربوط تأیید شود.'},
- {keys:['مصرف واقعی','میانگین مصرف','گازوئیل چقدر','لیتر در صد','مصرف کامیون'],answer:'برای محاسبه مصرف واقعی، کیلومتر شروع و پایان و مقدار سوخت مصرف‌شده را وارد کن. فرمول لیتر در ۱۰۰ کیلومتر = لیتر مصرفی ÷ کیلومتر طی‌شده × ۱۰۰ است. برای نتیجه دقیق‌تر، اندازه‌گیری را در چند نوبت و با روش یکسان انجام بده.'},
- {keys:['قسط ماهانه','محاسبه قسط','اقساط کامیون','وام کامیون'],answer:'در محاسبه‌گر اقساط، مبلغ وام، نرخ سالانه و تعداد ماه را وارد کن. نتیجه تقریبی است و ممکن است با کارمزد، بیمه، پیش‌پرداخت و روش محاسبه مؤسسه مالی فرق داشته باشد؛ رقم قرارداد ملاک نهایی است.'},
- {keys:['کامیون من','ثبت کامیون','مشخصات کامیون','مشخصات کشنده'],answer:'از منوی «بیشتر» بخش «مشخصات کامیون من» را باز کن. اطلاعات کامیون را با مدارک واقعی مطابقت بده؛ اطلاعات ثبت‌شده در برنامه به‌تنهایی جایگزین استعلام رسمی نیست.'},
- {keys:['یادآوری','سررسید','اعلان نمیاد','اعلان نمی آید','نوتیفیکیشن'],answer:'تنظیمات یادآوری و تاریخ سررسید را در بخش مربوط بررسی کن. اعلان خودکار ممکن است به مجوز اعلان مرورگر، بازبودن برنامه یا پیکربندی سرویس وابسته باشد؛ ثبت یادآوری به‌تنهایی تضمین نمی‌کند که اعلان در پس‌زمینه ارسال شود.'},
- {keys:['چرا این جواب','سؤال خارج','سوال خارج','هوش مصنوعی','دستیار'],answer:'من دستیار محلی صلایان بار هستم و با مجموعه‌ای از قوانین و کلیدواژه‌ها پاسخ می‌دهم. اگر موضوع یا عبارت جدیدی را نفهمیدم، نام صفحه و سؤال را دقیق‌تر بنویس تا بتوانم آن را با قوانین راهنما تطبیق بدهم.'}
- ];
- function respond(raw){const q=norm(raw);if(!q)return '';if(q.length<3)return 'لطفاً سؤال را کمی واضح‌تر بنویس؛ مثلاً «چطور در GPS موقعیتم را ببینم؟».';
- const outside=outOfScope.some(k=>q.includes(norm(k)));
- const hasAppWords=['صلایان','برنامه','سامانه','بار','بارا','بارها','راننده','کامیون','gps','جی پی اس','جی‌پی‌اس','لوکیشن','لوکیشنم','لوکیشنمو','نقشه','مسیریابی','کیف پول','کیف','پول','شارژ','پرداخت','حساب','سرویس','لاستیک','سوخت','مدرک','ورود','قسط','وام','چک لیست','چک‌لیست','دخل','هزینه','موقعیت','مکان','جای من','ثبت','بار نوبتی','بار آزاد'].some(k=>q.includes(norm(k)));
- if(outside&&!hasAppWords)return 'این سؤال خارج از محدوده من است. من فقط برای راهنمایی درباره خود برنامه صلایان بار طراحی شده‌ام؛ می‌توانم درباره بارها، GPS، کیف پول، حساب کاربری و ابزارهای راننده کمک کنم.';
- for(const item of advancedRules){if(item.keys.some(k=>matchesKey(q,k)))return item.answer}
- for(const item of intents){if(item.keys.some(k=>matchesKey(q,k)))return item.answer}
- if(!hasAppWords)return 'این سؤال خارج از موضوع برنامه به نظر می‌رسد. من فقط درباره امکانات و کار با صلایان بار پاسخ می‌دهم. درباره کدام بخش برنامه سؤال داری؟';
- return 'متوجه شدم که سؤالت درباره صلایان بار است، اما برای این مورد هنوز پاسخ مشخصی در راهنمای من ثبت نشده. از بخش «ارتباط و پشتیبانی» کمک بگیر یا سؤال را با نام دقیق بخش برنامه دوباره بنویس.'}
- window.askSalayanAI=function(raw){const q=String(raw||'').trim();if(!q)return;addMessage(q,'user');input.value='';const send=form.querySelector('button[type="submit"]');if(send){send.disabled=true;send.textContent='در حال بررسی…'}const pending=document.createElement('div');pending.className='salayan-ai-message bot pending';pending.innerHTML='<b>دستیار صلایان</b><p>در حال بررسی قوانین راهنما…</p>';chat.appendChild(pending);chat.scrollTop=chat.scrollHeight;setTimeout(()=>{try{const answer=respond(q);pending.remove();addMessage(answer,'bot',answer.startsWith('این سؤال خارج')||answer.startsWith('این سؤال خارج از موضوع'));}catch(err){pending.remove();addMessage('در بررسی سؤال خطایی رخ داد. سؤال را کوتاه‌تر و با نام دقیق بخش برنامه بنویس.','bot')}finally{if(send){send.disabled=false;send.textContent='ارسال سؤال ↑'}}},30)};
- form.addEventListener('submit',function(e){e.preventDefault();window.askSalayanAI(input.value)});
-})();
-document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e){e.preventDefault();const field=document.getElementById('homeAiQuickInput');const question=field?.value.trim();if(!question)return;showPage('questionBankPage');if(typeof window.askSalayanAI==='function'){window.askSalayanAI(question)}else{const target=document.getElementById('salayanAiInput');const form=document.getElementById('salayanAiForm');if(target&&form){target.value=question;form.requestSubmit()}}});
-</script>
 
 <style id="salayan-photo-rich-ui-v1">
 .salayan-photo-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px 7px;margin:14px 0 20px}
@@ -743,7 +621,7 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
  .salayan-photo-tile b{font-size:11px;line-height:1.5;padding:0 2px;font-weight:800;overflow-wrap:anywhere}
  .salayan-photo-tile small{font-size:9px;color:var(--muted,#6b7c72);line-height:1.4}
  .salayan-photo-kicker{font-size:12px;font-weight:900;color:var(--green);margin:18px 2px 8px}
- .salayan-home-photo-section,.salayan-ai-photo-catalog{border-radius:18px}
+ .salayan-home-photo-section,.salayan-support-question-catalog{border-radius:18px}
  .salayan-category-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:8px 0 12px}
  .salayan-category-chip{min-width:0;white-space:normal;min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #e2eee7;background:#fff;color:#176348;border-radius:14px;padding:8px 6px;font-size:11px;font-weight:800;box-shadow:0 2px 8px #123a2508}
  .salayan-category-chip.active,.salayan-category-chip:focus{background:linear-gradient(135deg,#087f5b,#10a878);border-color:#087f5b;color:#fff;box-shadow:0 5px 14px #087f5b2b}
@@ -798,9 +676,9 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
   const grid=wrap.querySelector('.salayan-photo-strip');categoriesQuick.forEach((x,i)=>grid.appendChild(makeTile(x,i)));
   const hero=home.querySelector('.card.hero');if(hero)hero.after(wrap);else home.prepend(wrap);
  }
- function addAIQuestions(){
-  const ai=document.getElementById('questionBankPage');if(!ai||ai.querySelector('.salayan-ai-photo-catalog'))return;
-  const section=document.createElement('div');section.className='salayan-ai-photo-catalog card';
+ function addSupportQuestions(){
+  const ai=document.getElementById('questionBankPage');if(!ai||ai.querySelector('.salayan-support-question-catalog'))return;
+  const section=document.createElement('div');section.className='salayan-support-question-catalog card';
   section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📚 دسته‌بندی‌ها و سؤال‌های آماده</h3></div><p class="muted">دسته‌بندی‌ها از همین ابتدا نمایش داده می‌شوند. روی هر سؤال بزن تا پاسخ آن باز شود.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجوی سؤال: جست‌وجوی بار، اعلام بار، GPS، کیف پول..." aria-label="جستجوی همه سؤال‌های آماده"><div class="salayan-question-count"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های آماده</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ عبارت دیگری جست‌وجو کن.</p>';
   const questions=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنما","چطور از صلایان بار استفاده کنم؟","🧭","از بخش‌های برنامه استفاده کن و برای اطلاعات زنده، موجود بودن بار را تأیید کن."]];
   const grid=section.querySelector('.salayan-photo-strip');categoriesQuick.forEach((x,i)=>grid.appendChild(makeTile(x,i)));
@@ -836,9 +714,9 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
   const banner=document.createElement('div');banner.className='salayan-photo-banner salayan-load-photo-banner';banner.innerHTML='<img loading="lazy" alt="" src="'+photo('photo-1519003722824-194d4455a60c',1000)+'"><div><b>تالار هوشمند بار صلایان</b><small>مبدأ، مقصد و نوع بار را جست‌وجو کن</small></div>';
   const title=loads.querySelector('.page-title');if(title)title.after(banner);
  }
- function init(){addHome();addAIQuestions();addLoadPhoto()}
+ function init(){addHome();addSupportQuestions();addLoadPhoto()}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
- const observer=new MutationObserver(()=>{addHome();addAIQuestions();addLoadPhoto()});observer.observe(document.body,{childList:true,subtree:true});
+ const observer=new MutationObserver(()=>{addHome();addSupportQuestions();addLoadPhoto()});observer.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
