@@ -3688,7 +3688,7 @@ function status(html){const n=$('sbGpsMapNote');if(n)n.innerHTML=html}
 function loadLeaflet(){if(window.L)return Promise.resolve(window.L);if(leafletPromise)return leafletPromise;leafletPromise=new Promise((resolve,reject)=>{const css=document.querySelector('link[href*="leaflet.css"]');if(!css){const l=document.createElement('link');l.rel='stylesheet';l.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(l)}const script=document.createElement('script');script.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';script.onload=()=>window.L?resolve(window.L):reject(Error('کتابخانه نقشه بارگیری نشد'));script.onerror=()=>{leafletPromise=null;reject(Error('کتابخانه نقشه بارگیری نشد؛ اتصال اینترنت را بررسی کن.'))};document.head.appendChild(script)});return leafletPromise}
 function truckIcon(){return L.divIcon({className:'sb-gps-truck-icon',iconSize:[66,58],iconAnchor:[33,47],popupAnchor:[0,-42],html:'<svg viewBox="0 0 96 78" xmlns="http://www.w3.org/2000/svg" aria-label="موقعیت کامیون"><defs><linearGradient id="sbTruckA" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fff9"/><stop offset="1" stop-color="#7ce0b4"/></linearGradient><linearGradient id="sbTruckB"><stop stop-color="#12a875"/><stop offset="1" stop-color="#04543e"/></linearGradient></defs><ellipse cx="48" cy="68" rx="39" ry="7" fill="#12382a" opacity=".24"/><path d="M7 20 52 7 78 17 32 31Z" fill="#fff" stroke="#315c4c" stroke-width="1.5"/><path d="M7 20 32 31 32 54 7 42Z" fill="#e5f7ee" stroke="#315c4c" stroke-width="1.5"/><path d="M32 31 78 17 78 40 32 54Z" fill="#a5c7b7" stroke="#315c4c" stroke-width="1.5"/><path d="M42 36 59 31 59 51 42 56Z" fill="#0a8e63" stroke="#034b38" stroke-width="1.5"/><path d="M59 31 75 36 75 55 59 51Z" fill="url(#sbTruckB)" stroke="#034b38" stroke-width="1.5"/><path d="M42 36 51 22 67 26 59 31Z" fill="url(#sbTruckA)" stroke="#034b38" stroke-width="1.5"/><path d="M51 22 67 26 75 36 59 31Z" fill="#a7f0cf" stroke="#034b38" stroke-width="1.5"/><path d="M51 25 59 27 59 34 46 38Z" fill="#c9efff" stroke="#17634e" stroke-width="1.2"/><path d="M61 33 72 37 72 44 61 41Z" fill="#e5f8ff" stroke="#17634e" stroke-width="1.2"/><path d="M32 54 42 57 75 55 78 40 78 48 75 61 32 63Z" fill="#064633"/><circle cx="43" cy="60" r="7" fill="#182a24" stroke="#fff" stroke-width="2"/><circle cx="43" cy="60" r="2.5" fill="#c8d5ce"/><circle cx="69" cy="57" r="7" fill="#182a24" stroke="#fff" stroke-width="2"/><circle cx="69" cy="57" r="2.5" fill="#c8d5ce"/><path d="M75 46 79 45 79 50 75 51Z" fill="#ffe17d"/></svg>'})}
 function paintPosition(p){if(!map||!p)return;const ll=[p.latitude,p.longitude];if(!marker)marker=L.marker(ll,{icon:truckIcon(),zIndexOffset:1000,title:'موقعیت کامیون'}).addTo(map);else marker.setLatLng(ll);marker.bindPopup('<b>🚚 موقعیت کامیون</b><br>دقت GPS: '+fa(p.accuracy)+' متر');if(accuracy)accuracy.setLatLng(ll).setRadius(Math.max(10,p.accuracy||25));else accuracy=L.circle(ll,{radius:Math.max(10,p.accuracy||25),color:'#0b9668',weight:2,fillColor:'#0b9668',fillOpacity:.12,interactive:false}).addTo(map)}
-async function initMap(){const Llib=await loadLeaflet();const node=$('sbGpsMapCanvas');if(!node)throw Error('بخش نقشه پیدا نشد.');if(!map){map=Llib.map(node,{zoomControl:false,preferCanvas:true,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,scrollWheelZoom:true,dragging:true,touchZoom:true,doubleClickZoom:true,keyboard:true}).setView(lastPos?[lastPos.latitude,lastPos.longitude]:HOME,lastPos?14:11);tiles=Llib.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,attribution:'© OpenStreetMap · © CARTO',crossOrigin:true});tiles.on('tileerror',()=>status('بارگیری نقشه با مشکل روبه‌رو شد. اینترنت را بررسی کن؛ برای مسیریابی جایگزین از دکمه «مسیریابی خارجی» استفاده کن.'));tiles.addTo(map);Llib.control.zoom({position:'bottomright'}).addTo(map);map.on('click',e=>{const inp=$('sbGpsDestination');if(inp&&inp.dataset.pick==='1'){inp.value=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6);inp.dataset.pick='0';status('نقطه مقصد انتخاب شد. حالا «مسیریابی» را بزن.')}});map.on('load',()=>{});}setTimeout(()=>{if(map)map.invalidateSize({pan:false})},100);setTimeout(()=>{if(map)map.invalidateSize({pan:false})},500);if(lastPos)paintPosition(lastPos);return map}
+async function initMap(){const Llib=await loadLeaflet();const node=$('sbGpsMapCanvas');if(!node)throw Error('بخش نقشه پیدا نشد.');if(!map){map=Llib.map(node,{zoomControl:false,preferCanvas:true,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,scrollWheelZoom:true,dragging:true,touchZoom:true,doubleClickZoom:true,keyboard:true}).setView(lastPos?[lastPos.latitude,lastPos.longitude]:HOME,lastPos?14:11);tiles=Llib.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,attribution:'© OpenStreetMap · © CARTO',crossOrigin:true});let sbTileFallback=false,sbTileLoaded=false;tiles.on('tileload',()=>{sbTileLoaded=true});tiles.on('tileerror',()=>{if(sbTileFallback)return;sbTileFallback=true;const failed=tiles;setTimeout(()=>{if(!sbTileLoaded&&map){try{tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);map.removeLayer(failed);status('نقشه روی سرویس جایگزین بارگیری شد.')}catch(e){status('کاشی‌های نقشه بارگیری نشدند؛ اینترنت یا دسترسی به سرویس نقشه را بررسی کن.')}}},900)});tiles.addTo(map);Llib.control.zoom({position:'bottomright'}).addTo(map);map.on('click',e=>{const inp=$('sbGpsDestination');if(inp&&inp.dataset.pick==='1'){inp.value=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6);inp.dataset.pick='0';status('نقطه مقصد انتخاب شد. حالا «مسیریابی» را بزن.')}});map.on('load',()=>{});}setTimeout(()=>{if(map)map.invalidateSize({pan:false})},100);setTimeout(()=>{if(map)map.invalidateSize({pan:false})},500);if(lastPos)paintPosition(lastPos);return map}
 function clearRoute(){if(routeLayer&&map)map.removeLayer(routeLayer);if(destMarker&&map)map.removeLayer(destMarker);routeLayer=null;destMarker=null;routeInfo=null}
 function startGPS(){if(!navigator.geolocation){status('این مرورگر از GPS پشتیبانی نمی‌کند.');return}if(!window.isSecureContext){status('برای GPS باید سایت با HTTPS باز شود.');return}status('در انتظار اجازه موقعیت مکانی گوشی…');navigator.geolocation.getCurrentPosition(p=>{savePos(p);if(!watch)watch=navigator.geolocation.watchPosition(savePos,e=>gpsError(e),{enableHighAccuracy:true,maximumAge:10000,timeout:20000});if(map){map.setView([lastPos.latitude,lastPos.longitude],15);paintPosition(lastPos)}},gpsError,{enableHighAccuracy:true,maximumAge:0,timeout:20000})}
 function gpsError(e){const msgs={1:'اجازه مکان داده نشد. مجوز Location را برای مرورگر فعال کن.',2:'موقعیت پیدا نشد؛ GPS گوشی را روشن کن و فضای باز را امتحان کن.',3:'دریافت موقعیت طول کشید؛ دوباره تلاش کن.'};status(msgs[e&&e.code]||'دریافت موقعیت GPS ناموفق بود.')}
@@ -5334,5 +5334,36 @@ html body #sbGlobalBack,html body #sbTopMenuTrigger,html body .sb-top-actions{po
 </script>
 
 
+<script id="salayan-gps-visibility-recovery">
+(function(){
+  function refresh(){
+    var page=document.getElementById('gpsPage');
+    var canvas=document.getElementById('sbGpsMapCanvas');
+    if(!page||!canvas||page.classList.contains('hidden')||page.getClientRects().length===0)return;
+    canvas.style.display='block';canvas.style.visibility='visible';canvas.style.opacity='1';
+    var box=canvas.parentElement;if(box){box.style.height='clamp(340px,55vh,560px)';box.style.minHeight='320px';}
+    [80,250,650,1200].forEach(function(ms){setTimeout(function(){
+      if(page.classList.contains('hidden')||page.getClientRects().length===0)return;
+      try{
+        if(typeof window.salayanRefreshMap==='function')window.salayanRefreshMap();
+        var m=window.__salayanGpsGetMap&&window.__salayanGpsGetMap();
+        if(m){m.invalidateSize({pan:false});if(!m._loaded)m.setView([33.726,59.184],11);}
+      }catch(e){console.warn('GPS map recovery:',e);}
+    },ms);});
+  }
+  function install(){
+    var page=document.getElementById('gpsPage');if(!page)return;
+    new MutationObserver(function(){refresh()}).observe(page,{attributes:true,attributeFilter:['class','style']});
+    document.addEventListener('click',function(e){
+      var b=e.target&&e.target.closest&&e.target.closest('[onclick*="gpsPage"],[data-page="gpsPage"]');
+      if(b)setTimeout(refresh,100);
+    },true);
+    window.addEventListener('resize',refresh,{passive:true});
+    window.addEventListener('orientationchange',function(){setTimeout(refresh,250)},{passive:true});
+    if(!page.classList.contains('hidden'))refresh();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
+})();
+</script>
 </body>
 </html>
