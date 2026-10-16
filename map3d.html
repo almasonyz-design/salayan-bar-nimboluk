@@ -208,25 +208,25 @@ if(map){try{map.dragPan.enable();map.scrollZoom.enable();map.touchZoomRotate.ena
 })();
 </script>
 
-<script id="salayan-controls-physically-below-map-v10">
+<script id="salayan-controls-physically-below-map-v11">
 (function(){
-  function relocate(){
-    if(!document.documentElement.classList.contains('sbl-embed-mode')) return;
-    const main=document.querySelector('main'), map=document.getElementById('map');
-    if(!main||!map||document.getElementById('sblBelowMapControls')) return;
-    const wrap=document.createElement('section');
-    wrap.id='sblBelowMapControls';
-    wrap.setAttribute('aria-label','ابزارهای نقشه و مسیریابی');
-    map.insertAdjacentElement('afterend',wrap);
-    ['.topcontrols','.tools','.sidecards','.hint','.bottom','.steps'].forEach(sel=>{
-      const el=main.querySelector(':scope > '+sel);
-      if(el) wrap.appendChild(el);
-    });
-    requestAnimationFrame(()=>{try{if(window.map&&typeof window.map.resize==='function')window.map.resize();}catch(e){}
-      window.dispatchEvent(new Event('resize'));
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',relocate,{once:true});else relocate();
+ function relocate(){
+  if(!document.documentElement.classList.contains('sbl-embed-mode')) return;
+  var main=document.querySelector('main'), map=document.getElementById('map');
+  if(!main||!map) return;
+  var wrap=document.getElementById('sblBelowMapControls');
+  if(!wrap){wrap=document.createElement('section');wrap.id='sblBelowMapControls';wrap.setAttribute('aria-label','ابزارهای نقشه و مسیریابی');map.insertAdjacentElement('afterend',wrap);}
+  ['.topcontrols','.tools','.sidecards','.hint','.bottom','.steps'].forEach(function(sel){
+   var el=main.querySelector(sel);
+   if(el && !wrap.contains(el)) wrap.appendChild(el);
+  });
+  wrap.style.setProperty('display','flex','important');wrap.style.setProperty('flex-direction','column','important');wrap.style.setProperty('position','relative','important');wrap.style.setProperty('width','100%','important');wrap.style.setProperty('height','auto','important');wrap.style.setProperty('overflow','visible','important');
+  try{if(window.map&&typeof window.map.resize==='function')window.map.resize()}catch(e){}
+  window.dispatchEvent(new Event('resize'));
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',relocate);else relocate();
+ window.addEventListener('load',relocate);
+ [100,500,1200].forEach(function(ms){setTimeout(relocate,ms)});
 })();
 </script>
 <style id="salayan-physical-controls-below-map-v10">
@@ -269,24 +269,24 @@ html.sbl-embed-mode .shade{display:none!important}
 #sblGuideOverlay .sblGuideBox{width:min(440px,100%);border-radius:20px;background:#0b2118;border:1px solid #367b55;padding:20px;color:#f3fff8;box-shadow:0 20px 60px #0008}
 #sblGuideOverlay h2{font-size:18px;margin:0 0 12px}
 #sblGuideOverlay p{font-size:13px;line-height:2;color:#d2e8db;margin:0 0 14px}
-#sblGuideOverlay button{width:100%;height:46px;border:0;border-radius:12px;background:#35d99a;color:#052c1d;font-weight:800;font-size:14px}
+#sblGuideOverlay .sblGuideActions{display:flex;gap:9px}#sblGuideOverlay .sblGuideActions button{flex:1;min-width:0;height:46px;border:0;border-radius:12px;background:#35d99a;color:#052c1d;font-weight:800;font-size:14px}#sblGuideOverlay .sblGuideActions #sblGuideBackInside{background:#18382a;border:1px solid #4c7a60;color:#f3fff8}
 </style>
-<div id="sblGuideOverlay" aria-hidden="true"><div class="sblGuideBox"><h2>راهنمای نقشه</h2><p>• برای جابه‌جایی، نقشه را با یک انگشت لمس و حرکت بده.<br>• برای بزرگ‌نمایی، دو انگشت را باز و بسته کن یا از دکمه‌های بزرگ‌نمایی استفاده کن.<br>• برای نمایش موقعیت فعلی، اجازهٔ مکان‌یابی گوشی را فعال کن.<br>• دکمه‌های اصلی نقشه و مسیریابی مثل قبل باقی مانده‌اند.</p><button id="sblGuideClose" type="button">متوجه شدم</button></div></div>
+<div id="sblGuideOverlay" aria-hidden="true"><div class="sblGuideBox"><h2>راهنمای نقشه</h2><p>• برای جابه‌جایی، نقشه را با یک انگشت لمس و حرکت بده.<br>• برای بزرگ‌نمایی، دو انگشت را باز و بسته کن یا از دکمه‌های بزرگ‌نمایی استفاده کن.<br>• برای نمایش موقعیت فعلی، اجازهٔ مکان‌یابی گوشی را فعال کن.<br>• دکمه‌های اصلی نقشه و مسیریابی مثل قبل باقی مانده‌اند.</p><div class="sblGuideActions"><button id="sblGuideClose" type="button">متوجه شدم</button><button id="sblGuideBackInside" type="button">↩ بازگشت</button></div></div></div>
 <script id="salayan-guide-back-behavior">
 (function(){
 function setup(){
 var wrap=document.getElementById('sblBelowMapControls');
 if(wrap&&!document.getElementById('sblGuideBackBar')){
 var bar=document.createElement('div');bar.id='sblGuideBackBar';
-bar.innerHTML='<button id="sblGuideOpen" type="button">❔ راهنما</button><button id="sblMapBack" type="button">↩ بازگشت</button>';
+bar.innerHTML='<button id="sblGuideOpen" type="button">❔ راهنما</button>';
 wrap.appendChild(bar);
 bar.querySelector('#sblGuideOpen').addEventListener('click',function(){var o=document.getElementById('sblGuideOverlay');o.classList.add('open');o.setAttribute('aria-hidden','false')});
-bar.querySelector('#sblMapBack').addEventListener('click',function(){if(window.parent&&window.parent!==window){window.parent.postMessage('salayan-map-back','*')}else if(history.length>1){history.back()}else{location.href='./'}});
+
 }
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});else setup();
 var observer=new MutationObserver(setup);observer.observe(document.documentElement,{childList:true,subtree:true});
-document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('#sblGuideClose')){var o=document.getElementById('sblGuideOverlay');o.classList.remove('open');o.setAttribute('aria-hidden','true')}if(e.target&&e.target.id==='sblGuideOverlay'){e.target.classList.remove('open');e.target.setAttribute('aria-hidden','true')}});
+document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('#sblGuideClose, #sblGuideBackInside')){var o=document.getElementById('sblGuideOverlay');o.classList.remove('open');o.setAttribute('aria-hidden','true')}if(e.target&&e.target.id==='sblGuideOverlay'){e.target.classList.remove('open');e.target.setAttribute('aria-hidden','true')}});
 })();
 </script>
 
