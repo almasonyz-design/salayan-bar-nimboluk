@@ -362,7 +362,7 @@ img,iframe,video,canvas{max-width:100%!important}
    <div class="card"><p class="muted">موارد انجام‌شده را علامت بزن؛ وضعیت در همین گوشی ذخیره می‌شود.</p><div id="cargoChecks"></div><button class="button full" onclick="resetCargoChecks()">شروع چک‌لیست جدید</button><div id="cargoProgress" class="alert info">۰ مورد از ۱۰ مورد انجام شده</div></div>
   </section>
   <section id="questionBankPage" class="page">
-<div class="page-title"><div><span class="eyebrow">HELP & SUPPORT</span><h2>سؤال از پشتیبانی</h2><p class="muted" style="margin:3px 0 0;font-size:12px">دسته‌بندی را انتخاب کن یا سؤال خودت را جست‌وجو کن؛ پاسخ‌ها همین‌جا نمایش داده می‌شوند.</p></div></div>
+<div class="page-title"><div><span class="eyebrow">HELP & SUPPORT</span><h2>سؤال از پشتیبانی</h2><p class="muted" style="margin:3px 0 0;font-size:12px">همه دسته‌بندی‌ها و سؤال‌های آماده همین‌جا دیده می‌شوند؛ دسته را بزن یا جست‌وجو کن تا پاسخ را پیدا کنی.</p></div></div>
 </section><section id="supportPage" class="page"><div class="page-title"><div><span class="eyebrow">HELP CENTER</span><h2>راهنما و خدمات</h2></div></div><div class="card"><button class="drawer-item" onclick="showPage('gpsPage')"><span>⌖</span> GPS و مسیریابی</button><button class="drawer-item" onclick="showPage('loadsPage');showLoads()"><span>⇄</span> جستجوی بار</button><button class="drawer-item" onclick="showPage('createLoadPage')"><span>＋</span> اعلام بار</button><button class="drawer-item" onclick="showPage('walletPage');showWallet()"><span>▣</span> کیف پول</button><button class="drawer-item" onclick="showPage('truckPage')"><span>🚛</span> کامیون و مدارک</button><button class="drawer-item" onclick="showPage('profilePage')"><span>♙</span> پروفایل و خروج</button></div><div class="card"><h3 style="margin-top:0">راهنمای استفاده</h3><p class="muted">۱. از تالار بار، مبدأ و مقصد یا نوع کالا را جستجو کنید.</p><p class="muted">۲. پیش از انتخاب بار، کرایه، وزن و نوع بار را بررسی کنید.</p><p class="muted">۳. برای مسیریابی، GPS را باز کنید و مجوز موقعیت مکانی را بدهید.</p></div></section>
  </main>
  <nav class="bottom-nav" aria-label="ناوبری اصلی"><button id="navHome" class="nav-btn active" onclick="showPage('homePage')" type="button"><span>⌂</span>خانه</button><button id="navLoads" class="nav-btn" onclick="showPage('loadsPage');showLoads()" type="button"><span>⇄</span>تالار بار</button><button id="navMine" class="nav-btn" onclick="showPage('myLoadsPage');showMyLoads()" type="button"><span>▤</span>بارهای من</button><button id="navWallet" class="nav-btn" onclick="showPage('walletPage');showWallet()" type="button"><span>▣</span>کیف پول</button><button id="navMore" class="nav-btn" onclick="openMenu()" type="button"><span>☰</span>بیشتر</button></nav>
@@ -428,9 +428,7 @@ img,iframe,video,canvas{max-width:100%!important}
 <button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>🔧</span> یادآور سرویس بعدی</button>
 <button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>🛞</span> یادآور بررسی لاستیک‌ها</button>
 <button class="drawer-item" onclick="drawerGo('truckPage')"><span>🔢</span> اطلاعات فنی و مشخصات کشنده</button>
-<button class="drawer-item salayan-ai-menu" onclick="drawerGo('questionBankPage')"><span>🤖</span> هوش مصنوعی مخصوص صلایان</button>
 <button class="drawer-item" onclick="drawerGo('supportPage')"><span>☎️</span> راهنمای استفاده از سامانه</button>
-<button class="drawer-item" onclick="drawerGo('supportPage')"><span>💬</span> ارتباط و پشتیبانی</button>
 
 <p class="drawer-group">📊 ابزارهای واقعی و دفترهای ثبت</p>
 <button class="drawer-item" onclick="drawerGo('expenseLogPage');renderRecords('salayan_expenses','expenseList')"><span>💵</span> دفتر دخل‌وخرج سفر</button>
@@ -665,7 +663,7 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
   {title:'کیف پول',sub:'موجودی و تراکنش‌ها',q:'چطور موجودی و تراکنش‌های کیف پول را بررسی کنم؟',icon:'💳'},
   {title:'هزینه سفر',sub:'سوخت، کرایه و سود',q:'چطور هزینه سفر و سود خالص بار را محاسبه کنم؟',icon:'💰'},
   {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',q:'چطور از راهنمای سرویس و چک‌لیست کامیون استفاده کنم؟',icon:'🔧'},
-  {title:'پشتیبانی',sub:'رفع مشکل برنامه',q:'چطور مشکل برنامه را به پشتیبانی گزارش کنم؟',icon:'💬'}
+  {title:'سؤال از پشتیبانی',sub:'دسته‌بندی‌ها و پاسخ‌های آماده',q:'چطور از بخش سؤال از پشتیبانی استفاده کنم؟',icon:'💬'}
  ];
  function goQuestion(q){if(typeof window.showPage==='function')window.showPage('questionBankPage');const field=document.querySelector('#questionBankPage .salayan-question-search');if(field){field.value='';field.focus({preventScroll:true});}}
  function makeTile(x,i){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';const c=tileColors[i%tileColors.length];b.innerHTML='<span class="salayan-category-icon" style="--tile-bg:'+c[0]+';--tile-color:'+c[1]+'">'+x.icon+'</span><b>'+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
