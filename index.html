@@ -115,6 +115,6 @@ function testCharge(){notify("شارژ واقعی هنوز به درگاه پر�
 $("loadSearch").addEventListener("input",renderLoads);$("createLoadForm").addEventListener("submit",createLoad);
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
 window.addEventListener("message",e=>{if(e.data?.type==="salayan-map-height"&&Number(e.data.height)>200)$("mapFrame").style.height=e.data.height+"px"});
-if(new URLSearchParams(location.search).get("demo")==="1"){enterDemoMode()}else if(localStorage.getItem("salayan_demo_login")==="1"){enterDemoMode()}else{checkSession()}
+enterDemoMode();
 </script>
 </body></html>
