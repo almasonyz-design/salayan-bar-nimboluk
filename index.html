@@ -3709,10 +3709,11 @@ $('sbGpsStart').addEventListener('click',startGPS);$('sbGpsMap').addEventListene
   url='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   attr='© OpenStreetMap contributors';max=19;
  }
+ let candidate=null;
  try{
   await initMap();
   const previous=tiles;
-  const candidate=L.tileLayer(url,{subdomains:subs||undefined,maxZoom:max,attribution:attr,crossOrigin:true});
+  candidate=L.tileLayer(url,{subdomains:subs||undefined,maxZoom:max,attribution:attr,crossOrigin:true});
   let settled=false;
   status('در حال بارگیری نقشه '+(type==='satellite'?'ماهواره‌ای':type==='terrain'?'ناهمواری':'جاده‌ای')+'…');
   await new Promise((resolve,reject)=>{
@@ -3727,6 +3728,7 @@ $('sbGpsStart').addEventListener('click',startGPS);$('sbGpsMap').addEventListene
   setTimeout(()=>map&&map.invalidateSize({pan:false}),120);
   status('لایه نقشه فعال شد. برای دیدن محل دقیق، GPS گوشی را فعال کن.');
  }catch(e){
+  if(candidate&&map&&map.hasLayer(candidate))map.removeLayer(candidate);
   status('<b>این لایه بارگیری نشد.</b><br>'+esc(e.message||'خطای سرویس نقشه'));
  }
 }));lastPos=null;initMap().then(()=>{status('نمای اولیه فقط محدوده نیمبلوک است، نه موقعیت دقیق شما. برای دیدن محل واقعی کامیون، «فعال‌سازی GPS» را بزن و اجازه مکان بده.')}).catch(e=>{const node=$('sbGpsMapCanvas');if(node){node.innerHTML='<iframe title="نقشه جایگزین صلایان بار" style="display:block;width:100%;height:100%;min-height:320px;border:0" loading="eager" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=58.9%2C33.5%2C59.5%2C34.0&layer=mapnik"></iframe>';}status('<b>نقشه تعاملی جایگزین فعال شد.</b><br>اگر باز هم سفید است، سرویس نقشه در اتصال فعلی مسدود است. '+esc(e.message||''))})}
