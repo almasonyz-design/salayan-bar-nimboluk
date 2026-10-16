@@ -5528,7 +5528,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
    if(card)gps.insertBefore(panel,card);else gps.appendChild(panel);
   }
   var frame=panel.querySelector('iframe');
-  if(frame&&!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-satellitefix12');
+  if(frame&&!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-mapfix13');
  }
  window.salayanInitEmbeddedMap3D=addMap3DLaunch;
  function ensureOverlay(){
@@ -5543,7 +5543,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
  function openMap3D(){
   var overlay=ensureOverlay(),frame=overlay.querySelector('iframe');
   overlay.classList.add('open');document.body.style.overflow='hidden';
-  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-satellitefix12');
+  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-mapfix13');
   try{frame.contentWindow.postMessage('salayan-start-gps',location.origin)}catch(e){}
  }
  window.salayanOpenMap3D=openMap3D;
@@ -5556,7 +5556,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
   addHero();addMap3DLaunch();
   /* Preload the map invisibly so tapping GPS opens an already-rendered map. */
   var preloadOverlay=ensureOverlay(),preloadFrame=preloadOverlay.querySelector('iframe');
-  if(!preloadFrame.getAttribute('src'))preloadFrame.setAttribute('src','map3d.html?embed=1&v=20261016-satellitefix12');
+  if(!preloadFrame.getAttribute('src'))preloadFrame.setAttribute('src','map3d.html?embed=1&v=20261016-mapfix13');
   var gps=document.getElementById('gpsPage');
   if(gps&&'MutationObserver'in window){var ob=new MutationObserver(function(){addMap3DLaunch()});ob.observe(gps,{childList:true,subtree:true});}
   var home=document.getElementById('homePage');
