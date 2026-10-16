@@ -550,4 +550,32 @@ function updateCargoProgress(){let s={};try{s=JSON.parse(localStorage.getItem("s
 function resetCargoChecks(){if(!confirm("چک‌لیست برای بار جدید پاک شود؟"))return;localStorage.removeItem("salayan_cargo_checks");renderCargoChecks()}
 document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_expenses","salayan_services","salayan_tires","salayan_doc_expiry","salayan_hours"].forEach((k,i)=>renderRecords(k,["expenseList","serviceList","tireList","docExpiryList","hoursList"][i]));});
 </script>
+
+<style id="salayan-gps-scroll-and-location-fix-v1">
+#gpsPage{position:relative}
+#gpsPage .gps-page-floaters{position:fixed;z-index:55;right:12px;bottom:calc(91px + env(safe-area-inset-bottom));display:none;gap:9px;flex-direction:column;align-items:center}
+#gpsPage.active .gps-page-floaters{display:flex}
+#gpsPage .gps-page-floaters button{width:49px;height:49px;border:1px solid #bcebd5;border-radius:16px;background:#087f5b;color:white;font-size:22px;font-weight:900;box-shadow:0 7px 22px #092c1d3d;display:grid;place-items:center}
+#gpsPage .gps-page-floaters button:last-child{background:#fff;color:#087f5b;border-color:#b8ddca}
+#gpsPage .gps-page-floaters button:active{transform:scale(.94)}
+@media(min-width:700px){#gpsPage .gps-page-floaters{right:max(20px,calc((100vw - 900px)/2 + 20px));bottom:100px}}
+</style>
+<script id="salayan-gps-scroll-and-location-fix-v1">
+(function(){
+ const page=document.getElementById('gpsPage');
+ if(!page||page.querySelector('.gps-page-floaters'))return;
+ const box=document.createElement('div');box.className='gps-page-floaters';
+ box.innerHTML='<button type="button" id="gpsJumpDown" aria-label="رفتن به پایین صفحه" title="پایین صفحه">↓</button><button type="button" id="gpsFindMe" aria-label="نمایش موقعیت من" title="موقعیت من">📍</button>';
+ page.appendChild(box);
+ document.getElementById('gpsJumpDown').addEventListener('click',function(){
+   const y=page.getBoundingClientRect().top+window.scrollY+Math.max(0,page.scrollHeight-window.innerHeight+40);
+   window.scrollTo({top:y,behavior:'smooth'});
+ });
+ document.getElementById('gpsFindMe').addEventListener('click',function(){
+   const frame=document.getElementById('mapFrame');
+   try{frame.contentWindow.postMessage('salayan-start-gps',location.origin);frame.contentWindow.postMessage('salayan-center-on-me',location.origin)}catch(e){}
+   if(typeof refreshMap==='function')refreshMap();
+ });
+})();
+</script>
 </body></html>
