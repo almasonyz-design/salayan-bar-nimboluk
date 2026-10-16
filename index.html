@@ -5504,6 +5504,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
   overlay.innerHTML='<iframe title="ناوبری سه‌بعدی صلایان بار" allow="geolocation; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe><button id="salayanMap3DClose" type="button" aria-label="بستن ناوبری">×</button>';
   document.body.appendChild(overlay);
   overlay.querySelector('button').addEventListener('click',closeMap3D);
+  var frame=overlay.querySelector('iframe');frame.addEventListener('load',function(){if(overlay.classList.contains('open')){try{frame.contentWindow.postMessage('salayan-start-gps',location.origin)}catch(e){}}});
   return overlay;
  }
  function openMap3D(){
