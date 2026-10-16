@@ -718,4 +718,72 @@ const matchesKey=(question,key)=>{const q=norm(question),k=norm(key);if(!k)retur
 })();
 document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e){e.preventDefault();const field=document.getElementById('homeAiQuickInput');const question=field?.value.trim();if(!question)return;showPage('salayanAiPage');if(typeof window.askSalayanAI==='function'){window.askSalayanAI(question)}else{const target=document.getElementById('salayanAiInput');const form=document.getElementById('salayanAiForm');if(target&&form){target.value=question;form.requestSubmit()}}});
 </script>
+
+<style id="salayan-photo-rich-ui-v1">
+.salayan-photo-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 20px}
+.salayan-photo-tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:145px;overflow:hidden;border:0;border-radius:18px;padding:0;text-align:right;color:#fff;background:#214f3c;box-shadow:0 8px 22px #153b2b18;isolation:isolate;cursor:pointer}
+.salayan-photo-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .25s}
+.salayan-photo-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,27,18,.88),rgba(3,27,18,.06) 82%);z-index:-1}
+.salayan-photo-tile:active img{transform:scale(1.04)}
+.salayan-photo-tile b{font-size:14px;padding:0 12px;font-weight:900}
+.salayan-photo-tile small{font-size:10px;color:#e4f7ed;padding:3px 12px 12px}
+.salayan-photo-kicker{font-size:10px;font-weight:900;color:var(--green);margin:18px 2px 8px}
+.salayan-question-search{width:100%;border:1px solid #d8e8de;border-radius:13px;padding:13px 14px;background:#fff;font:inherit;margin:7px 0 12px;outline:none}
+.salayan-question-search:focus{border-color:#10a878;box-shadow:0 0 0 3px #10a8781b}
+.salayan-question-list{display:grid;gap:8px}
+.salayan-question-item{display:flex;align-items:center;gap:10px;width:100%;text-align:right;border:1px solid #e0ebe4;border-radius:13px;background:#fff;padding:10px 12px;color:var(--ink);font:inherit;font-size:12px;font-weight:700}
+.salayan-question-item span{display:grid;place-items:center;flex:0 0 32px;height:32px;border-radius:10px;background:#eaf7f0;font-size:17px}
+.salayan-photo-banner{display:flex;align-items:flex-end;min-height:155px;position:relative;overflow:hidden;border-radius:18px;margin:12px 0 18px;color:#fff;padding:16px;background:#194632}
+.salayan-photo-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.salayan-photo-banner:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,27,18,.88),rgba(3,27,18,.08));z-index:1}
+.salayan-photo-banner div{position:relative;z-index:2}.salayan-photo-banner b{display:block;font-size:17px}.salayan-photo-banner small{font-size:11px;color:#e4f7ed}
+@media(min-width:600px){.salayan-photo-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.salayan-photo-tile{min-height:165px}}
+@media(max-width:350px){.salayan-photo-strip{gap:7px}.salayan-photo-tile{min-height:125px}.salayan-photo-tile b{font-size:12px}}
+</style>
+<script id="salayan-photo-rich-ui-v1-script">
+(function(){
+ const photo=(id,w=800)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=82';
+ const cities=[
+  {title:'مشهد',sub:'مسیر، بار رفت و برگشت',img:'photo-1563013544-824ae1b704d3',q:'چطور درباره مسیر و بار رفت و برگشت مشهد در صلایان بار جستجو کنم؟',icon:'🏙️'},
+  {title:'بیرجند و قاین',sub:'مسیرهای خراسان جنوبی',img:'photo-1519501025264-65ba15a82390',q:'چطور بارهای مسیر قاین و بیرجند را در صلایان بار جستجو کنم؟',icon:'📍'},
+  {title:'جاده و GPS',sub:'موقعیت و راه‌یابی',img:'photo-1500530855697-b586d89ba3ee',q:'چطور GPS و مسیریابی صلایان بار را استفاده کنم؟',icon:'🧭'},
+  {title:'بار و کامیون',sub:'اعلام بار و جست‌وجو',img:'photo-1519003722824-194d4455a60c',q:'چطور بار پیدا کنم و بارهای آزاد و نوبتی را ببینم؟',icon:'🚛'},
+  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',img:'photo- fuel-not-real',q:'چطور هزینه سفر و سود بار را محاسبه کنم؟',icon:'💰'},
+  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',img:'photo-1486262715619-67b85e0b08d3',q:'راهنمای سرویس و نگهداری کامیون در صلایان بار کجاست؟',icon:'🔧'}
+ ];
+ // Remove any invalid photo source from fallback to keep every tile useful.
+ cities[4].img='photo-1492144534655-ae79c964c9d7';
+ function goQuestion(q){if(typeof window.askSalayanAI==='function'){if(typeof window.showPage==='function')window.showPage('salayanAiPage');setTimeout(()=>window.askSalayanAI(q),80)}}
+ function makeTile(x){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';b.innerHTML='<img loading="lazy" alt="" src="'+photo(x.img)+'"><b>'+x.icon+' '+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
+ function addHome(){
+  const home=document.getElementById('homePage');if(!home||home.querySelector('.salayan-home-photo-section'))return;
+  const wrap=document.createElement('div');wrap.className='salayan-home-photo-section';
+  wrap.innerHTML='<div class="section-head"><h3>با تصویر انتخاب کن</h3><span class="eyebrow">راهنمای راننده</span></div><div class="salayan-photo-strip"></div>';
+  const grid=wrap.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
+  const hero=home.querySelector('.card.hero');if(hero)hero.after(wrap);else home.prepend(wrap);
+ }
+ function addAIQuestions(){
+  const ai=document.getElementById('salayanAiPage');if(!ai||ai.querySelector('.salayan-ai-photo-catalog'))return;
+  const section=document.createElement('div');section.className='salayan-ai-photo-catalog card';
+  section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📸 سؤال‌ها براساس موضوع و شهر</h3></div><p class="muted">روی عکس هر موضوع بزن یا سؤال موردنظرت را جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="جست‌وجو: مشهد، بار برگشتی، GPS، کیف پول..." aria-label="جستجوی سؤال‌های آماده"><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های پیشنهادی</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ سؤال خودت را در کادر گفت‌وگو بنویس.</p>';
+  const questions=[
+   ['مشهد','فاصله و مسیر قاین تا مشهد چطور بررسی می‌شود؟','🏙️'],['مشهد','چطور بار رفت به مشهد یا بار برگشت از مشهد پیدا کنم؟','🚛'],['بیرجند','چطور بارهای مسیر قاین و بیرجند را جست‌وجو کنم؟','📍'],['بار برگشتی','چطور بار برگشتی پیدا کنم؟','↩️'],['بار نوبتی','تفاوت بار آزاد و بار نوبتی چیست؟','🔢'],['GPS','چطور موقعیت فعلی خودم را در GPS ببینم؟','🧭'],['نقشه','اگر نقشه باز نشد یا حرکت نکرد چه کنم؟','🗺️'],['کیف پول','موجودی کیف پول و هزینه انتخاب بار کجاست؟','💳'],['هزینه سفر','چطور هزینه سوخت و سود سفر را حساب کنم؟','💰'],['سرویس کامیون','یادآور سرویس و تعویض روغن را کجا ثبت کنم؟','🔧'],['مدارک','چطور تاریخ انقضای مدارک راننده را یادآوری کنم؟','🪪'],['اعلام بار','چطور بار جدید ثبت کنم؟','📦'],['ورود','اگر نتوانم وارد حساب شوم چه کنم؟','🔐'],['پشتیبانی','چطور راهنما و پشتیبانی برنامه را پیدا کنم؟','💬']
+  ];
+  const grid=section.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
+  const list=section.querySelector('.salayan-question-list'),search=section.querySelector('.salayan-question-search'),none=section.querySelector('.salayan-no-questions');
+  function draw(){const q=search.value.trim().toLocaleLowerCase('fa');const filtered=questions.filter(x=>x.join(' ').toLocaleLowerCase('fa').includes(q));list.innerHTML='';filtered.forEach(x=>{const b=document.createElement('button');b.type='button';b.className='salayan-question-item';b.innerHTML='<span>'+x[2]+'</span><div>'+x[1]+'</div>';b.addEventListener('click',()=>goQuestion(x[1]));list.appendChild(b)});none.style.display=filtered.length?'none':'block'}
+  search.addEventListener('input',draw);draw();
+  const intro=ai.querySelector('.salayan-ai-intro');if(intro)intro.after(section);else ai.prepend(section);
+ }
+ function addLoadPhoto(){
+  const loads=document.getElementById('loadsPage');if(!loads||loads.querySelector('.salayan-load-photo-banner'))return;
+  const banner=document.createElement('div');banner.className='salayan-photo-banner salayan-load-photo-banner';banner.innerHTML='<img loading="lazy" alt="" src="'+photo('photo-1519003722824-194d4455a60c',1000)+'"><div><b>تالار هوشمند بار صلایان</b><small>مبدأ، مقصد و نوع بار را جست‌وجو کن</small></div>';
+  const title=loads.querySelector('.page-title');if(title)title.after(banner);
+ }
+ function init(){addHome();addAIQuestions();addLoadPhoto()}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+ const observer=new MutationObserver(()=>{addHome();addAIQuestions();addLoadPhoto()});observer.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
 </body></html>
