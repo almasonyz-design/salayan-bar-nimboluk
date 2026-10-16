@@ -739,17 +739,27 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
 (function(){
  const tileColors=[['#e7f4ff','#1671c5'],['#e9f9ef','#087f5b'],['#fff0e7','#c65a21'],['#f2eaff','#7748b5'],['#fff5d9','#9b7100'],['#e5f8f7','#087f8c'],['#ffeaf0','#b83263'],['#eaf0ff','#3f59b8']];
  const categoriesQuick=[
-  {title:'جست‌وجوی بار',sub:'پیدا کردن بار متناسب',q:'چطور در بخش جست‌وجوی بار، بار مناسب پیدا کنم؟',icon:'📦'},
-  {title:'اعلام بار',sub:'ثبت بار جدید',q:'چطور از دکمه اعلام بار برای ثبت بار جدید استفاده کنم؟',icon:'📝'},
-  {title:'GPS و مسیریابی',sub:'مکان فعلی و مسیر',q:'چطور GPS، مکان فعلی و مسیریابی را در صلایان بار استفاده کنم؟',icon:'🧭'},
-  {title:'بارهای من',sub:'پیگیری بارها',q:'بارهای ثبت‌شده یا انتخاب‌شده‌ام را از کدام بخش ببینم؟',icon:'🗂️'},
-  {title:'کیف پول',sub:'موجودی و تراکنش‌ها',q:'چطور موجودی و تراکنش‌های کیف پول را بررسی کنم؟',icon:'💳'},
-  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',q:'چطور هزینه سفر و سود خالص بار را محاسبه کنم؟',icon:'💰'},
-  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',q:'چطور از راهنمای سرویس و چک‌لیست کامیون استفاده کنم؟',icon:'🔧'},
-  {title:'سؤال از پشتیبانی',sub:'دسته‌بندی‌ها و پاسخ‌های آماده',q:'چطور از بخش سؤال از پشتیبانی استفاده کنم؟',icon:'💬'}
+  {title:'جست‌وجوی بار',sub:'پیدا کردن بار متناسب',page:'loadsPage',icon:'📦'},
+  {title:'اعلام بار',sub:'ثبت بار جدید',page:'createLoadPage',icon:'📝'},
+  {title:'GPS و مسیریابی',sub:'مکان فعلی و مسیر',page:'gpsPage',icon:'🧭'},
+  {title:'بارهای من',sub:'پیگیری بارها',page:'myLoadsPage',icon:'🗂️'},
+  {title:'کیف پول',sub:'موجودی و تراکنش‌ها',page:'walletPage',icon:'💳'},
+  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',page:'tripCostPage',icon:'💰'},
+  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',page:'maintenanceGuidePage',icon:'🔧'},
+  {title:'سؤال از پشتیبانی',sub:'دسته‌بندی‌ها و پاسخ‌های آماده',page:'questionBankPage',icon:'💬'}
  ];
- function goQuestion(q){if(typeof window.showPage==='function')window.showPage('questionBankPage');const field=document.querySelector('#questionBankPage .salayan-question-search');if(field){field.value='';field.focus({preventScroll:true});}}
- function makeTile(x,i){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';const c=tileColors[i%tileColors.length];b.innerHTML='<span class="salayan-category-icon" style="--tile-bg:'+c[0]+';--tile-color:'+c[1]+'">'+x.icon+'</span><b>'+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
+ function goQuickPage(id){
+  if(typeof window.showPage!=='function')return;
+  window.showPage(id);
+  if(id==='loadsPage'&&typeof window.showLoads==='function')window.showLoads();
+  if(id==='walletPage'&&typeof window.showWallet==='function')window.showWallet();
+  if(id==='gpsPage'&&typeof window.refreshMap==='function')window.refreshMap();
+  if(id==='questionBankPage'){
+   const field=document.querySelector('#questionBankPage .salayan-question-search');
+   if(field){field.value='';field.blur();}
+  }
+ }
+ function makeTile(x,i){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';const c=tileColors[i%tileColors.length];b.innerHTML='<span class="salayan-category-icon" style="--tile-bg:'+c[0]+';--tile-color:'+c[1]+'">'+x.icon+'</span><b>'+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuickPage(x.page));return b}
  function addHome(){
   const home=document.getElementById('homePage');if(!home||home.querySelector('.salayan-home-photo-section'))return;
   const wrap=document.createElement('div');wrap.className='salayan-home-photo-section';
