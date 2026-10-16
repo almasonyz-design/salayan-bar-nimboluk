@@ -5534,5 +5534,35 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
  window.addEventListener('pageshow',function(){addHero();addMap3DLaunch()});
 })();
 </script>
+
+<style id="salayan-map-compact-card-fix">
+/* نقشه زیبا داخل کارت GPS؛ نه تمام‌صفحه */
+#gpsPage #salayan-map3d-embedded{
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:10px 0 14px!important;padding:0!important;
+  border:1px solid #d9e9df!important;border-radius:20px!important;overflow:hidden!important;
+  background:#edf7f1!important;box-shadow:0 8px 24px rgba(12,70,44,.12)!important;
+}
+#gpsPage #salayan-map3d-embedded iframe{
+  display:block!important;width:100%!important;height:290px!important;
+  min-height:290px!important;max-height:290px!important;border:0!important;
+  border-radius:19px!important;touch-action:pan-x pan-y!important;overscroll-behavior:contain!important;
+}
+#gpsPage #salayan-map3d-embedded .sbx-map-stage,
+#gpsPage .sbx-map-stage{
+  position:relative!important;inset:auto!important;width:100%!important;
+  height:290px!important;min-height:290px!important;max-height:290px!important;
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  overflow:hidden!important;border-radius:19px!important;
+}
+#gpsPage #sbGpsCard .sb-gps-map{height:290px!important;min-height:290px!important;border-radius:19px!important}
+@media(max-width:520px){
+  #gpsPage #salayan-map3d-embedded iframe,
+  #gpsPage #salayan-map3d-embedded .sbx-map-stage,
+  #gpsPage .sbx-map-stage,
+  #gpsPage #sbGpsCard .sb-gps-map{height:260px!important;min-height:260px!important;max-height:260px!important}
+}
+</style>
+
 </body>
 </html>
