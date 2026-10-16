@@ -171,4 +171,56 @@ $('startBtn').onclick=startGPS;$('locBtn').onclick=()=>current?map.flyTo({center
 const last=localStorage.getItem('salayanLastDestination');if(last)$('destination').value=last;
 if(map){try{map.dragPan.enable();map.scrollZoom.enable();map.touchZoomRotate.enable();map.doubleClickZoom.enable();map.boxZoom.disable()}catch(e){}const mapCanvas=map.getCanvas();if(mapCanvas){mapCanvas.style.touchAction='none';mapCanvas.style.pointerEvents='auto';mapCanvas.setAttribute('aria-label','نقشه قابل حرکت و بزرگ‌نمایی با لمس');}const resizeMap=()=>{try{map.resize()}catch(e){}};window.addEventListener('resize',()=>requestAnimationFrame(resizeMap),{passive:true});window.addEventListener('orientationchange',()=>setTimeout(resizeMap,250),{passive:true});window.addEventListener('pageshow',()=>setTimeout(resizeMap,80));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(resizeMap,100)});if('ResizeObserver'in window){const ro=new ResizeObserver(()=>requestAnimationFrame(resizeMap));ro.observe($('map'))}map.on('dragstart',()=>{if(follow)setFollow(false)});map.on('load',()=>setTimeout(resizeMap,120));}
 })();
+
+<script id="salayan-controls-physically-below-map-v10">
+(function(){
+  function relocate(){
+    if(!document.documentElement.classList.contains('sbl-embed-mode')) return;
+    const main=document.querySelector('main'), map=document.getElementById('map');
+    if(!main||!map||document.getElementById('sblBelowMapControls')) return;
+    const wrap=document.createElement('section');
+    wrap.id='sblBelowMapControls';
+    wrap.setAttribute('aria-label','ابزارهای نقشه و مسیریابی');
+    map.insertAdjacentElement('afterend',wrap);
+    ['.topcontrols','.tools','.sidecards','.hint','.bottom','.steps'].forEach(sel=>{
+      const el=main.querySelector(':scope > '+sel);
+      if(el) wrap.appendChild(el);
+    });
+    requestAnimationFrame(()=>{try{if(window.map&&typeof window.map.resize==='function')window.map.resize();}catch(e){}
+      window.dispatchEvent(new Event('resize'));
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',relocate,{once:true});else relocate();
+})();
+</script>
+<style id="salayan-physical-controls-below-map-v10">
+html.sbl-embed-mode main{display:block!important;position:relative!important;height:auto!important;overflow:visible!important}
+html.sbl-embed-mode #map{position:relative!important;inset:auto!important;width:100%!important;height:300px!important;min-height:300px!important;max-height:300px!important;display:block!important;overflow:hidden!important;touch-action:pan-x pan-y!important}
+html.sbl-embed-mode #sblBelowMapControls{position:relative!important;display:flex!important;flex-direction:column!important;gap:0!important;width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important;background:#071812!important;border-top:2px solid #2a6749!important;padding-bottom:12px!important}
+html.sbl-embed-mode #sblBelowMapControls .topcontrols,
+html.sbl-embed-mode #sblBelowMapControls .tools,
+html.sbl-embed-mode #sblBelowMapControls .sidecards,
+html.sbl-embed-mode #sblBelowMapControls .hint,
+html.sbl-embed-mode #sblBelowMapControls .bottom,
+html.sbl-embed-mode #sblBelowMapControls .steps{position:relative!important;inset:auto!important;transform:none!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;min-height:0!important;margin:0!important;box-sizing:border-box!important}
+html.sbl-embed-mode #sblBelowMapControls .topcontrols{order:1!important;display:flex!important;flex-direction:column!important;padding:12px 10px 4px!important;gap:8px!important;background:#071812!important}
+html.sbl-embed-mode #sblBelowMapControls .searchwrap{width:100%!important;max-width:none!important;flex:none!important}
+html.sbl-embed-mode #sblBelowMapControls .search{width:100%!important;min-height:48px!important}
+html.sbl-embed-mode #sblBelowMapControls .tools{order:2!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:flex-start!important;gap:8px!important;padding:10px!important;background:#0a2118!important}
+html.sbl-embed-mode #sblBelowMapControls .tool{position:relative!important;inset:auto!important;flex:0 0 42px!important;width:42px!important;height:42px!important}
+html.sbl-embed-mode #sblBelowMapControls .sidecards{order:3!important;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;gap:8px!important;padding:8px 10px!important;background:#071812!important}
+html.sbl-embed-mode #sblBelowMapControls .hint{order:4!important;align-self:stretch!important;padding:8px 12px!important;margin:6px 10px 10px!important;text-align:center!important;white-space:normal!important}
+html.sbl-embed-mode #sblBelowMapControls .bottom{order:5!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:10px!important;padding:0 10px 12px!important;background:#071812!important}
+html.sbl-embed-mode #sblBelowMapControls .trip{width:100%!important;max-width:none!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions{width:100%!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+html.sbl-embed-mode #sblBelowMapControls .bottomactions .action{flex:1 1 105px!important;min-height:44px!important}
+html.sbl-embed-mode #sblBelowMapControls .steps{order:6!important;margin:0 10px 12px!important;width:auto!important}
+html.sbl-embed-mode .shade{display:none!important}
+@media(max-width:520px){
+ html.sbl-embed-mode #map{height:280px!important;min-height:280px!important;max-height:280px!important}
+ html.sbl-embed-mode #sblBelowMapControls .sidecards{grid-template-columns:1fr!important}
+ html.sbl-embed-mode #sblBelowMapControls .tools{justify-content:space-around!important}
+ html.sbl-embed-mode #sblBelowMapControls .tool{flex-basis:40px!important;width:40px!important;height:40px!important}
+}
+</style>
 </script></body></html>
