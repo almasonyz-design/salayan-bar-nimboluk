@@ -736,14 +736,19 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
 </script>
 
 <style id="salayan-photo-rich-ui-v1">
-.salayan-photo-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 20px}
-.salayan-photo-tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:145px;overflow:hidden;border:0;border-radius:18px;padding:0;text-align:right;color:#fff;background:#214f3c;box-shadow:0 8px 22px #153b2b18;isolation:isolate;cursor:pointer}
-.salayan-photo-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .25s}
-.salayan-photo-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,27,18,.88),rgba(3,27,18,.06) 82%);z-index:-1}
-.salayan-photo-tile:active img{transform:scale(1.04)}
-.salayan-photo-tile b{font-size:14px;padding:0 12px;font-weight:900}
-.salayan-photo-tile small{font-size:10px;color:#e4f7ed;padding:3px 12px 12px}
-.salayan-photo-kicker{font-size:10px;font-weight:900;color:var(--green);margin:18px 2px 8px}
+.salayan-photo-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px 7px;margin:14px 0 20px}
+ .salayan-photo-tile{display:flex;align-items:center;justify-content:flex-start;flex-direction:column;gap:7px;min-width:0;min-height:105px;border:0;border-radius:14px;padding:5px 2px 8px;text-align:center;color:var(--ink);background:transparent;box-shadow:none;cursor:pointer;font:inherit}
+ .salayan-category-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:20px;background:var(--tile-bg,#eaf7f0);color:var(--tile-color,#087f5b);font-size:27px;box-shadow:0 3px 10px #173d280b;transition:transform .15s}
+ .salayan-photo-tile:active .salayan-category-icon{transform:scale(.94)}
+ .salayan-photo-tile b{font-size:11px;line-height:1.5;padding:0 2px;font-weight:800;overflow-wrap:anywhere}
+ .salayan-photo-tile small{font-size:9px;color:var(--muted,#6b7c72);line-height:1.4}
+ .salayan-photo-kicker{font-size:12px;font-weight:900;color:var(--green);margin:18px 2px 8px}
+ .salayan-home-photo-section,.salayan-ai-photo-catalog{border-radius:18px}
+ .salayan-category-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;padding:8px 0 12px}
+ .salayan-category-chip{min-width:0;white-space:normal;min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #e2eee7;background:#fff;color:#176348;border-radius:14px;padding:8px 6px;font-size:11px;font-weight:800;box-shadow:0 2px 8px #123a2508}
+ .salayan-category-chip.active,.salayan-category-chip:focus{background:linear-gradient(135deg,#087f5b,#10a878);border-color:#087f5b;color:#fff;box-shadow:0 5px 14px #087f5b2b}
+ @media(min-width:600px){.salayan-photo-strip{grid-template-columns:repeat(6,minmax(0,1fr))}.salayan-category-filters{grid-template-columns:repeat(5,minmax(0,1fr))}}
+ @media(max-width:350px){.salayan-photo-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 4px}.salayan-category-icon{width:50px;height:50px;font-size:24px}.salayan-category-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .salayan-question-search{width:100%;border:1px solid #d8e8de;border-radius:13px;padding:13px 14px;background:#fff;font:inherit;margin:7px 0 12px;outline:none}
 .salayan-question-search:focus{border-color:#10a878;box-shadow:0 0 0 3px #10a8781b}
 .salayan-question-list{display:grid;gap:8px}.salayan-question-wrap{display:grid;gap:0}.salayan-question-answer{overflow-wrap:anywhere}.salayan-question-item{cursor:pointer}
@@ -759,24 +764,24 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
 <script src="./question-bank.js"></script>
 <script id="salayan-photo-rich-ui-v1-script">
 (function(){
- const photo=(id,w=800)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=82';
- const cities=[
-  {title:'جست‌وجوی بار',sub:'پیدا کردن بار متناسب',img:'photo-1519003722824-194d4455a60c',q:'چطور در بخش جست‌وجوی بار، بار مناسب پیدا کنم؟',icon:'📦'},
-  {title:'اعلام بار',sub:'ثبت بار جدید',img:'photo-1586528116311-ad8dd3c8310d',q:'چطور از دکمه اعلام بار برای ثبت بار جدید استفاده کنم؟',icon:'📝'},
-  {title:'GPS و مسیریابی',sub:'مکان فعلی و مسیر',img:'photo-1500530855697-b586d89ba3ee',q:'چطور GPS، مکان فعلی و مسیریابی را در صلایان بار استفاده کنم؟',icon:'🧭'},
-  {title:'بارهای من',sub:'پیگیری بارها',img:'photo-1494412519320-aa613dfb7738',q:'بارهای ثبت‌شده یا انتخاب‌شده‌ام را از کدام بخش ببینم؟',icon:'🗂️'},
-  {title:'کیف پول',sub:'موجودی و تراکنش‌ها',img:'photo-1556742049-0cfed4f6a45d',q:'چطور موجودی و تراکنش‌های کیف پول را بررسی کنم؟',icon:'💳'},
-  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',img:'photo-1492144534655-ae79c964c9d7',q:'چطور هزینه سفر و سود خالص بار را محاسبه کنم؟',icon:'💰'},
-  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',img:'photo-1486262715619-67b85e0b08d3',q:'چطور از راهنمای سرویس و چک‌لیست کامیون استفاده کنم؟',icon:'🔧'},
-  {title:'پشتیبانی',sub:'رفع مشکل برنامه',img:'photo-1552664730-d307ca884978',q:'چطور مشکل برنامه را به پشتیبانی گزارش کنم؟',icon:'💬'}
+ const tileColors=[['#e7f4ff','#1671c5'],['#e9f9ef','#087f5b'],['#fff0e7','#c65a21'],['#f2eaff','#7748b5'],['#fff5d9','#9b7100'],['#e5f8f7','#087f8c'],['#ffeaf0','#b83263'],['#eaf0ff','#3f59b8']];
+ const categoriesQuick=[
+  {title:'جست‌وجوی بار',sub:'پیدا کردن بار متناسب',q:'چطور در بخش جست‌وجوی بار، بار مناسب پیدا کنم؟',icon:'📦'},
+  {title:'اعلام بار',sub:'ثبت بار جدید',q:'چطور از دکمه اعلام بار برای ثبت بار جدید استفاده کنم؟',icon:'📝'},
+  {title:'GPS و مسیریابی',sub:'مکان فعلی و مسیر',q:'چطور GPS، مکان فعلی و مسیریابی را در صلایان بار استفاده کنم؟',icon:'🧭'},
+  {title:'بارهای من',sub:'پیگیری بارها',q:'بارهای ثبت‌شده یا انتخاب‌شده‌ام را از کدام بخش ببینم؟',icon:'🗂️'},
+  {title:'کیف پول',sub:'موجودی و تراکنش‌ها',q:'چطور موجودی و تراکنش‌های کیف پول را بررسی کنم؟',icon:'💳'},
+  {title:'هزینه سفر',sub:'سوخت، کرایه و سود',q:'چطور هزینه سفر و سود خالص بار را محاسبه کنم؟',icon:'💰'},
+  {title:'سرویس کامیون',sub:'نگهداری و چک‌لیست',q:'چطور از راهنمای سرویس و چک‌لیست کامیون استفاده کنم؟',icon:'🔧'},
+  {title:'پشتیبانی',sub:'رفع مشکل برنامه',q:'چطور مشکل برنامه را به پشتیبانی گزارش کنم؟',icon:'💬'}
  ];
  function goQuestion(q){if(typeof window.askSalayanAI==='function'){if(typeof window.showPage==='function')window.showPage('salayanAiPage');setTimeout(()=>window.askSalayanAI(q),80)}}
- function makeTile(x){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';b.innerHTML='<img loading="lazy" alt="" src="'+photo(x.img)+'"><b>'+x.icon+' '+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
+ function makeTile(x,i){const b=document.createElement('button');b.type='button';b.className='salayan-photo-tile';const c=tileColors[i%tileColors.length];b.innerHTML='<span class="salayan-category-icon" style="--tile-bg:'+c[0]+';--tile-color:'+c[1]+'">'+x.icon+'</span><b>'+x.title+'</b><small>'+x.sub+'</small>';b.addEventListener('click',()=>goQuestion(x.q));return b}
  function addHome(){
   const home=document.getElementById('homePage');if(!home||home.querySelector('.salayan-home-photo-section'))return;
   const wrap=document.createElement('div');wrap.className='salayan-home-photo-section';
-  wrap.innerHTML='<div class="section-head"><h3>با تصویر انتخاب کن</h3><span class="eyebrow">راهنمای راننده</span></div><div class="salayan-photo-strip"></div>';
-  const grid=wrap.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
+  wrap.innerHTML='<div class="section-head"><h3>دسته‌بندی‌های پرکاربرد</h3><span class="eyebrow">دسترسی سریع</span></div><div class="salayan-photo-strip"></div>';
+  const grid=wrap.querySelector('.salayan-photo-strip');categoriesQuick.forEach((x,i)=>grid.appendChild(makeTile(x,i)));
   const hero=home.querySelector('.card.hero');if(hero)hero.after(wrap);else home.prepend(wrap);
  }
  function addAIQuestions(){
