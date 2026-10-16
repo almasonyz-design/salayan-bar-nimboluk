@@ -236,6 +236,18 @@ img,iframe,video,canvas{max-width:100%!important}
 #questionBankPage .salayan-question-answer[hidden]{display:none!important}
 #questionBankPage .salayan-photo-strip,#questionBankPage .salayan-photo-kicker{display:none!important}
 </style>
+
+<style id="drawer-accordion-menu-styles">
+.drawer-accordion-trigger{display:flex!important;align-items:center;gap:10px;text-align:right}
+.drawer-accordion-trigger .drawer-item-label{flex:1}
+.drawer-chevron{margin-right:auto;font-size:18px;transition:transform .18s ease;color:#71847c}
+.drawer-accordion-trigger[aria-expanded="true"] .drawer-chevron{transform:rotate(180deg)}
+.drawer-submenu{margin:2px 8px 10px 0;padding:5px 10px 5px 5px;border-right:2px solid #10a878;border-radius:0 10px 10px 0;background:#f1f8f4}
+.drawer-submenu[hidden]{display:none!important}
+.drawer-subitem{display:flex;align-items:center;gap:9px;width:100%;border:0;border-radius:9px;background:transparent;color:#23483b;padding:11px 12px;text-align:right;font:inherit;font-size:13px;cursor:pointer}
+.drawer-subitem:active,.drawer-subitem:hover{background:#dff1e8}
+.drawer-subitem span{width:20px;text-align:center;color:#087f5b}
+</style>
 </head>
 <body>
 <section id="loginPage" class="login-screen">
@@ -406,7 +418,11 @@ img,iframe,video,canvas{max-width:100%!important}
 <p class="drawer-group">📄 مدارک و حساب</p>
 <button class="drawer-item" onclick="drawerGo('profilePage')"><span>♙</span> پروفایل راننده</button>
 <button class="drawer-item" onclick="drawerGo('documentsGuidePage')"><span>📋</span> چک‌لیست مدارک راننده و کامیون</button>
-<button class="drawer-item" onclick="drawerGo('walletPage');showWallet()"><span>▣</span> کیف پول و موجودی</button>
+<button class="drawer-item drawer-accordion-trigger" id="walletMenuTrigger" type="button" aria-expanded="false" aria-controls="walletSubmenu" onclick="toggleDrawerSubmenu('walletSubmenu','walletMenuTrigger')"><span>▣</span><span class="drawer-item-label">کیف پول و موجودی</span><span class="drawer-chevron" aria-hidden="true">⌄</span></button>
+<div class="drawer-submenu" id="walletSubmenu" hidden>
+ <button class="drawer-subitem" type="button" onclick="closeMenu();showPage('walletPage');showWallet()"><span>◉</span> مشاهده موجودی کیف پول</button>
+ <button class="drawer-subitem" type="button" onclick="closeMenu();showPage('walletPage');showWallet();setTimeout(()=>document.querySelector('#walletPage .button.light')?.focus(),100)"><span>＋</span> اطلاعات شارژ کیف پول</button>
+</div>
 <button class="drawer-item" onclick="drawerGo('tripCostPage');calculateTripCost()"><span>💰</span> محاسبه سود خالص سفر</button>
 <button class="drawer-item" onclick="drawerGo('remindersPage');renderDriverReminders()"><span>⏰</span> یادآور سرویس و سررسیدها</button>
 <p class="drawer-group">💬 سؤال از پشتیبانی</p>
@@ -484,6 +500,7 @@ const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","wa
 function showPage(id){if(!pages.includes(id))return;pages.forEach(p=>$(p).classList.toggle("active",p===id));const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};document.querySelectorAll(".nav-btn").forEach(b=>{b.classList.remove("active");b.removeAttribute("aria-current")});if(navMap[id]){$(navMap[id]).classList.add("active");$(navMap[id]).setAttribute("aria-current","page")};$("topSubtitle").textContent=({homePage:"مرکز هوشمند راننده",gpsPage:"موقعیت و مسیریابی",questionBankPage:"سؤال از پشتیبانی",loadsPage:"جستجو و انتخاب بار",myLoadsPage:"پیگیری بارهای انتخاب‌شده",createLoadPage:"ثبت اطلاعات بار",walletPage:"مدیریت موجودی",profilePage:"اطلاعات حساب",truckPage:"خودرو و مدارک",notificationsPage:"پیام‌ها و اطلاعیه‌ها",tripCostPage:"برآورد هزینه و سود سفر",supportPage:"راهنما و خدمات",maintenanceGuidePage:"سرویس دوره‌ای کامیون",preTripPage:"چک‌لیست قبل از حرکت",tireGuidePage:"بررسی لاستیک",fuelLogPage:"دفتر سوخت",documentsGuidePage:"مدارک راننده و کامیون",safetyGuidePage:"ایمنی رانندگی",emergencyGuidePage:"شرایط اضطراری",routeNotesPage:"یادداشت‌های سفر"})[id]||"صلایان بار";closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(id==="gpsPage")refreshMap();if(id==="walletPage")showWallet()}
 function openMenu(){$("menuOverlay").classList.add("open");$("drawer").classList.add("open");document.body.style.overflow="hidden"}
 function closeMenu(){$("menuOverlay").classList.remove("open");$("drawer").classList.remove("open");document.body.style.overflow=""}
+function toggleDrawerSubmenu(submenuId,triggerId){const panel=$(submenuId),trigger=$(triggerId);if(!panel||!trigger)return;const opening=panel.hidden;panel.hidden=!opening;trigger.setAttribute("aria-expanded",String(opening));if(opening)panel.scrollIntoView({block:"nearest",behavior:"smooth"})}
 function drawerGo(id){closeMenu();showPage(id)}
 const FUEL_LOG_KEY="salayanFuelLogV1",ROUTE_NOTES_KEY="salayanRouteNotesV1";
 function readLocalList(key){try{const a=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
