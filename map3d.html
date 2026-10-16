@@ -210,7 +210,19 @@ $('destination').addEventListener('input',()=>{if($('destination').value.trim().
 document.addEventListener('click',e=>{if(!$('favoriteRoutes').contains(e.target)&&!$('destination').contains(e.target)&&!$('saveDestBtn').contains(e.target))$('favoriteRoutes').classList.remove('show')});
 renderFavorites();
 $('destination').addEventListener('input',()=>{clearTimeout(searchTimer);const q=$('destination').value.trim();if(q.length<3){$('suggestions').classList.remove('show');return}searchTimer=setTimeout(()=>suggest(q),550)});
-async function suggest(q){try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=fa&q='+encodeURIComponent(q));if(!r.ok)return;const items=await r.json();const box=$('suggestions');box.innerHTML='';items.forEach(x=>{const b=document.createElement('button');b.textContent=x.display_name;b.onclick=()=>{$('destination').value=x.display_name;box.classList.remove('show');makeRoute(x)};box.appendChild(b)});if(items.length)box.classList.add('show')}catch(e){}}
+async function suggest(q){
+ const box=$('suggestions');if(!box)return;box.innerHTML='<button type="button" disabled>در حال جستجوی مقصد…</button>';box.classList.add('show');
+ const providers=[
+  async()=>{const x=await timeoutFetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=fa&q='+encodeURIComponent(q),8000);return (x||[]).map(v=>({label:v.display_name,lon:Number(v.lon),lat:Number(v.lat),name:v.name||q}))},
+  async()=>{const x=await timeoutFetch('https://photon.komoot.io/api/?limit=5&lang=fa&q='+encodeURIComponent(q),8000);return (x.features||[]).map(v=>({label:[v.properties?.name,v.properties?.city,v.properties?.state,v.properties?.country].filter(Boolean).join('،'),lon:Number(v.geometry?.coordinates?.[0]),lat:Number(v.geometry?.coordinates?.[1]),name:v.properties?.name||q}))}
+ ];
+ let items=[];
+ for(const provider of providers){try{items=await provider();if(items.length)break}catch(e){}}
+ box.innerHTML='';
+ items.filter(x=>Number.isFinite(x.lon)&&Number.isFinite(x.lat)&&Math.abs(x.lon)<=180&&Math.abs(x.lat)<=90).slice(0,5).forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x.label||x.name;b.onclick=()=>{$('destination').value=x.label||x.name;box.classList.remove('show');makeRoute(x)};box.appendChild(b)});
+ if(!box.children.length){const b=document.createElement('button');b.type='button';b.textContent='مقصد پیدا نشد؛ نام شهر و استان را کامل‌تر وارد کن';b.disabled=true;box.appendChild(b)}
+ box.classList.add('show')
+}
 function timeoutFetch(url,ms=12000){
  const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),ms);
  return fetch(url,{signal:ctrl.signal,headers:{'Accept':'application/json'}}).then(async r=>{if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}).finally(()=>clearTimeout(timer))
@@ -272,7 +284,7 @@ async function makeRoute(chosen){
  const btn=$('routeBtn'),oldLabel=btn.textContent;btn.disabled=true;btn.textContent='در حال محاسبه…';setStatus('در حال پیدا کردن مقصد و مسیر…');
  try{
   if(!map)throw Error('نقشه هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');
-  if(!map.isStyleLoaded())await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(Error('بارگذاری نقشه طول کشید؛ دوباره تلاش کن')),12000);const done=()=>{clearTimeout(t);resolve()};map.once('load',done);map.once('idle',done)});
+  if(!map.isStyleLoaded()){const deadline=Date.now()+15000;while(!map.isStyleLoaded()&&Date.now()<deadline)await new Promise(r=>setTimeout(r,180));if(!map.isStyleLoaded())throw Error('بارگذاری نقشه طول کشید؛ اینترنت را بررسی کن و دوباره بزن');}
   const origin=await freshPosition();current=origin;
   const dest=await resolveDestination(query,chosen);
   setStatus('مقصد پیدا شد؛ در حال محاسبه مسیر جاده‌ای…');
