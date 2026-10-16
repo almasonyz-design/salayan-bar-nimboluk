@@ -43,6 +43,88 @@ input,select,textarea{border:1px solid #d9e6df;background:#fbfdfc;padding:12px;c
 @media(min-width:700px){.content{padding:24px 22px 36px}.quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:32px;min-height:230px}.map-frame-wrap{height:calc(100dvh - 170px);min-height:680px}}
 @media(max-width:420px){.content{padding:13px 11px 25px}.page-title h2{font-size:19px}.page-title{align-items:flex-start}.stats{gap:6px}.stat{padding:12px 4px}.stat b{font-size:20px}.hero{padding:20px 17px}.hero:after{font-size:72px}.map-frame-wrap{height:78dvh;min-height:650px}.quick-card{min-height:108px;padding:12px 11px}}
 
+
+/* SALAYAN BAR — unified premium design system */
+:root{
+ --green:#087f5b;--green2:#11a879;--ink:#142f25;--muted:#718178;
+ --bg:#f4f7f5;--card:#fff;--line:#e2eae5;--gold:#edb64e;--red:#c74747;
+ --shadow:0 10px 30px rgba(17,54,37,.055);
+ --radius-card:20px;--radius-control:13px;
+}
+html{scroll-behavior:smooth}
+body{font-family:Vazirmatn,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+.topbar{min-height:72px;padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);box-shadow:0 3px 16px rgba(15,48,32,.035);backdrop-filter:blur(18px)}
+.brandmark{width:44px;height:44px;flex-basis:44px;border-radius:15px;background:linear-gradient(145deg,#21c88b,#066d4e);box-shadow:0 7px 16px rgba(8,127,91,.18)}
+.brandtext strong{font-size:15px;letter-spacing:-.25px}.brandtext small{font-size:11px}
+.content{width:min(100%,900px);padding:18px 16px calc(104px + env(safe-area-inset-bottom));}
+.page{animation:salayanPageIn .18s ease both}
+@keyframes salayanPageIn{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
+.page-title{align-items:center;margin:4px 2px 15px}.page-title h2{font-size:clamp(19px,4vw,23px);letter-spacing:-.4px}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.65px;color:#13805e}
+.card{border:1px solid var(--line);border-radius:var(--radius-card);padding:17px;background:var(--card);box-shadow:var(--shadow);margin-bottom:14px}
+.hero{min-height:0;padding:25px 22px 23px;border:0;border-radius:24px;background:radial-gradient(circle at 8% 8%,rgba(255,255,255,.12),transparent 32%),linear-gradient(132deg,#064d39 0%,#087f5b 62%,#13a779 100%);box-shadow:0 15px 32px rgba(8,127,91,.15)}
+.hero:after{content:"";width:160px;height:160px;border:1px solid rgba(255,255,255,.15);border-radius:50%;left:-42px;bottom:-92px;top:auto;box-shadow:0 0 0 20px rgba(255,255,255,.035),0 0 0 40px rgba(255,255,255,.025);font-size:0}
+.hero h2{font-size:clamp(23px,5vw,30px);line-height:1.65;margin:8px 0 5px}
+.hero p{font-size:12px;line-height:1.9;color:#e0fff0;max-width:440px;margin:0 0 16px}
+.hero .button{box-shadow:none;border-radius:12px;min-height:45px;padding-inline:18px}
+.stats{gap:9px;margin:13px 0 23px}
+.stat{border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px 8px;box-shadow:none}
+.stat b{font-size:clamp(19px,4vw,23px);color:var(--green)}.stat span{font-size:10px}
+.section-head{margin:22px 2px 11px}.section-head h3{font-size:15px;font-weight:800}
+.quick-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quick-card{position:relative;min-height:112px;padding:15px 14px;border:1px solid var(--line);border-radius:17px;background:#fff;box-shadow:none;gap:4px;transition:background .15s,border-color .15s,transform .15s}
+.quick-card:hover{border-color:#b7ddca;background:#fcfffd}.quick-card:active{transform:scale(.985)}
+.quick-card .qicon{width:36px;height:36px;margin:0 0 4px;border-radius:12px;background:#eaf7f0;color:var(--green);font-size:20px}
+.quick-card b{font-size:13px;font-weight:800}.quick-card small{font-size:10px;line-height:1.65}
+.quick-arrow{position:absolute;left:12px;top:12px;color:#8aa89a;font-size:15px}
+.button{border-radius:12px;min-height:45px;padding:10px 15px;box-shadow:none;font-weight:800;transition:transform .12s,background .12s}
+.button:active{transform:scale(.985)}
+.button.light{background:#edf7f1;border:1px solid #dceee3;color:#087f5b}
+.button.outline{background:#fff;border:1px solid #d6e5dc;color:#245b45}
+.icon-btn{border-radius:13px;background:#f2f8f4;border-color:#e0ece5;color:#176f50}
+.field input,.field select,.field textarea,.search-input,input,select,textarea{border-radius:12px}
+.load-card{border:1px solid var(--line);border-radius:17px;box-shadow:none;padding:15px;background:#fff}
+.route{font-size:15px;font-weight:800}
+.meta-box{background:#f5f8f6;border-radius:10px}
+.empty{border:1px dashed #cbdcd1;border-radius:16px;background:#fbfdfc;padding:22px 15px}
+.alert{border-radius:13px}
+.map-frame-wrap{height:min(67dvh,680px);min-height:380px;border:1px solid #dfe8e2;border-radius:18px;background:#071812;box-shadow:0 10px 26px rgba(13,48,32,.08)}
+#gpsPage>.card{padding:7px;border-radius:20px}
+#gpsPage .map-note{color:var(--muted);line-height:1.8;padding:0 6px}
+.bottom-nav{padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -5px 22px rgba(18,48,32,.05);backdrop-filter:blur(18px)}
+.nav-btn{min-height:54px;border-radius:12px;padding:5px 2px;font-size:10px;font-weight:700;gap:3px}
+.nav-btn span{font-size:19px}.nav-btn.active{background:#e9f6ee;color:var(--green)}
+.drawer{width:min(350px,90vw);padding:16px 14px calc(18px + env(safe-area-inset-bottom));background:#fbfdfc;box-shadow:-18px 0 45px rgba(0,25,14,.18);border-radius:22px 0 0 22px}
+.drawer-head{padding:12px 9px 18px;margin:-16px -14px 14px;border-radius:0 0 18px 18px;background:linear-gradient(135deg,#075b42,#0c9568);color:#fff}
+.drawer-head .brandmark{background:rgba(255,255,255,.15);box-shadow:none}
+.drawer-head small{color:#d7f8e7}.drawer-brand-copy{flex:1;min-width:0}.drawer-close{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+.drawer-group{margin:17px 10px 6px;color:#7b8e83;font-size:10px;font-weight:900;letter-spacing:.25px}
+.drawer-item{min-height:45px;margin:2px 0;padding:10px 12px;border-radius:11px;font-size:12px;transition:background .12s}
+.drawer-item span{flex:0 0 27px;width:27px;height:27px;display:grid;place-items:center;border-radius:9px;background:#edf7f1;color:var(--green);font-size:16px}
+.drawer-item:active,.drawer-item:hover{background:#eaf7ef;border-color:transparent}
+.drawer-divider{border:0;border-top:1px solid var(--line);margin:13px 4px}
+.logout-item{color:#ad3e3e}.logout-item span{background:#fff0f0;color:#ad3e3e}
+.menu-overlay{background:rgba(8,30,20,.54);backdrop-filter:blur(3px)}
+.login-screen{padding:22px;background:radial-gradient(circle at 84% 9%,#d6f3e3 0,transparent 32%),#f4f8f5}
+.login-box{border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 20px 60px rgba(15,48,32,.1)}
+.login-brand h1{font-size:20px}.role-tabs{background:#f0f6f2}
+.toast{bottom:calc(91px + env(safe-area-inset-bottom));border-radius:13px}
+@media(min-width:700px){
+ .content{padding:24px 22px calc(112px + env(safe-area-inset-bottom))}
+ .quick-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .hero{padding:30px 28px}
+ .map-frame-wrap{height:calc(100dvh - 225px);min-height:430px}
+}
+@media(max-width:420px){
+ .content{padding:13px 11px calc(100px + env(safe-area-inset-bottom))}
+ .topbar{padding-right:11px;padding-left:11px}
+ .hero{padding:20px 17px}.stats{gap:6px}.stat{padding:10px 4px}
+ .quick-grid{gap:8px}.quick-card{min-height:105px;padding:12px 11px}
+ .page-title{gap:7px}.page-title .button{font-size:11px;padding:8px 10px}
+ .map-frame-wrap{height:62dvh;min-height:360px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page,.quick-card,.button{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -69,12 +151,10 @@ input,select,textarea{border:1px solid #d9e6df;background:#fbfdfc;padding:12px;c
    <div class="stats"><div class="stat"><b id="homeTurnCount">—</b><span>بار نوبتی</span></div><div class="stat"><b id="homeFreeCount">—</b><span>بار آزاد</span></div><div class="stat"><b id="homeNearbyCount">—</b><span>بار نزدیک</span></div></div>
    <div class="section-head"><h3>دسترسی سریع</h3><span class="eyebrow">خدمات راننده</span></div>
    <div class="quick-grid">
-    <button class="quick-card" type="button" onclick="showPage('gpsPage')"><span class="qicon">⌖</span><b>GPS و نقشه</b><small>موقعیت و مسیر جاده‌ای</small></button>
-    <button class="quick-card" type="button" onclick="showPage('loadsPage');showLoads()"><span class="qicon">⇄</span><b>تالار بار</b><small>جستجو و انتخاب بار</small></button>
-    <button class="quick-card" type="button" onclick="showPage('myLoadsPage');showMyLoads()"><span class="qicon">▤</span><b>بارهای من</b><small>پیگیری انتخاب‌ها</small></button>
-    <button class="quick-card" type="button" onclick="showPage('walletPage');showWallet()"><span class="qicon">▣</span><b>کیف پول</b><small>مشاهده موجودی</small></button>
-    <button class="quick-card" type="button" onclick="showPage('createLoadPage')"><span class="qicon">＋</span><b>اعلام بار</b><small>ثبت مشخصات بار</small></button>
-    <button class="quick-card" type="button" onclick="showPage('supportPage')"><span class="qicon">؟</span><b>راهنما و پشتیبانی</b><small>راهنمای استفاده</small></button>
+    <button class="quick-card" type="button" onclick="showPage('gpsPage')"><span class="qicon">⌖</span><b>نقشه و مسیریابی</b><small>موقعیت و مسیر جاده‌ای</small><span class="quick-arrow" aria-hidden="true">↗</span></button>
+    <button class="quick-card" type="button" onclick="showPage('loadsPage');showLoads()"><span class="qicon">⇄</span><b>پیدا کردن بار</b><small>جست‌وجوی بارهای موجود</small><span class="quick-arrow" aria-hidden="true">↗</span></button>
+    <button class="quick-card" type="button" onclick="showPage('myLoadsPage');showMyLoads()"><span class="qicon">▤</span><b>سفرها و بارهای من</b><small>پیگیری سفارش‌ها</small><span class="quick-arrow" aria-hidden="true">↗</span></button>
+    <button class="quick-card" type="button" onclick="showPage('walletPage');showWallet()"><span class="qicon">▣</span><b>کیف پول</b><small>موجودی و هزینه‌ها</small><span class="quick-arrow" aria-hidden="true">↗</span></button>
    </div>
    <div class="section-head"><h3>بارهای تازه</h3><button class="button light small" type="button" onclick="showPage('loadsPage');showLoads()">مشاهده همه</button></div>
    <div id="homeSuggestedLoads"><div class="empty">در حال دریافت بارهای تازه…</div></div>
@@ -108,7 +188,7 @@ input,select,textarea{border:1px solid #d9e6df;background:#fbfdfc;padding:12px;c
  </main>
  <nav class="bottom-nav" aria-label="ناوبری اصلی"><button id="navHome" class="nav-btn active" onclick="showPage('homePage')" type="button"><span>⌂</span>خانه</button><button id="navLoads" class="nav-btn" onclick="showPage('loadsPage');showLoads()" type="button"><span>⇄</span>تالار بار</button><button id="navMine" class="nav-btn" onclick="showPage('myLoadsPage');showMyLoads()" type="button"><span>▤</span>بارهای من</button><button id="navWallet" class="nav-btn" onclick="showPage('walletPage');showWallet()" type="button"><span>▣</span>کیف پول</button><button id="navMore" class="nav-btn" onclick="openMenu()" type="button"><span>☰</span>بیشتر</button></nav>
 </div>
-<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div><aside id="drawer" class="drawer" aria-label="منوی خدمات"><div class="drawer-head"><div class="brandmark">🚛</div><div><b>مرکز خدمات راننده</b><small>صلایان بار نیمبلوک</small></div><button class="icon-btn drawer-close" onclick="closeMenu()" aria-label="بستن منو" type="button">×</button></div><button class="drawer-item" onclick="drawerGo('gpsPage')"><span>⌖</span> GPS و نقشه مسیر</button><button class="drawer-item" onclick="drawerGo('homePage')"><span>⌂</span> صفحه اصلی</button><button class="drawer-item" onclick="drawerGo('loadsPage');showLoads()"><span>⇄</span> تالار هوشمند بار</button><button class="drawer-item" onclick="drawerGo('myLoadsPage');showMyLoads()"><span>▤</span> بارهای من</button><button class="drawer-item" onclick="drawerGo('createLoadPage')"><span>＋</span> اعلام بار</button><button class="drawer-item" onclick="drawerGo('walletPage');showWallet()"><span>▣</span> کیف پول</button><button class="drawer-item" onclick="drawerGo('profilePage')"><span>♙</span> پروفایل راننده</button><button class="drawer-item" onclick="drawerGo('truckPage')"><span>🚛</span> کامیون و مدارک</button><button class="drawer-item" onclick="drawerGo('notificationsPage')"><span>♧</span> اعلان‌ها</button><button class="drawer-item" onclick="drawerGo('supportPage')"><span>؟</span> راهنما و پشتیبانی</button><hr style="border:0;border-top:1px solid var(--line);margin:12px 0"><button class="drawer-item" onclick="logout()"><span>↪</span> خروج از حساب</button></aside>
+<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div><aside id="drawer" class="drawer" aria-label="منوی خدمات" aria-modal="true" role="dialog"><div class="drawer-head"><div class="brandmark">🚛</div><div class="drawer-brand-copy"><b>مرکز خدمات راننده</b><small>صلایان بار نیمبلوک</small></div><button class="icon-btn drawer-close" onclick="closeMenu()" aria-label="بستن منو" type="button">×</button></div><p class="drawer-group">بار و سفر</p><button class="drawer-item" onclick="drawerGo('homePage')"><span>⌂</span> صفحه اصلی</button><button class="drawer-item" onclick="drawerGo('loadsPage');showLoads()"><span>⇄</span> تالار هوشمند بار</button><button class="drawer-item" onclick="drawerGo('myLoadsPage');showMyLoads()"><span>▤</span> بارها و سفرهای من</button><button class="drawer-item" onclick="drawerGo('createLoadPage')"><span>＋</span> اعلام بار جدید</button><button class="drawer-item" onclick="drawerGo('gpsPage')"><span>⌖</span> نقشه و مسیریابی</button><p class="drawer-group">حساب و ناوگان</p><button class="drawer-item" onclick="drawerGo('walletPage');showWallet()"><span>▣</span> کیف پول و هزینه‌ها</button><button class="drawer-item" onclick="drawerGo('truckPage')"><span>🚛</span> کامیون و مدارک</button><button class="drawer-item" onclick="drawerGo('profilePage')"><span>♙</span> پروفایل راننده</button><p class="drawer-group">پشتیبانی</p><button class="drawer-item" onclick="drawerGo('notificationsPage')"><span>♧</span> اعلان‌ها</button><button class="drawer-item" onclick="drawerGo('supportPage')"><span>؟</span> راهنما و پشتیبانی</button><hr class="drawer-divider"><button class="drawer-item logout-item" onclick="logout()"><span>↪</span> خروج از حساب</button></aside>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
 const SUPABASE_URL="https://ntirixjflgqihobpnmya.supabase.co";
@@ -129,7 +209,7 @@ function enterApp(phone){$("loginPage").classList.add("hide");$("appPage").class
 async function checkSession(){try{const {data}=await supabaseClient.auth.getSession();if(data.session?.user){currentUser=data.session.user;const phone=localStorage.getItem("salayan_phone")||currentUser.phone||"";enterApp(phone)}}catch(e){console.warn(e)}}
 async function logout(){closeMenu();try{if(!currentUser?.user_metadata?.demo)await supabaseClient.auth.signOut()}catch(e){}currentUser=null;localStorage.removeItem("salayan_demo_login");localStorage.removeItem("salayan_phone");$("appPage").classList.add("hide");$("loginPage").classList.remove("hide");$("otpArea").classList.add("hide");$("otpCode").value="";$("loginMessage").innerHTML="";notify("از حساب خارج شدید")}
 const pages=["homePage","gpsPage","loadsPage","myLoadsPage","createLoadPage","walletPage","profilePage","truckPage","notificationsPage","supportPage"];
-function showPage(id){if(!pages.includes(id))return;pages.forEach(p=>$(p).classList.toggle("active",p===id));const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));if(navMap[id])$(navMap[id]).classList.add("active");$("topSubtitle").textContent=({homePage:"مرکز هوشمند راننده",gpsPage:"موقعیت و مسیریابی",loadsPage:"جستجو و انتخاب بار",myLoadsPage:"پیگیری بارهای انتخاب‌شده",createLoadPage:"ثبت اطلاعات بار",walletPage:"مدیریت موجودی",profilePage:"اطلاعات حساب",truckPage:"خودرو و مدارک",notificationsPage:"پیام‌ها و اطلاعیه‌ها",supportPage:"راهنما و خدمات"})[id]||"صلایان بار";closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(id==="gpsPage")refreshMap();if(id==="walletPage")showWallet()}
+function showPage(id){if(!pages.includes(id))return;pages.forEach(p=>$(p).classList.toggle("active",p===id));const navMap={homePage:"navHome",loadsPage:"navLoads",myLoadsPage:"navMine",walletPage:"navWallet"};document.querySelectorAll(".nav-btn").forEach(b=>{b.classList.remove("active");b.removeAttribute("aria-current")});if(navMap[id]){$(navMap[id]).classList.add("active");$(navMap[id]).setAttribute("aria-current","page")};$("topSubtitle").textContent=({homePage:"مرکز هوشمند راننده",gpsPage:"موقعیت و مسیریابی",loadsPage:"جستجو و انتخاب بار",myLoadsPage:"پیگیری بارهای انتخاب‌شده",createLoadPage:"ثبت اطلاعات بار",walletPage:"مدیریت موجودی",profilePage:"اطلاعات حساب",truckPage:"خودرو و مدارک",notificationsPage:"پیام‌ها و اطلاعیه‌ها",supportPage:"راهنما و خدمات"})[id]||"صلایان بار";closeMenu();window.scrollTo({top:0,behavior:"smooth"});if(id==="gpsPage")refreshMap();if(id==="walletPage")showWallet()}
 function openMenu(){$("menuOverlay").classList.add("open");$("drawer").classList.add("open");document.body.style.overflow="hidden"}
 function closeMenu(){$("menuOverlay").classList.remove("open");$("drawer").classList.remove("open");document.body.style.overflow=""}
 function drawerGo(id){closeMenu();showPage(id)}
