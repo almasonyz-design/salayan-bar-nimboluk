@@ -789,7 +789,7 @@ document.getElementById('homeAiQuickForm')?.addEventListener('submit',function(e
   const section=document.createElement('div');section.className='salayan-ai-photo-catalog card';
   section.innerHTML='<div class="section-head" style="margin-top:0"><h3>📚 بانک منظم سؤال و جواب</h3></div><p class="muted">موضوع را انتخاب کن یا در همه سؤال‌ها جست‌وجو کن؛ با دکمه سبز هر سؤال مستقیماً به راهنمای برنامه ارسال می‌شود.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجوی سؤال: جست‌وجوی بار، اعلام بار، GPS، کیف پول..." aria-label="جستجوی همه سؤال‌های آماده"><div class="salayan-question-count"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-photo-strip"></div><div class="salayan-photo-kicker">سؤال‌های آماده</div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">سؤالی پیدا نشد؛ عبارت دیگری جست‌وجو کن.</p>';
   const questions=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنما","چطور از صلایان بار استفاده کنم؟","🧭","از بخش‌های برنامه استفاده کن و برای اطلاعات زنده، موجود بودن بار را تأیید کن."]];
-  const grid=section.querySelector('.salayan-photo-strip');cities.forEach(x=>grid.appendChild(makeTile(x)));
+  const grid=section.querySelector('.salayan-photo-strip');categoriesQuick.forEach((x,i)=>grid.appendChild(makeTile(x,i)));
   const list=section.querySelector('.salayan-question-list'),search=section.querySelector('.salayan-question-search'),none=section.querySelector('.salayan-no-questions'),count=section.querySelector('.salayan-question-count'),filters=section.querySelector('.salayan-category-filters');
   let activeCategory='همه';
   const categories=['همه',...new Set(questions.map(x=>x[0]))];
