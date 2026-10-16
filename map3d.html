@@ -211,74 +211,95 @@ document.addEventListener('click',e=>{if(!$('favoriteRoutes').contains(e.target)
 renderFavorites();
 $('destination').addEventListener('input',()=>{clearTimeout(searchTimer);const q=$('destination').value.trim();if(q.length<3){$('suggestions').classList.remove('show');return}searchTimer=setTimeout(()=>suggest(q),550)});
 async function suggest(q){try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=fa&q='+encodeURIComponent(q));if(!r.ok)return;const items=await r.json();const box=$('suggestions');box.innerHTML='';items.forEach(x=>{const b=document.createElement('button');b.textContent=x.display_name;b.onclick=()=>{$('destination').value=x.display_name;box.classList.remove('show');makeRoute(x)};box.appendChild(b)});if(items.length)box.classList.add('show')}catch(e){}}
-async function makeRoute(chosen){
- const q=$('destination').value.trim();
- if(!q){toast('نام مقصد یا شهر را وارد کن');$('destination').focus();return}
- const btn=$('routeBtn');btn.textContent='در حال مسیریابی…';btn.disabled=true;setStatus('در حال آماده‌سازی مسیر…');
+function timeoutFetch(url,ms=12000){
+ const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),ms);
+ return fetch(url,{signal:ctrl.signal,headers:{'Accept':'application/json'}}).then(async r=>{if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}).finally(()=>clearTimeout(timer))
+}
+async function resolveDestination(query,chosen){
+ if(chosen){
+  const lon=Number(chosen.lon??chosen.longitude??chosen.geometry?.coordinates?.[0]);
+  const lat=Number(chosen.lat??chosen.latitude??chosen.geometry?.coordinates?.[1]);
+  if(Number.isFinite(lon)&&Number.isFinite(lat))return {lon,lat,name:chosen.name||chosen.display_name||chosen.properties?.name||query,display_name:chosen.display_name||chosen.name||query};
+ }
+ const q=query.trim();
+ if(!q)throw Error('اول نام شهر یا مقصد را وارد کن');
+ const attempts=[
+  async()=>{const x=await timeoutFetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=fa&q='+encodeURIComponent(q),10000);if(!Array.isArray(x)||!x.length)throw Error('مقصد پیدا نشد');const best=x.find(v=>v.type==='city'||v.type==='town'||v.type==='village'||v.class==='place')||x[0];return {lon:Number(best.lon),lat:Number(best.lat),name:best.name||q,display_name:best.display_name||q}},
+  async()=>{const x=await timeoutFetch('https://photon.komoot.io/api/?limit=5&lang=fa&q='+encodeURIComponent(q),10000);const f=x.features?.find(v=>v.geometry?.coordinates?.length===2);if(!f)throw Error('مقصد پیدا نشد');return {lon:Number(f.geometry.coordinates[0]),lat:Number(f.geometry.coordinates[1]),name:f.properties?.name||f.properties?.city||q,display_name:[f.properties?.name,f.properties?.city,f.properties?.state,f.properties?.country].filter(Boolean).join('،')||q}},
+  async()=>{const x=await timeoutFetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=5&language=fa&format=json',10000);const f=x.results?.[0];if(!f)throw Error('مقصد پیدا نشد');return {lon:Number(f.longitude),lat:Number(f.latitude),name:f.name||q,display_name:[f.name,f.admin1,f.country].filter(Boolean).join('،')}}
+ ];
+ let last;
+ for(const attempt of attempts){try{const d=await attempt();if(Number.isFinite(d.lon)&&Number.isFinite(d.lat)&&Math.abs(d.lon)<=180&&Math.abs(d.lat)<=90)return d}catch(e){last=e}}
+ throw Error(last?.name==='AbortError'?'جستجوی مقصد زمان‌بر شد؛ دوباره امتحان کن.':'مقصد پیدا نشد یا سرویس جستجو در دسترس نیست؛ نام شهر را همراه استان وارد کن.')
+}
+async function freshPosition(){
+ if(!navigator.geolocation)throw Error('مرورگر از GPS پشتیبانی نمی‌کند');
  try{
-  if(!current){
-   try{
-    const p=await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,maximumAge:15000,timeout:12000}));
-    updatePosition(p);current=[p.coords.longitude,p.coords.latitude];
-    try{localStorage.setItem('salayan_lat',p.coords.latitude);localStorage.setItem('salayan_lng',p.coords.longitude);localStorage.setItem('salayan_accuracy',p.coords.accuracy||0)}catch(_){}
-   }catch(gpsError){
-    try{const la=Number(localStorage.getItem('salayan_lat')),lo=Number(localStorage.getItem('salayan_lng'));if(Number.isFinite(la)&&Number.isFinite(lo)&&Math.abs(la)<=90&&Math.abs(lo)<=180)current=[lo,la]}catch(_){}
-    if(!current)throw Error(gpsError&&gpsError.code===1?'اجازه GPS برای این صفحه فعال نیست؛ مجوز مکان‌یابی را در مرورگر روشن کن.':'موقعیت فعلی دریافت نشد. GPS گوشی را روشن کن و دوباره بزن.')
-   }
-  }
-  let dest=chosen;
-  if(!dest){
-   let geocodeError=null;
-   const urls=[
-    'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=fa&q='+encodeURIComponent(q),
-    'https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=5&language=fa&format=json'
-   ];
-   for(let gi=0;gi<urls.length;gi++){
-    try{
-     const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),10000);
-     const r=await fetch(urls[gi],{headers:{'Accept':'application/json','Accept-Language':'fa'},signal:ctrl.signal});clearTimeout(timer);
-     if(!r.ok)throw Error('جستجوی مقصد پاسخ نداد');
-     const a=await r.json();
-     if(gi===0&&Array.isArray(a)&&a.length){dest=a[0];break}
-     if(gi===1&&Array.isArray(a.results)&&a.results.length){dest={lon:a.results[0].longitude,lat:a.results[0].latitude,name:a.results[0].name,display_name:a.results[0].name};break}
-     geocodeError=Error('مقصد پیدا نشد؛ نام شهر یا روستا را دقیق‌تر بنویس')
-    }catch(e){geocodeError=e}
-   }
-   if(!dest)throw Error(geocodeError&&geocodeError.message==='مقصد پیدا نشد؛ نام شهر یا روستا را دقیق‌تر بنویس'?geocodeError.message:'جستجوی مقصد وصل نشد؛ اینترنت را بررسی کن یا نام شهر را کوتاه‌تر بنویس.')
-  }
-  const end=[Number(dest.lon??dest.longitude),Number(dest.lat??dest.latitude)];
-  if(!Number.isFinite(end[0])||!Number.isFinite(end[1]))throw Error('مختصات مقصد معتبر نیست');
-  let route=null,lastErr=null;
-  const hosts=['https://router.project-osrm.org/route/v1/driving/','https://routing.openstreetmap.de/routed-car/route/v1/driving/'];
-  for(const host of hosts){
-   try{
-    const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),16000);
-    const url=host+current[0]+','+current[1]+';'+end[0]+','+end[1]+'?overview=full&geometries=geojson&steps=true';
-    const rr=await fetch(url,{headers:{'Accept':'application/json'},signal:ctrl.signal});clearTimeout(timer);
-    if(!rr.ok)throw Error('سرویس مسیر پاسخ نداد');
-    const data=await rr.json();if(data.code!=='Ok'||!data.routes||!data.routes.length)throw Error('برای این مبدأ و مقصد مسیر جاده‌ای پیدا نشد');
-    route=data.routes[0];break
-   }catch(e){lastErr=e}
-  }
-  if(!route)throw Error(lastErr&&lastErr.message==='برای این مبدأ و مقصد مسیر جاده‌ای پیدا نشد'?lastErr.message:'سرویس‌های مسیریابی پاسخ ندادند؛ چند لحظه بعد دوباره امتحان کن.');
+  const p=await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,maximumAge:10000,timeout:12000}));
+  updatePosition(p);
+  try{localStorage.setItem('salayan_lat',p.coords.latitude);localStorage.setItem('salayan_lng',p.coords.longitude);localStorage.setItem('salayan_accuracy',p.coords.accuracy||0);localStorage.setItem('salayan_gps_time',p.timestamp||Date.now())}catch(_){}
+  return [p.coords.longitude,p.coords.latitude]
+ }catch(e){
+  const savedAt=Number(localStorage.getItem('salayan_gps_time')||0),la=Number(localStorage.getItem('salayan_lat')),lo=Number(localStorage.getItem('salayan_lng'));
+  if(Number.isFinite(la)&&Number.isFinite(lo)&&Math.abs(la)<=90&&Math.abs(lo)<=180&&savedAt&&Date.now()-savedAt<86400000){current=[lo,la];return current}
+  if(e.code===1)throw Error('دسترسی مکان‌یابی برای صلایان بار بسته است؛ مجوز Location را در تنظیمات مرورگر فعال کن.');
+  if(e.code===3)throw Error('GPS دیر پاسخ داد؛ GPS گوشی را روشن کن و دوباره بزن.');
+  throw Error('موقعیت گوشی دریافت نشد. GPS و مجوز مکان‌یابی را بررسی کن.')
+ }
+}
+async function getRoadRoute(origin,destination){
+ const coords=origin[0]+','+origin[1]+';'+destination.lon+','+destination.lat;
+ const services=[
+  'https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson&steps=true&alternatives=false',
+  'https://routing.openstreetmap.de/routed-car/route/v1/driving/'+coords+'?overview=full&geometries=geojson&steps=true&alternatives=false'
+ ];
+ let last;
+ for(const url of services){
+  try{
+   const data=await timeoutFetch(url,18000);
+   if(data.code!=='Ok'||!data.routes?.length)throw Error('برای این مسیر جاده‌ای پیدا نشد');
+   const route=data.routes[0];
+   if(!route.geometry?.coordinates||route.geometry.coordinates.length<2)throw Error('هندسه مسیر دریافت نشد');
+   return route
+  }catch(e){last=e}
+ }
+ if(last?.message==='برای این مسیر جاده‌ای پیدا نشد')throw last;
+ throw Error('سرویس محاسبه مسیر پاسخ نمی‌دهد. اینترنت را بررسی کن و دوباره تلاش کن.')
+}
+async function makeRoute(chosen){
+ const query=$('destination').value.trim();
+ if(!query&&!chosen){toast('نام مقصد را وارد کن؛ مثلاً مشهد یا قائن');$('destination').focus();return}
+ const btn=$('routeBtn'),oldLabel=btn.textContent;btn.disabled=true;btn.textContent='در حال محاسبه…';setStatus('در حال پیدا کردن مقصد و مسیر…');
+ try{
+  if(!map)throw Error('نقشه هنوز آماده نیست؛ چند ثانیه بعد دوباره بزن');
+  if(!map.loaded())await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(Error('بارگذاری نقشه طول کشید؛ دوباره تلاش کن')),12000);map.once('load',()=>{clearTimeout(t);resolve()})});
+  const origin=await freshPosition();current=origin;
+  const dest=await resolveDestination(query,chosen);
+  setStatus('مقصد پیدا شد؛ در حال محاسبه مسیر جاده‌ای…');
+  const route=await getRoadRoute(origin,dest);
   if(map.getLayer('salayan-route'))map.removeLayer('salayan-route');
   if(map.getLayer('salayan-route-glow'))map.removeLayer('salayan-route-glow');
   if(map.getSource('salayan-route'))map.removeSource('salayan-route');
   map.addSource('salayan-route',{type:'geojson',data:{type:'Feature',properties:{},geometry:route.geometry}});
-  map.addLayer({id:'salayan-route-glow',type:'line',source:'salayan-route',layout:{'line-join':'round','line-cap':'round'},paint:{'line-color':'#16d995','line-width':['interpolate',['linear'],['zoom'],5,10,12,18,16,25],'line-opacity':.23,'line-blur':4}});
-  map.addLayer({id:'salayan-route',type:'line',source:'salayan-route',layout:{'line-join':'round','line-cap':'round'},paint:{'line-color':'#24e8a0','line-width':['interpolate',['linear'],['zoom'],5,3,12,6,16,9],'line-opacity':.96}});
+  map.addLayer({id:'salayan-route-glow',type:'line',source:'salayan-route',layout:{'line-join':'round','line-cap':'round'},paint:{'line-color':'#16d995','line-width':['interpolate',['linear'],['zoom'],5,9,12,17,16,24],'line-opacity':.22,'line-blur':3}});
+  map.addLayer({id:'salayan-route',type:'line',source:'salayan-route',layout:{'line-join':'round','line-cap':'round'},paint:{'line-color':'#0bd88b','line-width':['interpolate',['linear'],['zoom'],5,3,12,6,16,8],'line-opacity':1}});
   routeGeometry=route.geometry;routeSteps=(route.legs||[]).flatMap(l=>l.steps||[]).filter(st=>st.name||st.maneuver);
-  const bounds=new maplibregl.LngLatBounds();route.geometry.coordinates.forEach(c=>bounds.extend(c));
-  map.fitBounds(bounds,{padding:{top:100,bottom:innerWidth<700?230:200,left:60,right:60},duration:1000,maxZoom:15});
+  const bounds=new maplibregl.LngLatBounds();route.geometry.coordinates.forEach(c=>bounds.extend(c));bounds.extend(origin);bounds.extend([dest.lon,dest.lat]);
+  map.fitBounds(bounds,{padding:{top:125,bottom:innerWidth<700?260:210,left:65,right:65},duration:850,maxZoom:15});
   const km=route.distance/1000,min=Math.round(route.duration/60);
   $('distance').innerHTML=km.toFixed(1)+' <small>km</small>';$('duration').innerHTML=min+' <small>دقیقه</small>';
-  $('routeTitle').textContent='مسیر به '+(dest.name||q);$('routeSub').textContent='مسیر پیشنهادی محاسبه شد؛ تابلوها و محدودیت‌های کامیون را رعایت کن.';
-  $('routeBadge').textContent='✓ مسیر آماده';$('aiText').textContent='فاصله تقریبی '+km.toFixed(1)+' کیلومتر است و رانندگی حدود '+min+' دقیقه زمان می‌برد. این برآورد ترافیک زنده و محدودیت کامیون را لحاظ نمی‌کند.';
+  $('routeTitle').textContent='مسیر به '+(dest.name||query);$('routeSub').textContent='مسیر جاده‌ای محاسبه شد؛ قبل حرکت محدودیت‌های کامیون را بررسی کن.';
+  $('routeBadge').textContent='✓ مسیر آماده';$('aiText').textContent='فاصله تقریبی '+km.toFixed(1)+' کیلومتر و زمان رانندگی حدود '+min+' دقیقه است؛ ترافیک زنده و محدودیت‌های کامیون لحاظ نشده.';
   renderSteps();setFollow(false);$('suggestions').classList.remove('show');$('favoriteRoutes').classList.remove('show');
-  try{localStorage.setItem('salayanLastDestination',q)}catch(_){}
-  toast('مسیر جاده‌ای روی نقشه نمایش داده شد');setStatus('مسیریابی انجام شد')
- }catch(e){setStatus('مسیریابی ناموفق');toast(e.message||'اینترنت و مجوز GPS را بررسی کن')}
- finally{btn.textContent='مسیریابی ←';btn.disabled=false}
+  try{localStorage.setItem('salayanLastDestination',query||dest.name)}catch(_){}
+  setStatus('مسیریابی انجام شد');toast('مسیر روی نقشه نمایش داده شد')
+ }catch(e){
+  setStatus('مسیریابی ناموفق');
+  const msg=e?.message||'مسیریابی انجام نشد؛ GPS و اینترنت را بررسی کن';
+  toast(msg);
+  const title=$('routeTitle');if(title)title.textContent='مسیریابی انجام نشد';
+  const sub=$('routeSub');if(sub)sub.textContent=msg;
+ }finally{btn.disabled=false;btn.textContent=oldLabel||'مسیریابی ←'}
 }
 function renderSteps(){const box=$('stepList');box.innerHTML='';if(!routeSteps.length){box.textContent='جزئیات مرحله‌ای برای این مسیر دریافت نشد.';return}routeSteps.slice(0,24).forEach((s,i)=>{const row=document.createElement('div');row.className='step';const type=s.maneuver?.type||'ادامه';const mod=s.maneuver?.modifier||'';const name=s.name||'مسیر را ادامه بده';const d=s.distance>=1000?(s.distance/1000).toFixed(1)+' کیلومتر':Math.round(s.distance)+' متر';row.innerHTML='<b>'+(i+1)+'.</b>'+escapeHTML(name)+' — '+escapeHTML(type+' '+mod)+' <span style="color:#9eb9ab">('+d+')</span>';box.appendChild(row)})}
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
