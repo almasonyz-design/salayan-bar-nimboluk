@@ -5528,7 +5528,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
    if(card)gps.insertBefore(panel,card);else gps.appendChild(panel);
   }
   var frame=panel.querySelector('iframe');
-  if(frame&&!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-satellite-route6');
+  if(frame&&!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-only3d-final7');
  }
  window.salayanInitEmbeddedMap3D=addMap3DLaunch;
  function ensureOverlay(){
@@ -5543,7 +5543,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
  function openMap3D(){
   var overlay=ensureOverlay(),frame=overlay.querySelector('iframe');
   overlay.classList.add('open');document.body.style.overflow='hidden';
-  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-instantgps4');
+  if(!frame.getAttribute('src'))frame.setAttribute('src','map3d.html?embed=1&v=20261016-only3d-final7');
   try{frame.contentWindow.postMessage('salayan-start-gps',location.origin)}catch(e){}
  }
  window.salayanOpenMap3D=openMap3D;
@@ -5556,7 +5556,7 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
   addHero();addMap3DLaunch();
   /* Preload the map invisibly so tapping GPS opens an already-rendered map. */
   var preloadOverlay=ensureOverlay(),preloadFrame=preloadOverlay.querySelector('iframe');
-  if(!preloadFrame.getAttribute('src'))preloadFrame.setAttribute('src','map3d.html?embed=1&v=20261016-instantgps4');
+  if(!preloadFrame.getAttribute('src'))preloadFrame.setAttribute('src','map3d.html?embed=1&v=20261016-only3d-final7');
   var gps=document.getElementById('gpsPage');
   if(gps&&'MutationObserver'in window){var ob=new MutationObserver(function(){addMap3DLaunch()});ob.observe(gps,{childList:true,subtree:true});}
   var home=document.getElementById('homePage');
@@ -5594,6 +5594,40 @@ body>.header .brand-logo{border-radius:15px!important;box-shadow:0 5px 18px #000
   #gpsPage #salayan-map3d-embedded .sbx-map-stage,
   #gpsPage .sbx-map-stage,
   #gpsPage #sbGpsCard .sb-gps-map{height:260px!important;min-height:260px!important;max-height:260px!important}
+}
+</style>
+
+
+<style id="salayan-final-only-3d-map-v7">
+/* نسخه نهایی: تنها نقشه سه‌بعدی map3d داخل کارت خودش نمایش داده شود */
+#gpsPage #sbGpsCard,
+#gpsPage #salayan-map3d-embedded,
+#gpsPage .sbx-map-stage,
+#gpsPage .sb-gps-map,
+#gpsPage #sbGpsMapCanvas,
+#gpsPage #sbGpsMapNote,
+#gpsPage .sb-gps-map-note,
+#gpsPage .sbl-nav3d-launch {
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+}
+/* نقشه سه‌بعدی اصلی تنها نقشه قابل‌مشاهده است */
+#gpsPage .sbl-map3d-card{
+  display:block!important;
+  visibility:visible!important;
+  height:auto!important;
+  max-height:none!important;
+  pointer-events:auto!important;
+}
+#gpsPage .sbl-map3d-card .sbl-map3d-frame,
+#gpsPage .sbl-map3d-card iframe{
+  visibility:visible!important;
+  pointer-events:auto!important;
 }
 </style>
 
