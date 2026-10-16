@@ -259,6 +259,19 @@ img,iframe,video,canvas{max-width:100%!important}
 #questionBankPage .salayan-no-questions{font-size:10px!important}
 
 </style>
+<style id="support-nested-inline-fix">
+#questionBankPage .salayan-category-filters{display:flex!important;flex-direction:column!important;gap:7px!important}
+#questionBankPage .support-category-group{display:flex!important;flex-direction:column!important;gap:0!important;width:100%!important;margin:0!important}
+#questionBankPage .support-category-group>.salayan-category-chip{position:relative!important;z-index:1!important;width:100%!important;box-sizing:border-box!important}
+#questionBankPage .support-category-questions{display:flex;flex-direction:column;gap:5px;margin:0 7px 8px 0;padding:6px 7px 7px 0;border-right:2px solid #b8dfca;background:#f8fcf9;border-radius:0 0 10px 0}
+#questionBankPage .support-category-questions[hidden]{display:none!important}
+#questionBankPage .support-category-questions .salayan-question-wrap{width:100%!important;box-sizing:border-box!important}
+#questionBankPage .support-category-questions .salayan-question-item{font-size:11px!important;padding:8px 9px!important;line-height:1.55!important;min-height:36px!important}
+#questionBankPage .support-category-questions .salayan-question-answer{font-size:10px!important;line-height:1.7!important;padding:8px 10px!important}
+#questionBankPage .salayan-category-chip{font-size:11px!important;min-height:38px!important;padding:8px 10px!important}
+#questionBankPage .support-category-meta{font-size:9px!important}
+#questionBankPage .salayan-question-list[hidden]{display:none!important}
+</style>
 </head>
 <body>
 <section id="loginPage" class="login-screen">
@@ -726,44 +739,47 @@ document.addEventListener("DOMContentLoaded",()=>{renderCargoChecks();["salayan_
    if(!page||page.querySelector('.salayan-support-question-catalog'))return;
    const section=document.createElement('div');
    section.className='salayan-support-question-catalog card';
-   section.innerHTML='<p class="muted support-intro">موضوع را انتخاب کن تا سؤال‌های همان بخش باز شوند؛ یا مستقیم جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجو در سؤال‌ها و پاسخ‌ها..." aria-label="جست‌وجوی سؤال‌ها و پاسخ‌های پشتیبانی"><div class="salayan-question-count" aria-live="polite"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-question-list"></div><p class="muted salayan-no-questions" style="display:none">نتیجه‌ای پیدا نشد؛ عبارت دیگری را امتحان کن.</p>';
-   // بانک سؤال‌ها با قالب ثابت [دسته‌بندی، متن سؤال، آیکون، پاسخ] خوانده می‌شود تا سؤال و پاسخ جابه‌جا نشوند.
+   section.innerHTML='<p class="muted support-intro">روی هر دسته بزن تا سؤال‌های همان دسته دقیقاً زیر خودش باز شوند؛ یا جست‌وجو کن.</p><input class="salayan-question-search" type="search" placeholder="🔎 جست‌وجو در سؤال‌ها و پاسخ‌ها..." aria-label="جست‌وجوی سؤال‌ها و پاسخ‌های پشتیبانی"><div class="salayan-question-count" aria-live="polite"></div><div class="salayan-category-filters" aria-label="دسته‌بندی سؤال‌ها"></div><div class="salayan-question-list" hidden></div><p class="muted salayan-no-questions" style="display:none">نتیجه‌ای پیدا نشد؛ عبارت دیگری را امتحان کن.</p>';
    const raw=(window.SALAYAN_QA_BANK||[]).length?window.SALAYAN_QA_BANK:[["راهنمای برنامه","چطور از صلایان بار استفاده کنم؟","🧭","از منوی برنامه بخش موردنظر را باز کن."]];
    const questions=raw.map(row=>({category:String(row[0]||'راهنمای برنامه'),question:String(row[1]||''),icon:String(row[2]||'❔'),answer:String(row[3]||'برای این مورد، بخش مرتبط برنامه را بررسی کن.')})).filter(row=>row.question.trim());
    const search=section.querySelector('.salayan-question-search');
    const filters=section.querySelector('.salayan-category-filters');
-   const list=section.querySelector('.salayan-question-list');
    const count=section.querySelector('.salayan-question-count');
    const none=section.querySelector('.salayan-no-questions');
    const categories=[...new Set(questions.map(x=>x.category))];
    let activeCategory='';
    function draw(){
     const query=search.value.trim().toLocaleLowerCase('fa');
-    const matches=questions.filter(x=>(!activeCategory||x.category===activeCategory)&&(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query));
+    const matches=questions.filter(x=>(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query));
     filters.innerHTML='';
-    categories.filter(cat=>!query||questions.some(x=>x.category===cat&&(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query))).forEach(cat=>{
-     const amount=questions.filter(x=>x.category===cat&&(!query||(x.question+' '+x.answer+' '+x.category).toLocaleLowerCase('fa').includes(query))).length;
-     const btn=document.createElement('button');btn.type='button';btn.className='salayan-category-chip'+(activeCategory===cat?' active':'');
-     btn.setAttribute('aria-expanded',String(activeCategory===cat));
-     const label=document.createElement('span');label.textContent=cat;
-     const meta=document.createElement('span');meta.className='support-category-meta';meta.textContent=amount.toLocaleString('fa-IR')+' سؤال　'+(activeCategory===cat?'⌃':'⌄');
-     btn.append(label,meta);btn.addEventListener('click',()=>{activeCategory=activeCategory===cat?'':cat;draw()});filters.appendChild(btn);
+    categories.forEach(cat=>{
+     const categoryMatches=matches.filter(x=>x.category===cat);
+     if(query&&!categoryMatches.length)return;
+     const group=document.createElement('div');group.className='support-category-group';
+     const isOpen=query.length>0||activeCategory===cat;
+     const btn=document.createElement('button');btn.type='button';btn.className='salayan-category-chip'+(activeCategory===cat||query?' active':'');
+     btn.setAttribute('aria-expanded',String(isOpen));
+     const label=document.createElement('span');label.className='support-category-label';label.textContent=cat;
+     const meta=document.createElement('span');meta.className='support-category-meta';meta.textContent=(query?categoryMatches.length:questions.filter(x=>x.category===cat).length).toLocaleString('fa-IR')+' سؤال　'+(isOpen?'⌃':'⌄');
+     btn.append(label,meta);
+     const nested=document.createElement('div');nested.className='support-category-questions';nested.hidden=!isOpen;
+     btn.addEventListener('click',()=>{activeCategory=activeCategory===cat?'':cat;draw()});
+     if(isOpen){
+      categoryMatches.forEach(x=>{
+       const wrap=document.createElement('div');wrap.className='salayan-question-wrap';
+       const question=document.createElement('button');question.type='button';question.className='salayan-question-item';question.setAttribute('aria-expanded','false');
+       const icon=document.createElement('span');icon.className='support-question-icon';icon.textContent=x.icon;
+       const label=document.createElement('span');label.className='support-question-label';label.textContent=x.question;
+       const arrow=document.createElement('span');arrow.className='support-question-arrow';arrow.textContent='＋';
+       question.append(icon,label,arrow);
+       const answer=document.createElement('div');answer.className='salayan-question-answer';answer.hidden=true;answer.textContent=x.answer;
+       question.addEventListener('click',()=>{const open=question.getAttribute('aria-expanded')!=='true';question.setAttribute('aria-expanded',String(open));answer.hidden=!open;arrow.textContent=open?'−':'＋';wrap.classList.toggle('is-open',open)});
+       wrap.append(question,answer);nested.appendChild(wrap);
+      });
+     }
+     group.append(btn,nested);filters.appendChild(group);
     });
-    list.innerHTML='';
-    count.textContent=query?'🔎 '+matches.length.toLocaleString('fa-IR')+' نتیجه برای «'+search.value.trim()+'»':questions.length.toLocaleString('fa-IR')+' سؤال در '+categories.length.toLocaleString('fa-IR')+' دسته‌بندی؛ برای دیدن زیرمجموعه‌ها یک دسته را انتخاب کن.';
-    const visible=matches.filter(x=>query||activeCategory);
-    visible.slice(0,100).forEach(x=>{
-     const wrap=document.createElement('div');wrap.className='salayan-question-wrap';
-     const question=document.createElement('button');question.type='button';question.className='salayan-question-item';question.setAttribute('aria-expanded','false');
-     const icon=document.createElement('span');icon.className='support-question-icon';icon.textContent=x.icon;
-     const label=document.createElement('span');label.className='support-question-label';label.textContent=x.question;
-     const arrow=document.createElement('span');arrow.className='support-question-arrow';arrow.textContent='＋';
-     question.append(icon,label,arrow);
-     const answer=document.createElement('div');answer.className='salayan-question-answer';answer.hidden=true;answer.textContent=x.answer;
-     question.addEventListener('click',()=>{const open=question.getAttribute('aria-expanded')!=='true';question.setAttribute('aria-expanded',String(open));answer.hidden=!open;arrow.textContent=open?'−':'＋';wrap.classList.toggle('is-open',open)});
-     wrap.append(question,answer);list.appendChild(wrap);
-    });
-    if(matches.length>100){const more=document.createElement('p');more.className='muted';more.textContent='۱۰۰ نتیجه اول نمایش داده شده؛ برای دقیق‌تر شدن جست‌وجو، عبارت را کامل‌تر کن.';list.appendChild(more)}
+    count.textContent=query?'🔎 '+matches.length.toLocaleString('fa-IR')+' نتیجه برای «'+search.value.trim()+'»':questions.length.toLocaleString('fa-IR')+' سؤال در '+categories.length.toLocaleString('fa-IR')+' دسته‌بندی';
     none.style.display=matches.length?'none':'block';
    }
    search.addEventListener('input',()=>{activeCategory='';draw()});
