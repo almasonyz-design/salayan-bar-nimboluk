@@ -64,7 +64,45 @@ header{height:72px;padding-inline:clamp(12px,2.5vw,28px);background:linear-gradi
 .pills{flex-wrap:wrap}.pill#satelliteBtn{border-color:#3e9e78;background:linear-gradient(120deg,#0c2b1e,#144632);color:#c8ffe5}.pill#satelliteBtn.active{background:linear-gradient(130deg,#a9ffda,#48dba2);color:#052b1c;border-color:#a9ffda;box-shadow:0 0 0 3px #49f0ad1b}
 @media(max-width:650px){.topcontrols{right:8px;left:8px;top:8px;gap:6px}.search{height:48px}.pills{gap:4px}.pill{height:38px;padding:0 8px;font-size:10px}.pill#satelliteBtn{font-size:10px}}
 </style>
-<style id="salayan-real-truck-marker-css">.pin.salayan-arrow-pin{width:46px!important;height:56px!important;display:flex;align-items:center;justify-content:center;pointer-events:none;filter:drop-shadow(0 4px 8px #00190f70)}.pin .salayan-nav-arrow{display:block;width:46px;height:56px;overflow:visible;transform-origin:50% 50%;transition:transform .18s ease-out}</style></head>
+<style id="salayan-real-truck-marker-css">.pin.salayan-arrow-pin{width:46px!important;height:56px!important;display:flex;align-items:center;justify-content:center;pointer-events:none;filter:drop-shadow(0 4px 8px #00190f70)}.pin .salayan-nav-arrow{display:block;width:46px;height:56px;overflow:visible;transform-origin:50% 50%;transition:transform .18s ease-out}</style>
+<style id="salayan-embed-controls-below-map-v8">
+/* حالت تعبیه‌شده در صلایان بار: نقشه خالی از دکمه‌ها، همه کنترل‌ها زیر آن */
+html.sbl-embed-mode, html.sbl-embed-mode body{height:auto!important;min-height:0!important;overflow:visible!important}
+html.sbl-embed-mode body{margin:0!important;background:#071812!important}
+html.sbl-embed-mode .app{height:auto!important;min-height:0!important;display:block!important;overflow:visible!important}
+html.sbl-embed-mode header{display:none!important}
+html.sbl-embed-mode main{display:flex!important;flex-direction:column!important;height:auto!important;min-height:0!important;overflow:visible!important;touch-action:auto!important}
+html.sbl-embed-mode #map{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:330px!important;min-height:300px!important;flex:none!important;touch-action:pan-x pan-y!important}
+html.sbl-embed-mode .shade{display:none!important}
+html.sbl-embed-mode .topcontrols{position:relative!important;inset:auto!important;display:flex!important;flex-direction:column!important;order:2!important;padding:12px 10px 0!important;gap:8px!important;background:#071812!important;box-sizing:border-box!important}
+html.sbl-embed-mode .searchwrap{width:100%!important;max-width:none!important;flex:none!important}
+html.sbl-embed-mode .search{height:48px!important}
+html.sbl-embed-mode .pills{display:flex!important}
+html.sbl-embed-mode .tools{position:relative!important;inset:auto!important;order:3!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:center!important;gap:8px!important;padding:10px!important;background:#071812!important}
+html.sbl-embed-mode .tool{width:42px!important;height:42px!important;flex:0 0 42px!important}
+html.sbl-embed-mode .sidecards{position:relative!important;inset:auto!important;order:4!important;width:auto!important;display:grid!important;grid-template-columns:1fr!important;padding:0 10px!important;background:#071812!important}
+html.sbl-embed-mode .hint{position:relative!important;inset:auto!important;order:5!important;transform:none!important;align-self:center!important;margin:10px auto!important;white-space:normal!important;text-align:center!important;max-width:calc(100% - 24px)!important}
+html.sbl-embed-mode .bottom{position:relative!important;inset:auto!important;order:6!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;padding:0 10px 12px!important;box-sizing:border-box!important;background:#071812!important}
+html.sbl-embed-mode .trip{width:auto!important;max-width:none!important;box-sizing:border-box!important}
+html.sbl-embed-mode .bottomactions{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+html.sbl-embed-mode .bottomactions .action{flex:1 1 110px!important;min-height:44px!important}
+html.sbl-embed-mode .steps{position:relative!important;inset:auto!important;margin:0 10px 12px!important}
+html.sbl-embed-mode .toast{position:fixed!important;top:8px!important}
+html.sbl-embed-mode .drawerbg{position:fixed!important;inset:0!important}
+html.sbl-embed-mode .app-panel{position:relative!important;inset:auto!important;margin:0 10px 12px!important}
+html.sbl-embed-mode .maplibregl-ctrl-bottom-left{bottom:4px!important;left:4px!important}
+@media(max-width:520px){
+ html.sbl-embed-mode #map{height:300px!important;min-height:280px!important}
+ html.sbl-embed-mode .stats{gap:5px!important}
+ html.sbl-embed-mode .stat{padding:7px 5px!important}
+ html.sbl-embed-mode .triphead{flex-wrap:wrap!important}
+}
+</style>
+<script id="salayan-embed-mode-flag">
+if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('sbl-embed-mode');
+</script>
+
+</head>
 <body><div class="app">
 <header><div class="brand"><div class="logo">🚛</div><div><h1>صلایان بار <em>PRO</em></h1><p>همراه هوشمند راننده • نسخه پیشرفته</p></div></div><div class="headright"><div class="statuspill"><i class="led"></i><span id="liveStatus">آماده اتصال GPS</span></div><button class="square" id="menuBtn" aria-label="تنظیمات">☰</button></div></header>
 <main><div id="map"></div><div class="shade"></div>
