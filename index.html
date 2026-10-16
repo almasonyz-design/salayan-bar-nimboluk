@@ -313,7 +313,7 @@ img,iframe,video,canvas{max-width:100%!important}
  </div>
 </section>
 <div id="appPage" class="app-shell hide">
- <header class="topbar"><div class="brandmark">🚛</div><div class="brandtext"><strong>صلایان بار نیمبلوک</strong><small id="topSubtitle">مرکز هوشمند راننده</small></div><button class="icon-btn" type="button" aria-label="باز کردن منو" onclick="openMenu()">☰</button></header>
+ <header class="topbar"><button id="appBackButton" class="icon-btn app-back-button" type="button" aria-label="بازگشت به صفحه قبلی" title="بازگشت">‹</button><div class="brandmark">🚛</div><div class="brandtext"><strong>صلایان بار نیمبلوک</strong><small id="topSubtitle">مرکز هوشمند راننده</small></div><button class="icon-btn" type="button" aria-label="باز کردن منو" onclick="openMenu()">☰</button></header>
  <main class="content">
   <section id="homePage" class="page active">
    <div class="card hero hero-driver-welcome"><div class="hero-brand-row"><div class="hero-logo-emblem" role="img" aria-label="لوگوی اختصاصی صلایان بار نیمبلوک"><svg viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="salayanMarkBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3fff8"/><stop offset="1" stop-color="#9beac1"/></linearGradient><linearGradient id="salayanTruckBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#087b55"/><stop offset="1" stop-color="#03452f"/></linearGradient></defs><rect x="2" y="2" width="84" height="84" rx="26" fill="url(#salayanMarkBg)"/><circle cx="44" cy="43" r="31" fill="none" stroke="#0a8058" stroke-opacity=".16" stroke-width="1.5"/><path d="M15 60h58" stroke="#0a8058" stroke-width="2" stroke-linecap="round" opacity=".35"/><path d="M20 23h32a4 4 0 0 1 4 4v25H20z" fill="url(#salayanTruckBody)"/><path d="M56 34h10l8 10v8H56z" fill="#07583e"/><path d="M59 37h6l5 6H59z" fill="#d8ffeb"/><path d="M25 30h21M25 36h16" stroke="#bdf8d8" stroke-width="2.6" stroke-linecap="round"/><path d="M16 66c10-7 18-7 28 0s18 7 28 0" fill="none" stroke="#0c9666" stroke-width="2.5" stroke-linecap="round"/><circle cx="31" cy="53" r="7" fill="#073e2d" stroke="#f1fff6" stroke-width="2.5"/><circle cx="64" cy="53" r="7" fill="#073e2d" stroke="#f1fff6" stroke-width="2.5"/><circle cx="31" cy="53" r="2" fill="#a8edc9"/><circle cx="64" cy="53" r="2" fill="#a8edc9"/><path d="m67 16 2.2 4.5 5 0.7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#0a8058"/></svg></div><div class="hero-brand-copy"><span class="eyebrow">صلایان بار نیمبلوک</span><div class="hero-brand-caption">سامانه هوشمند بار و حمل‌ونقل</div></div><span class="hero-trust-mark" aria-label="همراه مطمئن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.2c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8 12 2.5 2.5L16 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><h2><span class="hero-welcome-highlight">بارِ مناسب تو، همین‌جاست.</span></h2><p>از مبدأ تا مقصد، همراهِ هر مسیر؛ بارها را هوشمندانه پیدا کن و با اطمینان راه بیفت.</p><button class="button" type="button" onclick="showPage('loadsPage');showLoads()">جستجوی بار <span>←</span></button><div class="hero-welcome-footer"><span>● انتخاب هوشمند بار</span><span>● مسیر مطمئن</span><span>● همراه راننده</span></div></div>
@@ -1007,6 +1007,59 @@ input,select,textarea{font-weight:400!important}
   ev.preventDefault();ev.stopImmediatePropagation();
   route(match[1]);
  },true);
+})();
+</script>
+<style id="salayan-global-back-button-v1">
+.topbar{display:flex!important;align-items:center!important;gap:10px!important}
+.topbar .brandtext{flex:1!important;min-width:0!important}
+.app-back-button{display:grid!important;place-items:center!important;flex:0 0 42px!important;width:42px!important;height:42px!important;border:1px solid #dcebe2!important;border-radius:14px!important;background:#f4fbf6!important;color:#075a3f!important;font-size:32px!important;font-weight:500!important;line-height:1!important;box-shadow:0 3px 10px rgba(5,80,49,.07)!important}
+.app-back-button:active{transform:scale(.95)}
+</style>
+<script id="salayan-internal-back-navigation-v1">
+(function(){
+ let current='homePage';
+ const stack=['homePage'];
+ let handlingPop=false;
+ const originalShowPage=window.showPage;
+ if(typeof originalShowPage!=='function')return;
+ // Keep navigation inside the app instead of allowing browser Back to immediately leave the site.
+ try{history.replaceState({salayanApp:true,page:current},'',location.href);history.pushState({salayanApp:true,page:current},'',location.href)}catch(e){}
+ window.showPage=function(id){
+  if(!id)return;
+  const previous=current;
+  if(!handlingPop&&id!==current){
+   stack.push(id);
+   if(stack.length>60)stack.shift();
+   try{history.pushState({salayanApp:true,page:id},'',location.href)}catch(e){}
+  }
+  originalShowPage(id);
+  current=id;
+  const back=document.getElementById('appBackButton');
+  if(back){back.setAttribute('aria-label',id==='homePage'?'بازگشت به صفحه اصلی':'بازگشت به صفحه قبلی');back.title=id==='homePage'?'صفحه اصلی':'بازگشت';back.innerHTML=id==='homePage'?'⌂':'‹';}
+ };
+ function goBack(){
+  if(stack.length>1){
+   stack.pop();
+   const target=stack[stack.length-1]||'homePage';
+   handlingPop=true;
+   originalShowPage(target);current=target;
+   handlingPop=false;
+   const back=document.getElementById('appBackButton');
+   if(back){back.innerHTML=current==='homePage'?'⌂':'‹';back.title=current==='homePage'?'صفحه اصلی':'بازگشت';}
+   try{history.replaceState({salayanApp:true,page:current},'',location.href)}catch(e){}
+  }else{
+   current='homePage';stack.length=0;stack.push('homePage');originalShowPage('homePage');
+   const back=document.getElementById('appBackButton');if(back){back.innerHTML='⌂';back.title='صفحه اصلی'}
+   try{history.pushState({salayanApp:true,page:'homePage'},'',location.href)}catch(e){}
+  }
+ }
+ document.addEventListener('click',function(e){const b=e.target.closest&&e.target.closest('#appBackButton');if(!b)return;e.preventDefault();e.stopPropagation();goBack()},true);
+ window.addEventListener('popstate',function(){
+  // Treat the browser/Android Back button as in-app navigation first.
+  goBack();
+  try{history.pushState({salayanApp:true,page:current},'',location.href)}catch(e){}
+ });
+ window.addEventListener('keydown',function(e){if(e.key==='Escape'){/* leave menu behavior unchanged */}});
 })();
 </script>
 </body>
