@@ -509,4 +509,52 @@ html.sbl-embed-mode #sblBelowMapControls .steps{max-width:100%;overflow-wrap:any
 @media(prefers-reduced-motion:reduce){button{transition:none!important}}
 
 </style>
+<script id="salayan-mobile-scroll-and-map-gesture-fix-v18">
+(function(){
+ function setup(){
+  if(!document.documentElement.classList.contains('sbl-embed-mode'))return;
+  var mapEl=document.getElementById('map'),tools=document.querySelector('#sblBelowMapControls .tools');
+  if(!mapEl)return;
+  document.documentElement.style.setProperty('height','auto','important');
+  document.documentElement.style.setProperty('overflow-y','auto','important');
+  document.body.style.setProperty('height','auto','important');
+  document.body.style.setProperty('min-height','100%','important');
+  document.body.style.setProperty('overflow-y','auto','important');
+  document.body.style.setProperty('overscroll-behavior-y','contain','important');
+  mapEl.style.setProperty('touch-action','pan-y','important');
+  function applyScrollMode(){
+   try{if(window.map){window.map.dragPan.disable();window.map.touchZoomRotate.enable();window.map.scrollZoom.enable();}}catch(e){}
+   var canvas=mapEl.querySelector('canvas');
+   if(canvas){canvas.style.setProperty('touch-action','pan-y','important');canvas.style.setProperty('pointer-events','auto','important');}
+  }
+  applyScrollMode();
+  if(window.map&&typeof window.map.on==='function')window.map.on('load',applyScrollMode);
+  if(tools&&!document.getElementById('sblMapGestureToggle')){
+   var button=document.createElement('button');button.type='button';button.id='sblMapGestureToggle';button.className='tool';button.style.cssText='width:auto!important;min-width:125px!important;flex:1 1 125px!important;height:44px!important;padding:8px 12px!important;border-radius:13px!important;background:#174c35!important;color:#f3fff8!important;border:1px solid #48bd87!important;font-weight:800!important;font-size:12px!important;touch-action:manipulation!important';
+   button.textContent='🗺️ جابه‌جایی نقشه: خاموش';
+   button.setAttribute('aria-pressed','false');
+   button.addEventListener('click',function(){
+    var active=button.getAttribute('aria-pressed')!=='true';
+    button.setAttribute('aria-pressed',String(active));
+    button.textContent=active?'🗺️ جابه‌جایی نقشه: روشن':'🗺️ جابه‌جایی نقشه: خاموش';
+    mapEl.style.setProperty('touch-action',active?'none':'pan-y','important');
+    var canvas=mapEl.querySelector('canvas');if(canvas)canvas.style.setProperty('touch-action',active?'none':'pan-y','important');
+    try{if(window.map){if(active)window.map.dragPan.enable();else window.map.dragPan.disable();}}catch(e){}
+    button.style.background=active?'#087f5b':'#174c35';
+   });
+   tools.appendChild(button);
+  }
+  try{if(window.map)window.map.resize()}catch(e){}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+ window.addEventListener('load',setup);
+ [100,350,900,1800].forEach(function(ms){setTimeout(setup,ms)});
+})();
+</script>
+<style id="salayan-embed-scroll-fix-v18">
+html.sbl-embed-mode,html.sbl-embed-mode body{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;touch-action:pan-y!important}
+html.sbl-embed-mode #map{touch-action:pan-y!important}
+html.sbl-embed-mode #sblBelowMapControls{padding-bottom:calc(28px + env(safe-area-inset-bottom))!important;touch-action:pan-y!important}
+html.sbl-embed-mode #sblBelowMapControls button,html.sbl-embed-mode #sblBelowMapControls input{touch-action:manipulation!important}
+</style>
 </body></html>
