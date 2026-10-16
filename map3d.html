@@ -302,6 +302,7 @@ async function makeRoute(chosen){
   $('distance').innerHTML=km.toFixed(1)+' <small>km</small>';$('duration').innerHTML=min+' <small>دقیقه</small>';
   $('routeTitle').textContent='مسیر به '+(dest.name||query);$('routeSub').textContent='مسیر جاده‌ای محاسبه شد؛ قبل حرکت محدودیت‌های کامیون را بررسی کن.';
   $('routeBadge').textContent='✓ مسیر آماده';$('aiText').textContent='فاصله تقریبی '+km.toFixed(1)+' کیلومتر و زمان رانندگی حدود '+min+' دقیقه است؛ ترافیک زنده و محدودیت‌های کامیون لحاظ نشده.';
+  try{if(window.parent&&window.parent!==window)window.parent.postMessage({type:'salayan-route-calculated',distanceKm:km,durationMinutes:min,destination:dest.name||query},location.origin)}catch(e){}
   renderSteps();setFollow(false);$('suggestions').classList.remove('show');$('favoriteRoutes').classList.remove('show');
   try{localStorage.setItem('salayanLastDestination',query||dest.name)}catch(_){}
   setStatus('مسیریابی انجام شد');toast('مسیر روی نقشه نمایش داده شد')
