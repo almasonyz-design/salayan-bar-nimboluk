@@ -316,7 +316,7 @@ img,iframe,video,canvas{max-width:100%!important}
  <header class="topbar"><div class="brandmark">🚛</div><div class="brandtext"><strong>صلایان بار نیمبلوک</strong><small id="topSubtitle">مرکز هوشمند راننده</small></div><button class="icon-btn" type="button" aria-label="باز کردن منو" onclick="openMenu()">☰</button></header>
  <main class="content">
   <section id="homePage" class="page active">
-   <div class="card hero"><span class="eyebrow">SALAYAN BAR · NIMBOLUK</span><h2>سلام راننده،<br>بار بعدی‌ات را پیدا کن.</h2><p>بارها را بررسی کن، مسیرت را ببین و انتخابت را مدیریت کن.</p><button class="button" type="button" onclick="showPage('loadsPage');showLoads()">جستجوی بار <span>←</span></button></div>
+   <div class="card hero hero-driver-welcome"><div class="hero-welcome-top"><span class="eyebrow">صلایان بار نیمبلوک</span><span class="hero-trust-mark" aria-label="همراه مطمئن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7zM7 17a2 2 0 1 0 4 0m5 0a2 2 0 1 0 4 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><path d="m7 10 1.5 1.5L11 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><h2>سلام راننده‌ی پرتلاش!<br><span class="hero-welcome-highlight">بارِ بعدی، فرصتِ بعدی توست.</span></h2><p>از مبدأ تا مقصد، همراهِ هر مسیر؛ بار مناسب را پیدا کن و با اطمینان راه بیفت.</p><button class="button" type="button" onclick="showPage('loadsPage');showLoads()">پیدا کردن بار <span>←</span></button><div class="hero-welcome-footer"><span>● بار هوشمند</span><span>● مسیر مطمئن</span><span>● همراه راننده</span></div></div>
    <div class="stats"><div class="stat"><b id="homeTurnCount">—</b><span>بار نوبتی</span></div><div class="stat"><b id="homeFreeCount">—</b><span>بار آزاد</span></div><div class="stat"><b id="homeNearbyCount">—</b><span>بار نزدیک</span></div></div>
    <div class="section-head"><h3>دسترسی سریع</h3><span class="eyebrow">خدمات راننده</span></div>
    <div class="quick-grid">
@@ -933,4 +933,21 @@ input,select,textarea{font-weight:400!important}
  .hero h2{font-size:19px!important}
 }
 </style>
-</body></html>
+
+<style id="salayan-driver-welcome-redesign-v3">
+/* بازطراحی اختصاصی کارت «سلام راننده» در صفحه خانه */
+.hero-driver-welcome{padding:20px!important;border-radius:23px!important;background:radial-gradient(circle at 90% 0%,rgba(157,255,208,.18),transparent 34%),linear-gradient(135deg,#064b37 0%,#087653 55%,#0d9a6b 100%)!important;box-shadow:0 15px 32px rgba(5,86,57,.19)!important}
+.hero-welcome-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.hero-driver-welcome .eyebrow{font-size:11px!important;font-weight:800!important;letter-spacing:0!important;color:#d0f8e3!important;background:#ffffff15;border:1px solid #ffffff25;border-radius:999px;padding:5px 10px}
+.hero-trust-mark{width:43px;height:43px;display:grid;place-items:center;flex:0 0 43px;border-radius:15px;color:#eafff3;background:linear-gradient(145deg,#ffffff28,#ffffff0b);border:1px solid #ffffff45;box-shadow:inset 0 1px #ffffff20}
+.hero-trust-mark svg{width:27px;height:27px}
+.hero-driver-welcome h2{font-size:22px!important;line-height:1.9!important;font-weight:900!important;letter-spacing:-.5px!important;margin:6px 0 8px!important;color:#fff!important}
+.hero-welcome-highlight{color:#c4ffdf!important;text-shadow:0 1px 12px #003d2825}
+.hero-driver-welcome p{font-size:13px!important;line-height:2!important;font-weight:500!important;color:#e0f8ec!important;margin:0 0 16px!important;max-width:34em}
+.hero-driver-welcome .button{min-height:45px!important;padding:10px 17px!important;border-radius:14px!important;background:#f5fff8!important;color:#075a3f!important;font-size:13px!important;font-weight:800!important;box-shadow:0 5px 14px #003e2825!important}
+.hero-welcome-footer{display:flex;flex-wrap:wrap;gap:7px 13px;margin-top:16px;padding-top:12px;border-top:1px solid #ffffff28;color:#d8f8e7;font-size:10px;font-weight:600}
+.hero-welcome-footer span{white-space:nowrap}
+@media(max-width:380px){.hero-driver-welcome{padding:16px!important}.hero-driver-welcome h2{font-size:19px!important}.hero-driver-welcome p{font-size:12px!important}.hero-trust-mark{width:39px;height:39px;flex-basis:39px}}
+</style>
+</body>
+</html>
