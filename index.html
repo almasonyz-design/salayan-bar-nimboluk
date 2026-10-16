@@ -1282,7 +1282,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9fe0bc!important;bord
 #salayan-map3d-embedded{position:relative;z-index:2;width:100%;margin:10px 0 16px;border:1px solid #244738;border-radius:20px;overflow:hidden;background:#071812;box-shadow:0 12px 30px #07181220}
 #salayan-map3d-embedded iframe{display:block;width:100%;height:78vh;height:78dvh;min-height:600px;max-height:900px;border:0;background:#071812;touch-action:none!important;overscroll-behavior:contain}
 .sbx-map-console,.sbx-map-shortcuts,#sbGpsMapNote{display:none!important}
-.sbx-map-stage{position:fixed!important;left:-12000px!important;top:0!important;width:640px!important;height:420px!important;opacity:0!important;pointer-events:none!important;z-index:-1!important}
+.sbx-map-stage{position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:360px!important;min-height:320px!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;z-index:1!important;overflow:hidden!important;border-radius:18px!important;background:#e8f5ec!important}
 @media(max-width:520px){#salayan-map3d-embedded{margin:8px 0 14px;border-radius:16px}#salayan-map3d-embedded iframe{height:80vh;height:80dvh;min-height:560px;max-height:none}}
 </style></head>
 
@@ -5560,10 +5560,11 @@ html body #sbGlobalBack,html body #sbTopMenuTrigger,html body .sb-top-actions{po
 
 <!-- Salayan Bar GPS hotfix: Arabic/Persian RTL labels and reliable touch map -->
 <style id="salayan-gps-global-fix-20261016">
-/* Restore the primary embedded GPS map; it is the main map users see. */
-#gpsPage #salayan-map3d-embedded{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;pointer-events:auto!important;z-index:2!important}
-#gpsPage #salayan-map3d-embedded iframe{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:78vh!important;height:78dvh!important;min-height:560px!important;max-height:900px!important;pointer-events:auto!important;position:relative!important;z-index:20!important}
-@media(max-width:520px){#gpsPage #salayan-map3d-embedded iframe{height:80vh!important;height:80dvh!important;min-height:560px!important;max-height:none!important}}
+/* Recovery: use the native interactive map so GPS controls work even if the embedded page fails. */
+#gpsPage #salayan-map3d-embedded{display:none!important}
+#gpsPage #salayan-map3d-embedded iframe{display:none!important}
+#gpsPage #sbGpsCard .sbx-map-stage{display:block!important;position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:360px!important;min-height:320px!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;z-index:1!important;overflow:hidden!important;border-radius:18px!important;background:#e8f5ec!important}
+#gpsPage #sbGpsCard #sbGpsMapCanvas{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:100%!important;min-height:320px!important;pointer-events:auto!important;z-index:1!important}
 #gpsPage #sbGpsCard #sbGpsMapCanvas{touch-action:pan-x pan-y pinch-zoom!important;pointer-events:auto!important}
 #gpsPage #sbGpsCard .sbx-map-stage{touch-action:pan-x pan-y pinch-zoom!important}
 #gpsPage #sbGpsCard .sbx-map-overlay{pointer-events:none!important}
