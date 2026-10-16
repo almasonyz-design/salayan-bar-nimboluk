@@ -557,4 +557,21 @@ html.sbl-embed-mode #map{touch-action:pan-y!important}
 html.sbl-embed-mode #sblBelowMapControls{padding-bottom:calc(28px + env(safe-area-inset-bottom))!important;touch-action:pan-y!important}
 html.sbl-embed-mode #sblBelowMapControls button,html.sbl-embed-mode #sblBelowMapControls input{touch-action:manipulation!important}
 </style>
-</body></html>
+<script id="salayan-gps-iframe-height-child-v19">
+(function(){
+ if(!document.documentElement.classList.contains('sbl-embed-mode'))return;
+ let last=0,scheduled=false;
+ function report(){
+  scheduled=false;
+  const main=document.querySelector('main'),wrap=document.getElementById('sblBelowMapControls');
+  if(!main)return;
+  const height=Math.ceil(Math.max(main.scrollHeight,main.getBoundingClientRect().height)+12);
+  if(height!==last){last=height;try{window.parent.postMessage({type:'salayan-gps-content-height',height},location.origin)}catch(e){}}
+ }
+ function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(report)}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);else schedule();
+ window.addEventListener('load',schedule);window.addEventListener('resize',schedule);
+ if('ResizeObserver'in window){const ro=new ResizeObserver(schedule);ro.observe(document.body);const main=document.querySelector('main');if(main)ro.observe(main)}
+ [100,300,700,1200,2200].forEach(ms=>setTimeout(schedule,ms));
+})();
+</script></body></html>
