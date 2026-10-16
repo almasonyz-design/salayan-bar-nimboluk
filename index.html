@@ -5613,5 +5613,38 @@ function labels(){document.querySelectorAll('#sbGpsNear .sb-gps-load b').forEach
  window.addEventListener('pageshow',()=>setTimeout(()=>{const m=getMap();if(m)try{m.invalidateSize({pan:false})}catch(e){}},250));
 })();
 </script>
+
+<!-- Salayan Bar: stable standard 2D map mode -->
+<style id="salayan-standard-map-final">
+#gpsPage #salayan-map3d-embedded{display:none!important}
+#gpsPage #salayan-map3d-embedded iframe{display:none!important}
+#gpsPage #sbGpsCard .sbx-map-stage{display:block!important;position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:100%!important;height:360px!important;min-height:320px!important;max-height:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;z-index:1!important;overflow:hidden!important;transform:none!important;filter:none!important;border-radius:14px!important;background:#e9f2ed!important;touch-action:pan-x pan-y pinch-zoom!important;isolation:isolate!important}
+#gpsPage #sbGpsCard #sbGpsMapCanvas{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:320px!important;max-height:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;z-index:1!important;transform:none!important;touch-action:pan-x pan-y pinch-zoom!important}
+#gpsPage #sbGpsCard #sbGpsMap3D{display:none!important}
+#gpsPage #sbGpsCard .leaflet-container{width:100%!important;height:100%!important;min-height:320px!important;background:#e9f2ed!important;font-family:Tahoma,Arial,sans-serif!important;touch-action:pan-x pan-y pinch-zoom!important}
+#gpsPage #sbGpsCard .leaflet-pane,#gpsPage #sbGpsCard .leaflet-tile-pane,#gpsPage #sbGpsCard .leaflet-marker-pane,#gpsPage #sbGpsCard .leaflet-overlay-pane{pointer-events:auto}
+#gpsPage #sbGpsCard .leaflet-control-container{pointer-events:none}
+#gpsPage #sbGpsCard .leaflet-control-container .leaflet-control,#gpsPage #sbGpsCard .leaflet-control-container a{pointer-events:auto}
+#gpsPage #sbGpsCard .sbx-map-overlay{pointer-events:none!important}
+#gpsPage #sbGpsCard .sbx-map-3d{display:none!important}
+#gpsPage #sbGpsCard .sbx-map-layer-row{display:none!important}
+@media(max-width:600px){#gpsPage #sbGpsCard .sbx-map-stage{height:320px!important;min-height:300px!important}#gpsPage #sbGpsCard #sbGpsMapCanvas,#gpsPage #sbGpsCard .leaflet-container{min-height:300px!important}}
+</style>
+<script id="salayan-standard-map-recovery">
+(function(){
+ function refreshStandardMap(){
+  const page=document.getElementById('gpsPage');
+  const node=document.getElementById('sbGpsMapCanvas');
+  if(!page||!node||page.classList.contains('hidden'))return;
+  node.style.visibility='visible';
+  const map=window.__salayanGpsGetMap&&window.__salayanGpsGetMap();
+  if(map){[80,250,600,1100].forEach(ms=>setTimeout(()=>{try{if(node.isConnected&&node.offsetWidth&&node.offsetHeight){map.invalidateSize({pan:false});if(map.getZoom()<6)map.setView([33.72,59.18],6,{animate:false});}}catch(e){}},ms));}
+  else if(typeof window.salayanRefreshMap==='function')window.salayanRefreshMap();
+ }
+ document.addEventListener('DOMContentLoaded',()=>setTimeout(refreshStandardMap,500));
+ document.addEventListener('click',e=>{if(e.target.closest('[onclick*="gpsPage"],[data-page="gpsPage"],#navMore'))setTimeout(refreshStandardMap,350)});
+ window.addEventListener('orientationchange',()=>setTimeout(refreshStandardMap,500));
+})();
+</script>
 </body>
 </html>
